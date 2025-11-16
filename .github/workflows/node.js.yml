@@ -1,8 +1,10 @@
+name: Build and Deploy
+
 on:
   workflow_dispatch:
   repository_dispatch:
   push:
-    branches: ["develop"]
+    branches: [develop]
 
 permissions:
   contents: read
@@ -12,27 +14,36 @@ permissions:
 concurrency:
   group: "deploy"
   cancel-in-progress: true
-  #ci-${{ github.ref }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6-beta
-    - name: Setup GitHub Pages
-      uses: actions/configure-pages@v5.0.0
-      
-    - name: Install Node.js
-      uses: actions/setup-node@v6.0.0
+    - uses: actions/checkout@v4
       with:
-        node-version: 24
-    - name: Install dependencies and build site
-      run: rm -f package-lock.json && npm i --force && NODE_ENV="production" webpack --bail
-      
-    - name: Upload artifact 
-      uses: actions/upload-pages-artifact@v4.0.0
+        persist-credentials: false
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - run: npm ci
+    - run: npm run build
+      env:
+        NODE_ENV: production
+        ROUTING_STYLE: none
+    - name: Upload pages artifact
+      uses: actions/upload-pages-artifact@v3
       with:
         path: ./build/
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
     - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v4.0.5
+      id: deployment
+      uses: actions/deploy-pages@v4
