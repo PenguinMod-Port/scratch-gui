@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: 24
     - name: Install dependencies and build site
-      run: npm ci --force && NODE_ENV="production" webpack --bail
+      run: npm i --force && NODE_ENV="production" webpack --bail
       
     - name: Upload artifact 
       uses: actions/upload-pages-artifact@v4.0.0
