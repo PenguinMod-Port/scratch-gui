@@ -27,7 +27,7 @@ jobs:
       with:
         node-version: 22
         cache: npm
-    - run: npm ci
+    - run: npm ci --force
     - run: npm run build
       env:
         NODE_ENV: production
