@@ -12,6 +12,7 @@ class CustomProcedures extends React.Component {
         bindAll(this, [
             'handleAddLabel',
             'handleAddBoolean',
+            'handleAddCommand',
             'handleAddTextNumber',
             'handleToggleWarp',
             'handleCancel',
