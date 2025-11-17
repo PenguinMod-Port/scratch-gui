@@ -127,6 +127,11 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addBooleanExternal();
         }
     }
+    handleAddCommand () {
+        if (this.mutationRoot) {
+            this.mutationRoot.addCommandExternal();
+        }
+    }
     handleAddTextNumber () {
         if (this.mutationRoot) {
             this.mutationRoot.addStringNumberExternal();
@@ -145,6 +150,7 @@ class CustomProcedures extends React.Component {
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 onAddBoolean={this.handleAddBoolean}
+                onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
                 onAddTextNumber={this.handleAddTextNumber}
                 onCancel={this.handleCancel}
