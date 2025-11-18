@@ -736,7 +736,7 @@ const lists = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
-        name="%{BKY_PM_CATEGORY_VARIABLES}"
+        name="%{BKY_PM_CATEGORY_LISTS}"
         id="list"
         colour="${colors.primary}"
         secondaryColour="${colors.tertiary}"
