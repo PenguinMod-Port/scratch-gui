@@ -1,7 +1,5 @@
 // https://github.com/PenguinMod/PenguinMod-Blocks/blob/a92e9599ad2820ddda8b668a1d254931537be43e/blocks_vertical/procedures.js#L293
 export function modifiedCreateAllInputs(connectionMap) {
-  this.createIcon_()
-
   // Split the proc into components, by %n, %b, %s and %l (ignoring escaped).
   var procComponents = this.procCode_.split(/(?=[^\\]%[nbslc])/);
   procComponents = procComponents.map(function (c) {
