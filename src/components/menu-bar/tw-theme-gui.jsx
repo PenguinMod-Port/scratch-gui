@@ -27,22 +27,12 @@ const options = defineMessages({
 });
 
 const ColorIcon = props => (
-    icons[props.id] ? (
-        <img
-            className={styles.accentIconOuter}
-            src={icons[props.id]}
-            draggable={false}
-            // Image is decorative
-            alt=""
-        />
-    ) : (
-        <div
-            className={styles.accentIconOuter}
-            style={{
-                backgroundColor: GUI_MAP[props.id].guiColors['ui-secondary'],
-            }}
-        />
-    )
+    <div
+        className={styles.accentIconOuter}
+        style={{
+            backgroundColor: GUI_MAP[props.id].guiColors['ui-secondary'],
+        }}
+    />
 );
 
 ColorIcon.propTypes = {
