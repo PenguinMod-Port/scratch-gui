@@ -6,7 +6,7 @@ const guiColors = {
     'looks-secondary': '#ff4c4c',
     'looks-transparent': '#ff4d4d59',
     'looks-light-transparent': '#ff4d4d26',
-    'looks-secondary-dark': 'hsla(0, 42%, 51%, 1)',
+    'looks-secondary-dark': 'hsla(0, 100%, 50%, 1)',
 
     'extensions-primary': 'hsla(10, 85%, 65%, 1)',
     'extensions-tertiary': 'hsla(10, 85%, 40%, 1)',
