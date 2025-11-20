@@ -24,6 +24,11 @@ const options = defineMessages({
         description: 'Dark mode.',
         id: 'pm.guicolor.dark'
     },
+    [GUI_AMOLED]: {
+        defaultMessage: 'AMOLED',
+        description: 'AMOLED mode.',
+        id: 'pm.guicolor.amoled'
+    },
 });
 
 const ColorIcon = props => (
