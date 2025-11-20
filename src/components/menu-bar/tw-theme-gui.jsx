@@ -8,7 +8,7 @@ import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
 import {GUI_LIGHT, GUI_DARK, GUI_AMOLED, GUI_MAP, Theme} from '../../lib/themes/index.js';
-import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
+import {openGuiThemeMenu, guiThemeMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
 import styles from './settings-menu.css';
@@ -115,7 +115,7 @@ AccentThemeMenu.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    isOpen: accentMenuOpen(state),
+    isOpen: guiThemeMenuOpen(state),
     isRtl: state.locales.isRtl,
     theme: state.scratchGui.theme.theme
 });
@@ -126,7 +126,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(closeSettingsMenu());
         persistTheme(theme);
     },
-    onOpen: () => dispatch(openAccentMenu())
+    onOpen: () => dispatch(openGuiThemeMenu())
 });
 
 export default connect(
