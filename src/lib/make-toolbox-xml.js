@@ -419,11 +419,31 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         <block id="forever" type="control_forever"/>
         ${blockSeparator}
-        <block type="control_if"/>
-        <block type="control_if_else"/>
-        <block id="wait_until" type="control_wait_until"/>
-        <block id="repeat_until" type="control_repeat_until"/>
-        <block id="while" type="control_while"/>
+        <block type="control_if">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_if_else">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block id="wait_until" type="control_wait_until">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block id="repeat_until" type="control_repeat_until">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block id="while" type="control_while">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
         ${blockSeparator}
         <block type="control_stop"/>
         ${blockSeparator}
@@ -637,8 +657,30 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block type="operator_and"/>
-        <block type="operator_or"/>
+        <block type="operator_and">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_or">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_xor">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
         <block type="operator_not"/>
         ${blockSeparator}
         ${isInitialSetup ? '' : `
