@@ -681,7 +681,11 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block type="operator_not"/>
+        <block type="operator_not">
+            <value name="OPERAND">
+                <shadow type="checkbox" />
+            </value>
+        </block>
         ${blockSeparator}
         ${isInitialSetup ? '' : `
             <block type="operator_join">
