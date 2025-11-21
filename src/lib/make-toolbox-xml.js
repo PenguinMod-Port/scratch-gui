@@ -466,7 +466,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         <block type="control_inline_stack_output">
             <value name="SUBSTACK">
                 <block type="procedures_return">
-                    <value name="return">
+                    <value name="VALUE">
                         <shadow type="text">
                             <field name="TEXT">1</field>
                         </shadow>
