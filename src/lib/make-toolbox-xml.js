@@ -359,15 +359,21 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
     return `
     <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
         <block type="event_whenflagclicked"/>
-        <block type="event_whenkeypressed">
+        ${blockSeparator}
+        <block type="event_always"/>
+        <block type="event_whenanything">
+            <value name="ANYTHING">
+                <shadow type="checkbox" />
+            </value>
         </block>
+        ${blockSeparator}
+        <block type="event_whenkeypressed"/>
         ${isStage ? `
             <block type="event_whenstageclicked"/>
         ` : `
             <block type="event_whenthisspriteclicked"/>
         `}
-        <block type="event_whenbackdropswitchesto">
-        </block>
+        <block type="event_whenbackdropswitchesto"/>
         ${blockSeparator}
         <block type="event_whengreaterthan">
             <value name="VALUE">
