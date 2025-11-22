@@ -676,10 +676,10 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         ${blockSeparator}
         <block type="operator_checkboxBoolean">
-            <field name="CHECKBOX">FALSE</field>
+            <field name="CHECKBOX">TRUE</field>
         </block>
         <block type="operator_checkboxBoolean">
-            <field name="CHECKBOX">TRUE</field>
+            <field name="CHECKBOX">FALSE</field>
         </block>
         ${blockSeparator}
         <block type="operator_and">
