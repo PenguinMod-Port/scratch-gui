@@ -675,6 +675,13 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="operator_checkboxBoolean">
+            <field name="CHECKBOX">FALSE</field>
+        </block>
+        <block type="operator_checkboxBoolean">
+            <field name="CHECKBOX">TRUE</field>
+        </block>
+        ${blockSeparator}
         <block type="operator_and">
             <value name="OPERAND1">
                 <shadow type="checkbox" />
@@ -775,6 +782,21 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             <value name="NUM">
                 <shadow type="math_number">
                     <field name="NUM"/>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_stringify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_boolify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">true</field>
                 </shadow>
             </value>
         </block>
