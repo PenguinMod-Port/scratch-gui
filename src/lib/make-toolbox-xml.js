@@ -450,6 +450,19 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
+        ${blockSeperator}
+        <block type="control_try_catch">
+            <value name="SHADOW">
+                <shadow type="control_error" />
+            </value>
+        </block>
+        <block type="control_throw_error">
+            <value name="ERROR">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="control_stop"/>
         ${blockSeparator}
