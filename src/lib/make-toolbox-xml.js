@@ -403,6 +403,8 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
 const control = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     const hello = translate('LOOKS_HELLO', 'Hello!');
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
     return `
     <category
         name="%{BKY_CATEGORY_CONTROL}"
@@ -436,6 +438,22 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
+        <block type="control_if_return_else_return">
+            <value name="boolean">
+                <shadow type="checkbox" />
+            </value>
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">${banana}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
         <block id="wait_until" type="control_wait_until">
             <value name="CONDITION">
                 <shadow type="checkbox" />
