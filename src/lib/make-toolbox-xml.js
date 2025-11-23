@@ -450,7 +450,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
-        ${blockSeperator}
+        ${blockSeparator}
         <block type="control_try_catch">
             <value name="SHADOW">
                 <shadow type="control_error" />
