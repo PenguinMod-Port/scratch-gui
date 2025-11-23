@@ -402,6 +402,7 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
 
 const control = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    const hello = translate('LOOKS_HELLO', 'Hello!');
     return `
     <category
         name="%{BKY_CATEGORY_CONTROL}"
