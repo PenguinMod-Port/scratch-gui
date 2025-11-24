@@ -418,15 +418,11 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
-        ${blockSeparator}
-        <block type="control_repeat">
-            <value name="TIMES">
-                <shadow type="math_whole_number">
-                    <field name="NUM">10</field>
-                </shadow>
+        <block id="wait_until" type="control_wait_until">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
             </value>
         </block>
-        <block id="forever" type="control_forever"/>
         ${blockSeparator}
         <block type="control_if">
             <value name="CONDITION">
@@ -454,7 +450,15 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block id="wait_until" type="control_wait_until">
+        <block type="control_repeat">
+            <value name="TIMES">
+                <shadow type="math_whole_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+        </block>
+        <block id="forever" type="control_forever"/>
+        <block id="while" type="control_while">
             <value name="CONDITION">
                 <shadow type="checkbox" />
             </value>
@@ -464,11 +468,10 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block id="while" type="control_while">
-            <value name="CONDITION">
-                <shadow type="checkbox" />
-            </value>
-        </block>
+        <block type="control_exitLoop" />
+        <block type="control_continueLoop" />
+        ${blockSeparator}
+        <block type="control_all_at_once" />
         ${blockSeparator}
         <block type="control_try_catch">
             <value name="SHADOW">
