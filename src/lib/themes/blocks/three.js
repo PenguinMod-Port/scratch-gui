@@ -105,6 +105,9 @@ const blockColors = {
     valueReportBackground: '#FFFFFF',
     valueReportBorder: '#AAAAAA',
     valueReportForeground: '#000000',
+    errorReportBackground: '#ffeeee',
+    errorReportBorder: '#ff4444',
+    errorReportForeground: '#441111',
     menuHover: 'rgba(0, 0, 0, 0.2)',
     contextMenuBackground: '#ffffff',
     contextMenuBorder: '#cccccc',
@@ -121,7 +124,8 @@ const blockColors = {
     buttonActiveBackground: '#ffffff',
     buttonForeground: '#575E75',
     zoomIconFilter: 'none',
-    gridColor: '#dddddd'
+    gridColor: '#dddddd',
+    checkboxFieldBackground: '#33D833'
 };
 
 const extensions = {};

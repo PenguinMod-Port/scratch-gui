@@ -504,14 +504,25 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                     <shadow type="control_create_clone_of_menu"/>
                 </value>
             </block>
+            <block type="control_delete_clones_of">
+                <value name="CLONE_OPTION">
+                    <shadow type="control_create_clone_of_menu"/>
+                </value>
+            </block>
         ` : `
-            <block type="control_start_as_clone"/>
+            <block type="control_start_as_clone" />
             <block type="control_create_clone_of">
                 <value name="CLONE_OPTION">
                     <shadow type="control_create_clone_of_menu"/>
                 </value>
             </block>
-            <block type="control_delete_this_clone"/>
+            <block type="control_delete_clones_of">
+                <value name="CLONE_OPTION">
+                    <shadow type="control_create_clone_of_menu"/>
+                </value>
+            </block>
+            <block type="control_delete_this_clone" />
+            <block type="control_is_clone" />
         `}
         ${blockSeparator}
         <block type="control_inline_stack_output">
