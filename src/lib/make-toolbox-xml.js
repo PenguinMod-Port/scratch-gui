@@ -205,6 +205,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
+        <block type="looks_stoptalking"/>
         ${blockSeparator}
         `}
         ${isStage ? `
