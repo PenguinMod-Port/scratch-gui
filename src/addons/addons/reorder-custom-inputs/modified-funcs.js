@@ -22,7 +22,7 @@ export function modifiedCreateAllInputs(connectionMap) {
       labelText = component.substring(2).trim();
 
       if (argumentType == 'c') {
-        var input = this.appendStatementInput(id)
+        var input = this.appendStatementInput(id).setCheck(this.type == 'procedures_prototype' ? "argumentReporterCommand" : "normal");
       } else {
         var input = this.appendValueInput(id);
       }
@@ -54,7 +54,7 @@ export function modifiedUpdateDeclarationProcCode(prefixLabels = false) {
     var input = this.inputList[i];
     if (input.type == 5) {
       // replaced Blocky.DUMMY_VALUE with 5
-      this.procCode_ += (prefixLabels ? "%l " : "") + input.fieldRow[0].getValue(); // modified to prepend %l delimiter, which prevents label merging
+      if (input.fieldRow[0]) this.procCode_ += (prefixLabels ? "%l " : "") + input.fieldRow[0].getValue(); // modified to prepend %l delimiter, which prevents label merging
     } else if (input.type == 1 || input.type == 3) {
       // replaced Blocky.INPUT_VALUE with 1 and Blockly.NEXT_STATEMENT with 3
       // Inspect the argument editor.
