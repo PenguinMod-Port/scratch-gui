@@ -497,6 +497,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="control_restartproject" />
         <block type="control_stop"/>
         ${blockSeparator}
         ${isStage ? `
