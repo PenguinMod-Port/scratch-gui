@@ -285,7 +285,7 @@ class LibraryComponent extends React.Component {
                             <div className={styles.tagWrapper}>
                                 {tagListPrefix.concat(this.props.tags).map((tagProps, id) => (
                                     <TagButton
-                                        active={this.state.selectedTag === tagProps.tag.toLowerCase()}
+                                        active={this.state.selectedTags.includes(tagProps.tag.toLowerCase())}
                                         className={classNames(
                                             styles.filterBarItem,
                                             styles.tagButton,
