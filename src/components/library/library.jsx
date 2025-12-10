@@ -263,6 +263,29 @@ class LibraryComponent extends React.Component {
                 id={this.props.id}
                 onRequestClose={this.handleClose}
             >
+                {this.props.header && (
+                    <h1
+                        className={classNames(
+                            styles.libraryHeader
+                        )}
+                    >
+                        <button
+                            style={this.state.collapsed ? { transform: "scaleX(0.65)" } : null}
+                            className={classNames(styles.libraryFilterCollapse)}
+                            onClick={() => {
+                                this.setState({
+                                    collapsed: !this.state.collapsed
+                                });
+                            }}
+                        />
+                        {this.props.header}
+                        <p
+                            className={classNames(styles.libraryItemCount)}
+                        >
+                            {this.state.data.length}
+                        </p>
+                    </h1>
+                )}
                 {(this.props.filterable || this.props.tags) && (
                     <div className={styles.filterBar}>
                         {this.props.filterable && (
@@ -398,6 +421,7 @@ LibraryComponent.propTypes = {
     showPlayButton: PropTypes.bool,
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
     title: PropTypes.string.isRequired,
+    header: PropTypes.string,
     removedTrademarks: PropTypes.bool
 };
 
