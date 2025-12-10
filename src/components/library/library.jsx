@@ -181,7 +181,7 @@ class LibraryComponent extends React.Component {
     }
     getFilteredData () {
         // When no filtering, favorites get their own section
-        if (this.state.selectedTag.length == 0 && !this.state.filterQuery) {
+        if (this.state.selectedTags.length == 0 && !this.state.filterQuery) {
             const favoriteItems = this.props.data
                 .filter(dataItem => (
                     this.state.initialFavorites.includes(dataItem[this.props.persistableKey])
