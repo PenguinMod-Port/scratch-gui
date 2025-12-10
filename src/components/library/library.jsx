@@ -282,7 +282,7 @@ class LibraryComponent extends React.Component {
                         <p
                             className={classNames(styles.libraryItemCount)}
                         >
-                            {this.state.data.length}
+                            {this.props.data.length}
                         </p>
                     </h1>
                 )}
