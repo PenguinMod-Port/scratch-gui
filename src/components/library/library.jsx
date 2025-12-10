@@ -2,13 +2,14 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {defineMessages, injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import LibraryItem from '../../containers/library-item.jsx';
 import Modal from '../../containers/modal.jsx';
 import Divider from '../divider/divider.jsx';
 import Filter from '../filter/filter.jsx';
 import TagButton from '../../containers/tag-button.jsx';
+import TagCheckbox from '../../containers/tag-checkbox.jsx';
 import Spinner from '../spinner/spinner.jsx';
 import Separator from '../tw-extension-separator/separator.jsx';
 import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
@@ -29,8 +30,10 @@ const messages = defineMessages({
     }
 });
 
+const PM_LIBRARY_API = "https://library.penguinmod.com/";
+
 const ALL_TAG = {tag: 'all', intlLabel: messages.allTag};
-const tagListPrefix = [ALL_TAG];
+const tagListPrefix = [];
 
 class LibraryComponent extends React.Component {
     constructor (props) {
@@ -51,7 +54,7 @@ class LibraryComponent extends React.Component {
         this.state = {
             playingItem: null,
             filterQuery: '',
-            selectedTag: ALL_TAG.tag,
+            selectedTags: [],
             canDisplay: false,
             favorites,
             initialFavorites: favorites
@@ -69,7 +72,7 @@ class LibraryComponent extends React.Component {
     }
     componentDidUpdate (prevProps, prevState) {
         if (prevState.filterQuery !== this.state.filterQuery ||
-            prevState.selectedTag !== this.state.selectedTag) {
+            prevState.selectedTags.length !== this.state.selectedTags.length) {
             this.scrollToTop();
         }
 
@@ -114,18 +117,25 @@ class LibraryComponent extends React.Component {
     handleClose () {
         this.props.onRequestClose();
     }
-    handleTagClick (tag) {
+    handleTagClick (tag, enabled) {
         if (this.state.playingItem === null) {
             this.setState({
                 filterQuery: '',
-                selectedTag: tag.toLowerCase()
+                selectedTags: this.state.selectedTags.concat([tag.toLowerCase()])
             });
         } else {
             this.props.onItemMouseLeave(this.getFilteredData()[[this.state.playingItem]]);
             this.setState({
                 filterQuery: '',
                 playingItem: null,
-                selectedTag: tag.toLowerCase()
+                selectedTags: this.state.selectedTags.concat([tag.toLowerCase()])
+            });
+        }
+
+        if (!enabled) {
+            const tags = this.state.selectedTags.filter(t => (t !== tag));
+            this.setState({
+                selectedTags: tags
             });
         }
     }
@@ -156,15 +166,13 @@ class LibraryComponent extends React.Component {
     handleFilterChange (event) {
         if (this.state.playingItem === null) {
             this.setState({
-                filterQuery: event.target.value,
-                selectedTag: ALL_TAG.tag
+                filterQuery: event.target.value
             });
         } else {
             this.props.onItemMouseLeave(this.getFilteredData()[[this.state.playingItem]]);
             this.setState({
                 filterQuery: event.target.value,
-                playingItem: null,
-                selectedTag: ALL_TAG.tag
+                playingItem: null
             });
         }
     }
@@ -173,7 +181,7 @@ class LibraryComponent extends React.Component {
     }
     getFilteredData () {
         // When no filtering, favorites get their own section
-        if (this.state.selectedTag === 'all' && !this.state.filterQuery) {
+        if (this.state.selectedTag.length == 0 && !this.state.filterQuery) {
             const favoriteItems = this.props.data
                 .filter(dataItem => (
                     this.state.initialFavorites.includes(dataItem[this.props.persistableKey])
@@ -208,10 +216,10 @@ class LibraryComponent extends React.Component {
 
         let filteredItems = favoriteItems.concat(nonFavoriteItems);
 
-        if (this.state.selectedTag !== 'all') {
+        if (this.state.selectedTags.length > 0) {
             filteredItems = filteredItems.filter(dataItem => (
                 dataItem.tags &&
-                dataItem.tags.map(i => i.toLowerCase()).includes(this.state.selectedTag)
+                dataItem.tags.map(i => i.toLowerCase()).filter(v => this.state.selectedTags.includes(v)).length == this.state.selectedTags.length
             ));
         }
 
@@ -312,7 +320,7 @@ class LibraryComponent extends React.Component {
                                 featured={dataItem.featured}
                                 hidden={dataItem.hidden}
                                 iconMd5={dataItem.costumes ? dataItem.costumes[0].md5ext : dataItem.md5ext}
-                                iconRawURL={dataItem.rawURL}
+                                iconRawURL={this.props.actor === "CostumeLibrary" ? `${PM_LIBRARY_API}files/${dataItem.libraryFilePage}` : dataItem.rawURL}
                                 icons={dataItem.costumes}
                                 id={index}
                                 incompatibleWithScratch={dataItem.incompatibleWithScratch}
