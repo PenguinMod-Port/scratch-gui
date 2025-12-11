@@ -27,11 +27,6 @@ const messages = defineMessages({
         id: 'gui.library.allTag',
         defaultMessage: 'All',
         description: 'Label for library tag to revert to all items after filtering by tag.'
-    },
-    filtersHeader: {
-        id: 'pm.gui.library.filtersHeader',
-        defaultMessage: 'Filters',
-        description: 'Header text for the filter controls in the asset picker'
     }
 });
 
@@ -297,7 +292,13 @@ class LibraryComponent extends React.Component {
                         className={classNames(styles.libraryFilterBar)}
                         style={this.state.collapsed ? { display: "none" } : null}
                     >
-                        <h3>{messages.filtersHeader}</h3>
+                        <h3 className={classNames(styles.whiteTextInDarkMode)}>
+                            <FormattedMessage
+                                defaultMessage="Filters"
+                                description="Header text for the filter controls in the asset picker"
+                                id="pm.gui.library.filtersHeader"
+                            />
+                        </h3>
                         {this.props.filterable && (
                             <div>
                                 <Filter
