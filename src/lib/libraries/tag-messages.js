@@ -162,7 +162,7 @@ export default defineMessages({
         id: 'pm.gui.libraryTags.language'
     },
     library: {
-        defaultMessage: 'Extension Library',
+        defaultMessage: 'Extension Gallery',
         description: 'Tag for filtering a library for extension libraries',
         id: 'pm.gui.libraryTags.library'
     },
