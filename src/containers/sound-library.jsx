@@ -21,6 +21,11 @@ const messages = defineMessages({
         defaultMessage: 'Choose a Sound',
         description: 'Heading for the sound library',
         id: 'gui.soundLibrary.chooseASound'
+    },
+    header: {
+        defaultMessage: 'Sounds',
+        description: 'Header for sound library',
+        id: 'pm.gui.soundLibrary.header'
     }
 });
 
@@ -187,6 +192,7 @@ class SoundLibrary extends React.PureComponent {
                 setStopHandler={this.setStopHandler}
                 tags={soundTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 onItemMouseEnter={this.handleItemMouseEnter}
                 onItemMouseLeave={this.handleItemMouseLeave}
                 onItemSelected={this.handleItemSelected}
