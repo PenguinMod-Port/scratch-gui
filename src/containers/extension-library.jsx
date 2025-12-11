@@ -10,7 +10,7 @@ import extensionLibraryContent, {
     galleryLoading,
     galleryMore
 } from '../lib/libraries/extensions/index.jsx';
-import extensionTags from '../lib/libraries/tw-extension-tags';
+import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
@@ -20,6 +20,11 @@ const messages = defineMessages({
         defaultMessage: 'Choose an Extension',
         description: 'Heading for the extension library',
         id: 'gui.extensionLibrary.chooseAnExtension'
+    },
+    header: {
+        defaultMessage: 'Extensions',
+        description: 'Header for extension library',
+        id: 'pm.gui.extensionLibrary.header'
     }
 });
 
@@ -185,6 +190,7 @@ class ExtensionLibrary extends React.PureComponent {
                 id="extensionLibrary"
                 tags={extensionTags}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}

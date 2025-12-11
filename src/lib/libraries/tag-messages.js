@@ -125,5 +125,45 @@ export default defineMessages({
         defaultMessage: 'Letters',
         description: 'Tag for filtering a library for letters',
         id: 'gui.libraryTags.letters'
+    },
+    graphics: {
+        defaultMessage: 'Graphics',
+        description: 'Tag for filtering a library for graphics',
+        id: 'pm.gui.libraryTags.graphics'
+    },
+    sound: {
+        defaultMessage: 'Sound',
+        description: 'Tag for filtering a library for sound',
+        id: 'pm.gui.libraryTags.sound'
+    },
+    math: {
+        defaultMessage: 'Math',
+        description: 'Tag for filtering a library for math',
+        id: 'pm.gui.libraryTags.math'
+    },
+    data: {
+        defaultMessage: 'Data Management',
+        description: 'Tag for filtering a library for data',
+        id: 'pm.gui.libraryTags.data'
+    },
+    hardware: {
+        defaultMessage: 'Hardware',
+        description: 'Tag for filtering a library for hardware',
+        id: 'pm.gui.libraryTags.hardware'
+    },
+    expansion: {
+        defaultMessage: 'Category Expansion',
+        description: 'Tag for filtering a library for expansions',
+        id: 'pm.gui.libraryTags.expansion'
+    },
+    language: {
+        defaultMessage: 'Programming Language',
+        description: 'Tag for filtering a library for programming languages',
+        id: 'pm.gui.libraryTags.language'
+    },
+    customextension: {
+        defaultMessage: 'Load Custom Extension',
+        description: 'Button to load a custom extension',
+        id: 'pm.gui.libraryTags.customextension'
     }
 });

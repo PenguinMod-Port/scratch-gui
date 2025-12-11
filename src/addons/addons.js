@@ -8,7 +8,7 @@ const addons = [
     'jump-to-def',
     'reorder-custom-inputs',
     'editor-searchable-dropdowns',
-    'data-category-tweaks-v2',
+    //'data-category-tweaks-v2',
     'block-palette-icons',
     'hide-flyout',
     'mediarecorder',

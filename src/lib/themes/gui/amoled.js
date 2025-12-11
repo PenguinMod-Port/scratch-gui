@@ -1,37 +1,37 @@
 const guiColors = {
     'color-scheme': 'dark',
 
-    'ui-primary': '#111111',
-    'ui-secondary': '#1e1e1e',
-    'ui-tertiary': '#2e2e2e',
+    'ui-primary': '#000000',
+    'ui-secondary': '#080808',
+    'ui-tertiary': '#101010',
 
-    'ui-modal-overlay': '#333333aa',
-    'ui-modal-background': '#111111',
+    'ui-modal-overlay': '#101010aa',
+    'ui-modal-background': '#080808',
     'ui-modal-foreground': '#eeeeee',
-    'ui-modal-header-background': 'var(--menu-bar-background)',
+    'ui-modal-header-background': '#101010',
     'ui-modal-header-foreground': '#ffffff',
 
-    'ui-white': '#111111',
+    'ui-white': '#000000',
 
     'ui-black-transparent': '#ffffff26',
 
     'text-primary': '#eeeeee',
 
-    'menu-bar-background': 'var(--looks-secondary-dark)',
+    'menu-bar-background': 'var(--ui-modal-header-background)',
 
-    'assets-background': '#111111',
+    'assets-background': 'var(--ui-primary)',
 
-    'input-background': '#1e1e1e',
+    'input-background': 'var(--ui-secondary)',
 
-    'popover-background': '#1e1e1e',
+    'popover-background': 'var(--ui-secondary)',
 
     'badge-background': '#16202c',
     'badge-border': '#203652',
 
-    'fullscreen-background': '#111111',
-    'fullscreen-accent': '#111111',
+    'fullscreen-background': 'var(--ui-primary)',
+    'fullscreen-accent': 'var(--ui-primary)',
 
-    'page-background': '#111111',
+    'page-background': 'var(--ui-primary)',
     'page-foreground': '#eeeeee',
 
     'project-title-inactive': 'var(--ui-secondary)',
@@ -47,23 +47,23 @@ const guiColors = {
 };
 
 const blockColors = {
-    insertionMarker: '#cccccc',
-    workspace: '#1e1e1e',
-    toolboxSelected: '#1e1e1e',
-    toolboxText: '#cccccc',
-    toolbox: '#111111',
-    flyout: '#111111',
-    scrollbar: '#666666',
-    valueReportBackground: '#1e1e1e',
-    valueReportBorder: '#333333',
+    insertionMarker: '#dddddd',
+    workspace: '#080808',
+    toolboxSelected: '#080808',
+    toolboxText: '#dddddd',
+    toolbox: '#000000',
+    flyout: '#000000',
+    scrollbar: '#444444',
+    valueReportBackground: '#181818',
+    valueReportBorder: '#282828',
     valueReportForeground: '#eeeeee',
-    errorReportBackground: '#2e1818',
-    errorReportBorder: '#552222',
+    errorReportBackground: '#180808',
+    errorReportBorder: '#480808',
     errorReportForeground: '#eecccc',
-    contextMenuBackground: '#111111',
+    contextMenuBackground: '#080808',
     contextMenuBorder: '#ffffff26',
     contextMenuForeground: '#eeeeee',
-    contextMenuActiveBackground: '#2e2e2e',
+    contextMenuActiveBackground: '#101010',
     contextMenuDisabledForeground: '#666666',
     flyoutLabelColor: '#cccccc',
     checkboxInactiveBackground: '#222222',
@@ -72,7 +72,7 @@ const blockColors = {
     buttonActiveBackground: '#222222',
     buttonForeground: '#cccccc',
     zoomIconFilter: 'invert(100%)',
-    gridColor: '#484848'
+    gridColor: '#303030'
 };
 
 export {

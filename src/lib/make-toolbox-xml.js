@@ -205,6 +205,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
+        <block type="looks_stoptalking"/>
         ${blockSeparator}
         `}
         ${isStage ? `
@@ -359,15 +360,21 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
     return `
     <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
         <block type="event_whenflagclicked"/>
-        <block type="event_whenkeypressed">
+        ${blockSeparator}
+        <block type="event_always"/>
+        <block type="event_whenanything">
+            <value name="ANYTHING">
+                <shadow type="checkbox" />
+            </value>
         </block>
+        ${blockSeparator}
+        <block type="event_whenkeypressed"/>
         ${isStage ? `
             <block type="event_whenstageclicked"/>
         ` : `
             <block type="event_whenthisspriteclicked"/>
         `}
-        <block type="event_whenbackdropswitchesto">
-        </block>
+        <block type="event_whenbackdropswitchesto"/>
         ${blockSeparator}
         <block type="event_whengreaterthan">
             <value name="VALUE">
@@ -396,6 +403,9 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
 
 const control = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    const hello = translate('LOOKS_HELLO', 'Hello!');
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
     return `
     <category
         name="%{BKY_CATEGORY_CONTROL}"
@@ -409,6 +419,47 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="control_waitsecondsoruntil">
+            <value name="DURATION">
+                <shadow type="math_positive_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_wait_until">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="control_if">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_if_else">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_if_return_else_return">
+            <value name="boolean">
+                <shadow type="checkbox" />
+            </value>
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">${banana}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="control_repeat">
             <value name="TIMES">
@@ -418,13 +469,35 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         <block id="forever" type="control_forever"/>
+        <block id="while" type="control_while">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block id="repeat_until" type="control_repeat_until">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_exitLoop" />
+        <block type="control_continueLoop" />
         ${blockSeparator}
-        <block type="control_if"/>
-        <block type="control_if_else"/>
-        <block id="wait_until" type="control_wait_until"/>
-        <block id="repeat_until" type="control_repeat_until"/>
-        <block id="while" type="control_while"/>
+        <block type="control_all_at_once" />
         ${blockSeparator}
+        <block type="control_try_catch">
+            <value name="SHADOW">
+                <shadow type="control_error" />
+            </value>
+        </block>
+        <block type="control_throw_error">
+            <value name="ERROR">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="control_restartproject" />
         <block type="control_stop"/>
         ${blockSeparator}
         ${isStage ? `
@@ -433,15 +506,38 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                     <shadow type="control_create_clone_of_menu"/>
                 </value>
             </block>
+            <block type="control_delete_clones_of">
+                <value name="CLONE_OPTION">
+                    <shadow type="control_create_clone_of_menu"/>
+                </value>
+            </block>
         ` : `
-            <block type="control_start_as_clone"/>
+            <block type="control_start_as_clone" />
             <block type="control_create_clone_of">
                 <value name="CLONE_OPTION">
                     <shadow type="control_create_clone_of_menu"/>
                 </value>
             </block>
-            <block type="control_delete_this_clone"/>
+            <block type="control_delete_clones_of">
+                <value name="CLONE_OPTION">
+                    <shadow type="control_create_clone_of_menu"/>
+                </value>
+            </block>
+            <block type="control_delete_this_clone" />
+            <block type="control_is_clone" />
         `}
+        ${blockSeparator}
+        <block type="control_inline_stack_output">
+            <value name="SUBSTACK">
+                <block type="procedures_return">
+                    <value name="VALUE">
+                        <shadow type="text">
+                            <field name="TEXT">1</field>
+                        </shadow>
+                    </value>
+                </block>
+            </value>
+        </block>
         ${categorySeparator}
     </category>
     `;
@@ -637,9 +733,42 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block type="operator_and"/>
-        <block type="operator_or"/>
-        <block type="operator_not"/>
+        <block type="operator_checkboxBoolean">
+            <field name="CHECKBOX">TRUE</field>
+        </block>
+        <block type="operator_checkboxBoolean">
+            <field name="CHECKBOX">FALSE</field>
+        </block>
+        ${blockSeparator}
+        <block type="operator_and">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_or">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_xor">
+            <value name="OPERAND1">
+                <shadow type="checkbox" />
+            </value>
+            <value name="OPERAND2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_not">
+            <value name="OPERAND">
+                <shadow type="checkbox" />
+            </value>
+        </block>
         ${blockSeparator}
         ${isInitialSetup ? '' : `
             <block type="operator_join">
@@ -714,6 +843,28 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="operator_stringify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_boolify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">true</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_valid_type">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">1</field>
+                </shadow>
+            </value>
+        </block>
         ${categorySeparator}
     </category>
     `;
@@ -728,6 +879,19 @@ const variables = function (isInitialSetup, isStage, targetId, colors) {
         colour="${colors.primary}"
         secondaryColour="${colors.tertiary}"
         custom="VARIABLE">
+    </category>
+    `;
+};
+
+const lists = function (isInitialSetup, isStage, targetId, colors) {
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category
+        name="%{BKY_PM_CATEGORY_LISTS}"
+        id="list"
+        colour="${colors.primary}"
+        secondaryColour="${colors.tertiary}"
+        custom="LIST">
     </category>
     `;
 };
@@ -799,6 +963,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
+    const listsXML = moveCategory('list') || lists(isInitialSetup, isStage, targetId, colors.data_lists);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
 
     // Always display TurboWarp blocks as the first extension, if it exists,
@@ -818,6 +983,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
+        listsXML, gap,
         myBlocksXML
     ];
 
