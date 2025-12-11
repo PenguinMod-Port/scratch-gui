@@ -56,6 +56,7 @@ class LibraryComponent extends React.Component {
             filterQuery: '',
             selectedTags: [],
             canDisplay: false,
+            collapsed: false,
             favorites,
             initialFavorites: favorites
         };
@@ -287,7 +288,7 @@ class LibraryComponent extends React.Component {
                     </h1>
                 )}
                 {(this.props.filterable || this.props.tags) && (
-                    <div className={styles.filterBar}>
+                    /*<div className={styles.filterBar}>
                         {this.props.filterable && (
                             <Filter
                                 className={classNames(
@@ -321,7 +322,7 @@ class LibraryComponent extends React.Component {
                                 ))}
                             </div>
                         }
-                    </div>
+                    </div>*/
                 )}
                 <div
                     className={classNames(styles.libraryScrollGrid, {
