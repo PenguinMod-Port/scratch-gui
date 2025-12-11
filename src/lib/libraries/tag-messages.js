@@ -161,6 +161,11 @@ export default defineMessages({
         description: 'Tag for filtering a library for programming languages',
         id: 'pm.gui.libraryTags.language'
     },
+    library: {
+        defaultMessage: 'Extension Library',
+        description: 'Tag for filtering a library for extension libraries',
+        id: 'pm.gui.libraryTags.library'
+    },
     customextension: {
         defaultMessage: 'Load Custom Extension',
         description: 'Button to load a custom extension',
