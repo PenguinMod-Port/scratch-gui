@@ -10,7 +10,7 @@ import extensionLibraryContent, {
     galleryLoading,
     galleryMore
 } from '../lib/libraries/extensions/index.jsx';
-import extensionTags from '../lib/libraries/tw-extension-tags';
+import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
