@@ -14,7 +14,7 @@
     padding: 6px;
     margin-left: 4px;
     border-radius: 8px;
-    background: $menu-bar-background;
+    background: $ui-primary;
     overflow: auto;
     border: 2px solid $ui-black-transparent;
 }
