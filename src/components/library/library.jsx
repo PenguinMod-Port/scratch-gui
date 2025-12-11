@@ -297,7 +297,7 @@ class LibraryComponent extends React.Component {
                         className={classNames(styles.libraryFilterBar)}
                         style={this.state.collapsed ? { display: "none" } : null}
                     >
-                        <h3>{this.props.intl.formatMessage(messages.filtersHeader)}</h3>
+                        <h3>{messages.filtersHeader}</h3>
                         {this.props.filterable && (
                             <div>
                                 <Filter
