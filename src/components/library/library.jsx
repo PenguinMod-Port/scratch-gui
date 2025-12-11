@@ -370,7 +370,7 @@ class LibraryComponent extends React.Component {
                                                 />
                                             </div>
                                             <div className={styles.libraryTagCount}>
-                                                {(this.props.data ?? []).map(i => i.toLowerCase()).filter(v => v == tagProps.tag).length}
+                                                {(this.props.data ?? []).map(i => i.tags.map(v => v.toLowerCase())).filter(v => v.includes(tagProps.tag)).length}
                                             </div>
                                         </div>
                                     );
