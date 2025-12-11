@@ -264,7 +264,7 @@ class LibraryComponent extends React.Component {
                 id={this.props.id}
                 onRequestClose={this.handleClose}
             >
-                {this.props.header && filteredData &&  (
+                {this.props.header && (
                     <h1
                         className={classNames(
                             styles.libraryHeader
