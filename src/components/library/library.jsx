@@ -283,7 +283,7 @@ class LibraryComponent extends React.Component {
                         <p
                             className={classNames(styles.libraryItemCount)}
                         >
-                            {this.getFilteredData().length}
+                            {(this.props.data ?? []).length}
                         </p>
                     </h1>
                 )}
@@ -334,7 +334,7 @@ class LibraryComponent extends React.Component {
                                             api.useTag = this.handleTagClick;
                                             api.close = this.handleClose;
                                             api.select = (id) => {
-                                                const items = this.state.data;
+                                                const items = this.props.data;
                                                 for (const item of items) {
                                                     if (item.extensionId === id) {
                                                         this.handleClose();
@@ -360,7 +360,7 @@ class LibraryComponent extends React.Component {
                                         );
                                     }
                                     return (
-                                        <div className={classNames(styles.tagCheckboxWrapper)}>
+                                        <div className={styles.tagCheckboxWrapper}>
                                             <div style={{ width: "90%" }}>
                                                 <TagCheckbox
                                                     active={false}
@@ -370,15 +370,7 @@ class LibraryComponent extends React.Component {
                                                 />
                                             </div>
                                             <div className={styles.libraryTagCount}>
-                                                {this.state.loaded &&
-                                                    (
-                                                        this.state.data.filter(dataItem => (arrayIncludesItemsFrom(
-                                                            dataItem.tags &&
-                                                            dataItem.tags
-                                                                .map(String.prototype.toLowerCase.call, String.prototype.toLowerCase),
-                                                            [tagProps.tag]))).length
-                                                    )
-                                                }
+                                                {(this.props.data ?? []).map(i => i.toLowerCase()).filter(v => v == tagProps.tag).length}
                                             </div>
                                         </div>
                                     );
@@ -387,9 +379,7 @@ class LibraryComponent extends React.Component {
                         }
                     </div>
                     <div
-                        className={classNames(styles.libraryScrollGrid, {
-                            [styles.withFilterBar]: this.props.filterable || this.props.tags
-                        })}
+                        className={styles.libraryScrollGrid}
                         ref={this.setFilteredDataRef}
                     >
                         {filteredData && this.getFilteredData().map((dataItem, index) => (
