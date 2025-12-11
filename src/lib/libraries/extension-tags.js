@@ -2,7 +2,7 @@ import messages from './tag-messages.js';
 export default [
     {tag: 'scratch', intlLabel: 'Scratch'},
     {tag: 'tw', intlLabel: 'TurboWarp'},
-    {tag: 'penguinmod', intlLabel: 'PenguinMod'},
+    {tag: 'pm', intlLabel: 'PenguinMod'},
 
     {type: 'divider'},
 
