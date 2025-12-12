@@ -62,6 +62,7 @@ class Controls extends React.Component {
                 active={projectRunning && isStarted}
                 turbo={turbo}
                 onGreenFlagClick={this.handleGreenFlagClick}
+                onPauseButtonClick={this.handlePauseButtonClick}
                 onStopAllClick={this.handleStopAllClick}
             />
         );
