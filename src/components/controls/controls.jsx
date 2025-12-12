@@ -41,6 +41,7 @@ const Controls = function (props) {
         className,
         intl,
         onGreenFlagClick,
+        onPauseButtonClick,
         onStopAllClick,
         turbo,
         framerate,
