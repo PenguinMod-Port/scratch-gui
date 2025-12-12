@@ -399,7 +399,7 @@ class LibraryComponent extends React.Component {
                                     iconRawURL={this.props.actor === "CostumeLibrary" ? `${PM_LIBRARY_API}files/${dataItem.libraryFilePage}` : dataItem.rawURL}
                                     icons={dataItem.costumes}
                                     id={index}
-                                    incompatibleWithScratch={dataItem.incompatibleWithScratch}
+                                    //incompatibleWithScratch={dataItem.incompatibleWithScratch}
                                     favorite={this.state.favorites.includes(dataItem[this.props.persistableKey])}
                                     onFavorite={this.handleFavorite}
                                     insetIconURL={dataItem.insetIconURL}

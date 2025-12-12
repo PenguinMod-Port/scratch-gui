@@ -25,6 +25,6 @@ export default [
 
     {type: 'title', intlLabel: 'Actions'},
     {type: 'custom', intlLabel: messages.customextension, func: (library) => {
-        library.select(''); // selects custom extension since it's id is ''
+        library.select('custom_extension');
     } },
 ];
