@@ -4,6 +4,7 @@ import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import GreenFlag from '../green-flag/green-flag.jsx';
+import PauseButton from '../pause-button/pause-button.jsx';
 import StopAll from '../stop-all/stop-all.jsx';
 import TurboMode from '../turbo-mode/turbo-mode.jsx';
 import FramerateIndicator from '../tw-framerate-indicator/framerate-indicator.jsx';
@@ -16,6 +17,16 @@ const messages = defineMessages({
         defaultMessage: 'Go',
         description: 'Green flag button title'
     },
+    pauseTitle: {
+        id: 'pm.gui.controls.pause',
+        defaultMessage: 'Pause',
+        description: 'Pause button title'
+    },
+    playTitle: {
+        id: 'pm.gui.controls.play',
+        defaultMessage: 'Play',
+        description: 'Play button title'
+    },
     stopTitle: {
         id: 'gui.controls.stop',
         defaultMessage: 'Stop',
@@ -26,6 +37,7 @@ const messages = defineMessages({
 const Controls = function (props) {
     const {
         active,
+        paused,
         className,
         intl,
         onGreenFlagClick,
@@ -45,6 +57,11 @@ const Controls = function (props) {
                 active={active}
                 title={intl.formatMessage(messages.goTitle)}
                 onClick={onGreenFlagClick}
+            />
+            <PauseButton
+                paused={paused}
+                title={intl.formatMessage(paused ? messages.playTitle : messages.pauseTitle)}
+                onClick={onPauseButtonClick}
             />
             <StopAll
                 active={active}
@@ -66,9 +83,11 @@ const Controls = function (props) {
 
 Controls.propTypes = {
     active: PropTypes.bool,
+    paused: PropTypes.bool,
     className: PropTypes.string,
     intl: intlShape.isRequired,
     onGreenFlagClick: PropTypes.func.isRequired,
+    onPauseButtonClick: PropTypes.func.isRequired,
     onStopAllClick: PropTypes.func.isRequired,
     framerate: PropTypes.number,
     interpolation: PropTypes.bool,

@@ -11,6 +11,7 @@ class Controls extends React.Component {
         super(props);
         bindAll(this, [
             'handleGreenFlagClick',
+            'handlePauseButtonClick',
             'handleStopAllClick'
         ]);
     }
@@ -34,6 +35,14 @@ class Controls extends React.Component {
             }
             this.props.vm.greenFlag();
         }
+    }
+    handlePauseButtonClick (e) {
+        e.preventDefault();
+        if (!this.props.paused) {
+            this.props.vm.pause();
+            return;
+        }
+        this.props.vm.play();
     }
     handleStopAllClick (e) {
         e.preventDefault();
@@ -66,6 +75,7 @@ Controls.propTypes = {
     framerate: PropTypes.number.isRequired,
     interpolation: PropTypes.bool.isRequired,
     isSmall: PropTypes.bool,
+    paused: PropTypes.bool,
     vm: PropTypes.instanceOf(VM)
 };
 
@@ -74,7 +84,8 @@ const mapStateToProps = state => ({
     projectRunning: state.scratchGui.vmStatus.running,
     framerate: state.scratchGui.tw.framerate,
     interpolation: state.scratchGui.tw.interpolation,
-    turbo: state.scratchGui.vmStatus.turbo
+    turbo: state.scratchGui.vmStatus.turbo,
+    paused: state.scratchGui.vmStatus.paused
 });
 // no-op function to prevent dispatch prop being passed to component
 const mapDispatchToProps = () => ({});
