@@ -360,6 +360,7 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
     return `
     <category name="%{BKY_CATEGORY_EVENTS}" id="events" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
         <block type="event_whenflagclicked"/>
+        <block type="event_whenstopclicked"/>
         ${blockSeparator}
         <block type="event_always"/>
         <block type="event_whenanything">
