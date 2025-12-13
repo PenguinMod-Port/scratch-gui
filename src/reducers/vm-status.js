@@ -66,6 +66,7 @@ export {
     reducer as default,
     initialState as vmStatusInitialState,
     setRunningState,
+    setPausedState,
     setStartedState,
     setTurboState
 };
