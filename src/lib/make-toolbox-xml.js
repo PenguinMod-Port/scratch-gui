@@ -370,6 +370,8 @@ const events = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         ${blockSeparator}
         <block type="event_whenkeypressed"/>
+        <block type="event_whenkeyhit"/>
+        <block type="event_whenmousescrolled"/>
         ${isStage ? `
             <block type="event_whenstageclicked"/>
         ` : `
