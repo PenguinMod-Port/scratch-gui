@@ -98,6 +98,7 @@ Controls.propTypes = {
 
 Controls.defaultProps = {
     active: false,
+    paused: false,
     turbo: false,
     isSmall: false
 };
