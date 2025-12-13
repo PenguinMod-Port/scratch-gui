@@ -1,3 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-  <path d="M 1 2.5 C 3.667 0.5 6.334 0.5 9 2.5 C 11.667 4.5 14.334 4.5 17 2.5 L 17 12.5 C 14.334 14.5 11.667 14.5 9 12.5 C 6.334 10.5 3.667 10.5 1 12.5 L 1 2.5 Z M 1 1 L 1 17" stroke-width="1" style="stroke-width: 1; fill: rgb(82, 165, 224); stroke-linejoin: round; stroke-linecap: round; stroke: rgb(51, 111, 153);"></path>
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="9" y1="1" x2="9" y2="17" id="gradient-0">
+      <stop offset="0" style="stop-color: rgb(32.157% 64.706% 87.843%)"></stop>
+      <stop offset="1" style="stop-color: rgb(0% 38.808% 59.971%)"></stop>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="9" y1="1" x2="9" y2="17" id="gradient-1">
+      <stop offset="0" style="stop-color: rgb(20% 43.529% 60%)"></stop>
+      <stop offset="1" style="stop-color: rgb(0% 26.889% 42.088%)"></stop>
+    </linearGradient>
+  </defs>
+  <path d="M 1 2.5 C 3.667 0.5 6.334 0.5 9 2.5 C 11.667 4.5 14.334 4.5 17 2.5 L 17 12.5 C 14.334 14.5 11.667 14.5 9 12.5 C 6.334 10.5 3.667 10.5 1 12.5 L 1 2.5 Z M 1 1 L 1 17" stroke-width="1" style="stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; fill: url(#gradient-0); stroke: url(#gradient-1);"></path>
 </svg>
