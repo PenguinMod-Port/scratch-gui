@@ -8,7 +8,8 @@ import log from '../lib/log';
 import extensionLibraryContent, {
     galleryError,
     galleryLoading,
-    galleryMore
+    galleryMore,
+    penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
 import extensionTags from '../lib/libraries/extension-tags';
 
@@ -32,6 +33,7 @@ const toLibraryItem = extension => {
     if (typeof extension === 'object') {
         return ({
             rawURL: extension.iconURL || extensionIcon,
+            featured: true,
             ...extension
         });
     }
@@ -174,6 +176,8 @@ class ExtensionLibrary extends React.PureComponent {
             } else {
                 library.push(toLibraryItem(galleryLoading));
             }
+            library.push('---');
+            library = library.concat(penguinmodGallery.map(toLibraryItem))
         }
 
         return (

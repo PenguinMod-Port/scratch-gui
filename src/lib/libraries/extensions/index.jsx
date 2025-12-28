@@ -449,3 +449,25 @@ export const galleryError = {
     tags: ['tw', 'library'],
     featured: true
 };
+
+export const penguinmodGallery = [
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Arrays"
+                description="Name for the jwArray extension"
+                id="pm.gui.extension.jwArray.name"
+            />
+        ),
+        extensionId: 'jwArray',
+        iconURL: require('../extensions/penguinmod/jwArray.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data efficiently in multi-purpose arrays."
+                description="Description for the jwArray extension"
+                id="pm.gui.extension.jwArray.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    }
+]

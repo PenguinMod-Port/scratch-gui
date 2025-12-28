@@ -156,6 +156,11 @@ export default defineMessages({
         description: 'Tag for filtering a library for expansions',
         id: 'pm.gui.libraryTags.expansion'
     },
+    type: {
+        defaultMessage: 'Types',
+        description: 'Tag for filtering a library for data types',
+        id: 'pm.gui.libraryTags.type'
+    },
     language: {
         defaultMessage: 'Programming Language',
         description: 'Tag for filtering a library for programming languages',

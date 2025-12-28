@@ -15,6 +15,7 @@ export default [
     {type: 'divider'},
 
     {tag: 'expansion', intlLabel: messages.expansion},
+    {tag: 'type', intlLabel: messages.type},
     {tag: 'language', intlLabel: messages.language},
 
     {type: 'divider'},
