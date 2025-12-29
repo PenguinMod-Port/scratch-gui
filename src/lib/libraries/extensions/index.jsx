@@ -469,5 +469,24 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Targets"
+                description="Name for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.name"
+            />
+        ),
+        extensionId: 'jwTargets',
+        iconURL: require('../extensions/penguinmod/jwTargets.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Direct access to sprites and their clones."
+                description="Description for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.description"
+            />
+        ),
+        tags: ['pm', 'type']
     }
 ]
