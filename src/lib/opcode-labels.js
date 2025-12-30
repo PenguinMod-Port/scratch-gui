@@ -44,6 +44,18 @@ const messages = defineMessages({
         id: 'gui.opcodeLabels.backdropnumber'
     },
 
+    // pm looks
+    looks_stretchGetX: {
+        defaultMessage: 'stretch x',
+        description: 'Label for the stretch x monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.stretchX'
+    },
+    looks_stretchGetY: {
+        defaultMessage: 'stretch y',
+        description: 'Label for the stretch y monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.stretchY'
+    },
+
 
     // Sound
     sound_volume: {
@@ -161,6 +173,10 @@ class OpcodeLabels {
             looks_backdropnumbername: {category: 'looks'},
             looks_backdropname: {category: 'looks'},
 
+            // pm looks
+            looks_stretchGetX: {category: 'looks'},
+            looks_stretchGetY: {category: 'looks'},
+
             // Data
             data_variable: {category: 'data'},
             data_listcontents: {category: 'list'},
@@ -220,6 +236,10 @@ class OpcodeLabels {
             return this._translator(messages.looks_backdropname);
         };
         this._opcodeMap.looks_backdropname.labelFn = () => this._translator(messages.looks_backdropname);
+
+        // pm looks
+        this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
+        this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
 
         // Data
         this._opcodeMap.data_variable.labelFn = params => params.VARIABLE;
