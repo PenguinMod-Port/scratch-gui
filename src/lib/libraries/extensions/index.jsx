@@ -506,6 +506,6 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.jwColor.description"
             />
         ),
-        tags: ['pm', 'type']
+        tags: ['pm', 'graphics', 'type']
     }
 ]
