@@ -488,5 +488,24 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Color"
+                description="Name for the jwColor extension"
+                id="pm.gui.extension.jwColor.name"
+            />
+        ),
+        extensionId: 'jwColor',
+        iconURL: require('../extensions/penguinmod/jwColor.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Utilities for anything involving colors."
+                description="Description for the jwColor extension"
+                id="pm.gui.extension.jwColor.description"
+            />
+        ),
+        tags: ['pm', 'type']
     }
 ]
