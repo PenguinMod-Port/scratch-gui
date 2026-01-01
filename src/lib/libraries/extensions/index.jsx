@@ -507,5 +507,24 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'graphics', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Vector"
+                description="Name for the jwVector extension"
+                id="pm.gui.extension.jwVector.name"
+            />
+        ),
+        extensionId: 'jwVector',
+        iconURL: require('../extensions/penguinmod/jwVector.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Math with direction and magnitude."
+                description="Description for the jwVector extension"
+                id="pm.gui.extension.jwVector.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
     }
 ]
