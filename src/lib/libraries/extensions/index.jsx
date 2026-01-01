@@ -473,6 +473,45 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="XML"
+                description="Name for the jwXML extension"
+                id="pm.gui.extension.jwXML.name"
+            />
+        ),
+        extensionId: 'jwXML',
+        iconURL: require('../extensions/penguinmod/jwXML.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Creating, parsing and modifying XML data."
+                description="Description for the jwXML extension"
+                id="pm.gui.extension.jwXML.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Objects"
+                description="Name for the dogeiscutObject extension"
+                id="pm.gui.extension.dogeiscutObject.name"
+            />
+        ),
+        credits: ['DogeisCut'],
+        extensionId: 'https://extensions.penguinmod.com/extensions/DogeisCut/dogeiscutObject.js',
+        iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data efficiently in multi-purpose objects."
+                description="Description for the dogeiscutObject extension"
+                id="pm.gui.extension.dogeiscutObject.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Targets"
                 description="Name for the jwTargets extension"
                 id="pm.gui.extension.jwTargets.name"
