@@ -565,5 +565,24 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Lambda"
+                description="Name for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.name"
+            />
+        ),
+        extensionId: 'jwLambda',
+        iconURL: require('../extensions/penguinmod/jwLambda.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create and execute anonymous functions."
+                description="Description for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.description"
+            />
+        ),
+        tags: ['pm', 'type']
     }
 ]
