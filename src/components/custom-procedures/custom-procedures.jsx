@@ -16,6 +16,52 @@ const messages = defineMessages({
         defaultMessage: 'Make a Block',
         description: 'Title for the modal where you create a custom block.',
         id: 'gui.customProcedures.myblockModalTitle'
+    },
+
+    forceOutputAuto: {
+        defaultMessage: 'auto',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.0'
+    },
+    forceOutputHexagonal: {
+        defaultMessage: 'hexagonal',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.1'
+    },
+    forceOutputRound: {
+        defaultMessage: 'round',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.2'
+    },
+    forceOutputSquare: {
+        defaultMessage: 'square',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.3'
+    },
+    forceOutputLeaf: {
+        defaultMessage: 'leaf',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.4'
+    },
+    forceOutputPlus: {
+        defaultMessage: 'plus',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.5'
+    },
+    forceOutputOctagonal: {
+        defaultMessage: 'octagonal',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.6'
+    },
+    forceOutputBumped: {
+        defaultMessage: 'bumped',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.7'
+    },
+    forceOutputIndented: {
+        defaultMessage: 'indented',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.8'
     }
 });
 
@@ -144,6 +190,29 @@ const CustomProcedures = props => (
                     />
                 </label>
             </div>
+            <div className={styles.checkboxRow}>
+                <label>
+                    <FormattedMessage
+                        defaultMessage="Output: "
+                        description="Label for forced output shapes"
+                        id="pm.gui.customProcedures.forceOutput"
+                    />
+                </label>
+                <select
+                    value={props.forceOutput}
+                    onChange={e => props.onForceOutput(e.target.value)}
+                >
+                    <option value="0">{props.intl.formatMessage(messages.forceOutputAuto)}</option>
+                    <option value="1">{props.intl.formatMessage(messages.forceOutputRound)}</option>
+                    <option value="2">{props.intl.formatMessage(messages.forceOutputHexagonal)}</option>
+                    <option value="3">{props.intl.formatMessage(messages.forceOutputSquare)}</option>
+                    <option value="4">{props.intl.formatMessage(messages.forceOutputLeaf)}</option>
+                    <option value="5">{props.intl.formatMessage(messages.forceOutputPlus)}</option>
+                    <option value="6">{props.intl.formatMessage(messages.forceOutputOctagonal)}</option>
+                    <option value="7">{props.intl.formatMessage(messages.forceOutputBumped)}</option>
+                    <option value="8">{props.intl.formatMessage(messages.forceOutputIndented)}</option>
+                </select>
+            </div>
             <Box className={styles.buttonRow}>
                 <button
                     className={styles.cancelButton}
@@ -180,7 +249,9 @@ CustomProcedures.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
-    warp: PropTypes.bool.isRequired
+    warp: PropTypes.bool.isRequired,
+    forceOutput: PropTypes.number.isRequired,
+    onForceOutput: PropTypes.func.isRequired
 };
 
 export default injectIntl(CustomProcedures);
