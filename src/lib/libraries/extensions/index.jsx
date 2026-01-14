@@ -569,6 +569,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Scope"
+                description="Name for the jwScope extension"
+                id="pm.gui.extension.jwScope.name"
+            />
+        ),
+        extensionId: 'jwScope',
+        iconURL: require('../extensions/penguinmod/jwScope.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Temporary variables based on block stack. (extra blocks if used with Array extension)"
+                description="Description for the jwScope extension"
+                id="pm.gui.extension.jwScope.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Lambda"
                 description="Name for the jwLambda extension"
                 id="pm.gui.extension.jwLambda.name"
@@ -584,5 +603,24 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'type']
-    }
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Pointers"
+                description="Name for the jwPointer extension"
+                id="pm.gui.extension.jwPointer.name"
+            />
+        ),
+        extensionId: 'jwPointer',
+        iconURL: require('../extensions/penguinmod/jwPointer.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Define references to values. (extra blocks if used with Array extension)"
+                description="Description for the jwPointer extension"
+                id="pm.gui.extension.jwPointer.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
 ]
