@@ -660,6 +660,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
 const operators = function (isInitialSetup, isStage, targetId, colors) {
     const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
     const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
+    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
     const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
@@ -884,6 +885,23 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 <value name="STRING2">
                     <shadow type="text">
                         <field name="TEXT">${banana}</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="operator_join3">
+                <value name="STRING1">
+                    <shadow type="text">
+                        <field name="TEXT">${apple} </field>
+                    </shadow>
+                </value>
+                <value name="STRING2">
+                    <shadow type="text">
+                        <field name="TEXT">${banana} </field>
+                    </shadow>
+                </value>
+                <value name="STRING3">
+                    <shadow type="text">
+                        <field name="TEXT">${pear}</field>
                     </shadow>
                 </value>
             </block>
