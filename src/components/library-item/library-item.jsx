@@ -129,28 +129,7 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 )}
 
-                {this.props.credits && this.props.credits.length > 0 && (
-                    <div className={styles.extensionLinks}>
-                        <div>
-                            <FormattedMessage
-                                defaultMessage="Created by:"
-                                description="Appears in the extension list. Followed by a list of names."
-                                id="tw.createdBy"
-                            />
-                            {' '}
-                            {this.props.credits.map((credit, index) => (
-                                <React.Fragment key={index}>
-                                    {credit}
-                                    {index !== this.props.credits.length - 1 && (
-                                        ', '
-                                    )}
-                                </React.Fragment>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator || (this.props.credits && this.props.credits.length > 0) ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
@@ -198,6 +177,29 @@ class LibraryItemComponent extends React.PureComponent {
                                     </div>
                                 </div>
                             ) : null}
+                            {this.props.credits && this.props.credits.length > 0 && (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Created by"
+                                            description="Appears in the extension list. Followed by a list of names."
+                                            id="pm.gui.createdBy"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionMetadataDetail}
+                                    >
+                                    {this.props.credits.map((credit, index) => (
+                                        <React.Fragment key={index}>
+                                            {credit}
+                                            {index !== this.props.credits.length - 1 && (
+                                                ', '
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ) : null}

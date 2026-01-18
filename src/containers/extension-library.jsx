@@ -8,9 +8,10 @@ import log from '../lib/log';
 import extensionLibraryContent, {
     galleryError,
     galleryLoading,
-    galleryMore
+    galleryMore,
+    penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
-import extensionTags from '../lib/libraries/tw-extension-tags';
+import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
@@ -20,6 +21,11 @@ const messages = defineMessages({
         defaultMessage: 'Choose an Extension',
         description: 'Heading for the extension library',
         id: 'gui.extensionLibrary.chooseAnExtension'
+    },
+    header: {
+        defaultMessage: 'Extensions',
+        description: 'Header for extension library',
+        id: 'pm.gui.extensionLibrary.header'
     }
 });
 
@@ -27,6 +33,7 @@ const toLibraryItem = extension => {
     if (typeof extension === 'object') {
         return ({
             rawURL: extension.iconURL || extensionIcon,
+            featured: true,
             ...extension
         });
     }
@@ -133,12 +140,6 @@ class ExtensionLibrary extends React.PureComponent {
             return;
         }
 
-        if (extensionId === 'procedures_enable_return') {
-            this.props.onEnableProcedureReturns();
-            this.props.onCategorySelected('myBlocks');
-            return;
-        }
-
         const url = item.extensionURL ? item.extensionURL : extensionId;
         if (!item.disabled) {
             if (this.props.vm.extensionManager.isExtensionLoaded(extensionId)) {
@@ -175,6 +176,8 @@ class ExtensionLibrary extends React.PureComponent {
             } else {
                 library.push(toLibraryItem(galleryLoading));
             }
+            library.push('---');
+            library = library.concat(penguinmodGallery.map(toLibraryItem))
         }
 
         return (
@@ -185,6 +188,7 @@ class ExtensionLibrary extends React.PureComponent {
                 id="extensionLibrary"
                 tags={extensionTags}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}

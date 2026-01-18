@@ -6,13 +6,12 @@ import _middle_click_popup from "../addons/middle-click-popup/_manifest_entry.js
 import _jump_to_def from "../addons/jump-to-def/_manifest_entry.js";
 import _reorder_custom_inputs from "../addons/reorder-custom-inputs/_manifest_entry.js";
 import _editor_searchable_dropdowns from "../addons/editor-searchable-dropdowns/_manifest_entry.js";
-import _data_category_tweaks_v2 from "../addons/data-category-tweaks-v2/_manifest_entry.js";
+//import _data_category_tweaks_v2 from "../addons/data-category-tweaks-v2/_manifest_entry.js";
 import _block_palette_icons from "../addons/block-palette-icons/_manifest_entry.js";
 import _hide_flyout from "../addons/hide-flyout/_manifest_entry.js";
 import _mediarecorder from "../addons/mediarecorder/_manifest_entry.js";
 import _drag_drop from "../addons/drag-drop/_manifest_entry.js";
 import _debugger from "../addons/debugger/_manifest_entry.js";
-import _pause from "../addons/pause/_manifest_entry.js";
 import _mute_project from "../addons/mute-project/_manifest_entry.js";
 import _vol_slider from "../addons/vol-slider/_manifest_entry.js";
 import _clones from "../addons/clones/_manifest_entry.js";
@@ -78,7 +77,6 @@ import _tw_remove_backpack from "../addons/tw-remove-backpack/_manifest_entry.js
 import _tw_remove_feedback from "../addons/tw-remove-feedback/_manifest_entry.js";
 import _tw_disable_vibration from "../addons/tw-disable-vibration/_manifest_entry.js";
 import _tw_disable_cloud_variables from "../addons/tw-disable-cloud-variables/_manifest_entry.js";
-import _tw_disable_compiler from "../addons/tw-disable-compiler/_manifest_entry.js";
 import _editor_stepping from "../addons/editor-stepping/_manifest_entry.js";
 export default {
   "cat-blocks": _cat_blocks,
@@ -88,13 +86,12 @@ export default {
   "jump-to-def": _jump_to_def,
   "reorder-custom-inputs": _reorder_custom_inputs,
   "editor-searchable-dropdowns": _editor_searchable_dropdowns,
-  "data-category-tweaks-v2": _data_category_tweaks_v2,
+  //"data-category-tweaks-v2": _data_category_tweaks_v2,
   "block-palette-icons": _block_palette_icons,
   "hide-flyout": _hide_flyout,
   "mediarecorder": _mediarecorder,
   "drag-drop": _drag_drop,
   "debugger": _debugger,
-  "pause": _pause,
   "mute-project": _mute_project,
   "vol-slider": _vol_slider,
   "clones": _clones,
@@ -160,6 +157,5 @@ export default {
   "tw-remove-feedback": _tw_remove_feedback,
   "tw-disable-vibration": _tw_disable_vibration,
   "tw-disable-cloud-variables": _tw_disable_cloud_variables,
-  "tw-disable-compiler": _tw_disable_compiler,
   "editor-stepping": _editor_stepping,
 };

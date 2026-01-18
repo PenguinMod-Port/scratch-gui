@@ -8,13 +8,11 @@ const addons = [
     'jump-to-def',
     'reorder-custom-inputs',
     'editor-searchable-dropdowns',
-    'data-category-tweaks-v2',
     'block-palette-icons',
     'hide-flyout',
     'mediarecorder',
     'drag-drop',
     'debugger',
-    'pause',
     'mute-project',
     'vol-slider',
     'clones',
@@ -80,7 +78,6 @@ const addons = [
     'tw-remove-feedback',
     'tw-disable-vibration',
     'tw-disable-cloud-variables',
-    'tw-disable-compiler',
     'editor-stepping'
 ];
 

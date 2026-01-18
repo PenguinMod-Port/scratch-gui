@@ -3,10 +3,12 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import * as accentPurple from './accent/purple';
 import * as accentBlue from './accent/blue';
 import * as accentRed from './accent/red';
+import * as accentCyan from './accent/cyan';
 import * as accentRainbow from './accent/rainbow';
 
 import * as guiLight from './gui/light';
 import * as guiDark from './gui/dark';
+import * as guiAmoled from './gui/amoled';
 
 import * as blocksThree from './blocks/three';
 import * as blocksHighContrast from './blocks/high-contrast';
@@ -15,20 +17,24 @@ import * as blocksDark from './blocks/dark';
 const ACCENT_PURPLE = 'purple';
 const ACCENT_BLUE = 'blue';
 const ACCENT_RED = 'red';
+const ACCENT_CYAN = 'cyan';
 const ACCENT_RAINBOW = 'rainbow';
 const ACCENT_MAP = {
     [ACCENT_PURPLE]: accentPurple,
     [ACCENT_BLUE]: accentBlue,
     [ACCENT_RED]: accentRed,
+    [ACCENT_CYAN]: accentCyan,
     [ACCENT_RAINBOW]: accentRainbow
 };
-const ACCENT_DEFAULT = ACCENT_RED;
+const ACCENT_DEFAULT = ACCENT_CYAN;
 
 const GUI_LIGHT = 'light';
 const GUI_DARK = 'dark';
+const GUI_AMOLED = 'amoled';
 const GUI_MAP = {
     [GUI_LIGHT]: guiLight,
-    [GUI_DARK]: guiDark
+    [GUI_DARK]: guiDark,
+    [GUI_AMOLED]: guiAmoled
 };
 const GUI_DEFAULT = GUI_LIGHT;
 
@@ -149,11 +155,13 @@ export {
     ACCENT_RED,
     ACCENT_PURPLE,
     ACCENT_BLUE,
+    ACCENT_CYAN,
     ACCENT_RAINBOW,
     ACCENT_MAP,
 
     GUI_LIGHT,
     GUI_DARK,
+    GUI_AMOLED,
     GUI_MAP,
 
     BLOCKS_THREE,
