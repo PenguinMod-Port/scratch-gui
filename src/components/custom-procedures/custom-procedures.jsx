@@ -203,8 +203,8 @@ const CustomProcedures = props => (
                     onChange={e => props.onForceOutput(e.target.value)}
                 >
                     <option value="0">{props.intl.formatMessage(messages.forceOutputAuto)}</option>
-                    <option value="1">{props.intl.formatMessage(messages.forceOutputRound)}</option>
-                    <option value="2">{props.intl.formatMessage(messages.forceOutputHexagonal)}</option>
+                    <option value="1">{props.intl.formatMessage(messages.forceOutputHexagonal)}</option>
+                    <option value="2">{props.intl.formatMessage(messages.forceOutputRound)}</option>
                     <option value="3">{props.intl.formatMessage(messages.forceOutputSquare)}</option>
                     <option value="4">{props.intl.formatMessage(messages.forceOutputLeaf)}</option>
                     <option value="5">{props.intl.formatMessage(messages.forceOutputPlus)}</option>
