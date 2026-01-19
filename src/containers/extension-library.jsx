@@ -162,6 +162,8 @@ class ExtensionLibrary extends React.PureComponent {
         if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
             library = extensionLibraryContent.map(toLibraryItem);
             library.push('---');
+            library = library.concat(penguinmodGallery.map(toLibraryItem));
+            library.push('---');
             if (this.state.gallery) {
                 library.push(toLibraryItem(galleryMore));
                 const locale = this.props.intl.locale;
@@ -176,8 +178,6 @@ class ExtensionLibrary extends React.PureComponent {
             } else {
                 library.push(toLibraryItem(galleryLoading));
             }
-            library.push('---');
-            library = library.concat(penguinmodGallery.map(toLibraryItem))
         }
 
         return (

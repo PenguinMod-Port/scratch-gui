@@ -473,25 +473,6 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
-                defaultMessage="XML"
-                description="Name for the jwXML extension"
-                id="pm.gui.extension.jwXML.name"
-            />
-        ),
-        extensionId: 'jwXML',
-        iconURL: require('../extensions/penguinmod/jwXML.svg'),
-        description: (
-            <FormattedMessage
-                defaultMessage="Creating, parsing and modifying XML data."
-                description="Description for the jwXML extension"
-                id="pm.gui.extension.jwXML.description"
-            />
-        ),
-        tags: ['pm', 'data', 'type']
-    },
-    {
-        name: (
-            <FormattedMessage
                 defaultMessage="Objects"
                 description="Name for the dogeiscutObject extension"
                 id="pm.gui.extension.dogeiscutObject.name"
@@ -512,40 +493,40 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
-                defaultMessage="Targets"
-                description="Name for the jwTargets extension"
-                id="pm.gui.extension.jwTargets.name"
+                defaultMessage="XML"
+                description="Name for the jwXML extension"
+                id="pm.gui.extension.jwXML.name"
             />
         ),
-        extensionId: 'jwTargets',
-        iconURL: require('../extensions/penguinmod/jwTargets.svg'),
+        extensionId: 'jwXML',
+        iconURL: require('../extensions/penguinmod/jwXML.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="Direct access to sprites and their clones."
-                description="Description for the jwTargets extension"
-                id="pm.gui.extension.jwTargets.description"
+                defaultMessage="Creating, parsing and modifying XML data."
+                description="Description for the jwXML extension"
+                id="pm.gui.extension.jwXML.description"
             />
         ),
-        tags: ['pm', 'type']
+        tags: ['pm', 'data', 'type']
     },
     {
         name: (
             <FormattedMessage
-                defaultMessage="Color"
-                description="Name for the jwColor extension"
-                id="pm.gui.extension.jwColor.name"
+                defaultMessage="Infinity"
+                description="Name for the jwNum extension"
+                id="pm.gui.extension.jwNum.name"
             />
         ),
-        extensionId: 'jwColor',
-        iconURL: require('../extensions/penguinmod/jwColor.svg'),
+        extensionId: 'jwNum',
+        iconURL: require('../extensions/penguinmod/jwNum.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="Utilities for anything involving colors."
-                description="Description for the jwColor extension"
-                id="pm.gui.extension.jwColor.description"
+                defaultMessage="Advanced number type capable of massive numbers."
+                description="Description for the jwNum extension"
+                id="pm.gui.extension.jwNum.description"
             />
         ),
-        tags: ['pm', 'graphics', 'type']
+        tags: ['pm', 'math', 'type']
     },
     {
         name: (
@@ -588,18 +569,18 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
-                defaultMessage="Lambda"
-                description="Name for the jwLambda extension"
-                id="pm.gui.extension.jwLambda.name"
+                defaultMessage="Targets"
+                description="Name for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.name"
             />
         ),
-        extensionId: 'jwLambda',
-        iconURL: require('../extensions/penguinmod/jwLambda.svg'),
+        extensionId: 'jwTargets',
+        iconURL: require('../extensions/penguinmod/jwTargets.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="Create and execute anonymous functions."
-                description="Description for the jwLambda extension"
-                id="pm.gui.extension.jwLambda.description"
+                defaultMessage="Direct access to sprites and their clones."
+                description="Description for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.description"
             />
         ),
         tags: ['pm', 'type']
@@ -622,5 +603,43 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Color"
+                description="Name for the jwColor extension"
+                id="pm.gui.extension.jwColor.name"
+            />
+        ),
+        extensionId: 'jwColor',
+        iconURL: require('../extensions/penguinmod/jwColor.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Utilities for anything involving colors."
+                description="Description for the jwColor extension"
+                id="pm.gui.extension.jwColor.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Lambda"
+                description="Name for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.name"
+            />
+        ),
+        extensionId: 'jwLambda',
+        iconURL: require('../extensions/penguinmod/jwLambda.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create and execute anonymous functions."
+                description="Description for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.description"
+            />
+        ),
+        tags: ['pm', 'type']
     },
 ]
