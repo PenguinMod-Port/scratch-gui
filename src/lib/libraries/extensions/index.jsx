@@ -473,6 +473,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Integers"
+                description="Name for the jwInt extension"
+                id="pm.gui.extension.jwInt.name"
+            />
+        ),
+        extensionId: 'jwInt',
+        iconURL: require('../extensions/penguinmod/jwInt.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Large integers with zero precision loss."
+                description="Description for the jwInt extension"
+                id="pm.gui.extension.jwInt.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Objects"
                 description="Name for the dogeiscutObject extension"
                 id="pm.gui.extension.dogeiscutObject.name"
