@@ -62,6 +62,11 @@ const messages = defineMessages({
         defaultMessage: 'indented',
         description: 'Label for forced output shapes',
         id: 'pm.gui.customProcedures.forceOutput.8'
+    },
+    forceOutputArrow: {
+        defaultMessage: 'arrow',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.10'
     }
 });
 
@@ -211,6 +216,7 @@ const CustomProcedures = props => (
                     <option value="6">{props.intl.formatMessage(messages.forceOutputOctagonal)}</option>
                     <option value="7">{props.intl.formatMessage(messages.forceOutputBumped)}</option>
                     <option value="8">{props.intl.formatMessage(messages.forceOutputIndented)}</option>
+                    <option value="10">{props.intl.formatMessage(messages.forceOutputArrow)}</option>
                 </select>
             </div>
             <Box className={styles.buttonRow}>
