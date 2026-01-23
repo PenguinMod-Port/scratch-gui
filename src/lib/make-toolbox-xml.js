@@ -531,6 +531,35 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="control_switch">
+            <value name="CONDITION">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="control_switch_default">
+            <value name="CONDITION">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="control_case">
+            <value name="CONDITION">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="control_case_next">
+            <value name="CONDITION">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
         <block type="control_restartproject" />
         <block type="control_stop"/>
         ${blockSeparator}
