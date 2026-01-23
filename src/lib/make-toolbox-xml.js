@@ -502,7 +502,6 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
-        <block id="forever" type="control_forever"/>
         <block id="while" type="control_while">
             <value name="CONDITION">
                 <shadow type="checkbox" />
@@ -559,6 +558,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="control_exitCase" />
         ${blockSeparator}
         <block type="control_restartproject" />
         <block type="control_stop"/>
