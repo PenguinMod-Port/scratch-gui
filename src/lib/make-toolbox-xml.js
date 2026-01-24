@@ -1016,7 +1016,10 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
         <block type="operator_null" />
+        <block type="operator_newLine" />
+        <block type="operator_tabCharacter" />
         ${categorySeparator}
     </category>
     `;
