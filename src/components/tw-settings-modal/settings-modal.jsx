@@ -495,15 +495,6 @@ const SettingsModalComponent = props => (
                     {...props}
                 />
             )}
-            <DisableCompiler
-                value={props.disableCompiler}
-                onChange={props.onDisableCompilerChange}
-            />
-            {!props.isEmbedded && (
-                <StoreProjectOptions
-                    {...props}
-                />
-            )}
         </Box>
     </Modal>
 );

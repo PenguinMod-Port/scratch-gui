@@ -17,7 +17,11 @@ const circularReplacer = () => {
  * @returns {string} A stringified version of the input.
  */
 export const safeStringify = input => {
-    if (typeof input === 'object' && input !== null) {
+    if (input === null || input === undefined) {
+        return `null`
+    }
+
+    if (typeof input === 'object') {
         // TODO: this will not handle -0 inside the input properly, though that is very low priority.
         return JSON.stringify(input, circularReplacer());
     }
