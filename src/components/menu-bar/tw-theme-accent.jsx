@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_CYAN, Theme} from '../../lib/themes/index.js';
+import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_CYAN, ACCENT_GREEN, Theme} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -18,7 +18,7 @@ const options = defineMessages({
     [ACCENT_CYAN]: {
         defaultMessage: 'Cyan',
         description: 'Name of the cyan color scheme, used by PenguinMod by default.',
-        id: 'pm.accent.cyan'
+        id: 'pm.gui.accent.cyan'
     },
     [ACCENT_RED]: {
         defaultMessage: 'Red',
@@ -34,6 +34,11 @@ const options = defineMessages({
         defaultMessage: 'Blue',
         description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
         id: 'tw.accent.blue'
+    },
+    [ACCENT_GREEN]: {
+        defaultMessage: 'Green',
+        description: 'Name of the green color scheme, used by PenguinMod by default.',
+        id: 'pm.gui.accent.green'
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: 'Rainbow',
