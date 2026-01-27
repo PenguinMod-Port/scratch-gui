@@ -19,9 +19,9 @@ const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     title: {
-        defaultMessage: 'Advanced Settings',
+        defaultMessage: 'Project Settings',
         description: 'Title of settings modal',
-        id: 'tw.settingsModal.title'
+        id: 'pm.gui.settingsModal.title'
     },
     help: {
         defaultMessage: 'Click for help',

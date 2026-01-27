@@ -13,6 +13,7 @@ const MENU_ACCENT = 'accentMenu';
 const MENU_GUI_THEME = 'guiThemeMenu';
 const MENU_BLOCKS_THEME = 'blocksThemeMenu';
 const MENU_ERRORS = 'errorsMenu';
+const MENU_CONFIG = 'configMenu';
 
 class Menu {
     constructor (id) {
@@ -65,7 +66,8 @@ const rootMenu = new Menu('root')
     .addChild(new Menu(MENU_SETTINGS))
     .addChild(new Menu(MENU_LOGIN))
     .addChild(new Menu(MENU_ACCOUNT))
-    .addChild(new Menu(MENU_ABOUT));
+    .addChild(new Menu(MENU_ABOUT))
+    .addChild(new Menu(MENU_CONFIG));
 
 const initialState = {
     [MENU_ABOUT]: false,
@@ -79,7 +81,8 @@ const initialState = {
     [MENU_ACCENT]: false,
     [MENU_GUI_THEME]: false,
     [MENU_BLOCKS_THEME]: false,
-    [MENU_ERRORS]: false
+    [MENU_ERRORS]: false,
+    [MENU_CONFIG]: false
 };
 
 const reducer = function (state, action) {
@@ -167,6 +170,10 @@ const openErrorsMenu = () => openMenu(MENU_ERRORS);
 const closeErrorsMenu = () => closeMenu(MENU_ERRORS);
 const errorsMenuOpen = state => state.scratchGui.menus[MENU_ERRORS];
 
+const openConfigMenu = () => openMenu(MENU_CONFIG);
+const closeConfigMenu = () => closeMenu(MENU_CONFIG);
+const configMenuOpen = state => state.scratchGui.menus[MENU_CONFIG];
+
 export {
     reducer as default,
     initialState as menuInitialState,
@@ -205,5 +212,9 @@ export {
     blocksThemeMenuOpen,
     openErrorsMenu,
     closeErrorsMenu,
-    errorsMenuOpen
+    errorsMenuOpen,
+
+    openConfigMenu,
+    closeConfigMenu,
+    configMenuOpen
 };

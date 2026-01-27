@@ -77,7 +77,11 @@ import {
     closeSettingsMenu,
     errorsMenuOpen,
     openErrorsMenu,
-    closeErrorsMenu
+    closeErrorsMenu,
+
+    openConfigMenu,
+    closeConfigMenu,
+    configMenuOpen
 } from '../../reducers/menus';
 import {setFileHandle} from '../../reducers/tw.js';
 
@@ -96,6 +100,7 @@ import editIcon from './icon--edit.svg';
 import addonsIcon from './addons.svg';
 import errorIcon from './tw-error.svg';
 import advancedIcon from './tw-advanced.svg';
+import settingsIcon from './icon--settings.svg';
 
 import ninetiesLogo from './nineties_logo.svg';
 import catLogo from './cat_logo.svg';
@@ -774,7 +779,7 @@ class MenuBar extends React.Component {
                                             )}
                                         </MenuItem>
                                     )}</TurboMode>
-                                    <FramerateChanger>{(changeFramerate, {framerate}) => (
+                                    {/*<FramerateChanger>{(changeFramerate, {framerate}) => (
                                         <MenuItem onClick={changeFramerate}>
                                             {framerate === 60 ? (
                                                 <FormattedMessage
@@ -790,7 +795,7 @@ class MenuBar extends React.Component {
                                                 />
                                             )}
                                         </MenuItem>
-                                    )}</FramerateChanger>
+                                    )}</FramerateChanger>*/}
                                     <ChangeUsername>{changeUsername => (
                                         <MenuItem onClick={changeUsername}>
                                             <FormattedMessage
@@ -830,7 +835,7 @@ class MenuBar extends React.Component {
                                         </MenuItem>
                                     )}</CloudVariablesToggler>
                                 </MenuSection>
-                                <MenuSection>
+                                {/*<MenuSection>
                                     <MenuItem onClick={this.props.onClickSettingsModal}>
                                         <FormattedMessage
                                             defaultMessage="Advanced Settings"
@@ -838,7 +843,7 @@ class MenuBar extends React.Component {
                                             id="tw.menuBar.moreSettings"
                                         />
                                     </MenuItem>
-                                </MenuSection>
+                                </MenuSection>*/}
                             </MenuBarMenu>
                         </MenuLabel>
                         {this.props.isTotallyNormal && (
@@ -885,7 +890,74 @@ class MenuBar extends React.Component {
                             </MenuLabel>
                         )}
 
-                        {this.props.onClickAddonSettings && (
+                        
+                        <MenuLabel
+                            open={this.props.configMenuOpen}
+                            onOpen={this.props.onClickConfig}
+                            onClose={this.props.onRequestCloseConfig}
+                        >
+                            <img
+                                src={settingsIcon}
+                                draggable={false}
+                                width={20}
+                                height={20}
+                            />
+                            <span className={styles.collapsibleLabel}>
+                                <FormattedMessage
+                                    defaultMessage="Settings"
+                                    description="Settings menu"
+                                    id="gui.menuBar.settings"
+                                />
+                            </span>
+                            <img
+                                src={dropdownCaret}
+                                draggable={false}
+                                width={8}
+                                height={5}
+                            />
+                            <MenuBarMenu
+                                className={classNames(styles.menuBarMenu)}
+                                open={this.props.configMenuOpen}
+                                place={this.props.isRtl ? 'left' : 'right'}
+                            >
+                                <MenuSection>
+                                    <MenuItem onClick={this.props.onClickSettingsModal}>
+                                        <FormattedMessage
+                                            defaultMessage="Project Settings"
+                                            description="Menu bar item for project settings"
+                                            id="pm.gui.menuBar.projectSettings"
+                                        />
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <FormattedMessage
+                                            defaultMessage="Editor Settings"
+                                            description="Menu bar item for editor settings"
+                                            id="pm.gui.menuBar.editorSettings"
+                                        />
+                                    </MenuItem>
+                                    {this.props.onClickDesktopSettings && (
+                                        <MenuItem onClick={this.props.onClickDesktopSettings}>
+                                            <FormattedMessage
+                                                defaultMessage="Desktop Settings"
+                                                description="Menu bar item for desktop settings"
+                                                id="tw.menuBar.desktopSettings"
+                                            />
+                                        </MenuItem>
+                                    )}
+                                </MenuSection>
+                                <MenuSection>
+                                    <MenuItem onClick={this.props.onClickAddonSettings}>
+                                        <FormattedMessage
+                                            defaultMessage="Addons"
+                                            description="Button to open addon settings"
+                                            id="pm.gui.menuBar.addons"
+                                        />
+                                    </MenuItem>
+                                </MenuSection>
+                            </MenuBarMenu>
+                        </MenuLabel>
+
+                        {/*{this.props.onClickAddonSettings && (
                             <div
                                 className={classNames(styles.menuBarItem, styles.hoverable)}
                                 onClick={this.props.onClickAddonSettings}
@@ -924,7 +996,7 @@ class MenuBar extends React.Component {
                                     />
                                 </span>
                             </div>
-                        )}
+                        )}*/}
                     </div>
 
                     <Divider className={styles.divider} />
@@ -1131,7 +1203,11 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     username: PropTypes.string,
     userOwnsProject: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+
+    configMenuOpen: PropTypes.bool,
+    onOpenConfig: PropTypes.func,
+    onRequestCloseConfig: PropTypes.func
 };
 
 MenuBar.defaultProps = {
@@ -1170,7 +1246,9 @@ const mapStateToProps = (state, ownProps) => {
         mode1920: isTimeTravel1920(state),
         mode1990: isTimeTravel1990(state),
         mode2020: isTimeTravel2020(state),
-        modeNow: isTimeTravelNow(state)
+        modeNow: isTimeTravelNow(state),
+
+        configMenuOpen: configMenuOpen(state)
     };
 };
 
@@ -1207,7 +1285,10 @@ const mapDispatchToProps = dispatch => ({
     onClickSave: () => dispatch(manualUpdateProject()),
     onClickSaveAsCopy: () => dispatch(saveProjectAsCopy()),
     onSeeCommunity: () => dispatch(setPlayer(true)),
-    onSetTimeTravelMode: mode => dispatch(setTimeTravel(mode))
+    onSetTimeTravelMode: mode => dispatch(setTimeTravel(mode)),
+
+    onClickConfig: () => dispatch(openConfigMenu()),
+    onRequestCloseConfig: () => dispatch(closeConfigMenu())
 });
 
 export default compose(
