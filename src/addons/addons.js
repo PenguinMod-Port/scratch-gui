@@ -6,7 +6,6 @@ const addons = [
     'find-bar',
     'middle-click-popup',
     'jump-to-def',
-    'reorder-custom-inputs',
     'editor-searchable-dropdowns',
     'block-palette-icons',
     'hide-flyout',
