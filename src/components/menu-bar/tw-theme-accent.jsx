@@ -15,35 +15,35 @@ import rainbowIcon from './tw-accent-rainbow.svg';
 import styles from './settings-menu.css';
 
 const options = defineMessages({
-    [ACCENT_CYAN]: {
-        defaultMessage: 'Cyan',
-        description: 'Name of the cyan color scheme, used by PenguinMod by default.',
-        id: 'pm.gui.accent.cyan'
-    },
     [ACCENT_RED]: {
         defaultMessage: 'Red',
         description: 'Name of the red color scheme, used by TurboWarp by default.',
         id: 'tw.accent.red'
     },
-    [ACCENT_PURPLE]: {
-        defaultMessage: 'Purple',
-        description: 'Name of the purple color scheme. Matches modern Scratch.',
-        id: 'tw.accent.purple'
-    },
-    [ACCENT_BLUE]: {
-        defaultMessage: 'Blue',
-        description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
-        id: 'tw.accent.blue'
+    [ACCENT_ORANGE]: {
+        defaultMessage: 'Orange',
+        description: 'Name of the orange color scheme.',
+        id: 'pm.gui.accent.orange'
     },
     [ACCENT_GREEN]: {
         defaultMessage: 'Green',
         description: 'Name of the green color scheme, used by Scratch Labs.',
         id: 'pm.gui.accent.green'
     },
-    [ACCENT_ORANGE]: {
-        defaultMessage: 'Orange',
-        description: 'Name of the orange color scheme.',
-        id: 'pm.gui.accent.orange'
+    [ACCENT_CYAN]: {
+        defaultMessage: 'Cyan',
+        description: 'Name of the cyan color scheme, used by PenguinMod by default.',
+        id: 'pm.gui.accent.cyan'
+    },
+    [ACCENT_BLUE]: {
+        defaultMessage: 'Blue',
+        description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
+        id: 'tw.accent.blue'
+    },
+    [ACCENT_PURPLE]: {
+        defaultMessage: 'Purple',
+        description: 'Name of the purple color scheme. Matches modern Scratch.',
+        id: 'tw.accent.purple'
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: 'Rainbow',

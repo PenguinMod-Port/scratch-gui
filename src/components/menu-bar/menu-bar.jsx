@@ -34,7 +34,7 @@ import CloudVariablesToggler from '../../containers/tw-cloud-toggler.jsx';
 import TWSaveStatus from './tw-save-status.jsx';
 import TWNews from './tw-news.jsx';
 
-import {openTipsLibrary, openSettingsModal, openRestorePointModal} from '../../reducers/modals';
+import {openTipsLibrary, openSettingsModal, openEditorSettingsModal, openRestorePointModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     isTimeTravel220022BC,
@@ -928,7 +928,7 @@ class MenuBar extends React.Component {
                                             id="pm.gui.menuBar.projectSettings"
                                         />
                                     </MenuItem>
-                                    <MenuItem>
+                                    <MenuItem onClick={this.props.onClickEditorSettingsModal}>
                                         <FormattedMessage
                                             defaultMessage="Editor Settings"
                                             description="Menu bar item for editor settings"
@@ -1207,7 +1207,8 @@ MenuBar.propTypes = {
 
     configMenuOpen: PropTypes.bool,
     onOpenConfig: PropTypes.func,
-    onRequestCloseConfig: PropTypes.func
+    onRequestCloseConfig: PropTypes.func,
+    onClickEditorSettingsModal: PropTypes.func
 };
 
 MenuBar.defaultProps = {
@@ -1288,7 +1289,8 @@ const mapDispatchToProps = dispatch => ({
     onSetTimeTravelMode: mode => dispatch(setTimeTravel(mode)),
 
     onClickConfig: () => dispatch(openConfigMenu()),
-    onRequestCloseConfig: () => dispatch(closeConfigMenu())
+    onRequestCloseConfig: () => dispatch(closeConfigMenu()),
+    onClickEditorSettingsModal: () => dispatch(openEditorSettingsModal())
 });
 
 export default compose(
