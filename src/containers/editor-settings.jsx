@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
+import bindAll from 'lodash.bindall';
+import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
+import {closeEditorSettingsModal} from '../reducers/modals';
 
 import ModalTabsComponent from '../components/modal/modal-tabs.jsx';
 
@@ -12,11 +15,32 @@ const messages = defineMessages({
     }
 });
 
-const EditorSettingsModal = props => (
-    <ModalTabsComponent
-        contentLabel={props.intl.formatMessage(messages.title)}
-        id="editorSettingsModal"
-    />
-);
+class EditorSettingsModal extends React.Component {
+    constructor (props) {
+        super(props);
+    }
 
-export default injectIntl(EditorSettingsModal);
+    render() {
+        console.log(this);
+        return <ModalTabsComponent
+            onRequestClose={this.props.closeEditorSettingsModal}
+            contentLabel={this.props.intl.formatMessage(messages.title)}
+            id="editorSettingsModal"
+        />
+    }
+}
+
+EditorSettingsModal.propTypes = {
+    intl: intlShape
+};
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    closeEditorSettingsModal: () => dispatch(closeEditorSettingsModal())
+});
+
+export default injectIntl(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EditorSettingsModal));
