@@ -15,12 +15,11 @@ const messages = defineMessages({
     }
 });
 
-class UsernameModal extends React.Component {
+class SettingsModal extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
             'handleFramerateChange',
-            'handleCustomizeFramerate',
             'handleHighQualityPenChange',
             'handleInterpolationChange',
             'handleInfiniteClonesChange',
@@ -30,20 +29,21 @@ class UsernameModal extends React.Component {
             'handleStageWidthChange',
             'handleStageHeightChange',
             'handleDisableCompilerChange',
-            'handleStoreProjectOptions'
+            'handleStoreProjectOptions',
+            'handleTabChange'
         ]);
+        this.state = {
+            currentTab: 0
+        };
     }
-    handleFramerateChange (e) {
-        this.props.vm.setFramerate(e.target.checked ? 60 : 30);
+    handleTabChange(index) {
+        console.log("yo")
+        this.setState({
+            currentTab: index
+        })
     }
-    async handleCustomizeFramerate () {
-        // prompt() returns Promise in desktop app
-        // eslint-disable-next-line no-alert
-        const newFramerate = await prompt(this.props.intl.formatMessage(messages.newFramerate), this.props.framerate);
-        const parsed = parseFloat(newFramerate);
-        if (isFinite(parsed)) {
-            this.props.vm.setFramerate(parsed);
-        }
+    handleFramerateChange (value) {
+        this.props.vm.setFramerate(value);
     }
     handleHighQualityPenChange (e) {
         this.props.vm.renderer.setUseHighQualityRender(e.target.checked);
@@ -97,7 +97,6 @@ class UsernameModal extends React.Component {
             <SettingsModalComponent
                 onClose={this.props.onClose}
                 onFramerateChange={this.handleFramerateChange}
-                onCustomizeFramerate={this.handleCustomizeFramerate}
                 onHighQualityPenChange={this.handleHighQualityPenChange}
                 onInterpolationChange={this.handleInterpolationChange}
                 onInfiniteClonesChange={this.handleInfiniteClonesChange}
@@ -107,6 +106,8 @@ class UsernameModal extends React.Component {
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
                 onDisableCompilerChange={this.handleDisableCompilerChange}
+                onTabChange={this.handleTabChange}
+                currentTab={this.state.currentTab}
                 stageWidth={this.props.customStageSize.width}
                 stageHeight={this.props.customStageSize.height}
                 customStageSizeEnabled={
@@ -120,7 +121,7 @@ class UsernameModal extends React.Component {
     }
 }
 
-UsernameModal.propTypes = {
+SettingsModal.propTypes = {
     intl: intlShape,
     onClose: PropTypes.func,
     vm: PropTypes.shape({
@@ -170,4 +171,4 @@ const mapDispatchToProps = dispatch => ({
 export default injectIntl(connect(
     mapStateToProps,
     mapDispatchToProps
-)(UsernameModal));
+)(SettingsModal));

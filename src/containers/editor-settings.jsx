@@ -18,13 +18,38 @@ const messages = defineMessages({
 class EditorSettingsModal extends React.Component {
     constructor (props) {
         super(props);
+
+        bindAll(this, [
+            'handleTabChange'
+        ]);
+
+        this.state = {
+            currentTab: 0
+        };
+    }
+
+    handleTabChange(index) {
+        this.setState({
+            currentTab: index
+        })
     }
 
     render() {
-        console.log(this);
         return <ModalTabsComponent
-            onRequestClose={this.props.closeEditorSettingsModal}
+            onRequestClose={this.props.onClose}
+            onTabChange={this.handleTabChange}
             contentLabel={this.props.intl.formatMessage(messages.title)}
+            tabs={[
+                {
+                    title: "tab 1",
+                    content: <div>tab 1 content</div>
+                },
+                {
+                    title: "tab 2",
+                    content: <div>tab 2 content</div>
+                }
+            ]}
+            currentTab={this.state.currentTab}
             id="editorSettingsModal"
         />
     }
@@ -37,7 +62,7 @@ EditorSettingsModal.propTypes = {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-    closeEditorSettingsModal: () => dispatch(closeEditorSettingsModal())
+    onClose: () => dispatch(closeEditorSettingsModal())
 });
 
 export default injectIntl(connect(

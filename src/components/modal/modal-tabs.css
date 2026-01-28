@@ -3,13 +3,46 @@
 @import "../../css/default-colors.css";
 
 .modal-content {
-    max-width: 750px;
+    width: 750px;
+    height: 500px;
+    display: flex;
 }
 
 .body {
     background: $ui-modal-background;
-    padding: 1.5rem 2.25rem;
-    min-height: 150px;
-    max-height: calc(100vh - 250px);
+    height: calc(100% - 50px);
+    overflow: hidden;
+    display: flex;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    background: $ui-secondary;
+}
+
+.tabButton {
+    border-radius: 0;
+    border: 0;
+    padding: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-primary;
+    background: $ui-secondary;
+    cursor: pointer;
+}
+.tabButton:hover, .tabButton.selected {
+    background: $ui-tertiary;
+}
+
+.tabContent {
+    width: 600px;
+    height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem 2.25rem;
+    box-sizing: border-box;
 }
