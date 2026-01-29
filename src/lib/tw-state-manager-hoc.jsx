@@ -332,12 +332,6 @@ const TWStateManager = function (WrappedComponent) {
                 });
             }
 
-            if (urlParams.has('nocompile')) {
-                this.props.vm.setCompilerOptions({
-                    enabled: false
-                });
-            }
-
             if (urlParams.has('clones')) {
                 const clones = +urlParams.get('clones');
                 if (Number.isNaN(clones) || clones < 0) {
@@ -359,6 +353,12 @@ const TWStateManager = function (WrappedComponent) {
                 this.props.vm.setRuntimeOptions({
                     miscLimits: false
                 });
+            }
+
+            if (urlParams.has("stricteq")) {
+                this.props.vm.setCompilerOptions({
+                    strictEquality: true
+                })
             }
 
             for (const extension of urlParams.getAll('extension')) {
@@ -445,8 +445,10 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.delete('hqpen');
                 }
 
-                if (compilerOptions.enabled) {
-                    searchParams.delete('nocompile');
+                if (compilerOptions.strictEquality) {
+                    searchParams.set('stricteq', '');
+                } else {
+                    searchParams.delete('stricteq');
                 }
 
                 if (this.props.isPlayerOnly) {
@@ -554,7 +556,8 @@ const TWStateManager = function (WrappedComponent) {
         projectId: PropTypes.string,
         compilerOptions: PropTypes.shape({
             enabled: PropTypes.bool,
-            warpTimer: PropTypes.bool
+            warpTimer: PropTypes.bool,
+            strictEquality: PropTypes.bool
         }),
         runtimeOptions: PropTypes.shape({
             miscLimits: PropTypes.bool,

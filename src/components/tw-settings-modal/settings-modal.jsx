@@ -58,6 +58,8 @@ const LearnMore = props => (
     </React.Fragment>
 );
 
+const Separator = props => <div className={styles.separator}></div>
+
 class UnwrappedSetting extends React.Component {
     constructor (props) {
         super(props);
@@ -144,10 +146,10 @@ BooleanSetting.propTypes = {
     label: PropTypes.node.isRequired
 };
 
-const IntegerSetting = ({value, onChange, label, min, max, ...props}) => (
+const IntegerSetting = ({value, onChange, label, min, max, defaultValue, ...props}) => (
     <Setting
         {...props}
-        active={true}
+        active={value !== defaultValue}
         primary={
             <label className={styles.label}>
                 {label}
@@ -170,7 +172,8 @@ IntegerSetting.propTypes = {
     value: PropTypes.number.isRequired,
     label: PropTypes.node.isRequired,
     min: PropTypes.number,
-    max: PropTypes.number
+    max: PropTypes.number,
+    defaultValue: PropTypes.number
 };
 
 const HighQualityPen = props => (
@@ -216,6 +219,7 @@ const CustomFPS = props => (
         }
         min={0}
         max={250}
+        defaultValue={30}
         slug="custom-fps"
     />
 );
@@ -357,6 +361,27 @@ const DisableCompiler = props => (
     />
 );
 
+const StrictEquality = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Strict Equality"
+                description="Strict Equality setting"
+                id="pm.gui.settingsModal.strictEquality"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Makes the 'equals' block case sensitive."
+                description="Strict Equality help"
+                id="pm.gui.settingsModal.strictEqualityHelp"
+            />
+        }
+    />
+);
+
 const CustomStageSize = ({
     customStageSizeEnabled,
     stageWidth,
@@ -484,6 +509,7 @@ const SettingsModalComponent = props => (
                         framerate={props.framerate}
                         onChange={props.onFramerateChange}
                     />
+                    <Separator />
                     <Interpolation
                         value={props.interpolation}
                         onChange={props.onInterpolationChange}
@@ -518,6 +544,10 @@ const SettingsModalComponent = props => (
                         value={props.warpTimer}
                         onChange={props.onWarpTimerChange}
                     />
+                    <StrictEquality
+                        value={props.strictEquality}
+                        onChange={props.onStrictEqualityChange}
+                    />
                 </React.Fragment>
             }
         ]}
@@ -545,6 +575,8 @@ SettingsModalComponent.propTypes = {
     onWarpTimerChange: PropTypes.func,
     disableCompiler: PropTypes.bool,
     onDisableCompilerChange: PropTypes.func,
+    strictEquality: PropTypes.bool,
+    onStrictEqualityChange: PropTypes.func,
     currentTab: PropTypes.number,
     onTabChange: PropTypes.func
 };

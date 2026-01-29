@@ -30,6 +30,7 @@ class SettingsModal extends React.Component {
             'handleStageHeightChange',
             'handleDisableCompilerChange',
             'handleStoreProjectOptions',
+            'handleStrictEqualityChange',
             'handleTabChange'
         ]);
         this.state = {
@@ -85,6 +86,11 @@ class SettingsModal extends React.Component {
     handleStoreProjectOptions () {
         this.props.vm.storeProjectOptions();
     }
+    handleStrictEqualityChange (e) {
+        this.props.vm.setCompilerOptions({
+            strictEquality: e.target.checked
+        });
+    }
     render () {
         const {
             /* eslint-disable no-unused-vars */
@@ -106,6 +112,7 @@ class SettingsModal extends React.Component {
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
                 onDisableCompilerChange={this.handleDisableCompilerChange}
+                onStrictEqualityChange={this.handleStrictEqualityChange}
                 onTabChange={this.handleTabChange}
                 currentTab={this.state.currentTab}
                 stageWidth={this.props.customStageSize.width}
@@ -147,7 +154,8 @@ SettingsModal.propTypes = {
         width: PropTypes.number,
         height: PropTypes.number
     }),
-    disableCompiler: PropTypes.bool
+    disableCompiler: PropTypes.bool,
+    strictEquality: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -161,7 +169,8 @@ const mapStateToProps = state => ({
     removeLimits: !state.scratchGui.tw.runtimeOptions.miscLimits,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
     customStageSize: state.scratchGui.customStageSize,
-    disableCompiler: !state.scratchGui.tw.compilerOptions.enabled
+    disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
+    strictEquality: state.scratchGui.tw.compilerOptions.strictEquality
 });
 
 const mapDispatchToProps = dispatch => ({
