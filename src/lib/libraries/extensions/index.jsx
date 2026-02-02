@@ -454,6 +454,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Controls Expansion"
+                description="Name for the pmControlsExpansion extension"
+                id="pm.gui.extension.pmControlsExpansion.name"
+            />
+        ),
+        extensionId: 'pmControlsExpansion',
+        iconURL: require('../extensions/penguinmod/pmControlsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More control blocks for animations, complex systems or cleaner one-time use blocks."
+                description="Description for the pmControlsExpansion extension"
+                id="pm.gui.extension.pmControlsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Arrays"
                 description="Name for the jwArray extension"
                 id="pm.gui.extension.jwArray.name"
