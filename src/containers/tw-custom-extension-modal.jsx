@@ -198,7 +198,8 @@ class CustomExtensionModal extends React.Component {
     }
 
     canChangeUnsandboxed () {
-        return this.state.type !== 'url';
+        return true;
+        //return this.state.type !== 'url';
     }
 
     handleChangeUnsandboxed (e) {
