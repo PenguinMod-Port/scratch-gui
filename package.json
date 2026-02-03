@@ -100,7 +100,7 @@
         "scratch-paint": "github:PenguinMod-Port/scratch-paint#develop",
         "scratch-render": "github:PenguinMod-Port/scratch-render#develop",
         "scratch-render-fonts": "github:PenguinMod-Port/scratch-render-fonts#master",
-        "scratch-storage": "github:PenguinMod-Port/scratch-storage",
+        "scratch-storage": "github:PenguinMod-Port/scratch-storage#develop",
         "scratch-svg-renderer": "github:PenguinMod-Port/scratch-svg-renderer#develop",
         "scratch-vm": "github:PenguinMod-Port/scratch-vm#develop",
         "startaudiocontext": "1.2.1",
