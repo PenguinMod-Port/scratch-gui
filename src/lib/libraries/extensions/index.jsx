@@ -569,6 +569,26 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Storage"
+                description="Name for the jgStorage extension"
+                id="pm.gui.extension.jgStorage.name"
+            />
+        ),
+        extensionId: 'jgStorage',
+        iconURL: require('../extensions/penguinmod/jgStorage.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data after PenguinMod has already been closed out. Basic Server Storage is also included."
+                description="Description for the jgStorage extension"
+                id="pm.gui.extension.jgStorage.description"
+            />
+        ),
+        tags: ['pm', 'data'],
+        internetConnectionRequired: true
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Vector"
                 description="Name for the jwVector extension"
                 id="pm.gui.extension.jwVector.name"
