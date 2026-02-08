@@ -1072,7 +1072,7 @@ const lists = function (isInitialSetup, isStage, targetId, colors) {
     return `
     <category
         name="%{BKY_PM_CATEGORY_LISTS}"
-        id="list"
+        id="lists"
         colour="${colors.primary}"
         secondaryColour="${colors.tertiary}"
         custom="LIST">
