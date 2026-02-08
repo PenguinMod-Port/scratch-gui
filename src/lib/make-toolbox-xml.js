@@ -934,35 +934,7 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         ${blockSeparator}
         ${isInitialSetup ? '' : `
-            <block type="operator_join">
-                <value name="STRING1">
-                    <shadow type="text">
-                        <field name="TEXT">${apple} </field>
-                    </shadow>
-                </value>
-                <value name="STRING2">
-                    <shadow type="text">
-                        <field name="TEXT">${banana}</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="operator_join3">
-                <value name="STRING1">
-                    <shadow type="text">
-                        <field name="TEXT">${apple} </field>
-                    </shadow>
-                </value>
-                <value name="STRING2">
-                    <shadow type="text">
-                        <field name="TEXT">${banana} </field>
-                    </shadow>
-                </value>
-                <value name="STRING3">
-                    <shadow type="text">
-                        <field name="TEXT">${pear}</field>
-                    </shadow>
-                </value>
-            </block>
+            <block type="operator_expandablejoininputs" />
             <block type="operator_letter_of">
                 <value name="LETTER">
                     <shadow type="math_whole_number">
