@@ -817,6 +817,7 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_range_expandable" />
         <block type="operator_lerpFunc">
             <value name="ONE">
                 <shadow type="math_number">
