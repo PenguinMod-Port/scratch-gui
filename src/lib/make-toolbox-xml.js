@@ -486,15 +486,9 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block type="control_if">
-            <value name="CONDITION">
-                <shadow type="checkbox" />
-            </value>
-        </block>
-        <block type="control_if_else">
-            <value name="CONDITION">
-                <shadow type="checkbox" />
-            </value>
+        <block type="control_expandableIf" />
+        <block type="control_expandableIf">
+            <field name="EXPANDABLE">2</field>
         </block>
         <block type="control_if_return_else_return">
             <value name="boolean">
