@@ -63,6 +63,11 @@ const messages = defineMessages({
         description: 'Label for forced output shapes',
         id: 'pm.gui.customProcedures.forceOutput.8'
     },
+    forceOutputScrapped: {
+        defaultMessage: 'scrapped',
+        description: 'Label for forced output shapes',
+        id: 'pm.gui.customProcedures.forceOutput.9'
+    },
     forceOutputArrow: {
         defaultMessage: 'arrow',
         description: 'Label for forced output shapes',
@@ -216,6 +221,7 @@ const CustomProcedures = props => (
                     <option value="6">{props.intl.formatMessage(messages.forceOutputOctagonal)}</option>
                     <option value="7">{props.intl.formatMessage(messages.forceOutputBumped)}</option>
                     <option value="8">{props.intl.formatMessage(messages.forceOutputIndented)}</option>
+                    <option value="9">{props.intl.formatMessage(messages.forceOutputScrapped)}</option>
                     <option value="10">{props.intl.formatMessage(messages.forceOutputArrow)}</option>
                 </select>
             </div>
