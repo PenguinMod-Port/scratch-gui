@@ -486,9 +486,17 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block type="control_expandableIf" />
+        <block type="control_expandableIf">
+            <field name="EXPANDABLE">1</field>
+            <value name="BOOL1">
+                <shadow type="checkbox" />
+            </value>
+        </block>
         <block type="control_expandableIf">
             <field name="EXPANDABLE">2</field>
+            <value name="BOOL1">
+                <shadow type="checkbox" />
+            </value>
         </block>
         <block type="control_if_return_else_return">
             <value name="boolean">
@@ -723,23 +731,73 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
         secondaryColour="${colors.tertiary}">
         <block type="operator_expandableMath">
             <field name="EXPANDABLE">2</field>
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
             <field name="OP2">+</field>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
         </block>
         <block type="operator_expandableMath">
             <field name="EXPANDABLE">2</field>
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
             <field name="OP2">-</field>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
         </block>
         <block type="operator_expandableMath">
             <field name="EXPANDABLE">2</field>
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
             <field name="OP2">*</field>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
         </block>
         <block type="operator_expandableMath">
             <field name="EXPANDABLE">2</field>
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
             <field name="OP2">/</field>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
         </block>
         <block type="operator_expandableMath">
             <field name="EXPANDABLE">2</field>
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
             <field name="OP2">^</field>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
         </block>
         ${blockSeparator}
         <block type="operator_random">
@@ -771,7 +829,19 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
-        <block type="operator_range_expandable" />
+        <block type="operator_range_expandable">
+            <field name="EXPANDABLE">2</field>
+            <value name="INPUT1">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="INPUT2">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
+        </block>
         <block type="operator_lerpFunc">
             <value name="ONE">
                 <shadow type="math_number">
@@ -889,7 +959,19 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         ${blockSeparator}
         ${isInitialSetup ? '' : `
-            <block type="operator_expandablejoininputs" />
+            <block type="operator_expandablejoininputs">
+                <field name="EXPANDABLE">2</field>
+                <value name="INPUT1">
+                    <shadow type="text">
+                        <field name="TEXT">${apple}</field>
+                    </shadow>
+                </value>
+                <value name="INPUT2">
+                    <shadow type="text">
+                        <field name="TEXT">${banana}</field>
+                    </shadow>
+                </value>
+            </block>
             <block type="operator_letter_of">
                 <value name="LETTER">
                     <shadow type="math_whole_number">
