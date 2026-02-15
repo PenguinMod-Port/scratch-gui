@@ -28,6 +28,11 @@ const isTrustedExtension = url => (
     url.startsWith('https://extensions.turbowarp.org/') ||
     url.startsWith('https://extensions.penguinmod.com/') ||
 
+    /* Trust other people's galleries. These can be removed in the future, they will just show a pop-up on load if they are */
+    url.startsWith('https://sharkpools-extensions.vercel.app/') || // SharkPool
+    url.startsWith('https://sharkpool-sp.github.io/SharkPools-Extensions/') || // SharkPool (github link)
+    url.startsWith('https://pen-group.github.io/') || // Pen-Group / ObviousAlexC
+
     // For development.
     url.startsWith('http://localhost:8000/') ||
 
@@ -58,6 +63,10 @@ const isAlwaysTrustedForFetching = parsed => (
     parsed.origin === 'https://turbowarp.org' ||
     parsed.origin.endsWith('.turbowarp.org') ||
     parsed.origin.endsWith('.turbowarp.xyz') ||
+
+    // Any PenguinMod service such as projects
+    parsed.origin === 'https://penguinmod.com' ||
+    parsed.origin.endsWith('.penguinmod.com') ||
 
     // GitHub API
     // GitHub Pages allows redirects, so not included here.
@@ -129,6 +138,12 @@ let allowedReadClipboard = false;
 let allowedNotify = false;
 let allowedGeolocation = false;
 
+/**
+ * A list of developer defined names that are not allowed to ask for unsandboxing.
+ * @type {Set<string>}
+ */
+const notAllowedToAskUnsandbox = new Set();
+
 const SECURITY_MANAGER_METHODS = [
     'getSandboxMode',
     'canLoadExtensionFromProject',
@@ -141,7 +156,9 @@ const SECURITY_MANAGER_METHODS = [
     'canNotify',
     'canGeolocate',
     'canEmbed',
-    'canDownload'
+    'canDownload',
+    'canUnsandbox',
+    'canScreenshotCamera'
 ];
 
 class TWSecurityManagerComponent extends React.Component {
@@ -435,6 +452,30 @@ class TWSecurityManagerComponent extends React.Component {
             url,
             name
         });
+    }
+    
+    /**
+     * @returns {Promise<boolean>} True if unsandboxing the provided extension name is allowed.
+     */
+    async canUnsandbox(name) {
+        if (notAllowedToAskUnsandbox.has(name)) return false;
+        const { showModal } = await this.acquireModalLock();
+        const allowedUnsandbox = await showModal(SecurityModals.Unsandbox, { name: name || "" });
+        if (!allowedUnsandbox) {
+            notAllowedToAskUnsandbox.add(name);
+        }
+        return allowedUnsandbox;
+    }
+
+    /**
+     * @returns {Promise<boolean>} True if screenshotting the camera is allowed.
+     */
+    async canScreenshotCamera() {
+        if (!allowedScreenshotCamera) {
+            const { showModal } = await this.acquireModalLock();
+            allowedScreenshotCamera = await showModal(SecurityModals.ScreenshotCamera);
+        }
+        return allowedScreenshotCamera;
     }
 
     render () {

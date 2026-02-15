@@ -550,6 +550,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="JavaScript"
+                description="Name for the SPjavascriptV2 extension"
+                id="pm.gui.extension.SPjavascriptV2.name"
+            />
+        ),
+        extensionId: 'SPjavascriptV2',
+        iconURL: require('../extensions/penguinmod/SPjavascriptV2.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Run your own custom code written in JavaScript!"
+                description="Description for the SPjavascriptV2 extension"
+                id="pm.gui.extension.SPjavascriptV2.description"
+            />
+        ),
+        tags: ['pm', 'language']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="XML"
                 description="Name for the jwXML extension"
                 id="pm.gui.extension.jwXML.name"

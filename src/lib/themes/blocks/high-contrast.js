@@ -139,7 +139,8 @@ const customExtensionColors = {
         return hsv2hex(hsv);
     },
     categoryIconBackground: primary => customExtensionColors.primary(primary),
-    categoryIconBorder: primary => customExtensionColors.tertiary(primary)
+    categoryIconBorder: primary => customExtensionColors.tertiary(primary),
+    blockText: primary => "#000000"
 };
 
 export {
