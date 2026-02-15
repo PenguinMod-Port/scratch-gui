@@ -473,6 +473,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Operators Expansion"
+                description="Name for the pmOperatorsExpansion extension"
+                id="pm.gui.extension.pmOperatorsExpansion.name"
+            />
+        ),
+        extensionId: 'pmOperatorsExpansion',
+        iconURL: require('../extensions/penguinmod/pmOperatorsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More operators like nand, nor, character code to character, reading multiple lined text line by line, etc."
+                description="Description for the pmOperatorsExpansion extension"
+                id="pm.gui.extension.pmOperatorsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Arrays"
                 description="Name for the jwArray extension"
                 id="pm.gui.extension.jwArray.name"
