@@ -12,15 +12,18 @@ class CustomProcedures extends React.Component {
         bindAll(this, [
             'handleAddLabel',
             'handleAddBoolean',
+            'handleAddCommand',
             'handleAddTextNumber',
             'handleToggleWarp',
+            'handleForceOutput',
             'handleCancel',
             'handleOk',
             'setBlocks'
         ]);
         this.state = {
             rtlOffset: 0,
-            warp: false
+            warp: false,
+            forceOutput: 0
         };
     }
     componentWillUnmount () {
@@ -104,7 +107,7 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp()});
+        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput()});
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
@@ -127,6 +130,11 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addBooleanExternal();
         }
     }
+    handleAddCommand () {
+        if (this.mutationRoot) {
+            this.mutationRoot.addCommandExternal();
+        }
+    }
     handleAddTextNumber () {
         if (this.mutationRoot) {
             this.mutationRoot.addStringNumberExternal();
@@ -139,17 +147,26 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    handleForceOutput (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.setForceOutput(value);
+            this.setState({forceOutput: value});
+        }
+    }
     render () {
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 onAddBoolean={this.handleAddBoolean}
+                onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
                 onAddTextNumber={this.handleAddTextNumber}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
+                forceOutput={this.state.forceOutput}
+                onForceOutput={this.handleForceOutput}
             />
         );
     }

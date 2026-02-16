@@ -105,7 +105,8 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
             colour: converters.primary(blockInfoJson.colour),
             colourSecondary: converters.secondary(blockInfoJson.colour),
             colourTertiary: converters.tertiary(blockInfoJson.colour),
-            colourQuaternary: converters.quaternary(blockInfoJson.colour)
+            colourQuaternary: converters.quaternary(blockInfoJson.colour),
+            blockText: blockInfoJson.blockText && converters.blockText(blockInfoJson) 
         };
     }
 

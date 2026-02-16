@@ -26,7 +26,8 @@ export const initialState = {
     highQualityPen: false,
     compilerOptions: {
         enabled: true,
-        warpTimer: false
+        warpTimer: false,
+        strictEquality: false
     },
     runtimeOptions: {
         maxClones: 300,

@@ -129,3 +129,12 @@
     background: rgb(233, 233, 53);
     color: $text-primary-default;
 }
+
+.space {
+    margin-right: 0.5em;
+}
+
+.separator {
+    width: 100%;
+    height: 1em;
+}

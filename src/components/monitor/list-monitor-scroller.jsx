@@ -81,7 +81,8 @@ class ListMonitorScroller extends React.Component {
         );
     }
     render () {
-        const {height, values, width, activeIndex, activeValue} = this.props;
+        let {height, values, width, activeIndex, activeValue} = this.props;
+        values ??= [];
         // Keep the active index in view if defined, else must be undefined for List component
         const scrollToIndex = activeIndex === null ? undefined : activeIndex; /* eslint-disable-line no-undefined */
         return (
