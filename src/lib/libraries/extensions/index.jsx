@@ -607,6 +607,26 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Tweening"
+                description="Name for the jgTween extension"
+                id="pm.gui.extension.jgTween.name"
+            />
+        ),
+        credits: ['easings.net', 'Arrow', 'GarboMuffin'],
+        extensionId: 'jgTween',
+        iconURL: require('../extensions/penguinmod/jgTween.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Smoothly animating values using different easing functions and directions."
+                description="Description for the jgTween extension"
+                id="pm.gui.extension.jgTween.description"
+            />
+        ),
+        tags: ['pm', 'math']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Storage"
                 description="Name for the jgStorage extension"
                 id="pm.gui.extension.jgStorage.name"
