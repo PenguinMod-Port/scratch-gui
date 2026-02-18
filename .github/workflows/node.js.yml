@@ -34,7 +34,7 @@ jobs:
         cache: 'pnpm'
 
     - name: Install dependencies
-      run: pnpm i --frozen-lockfile
+      run: pnpm i --frozen-lockfile --shamefully-hoist
     - name: Build site
       run: NODE_ENV="production" webpack --bail
       
