@@ -16,7 +16,6 @@ const isUndefined = a => typeof a === 'undefined';
  * @return {object} The adapted monitor with label and category
  */
 export default function ({id, mode, spriteName, opcode, params, value, vm}) {
-    console.log(value, mode)
     // Extension monitors get their labels from the Runtime through `getLabelForOpcode`.
     // Other monitors' labels are hard-coded in `OpcodeLabels`.
     let {label, category, labelFn} = (vm && vm.runtime.getLabelForOpcode(opcode)) || OpcodeLabels.getLabel(opcode);
@@ -52,7 +51,15 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
             value = customTypeHandler(value);
         } else value = safeStringify(value);
     } else if (value instanceof Array) {
-        value = value.map(v => ![Object.prototype, null].includes(Object.getPrototypeOf(v)) ? customTypeHandler(v, true) : v)
+        value = value.map(v => {
+            if (v === null || v === undefined) {
+                v = document.createElement('i');
+                v.textContent = 'null';
+                return v;
+            }
+            if (![Object.prototype, null].includes(Object.getPrototypeOf(v))) return customTypeHandler(v, true);
+            return v;
+        });
     }
 
     return {id, label, category, value};
