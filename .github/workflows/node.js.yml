@@ -27,10 +27,10 @@ jobs:
       uses: actions/setup-node@v6.0.0
       with:
         node-version: 24
-        cache: 'npm'
+        cache: 'pnpm'
+
     - name: Install dependencies
       run: pnpm i --frozen-lockfile
-      
     - name: Build site
       run: NODE_ENV="production" webpack --bail
       
