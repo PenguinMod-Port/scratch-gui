@@ -27,8 +27,12 @@ jobs:
       uses: actions/setup-node@v6.0.0
       with:
         node-version: 24
-    - name: Install dependencies and build site
-      run: npm i -g pnpm@v10 && pnpm up && pnpm i --shamefully-hoist --force && NODE_ENV="production" webpack --bail
+        cache: 'npm'
+    - name: Install dependencies
+      run: pnpm i --frozen-lockfile
+      
+    - name: Build site
+      run: NODE_ENV="production" webpack --bail
       
     - name: Upload artifact 
       uses: actions/upload-pages-artifact@v4.0.0
