@@ -16,6 +16,7 @@ const isUndefined = a => typeof a === 'undefined';
  * @return {object} The adapted monitor with label and category
  */
 export default function ({id, mode, spriteName, opcode, params, value, vm}) {
+    console.log(value, mode)
     // Extension monitors get their labels from the Runtime through `getLabelForOpcode`.
     // Other monitors' labels are hard-coded in `OpcodeLabels`.
     let {label, category, labelFn} = (vm && vm.runtime.getLabelForOpcode(opcode)) || OpcodeLabels.getLabel(opcode);
@@ -33,10 +34,25 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
         value = Number(value.toFixed(6));
     }
 
-    // Convert scalars to a string now. That should help avoid unnecessary re-renders in a few edge cases.
-    // For lists, we stringify when we display the list row instead of doing a full list copy on every change.
+    const customTypeHandler = (value, list = false) => {
+        let func = (list && value.toListItem) || value.toMonitorContent || value.toReporterContent;
+        if (!func) {
+            return value.toString();
+            return;
+        }
+
+        return func();
+    }
+
     if (mode !== 'list') {
-        value = safeStringify(value);
+        if (value === null || value === undefined) {
+            value = document.createElement('i');
+            value.textContent = 'null';
+        } else if (![Object.prototype, null].includes(Object.getPrototypeOf(value))) {
+            value = customTypeHandler(value);
+        } else value = safeStringify(value);
+    } else if (value instanceof Array) {
+        value = value.map(v => ![Object.prototype, null].includes(Object.getPrototypeOf(v)) ? customTypeHandler(v, true) : v)
     }
 
     return {id, label, category, value};
