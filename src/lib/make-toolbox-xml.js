@@ -313,6 +313,13 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
             <block type="looks_stretchGetY"/>
         `}
         ${blockSeparator}
+        <block type="looks_setTintColor">
+            <value name="color">
+                <shadow type="colour_picker"/>
+            </value>
+        </block>
+        <block type="looks_tintColor" />
+        ${blockSeparator}
         <block type="looks_changeeffectby">
             <value name="CHANGE">
                 <shadow type="math_number">

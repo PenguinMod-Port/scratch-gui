@@ -55,6 +55,11 @@ const messages = defineMessages({
         description: 'Label for the stretch y monitor when shown on the stage',
         id: 'pm.gui.opcodeLabels.stretchY'
     },
+    looks_tintColor: {
+        defaultMessage: 'tint color',
+        description: 'Label for the tint color monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.tintColor'
+    },
 
 
     // Sound
@@ -181,6 +186,7 @@ class OpcodeLabels {
             // pm looks
             looks_stretchGetX: {category: 'looks'},
             looks_stretchGetY: {category: 'looks'},
+            looks_tintColor: {category: 'looks'},
 
             // Data
             data_variable: {category: 'data'},
@@ -246,6 +252,7 @@ class OpcodeLabels {
         // pm looks
         this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
         this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
+        this._opcodeMap.looks_tintColor.labelFn = () => this._translator(messages.looks_tintColor);
 
         // Data
         this._opcodeMap.data_variable.labelFn = params => params.VARIABLE;
