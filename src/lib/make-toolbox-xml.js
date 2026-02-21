@@ -965,52 +965,57 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        ${isInitialSetup ? '' : `
-            <block type="operator_expandablejoininputs">
-                <field name="EXPANDABLE">2</field>
-                <value name="INPUT1">
-                    <shadow type="text">
-                        <field name="TEXT">${apple}</field>
-                    </shadow>
-                </value>
-                <value name="INPUT2">
-                    <shadow type="text">
-                        <field name="TEXT">${banana}</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="operator_letter_of">
-                <value name="LETTER">
-                    <shadow type="math_whole_number">
-                        <field name="NUM">1</field>
-                    </shadow>
-                </value>
-                <value name="STRING">
-                    <shadow type="text">
-                        <field name="TEXT">${apple}</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="operator_length">
-                <value name="STRING">
-                    <shadow type="text">
-                        <field name="TEXT">${apple}</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="operator_contains" id="operator_contains">
-              <value name="STRING1">
+        <block type="operator_expandablejoininputs">
+            <field name="EXPANDABLE">2</field>
+            <value name="INPUT1">
                 <shadow type="text">
-                  <field name="TEXT">${apple}</field>
+                    <field name="TEXT">${apple}</field>
                 </shadow>
-              </value>
-              <value name="STRING2">
+            </value>
+            <value name="INPUT2">
                 <shadow type="text">
-                  <field name="TEXT">${letter}</field>
+                    <field name="TEXT">${banana}</field>
                 </shadow>
-              </value>
-            </block>
-        `}
+            </value>
+        </block>
+        <block type="operator_letter_of">
+            <value name="LETTER">
+                <shadow type="math_whole_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="STRING">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_length">
+            <value name="STRING">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_contains" id="operator_contains">
+            <value name="STRING1">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+            <value name="STRING2">
+                <shadow type="text">
+                    <field name="TEXT">${letter}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_toUpperLowerCase">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="operator_mod">
             <value name="NUM1">
