@@ -612,7 +612,7 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.jgTween.name"
             />
         ),
-        credits: ['easings.net', 'Arrow', 'GarboMuffin'],
+        //credits: ['easings.net', 'Arrow', 'GarboMuffin'], probably make new key somewhen for like 'helped by' or whatever
         extensionId: 'jgTween',
         iconURL: require('../extensions/penguinmod/jgTween.svg'),
         description: (
@@ -685,6 +685,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Temporary Variables"
+                description="Name for the tempVars extension"
+                id="pm.gui.extension.tempVars.name"
+            />
+        ),
+        extensionId: 'tempVars',
+        iconURL: require('../extensions/penguinmod/tempVars.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create temporary variables for use in one block stack."
+                description="Description for the tempVars extension"
+                id="pm.gui.extension.tempVars.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Targets"
                 description="Name for the jwTargets extension"
                 id="pm.gui.extension.jwTargets.name"
@@ -719,6 +738,25 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Sound Systems"
+                description="Name for the jgExtendedAudio extension"
+                id="pm.gui.extension.jgExtendedAudio.name"
+            />
+        ),
+        extensionId: 'jgExtendedAudio',
+        iconURL: require('../extensions/penguinmod/jgExtendedAudio.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="An audio grouping system for more intensive audio work."
+                description="Description for the jgExtendedAudio extension"
+                id="pm.gui.extension.jgExtendedAudio.description"
+            />
+        ),
+        tags: ['pm', 'sound']
     },
     {
         name: (

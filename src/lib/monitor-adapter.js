@@ -40,7 +40,7 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
             return;
         }
 
-        return func();
+        return func.call(value);
     }
 
     if (mode !== 'list') {
