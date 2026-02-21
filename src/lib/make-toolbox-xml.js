@@ -334,6 +334,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
+        <block type="looks_getEffectValue" />
+        ${blockSeparator}
         <block type="looks_cleargraphiceffects"/>
         ${blockSeparator}
         ${isStage ? '' : `

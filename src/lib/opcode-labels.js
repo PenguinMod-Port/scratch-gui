@@ -45,6 +45,76 @@ const messages = defineMessages({
     },
 
     // pm looks
+    looks_getEffectValue_color: {
+        defaultMessage: 'color',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.color'
+    },
+    looks_getEffectValue_fisheye: {
+        defaultMessage: 'fisheye',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.fisheye'
+    },
+    looks_getEffectValue_whirl: {
+        defaultMessage: 'whirl',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.whirl'
+    },
+    looks_getEffectValue_pixelate: {
+        defaultMessage: 'pixelate',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.pixelate'
+    },
+    looks_getEffectValue_mosaic: {
+        defaultMessage: 'mosaic',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.mosaic'
+    },
+    looks_getEffectValue_brightness: {
+        defaultMessage: 'brightness',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.brightness'
+    },
+    looks_getEffectValue_ghost: {
+        defaultMessage: 'ghost',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.ghost'
+    },
+    looks_getEffectValue_saturation: {
+        defaultMessage: 'saturation',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.saturation'
+    },
+    looks_getEffectValue_red: {
+        defaultMessage: 'red',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.red'
+    },
+    looks_getEffectValue_green: {
+        defaultMessage: 'green',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.green'
+    },
+    looks_getEffectValue_blue: {
+        defaultMessage: 'blue',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.blue'
+    },
+    looks_getEffectValue_opaque: {
+        defaultMessage: 'opaque',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.opaque'
+    },
+    looks_getEffectValue_horizShear: {
+        defaultMessage: 'horizontal shear',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.horizShear'
+    },
+    looks_getEffectValue_vertiShear: {
+        defaultMessage: 'vertical shear',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.vertiShear'
+    },
     looks_stretchGetX: {
         defaultMessage: 'stretch x',
         description: 'Label for the stretch x monitor when shown on the stage',
@@ -60,7 +130,6 @@ const messages = defineMessages({
         description: 'Label for the tint color monitor when shown on the stage',
         id: 'pm.gui.opcodeLabels.tintColor'
     },
-
 
     // Sound
     sound_volume: {
@@ -140,6 +209,11 @@ const messages = defineMessages({
         description: 'Label for the current second monitor when shown on the stage',
         id: 'gui.opcodeLabels.second'
     },
+    sensing_current_timestamp: {
+        defaultMessage: 'timestamp',
+        description: 'Label for the current timestamp monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.timestamp'
+    },
     sensing_timer: {
         defaultMessage: 'timer',
         description: 'Label for the timer monitor when shown on the stage',
@@ -184,6 +258,7 @@ class OpcodeLabels {
             looks_backdropname: {category: 'looks'},
 
             // pm looks
+            looks_getEffectValue: {category: 'looks'},
             looks_stretchGetX: {category: 'looks'},
             looks_stretchGetY: {category: 'looks'},
             looks_tintColor: {category: 'looks'},
@@ -250,6 +325,24 @@ class OpcodeLabels {
         this._opcodeMap.looks_backdropname.labelFn = () => this._translator(messages.looks_backdropname);
 
         // pm looks
+        this._opcodeMap.looks_getEffectValue.labelFn = params => {
+            switch (params.EFFECT.toLowerCase()) {
+                case 'color': return this._translator(messages.looks_getEffectValue_color);
+                case 'fisheye': return this._translator(messages.looks_getEffectValue_fisheye);
+                case 'whirl': return this._translator(messages.looks_getEffectValue_whirl);
+                case 'pixelate': return this._translator(messages.looks_getEffectValue_pixelate);
+                case 'mosaic': return this._translator(messages.looks_getEffectValue_mosaic);
+                case 'brightness': return this._translator(messages.looks_getEffectValue_brightness);
+                case 'ghost': return this._translator(messages.looks_getEffectValue_ghost);
+                case 'saturation': return this._translator(messages.looks_getEffectValue_saturation);
+                case 'red': return this._translator(messages.looks_getEffectValue_red);
+                case 'green': return this._translator(messages.looks_getEffectValue_green);
+                case 'blue': return this._translator(messages.looks_getEffectValue_blue);
+                case 'opaque': return this._translator(messages.looks_getEffectValue_opaque);
+                case 'horizontal_shear': return this._translator(messages.looks_getEffectValue_horizShear);
+                case 'vertical_shear': return this._translator(messages.looks_getEffectValue_vertiShear);
+            }
+        }
         this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
         this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
         this._opcodeMap.looks_tintColor.labelFn = () => this._translator(messages.looks_tintColor);
@@ -285,6 +378,8 @@ class OpcodeLabels {
                 return this._translator(messages.sensing_current_minute);
             case 'second':
                 return this._translator(messages.sensing_current_second);
+            case 'timestamp':
+                return this._translator(messages.sensing_current_timestamp);
             }
         };
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
