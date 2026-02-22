@@ -1,5 +1,6 @@
 // Legacy export format because this is used by some build-time scripts stuck in the past.
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-    APP_NAME: 'PenguinMod'
+    APP_NAME: 'PenguinMod',
+    HOME_SITE: 'https://penguinmod.com'
 };
