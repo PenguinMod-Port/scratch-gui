@@ -673,22 +673,35 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                     <shadow type="colour_picker"/>
                 </value>
             </block>
+            ${blockSeparator}
             <block type="sensing_distanceto">
                 <value name="DISTANCETOMENU">
                     <shadow type="sensing_distancetomenu"/>
                 </value>
             </block>
-            ${blockSeparator}
         `}
-        ${isInitialSetup ? '' : `
-            <block id="askandwait" type="sensing_askandwait">
-                <value name="QUESTION">
-                    <shadow type="text">
-                        <field name="TEXT">${name}</field>
-                    </shadow>
-                </value>
-            </block>
-        `}
+        <block type="sensing_distanceTo">
+            <value name="x1">
+                <shadow type="math_number" />
+            </value>
+            <value name="y1">
+                <shadow type="math_number" />
+            </value>
+            <value name="x2">
+                <shadow type="math_number" />
+            </value>
+            <value name="y2">
+                <shadow type="math_number" />
+            </value>
+        </block>
+        ${blockSeparator}
+        <block id="askandwait" type="sensing_askandwait">
+            <value name="QUESTION">
+                <shadow type="text">
+                    <field name="TEXT">${name}</field>
+                </shadow>
+            </value>
+        </block>
         <block id="answer" type="sensing_answer"/>
         ${blockSeparator}
         <block type="sensing_keypressed">
