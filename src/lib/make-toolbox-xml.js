@@ -696,13 +696,20 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="sensing_keyoptions"/>
             </value>
         </block>
+        ${blockSeparator}
         <block type="sensing_mousedown"/>
+        ${blockSeparator}
         <block type="sensing_mousex"/>
         <block type="sensing_mousey"/>
+        ${blockSeparator}
+        <block type="sensing_mousescrolling">
+            <value name="SCROLL_OPTION">
+                <shadow type="sensing_scrolldirections" />
+            </value>
+        </block>
         ${isStage ? '' : `
             ${blockSeparator}
-            '<block type="sensing_setdragmode" id="sensing_setdragmode"></block>'+
-            ${blockSeparator}
+            <block type="sensing_setdragmode" id="sensing_setdragmode"></block>
         `}
         ${blockSeparator}
         <block id="loudness" type="sensing_loudness"/>
