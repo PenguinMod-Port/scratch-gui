@@ -65,7 +65,10 @@ const MonitorComponent = props => (
                 data-opcode={props.opcode}
             >
                 {React.createElement(modes[props.mode], {
-                    categoryColor: getCategoryColor(props.theme, props.category),
+                    categoryColor:
+                        props.category == 'extension'
+                            ? props.monitorColor
+                            : getCategoryColor(props.theme, props.category),
                     ...props
                 })}
             </Box>
@@ -146,6 +149,7 @@ MonitorComponent.propTypes = {
     draggable: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    monitorColor: PropTypes.string,
     mode: PropTypes.oneOf(monitorModes),
     opcode: PropTypes.string.isRequired,
     onDragEnd: PropTypes.func.isRequired,
