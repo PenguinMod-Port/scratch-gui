@@ -742,6 +742,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Polygons"
+                description="Name for the jwPolygon extension"
+                id="pm.gui.extension.jwPolygon.name"
+            />
+        ),
+        extensionId: 'jwPolygon',
+        iconURL: require('../extensions/penguinmod/jwPolygon.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create and perform transforms on polygons."
+                description="Description for the jwPolygon extension"
+                id="pm.gui.extension.jwPolygon.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Sound Systems"
                 description="Name for the jgExtendedAudio extension"
                 id="pm.gui.extension.jgExtendedAudio.name"
