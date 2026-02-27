@@ -6,6 +6,7 @@ import Box from '../box/box.jsx';
 import PlayButton from '../../containers/play-button.jsx';
 import styles from './library-item.css';
 import classNames from 'classnames';
+import SettingsStore from '../../editor-settings/settings-store-singleton';
 
 import bluetoothIconURL from './bluetooth.svg';
 import internetConnectionIconURL from './internet-connection.svg';
@@ -45,6 +46,8 @@ class LibraryItemComponent extends React.PureComponent {
                 />
             </button>
         );
+
+        const showIDS = SettingsStore.store.showExtensionIds;
 
         return this.props.featured ? (
             <div
@@ -90,8 +93,12 @@ class LibraryItemComponent extends React.PureComponent {
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <span className={styles.libraryItemName}>{this.props.name}{(() => {
+                        if (!showIDS || typeof this.props.extensionId !== 'string') return "";
+                        return <span className={styles.extensionId}> ({this.props.extensionId})</span>
+                    })()}</span>
                     <br />
+                    
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
 

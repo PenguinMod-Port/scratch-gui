@@ -1,4 +1,5 @@
 import EventTargetShim from './event-target';
+import settings from './settings';
 
 const SETTINGS_KEY = 'pm:editor-settings';
 const VERSION = 1;
@@ -38,9 +39,17 @@ class SettingsStore extends EventTargetShim {
      */
     createEmptyStore () {
         const result = {};
-        /**for (const addonId of Object.keys(addons)) {
-            result[addonId] = {};
-        }*/
+        for (const id of Object.keys(settings)) {
+            result[id] = undefined;
+            let the = this;
+            settings[id].prototype._setStorage = function(v) {
+                the.store[id] = v;
+                the.saveToLocalStorage();
+            };
+            settings[id].prototype._readStorage = function(v) {
+                return the.store[id];
+            }
+        }
         return result;
     }
 
@@ -55,7 +64,7 @@ class SettingsStore extends EventTargetShim {
                     for (const key of Object.keys(result)) {
                         if (Object.prototype.hasOwnProperty.call(base, key)) {
                             const value = result[key];
-                            if (value && typeof value === 'object') {
+                            if (typeof value !== undefined) {
                                 base[key] = value;
                             }
                         }
@@ -77,14 +86,9 @@ class SettingsStore extends EventTargetShim {
         }
         try {
             const result = {
-                _: VERSION
+                _: VERSION,
+                ...this.store
             };
-            /**for (const addonId of Object.keys(addons)) {
-                const data = this.getAddonStorage(addonId);
-                if (Object.keys(data).length > 0) {
-                    result[addonId] = data;
-                }
-            }*/
             localStorage.setItem(SETTINGS_KEY, JSON.stringify(result));
         } catch (e) {
             // ignore

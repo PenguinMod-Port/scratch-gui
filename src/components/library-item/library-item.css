@@ -240,3 +240,9 @@
 .library-item:hover .favorite-container {
     display: block;
 }
+
+.extensionId {
+    font-style: italic;
+    font-size: 0.75em;
+    opacity: 0.75;
+}

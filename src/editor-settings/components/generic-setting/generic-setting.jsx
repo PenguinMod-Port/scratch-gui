@@ -1,19 +1,18 @@
-import {intlShape, injectIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, intlShape, injectIntl} from 'react-intl';
+import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 import styles from './generic-setting.css';
+import helpIcon from './help-icon.svg';
 
-const LearnMore = props => (
-    <React.Fragment>
-        {' '}
-        <DocumentationLink {...props}>
-            <FormattedMessage
-                defaultMessage="Learn more."
-                id="gui.alerts.cloudInfoLearnMore"
-            />
-        </DocumentationLink>
-    </React.Fragment>
-);
+const messages = defineMessages({
+    help: {
+        defaultMessage: 'Click for help',
+        description: 'Hover text of help icon in settings',
+        id: 'tw.settingsModal.help'
+    }
+});
 
 class UnwrappedSetting extends React.Component {
     constructor (props) {
@@ -59,9 +58,8 @@ class UnwrappedSetting extends React.Component {
                     </button>
                 </div>
                 {this.state.helpVisible && (
-                    <div className={styles.detail}>
+                    <div>
                         {this.props.help}
-                        {this.props.slug && <LearnMore slug={this.props.slug} />}
                     </div>
                 )}
                 {this.props.secondary}
@@ -77,32 +75,82 @@ UnwrappedSetting.propTypes = {
     secondary: PropTypes.node,
     slug: PropTypes.string
 };
-const Setting = injectIntl(UnwrappedSetting);
+export const Setting = injectIntl(UnwrappedSetting);
 
-class GenericSetting extends React.component {
-    settingId = ""
-    value = ""
+class GenericSetting extends React.Component {
+    defaultValue = ""
 
     constructor (props) {
         super(props);
         bindAll(this, [
-            '_setValue'
+            '_setValue',
+            '_setStorage',
+            'setValue',
+            'isActive',
+            'getPrimary',
+            'getHelp',
+            'getSecondary'
         ]);
 
-        this.defaultValue = this.value;
-
         this.state = {
-            value: this.defaultValue,
+            value: this._readStorage() ?? this.defaultValue,
             active: false
         };
+
+        if (this.isActive()) this.state.active = true;
     }
 
     _setValue(value) {
         this.value = value;
         this.setState({
             value,
-            active: 
-        })
+            active: this.isActive()
+        });
+        this._setStorage(value);
+        this.setValue(value);
+    }
+
+    _setStorage(value) {
+
+    }
+
+    _readStorage(value) {
+
+    }
+
+    setValue(value) {
+
+    }
+
+    isActive() {
+        return this.defaultValue !== this.state.value;
+    }
+
+    getPrimary() {
+        return (<FormattedMessage
+            defaultMessage="Placeholder"
+            id="pm.gui.placeholder"
+        />)
+    }
+
+    getHelp() {
+        return (<FormattedMessage
+            defaultMessage="Placeholder"
+            id="pm.gui.placeholder"
+        />)
+    }
+
+    getSecondary() {
+        return null;
+    }
+
+    render () {
+        return <Setting
+            active={this.state.active}
+            primary={this.getPrimary()}
+            help={this.getHelp()}
+            secondary={this.getSecondary()}
+        />
     }
 }
 

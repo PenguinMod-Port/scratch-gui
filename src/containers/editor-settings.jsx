@@ -4,6 +4,7 @@ import bindAll from 'lodash.bindall';
 import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import {connect} from 'react-redux';
 import {closeEditorSettingsModal} from '../reducers/modals';
+import settings from '../editor-settings/settings';
 
 import ModalTabsComponent from '../components/modal/modal-tabs.jsx';
 
@@ -42,7 +43,10 @@ class EditorSettingsModal extends React.Component {
             tabs={[
                 {
                     title: "tab 1",
-                    content: <div>tab 1 content</div>
+                    content: <React.Fragment>
+                        <settings.test />
+                        <settings.showExtensionIds />
+                    </React.Fragment>
                 },
                 {
                     title: "tab 2",
