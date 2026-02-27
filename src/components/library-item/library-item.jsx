@@ -95,7 +95,9 @@ class LibraryItemComponent extends React.PureComponent {
                 >
                     <span className={styles.libraryItemName}>{this.props.name}{(() => {
                         if (!showIDS || typeof this.props.extensionId !== 'string') return "";
-                        return <span className={styles.extensionId}> ({this.props.extensionId})</span>
+                        let id = this.props.extensionId
+                        if (id.startsWith("https://")) id = id.split("/").pop().split(".").shift();
+                        return <span className={styles.extensionId}> ({id})</span>;
                     })()}</span>
                     <br />
                     

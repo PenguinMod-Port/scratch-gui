@@ -246,6 +246,9 @@ class LibraryComponent extends React.Component {
                         }));
                     }
                 }
+                if (dataItem.extensionId) {
+                    search.push(dataItem.extensionId);
+                }
                 return search
                     .join('\n')
                     .toLowerCase()
