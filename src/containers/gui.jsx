@@ -41,6 +41,9 @@ import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import TWFullScreenResizerHOC from '../lib/tw-fullscreen-resizer-hoc.jsx';
 import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
 
+import SettingsStore from '../editor-settings/settings-store-singleton';
+void SettingsStore;
+
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
 const setProjectIdMetadata = projectId => {

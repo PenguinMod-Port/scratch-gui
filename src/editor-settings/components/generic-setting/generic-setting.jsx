@@ -78,7 +78,7 @@ UnwrappedSetting.propTypes = {
 export const Setting = injectIntl(UnwrappedSetting);
 
 class GenericSetting extends React.Component {
-    defaultValue = ""
+    defaultValue() { return ""; }
 
     constructor (props) {
         super(props);
@@ -93,18 +93,17 @@ class GenericSetting extends React.Component {
         ]);
 
         this.state = {
-            value: this._readStorage() ?? this.defaultValue,
+            value: this._readStorage() ?? this.defaultValue(),
             active: false
         };
 
-        if (this.isActive()) this.state.active = true;
+        if (this.isActive(this.state.value)) this.state.active = true;
     }
 
     _setValue(value) {
-        this.value = value;
         this.setState({
             value,
-            active: this.isActive()
+            active: this.isActive(value)
         });
         this._setStorage(value);
         this.setValue(value);
@@ -122,8 +121,8 @@ class GenericSetting extends React.Component {
 
     }
 
-    isActive() {
-        return this.defaultValue !== this.state.value;
+    isActive(value) {
+        return this.defaultValue() !== value;
     }
 
     getPrimary() {

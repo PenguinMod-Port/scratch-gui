@@ -6,14 +6,14 @@ export default (class extends BooleanSetting {
     getPrimary() {
         return (<FormattedMessage
             defaultMessage="Show Extension IDs"
-            id="pm.editorSettings.show-extension-ids.primary"
+            id="pm.editorSettings.showExtensionIds.primary"
         />)
     }
 
     getHelp() {
         return (<FormattedMessage
             defaultMessage="Makes extension IDs visible inside the extension gallery."
-            id="pm.editorSettings.show-extension-ids.help"
+            id="pm.editorSettings.showExtensionIds.help"
         />)
     }
 });

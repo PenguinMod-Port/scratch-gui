@@ -31,7 +31,7 @@ import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import TWUsernameModal from '../../containers/tw-username-modal.jsx';
 import TWSettingsModal from '../../containers/tw-settings-modal.jsx';
-import EditorSettingsModal from '../../containers/editor-settings.jsx';
+import EditorSettingsModal from '../editor-settings/editor-settings.jsx';
 import TWSecurityManager from '../../containers/tw-security-manager.jsx';
 import TWCustomExtensionModal from '../../containers/tw-custom-extension-modal.jsx';
 import TWRestorePointManager from '../../containers/tw-restore-point-manager.jsx';

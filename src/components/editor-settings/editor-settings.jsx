@@ -3,18 +3,29 @@ import React from 'react';
 import bindAll from 'lodash.bindall';
 import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import {connect} from 'react-redux';
-import {closeEditorSettingsModal} from '../reducers/modals';
-import settings from '../editor-settings/settings';
+import {closeEditorSettingsModal} from '../../reducers/modals.js';
+import settings from '../../editor-settings/settings.js';
+import styles from './editor-settings.jsx';
 
-import ModalTabsComponent from '../components/modal/modal-tabs.jsx';
+import ModalTabsComponent from '../modal/modal-tabs.jsx';
 
 const messages = defineMessages({
     title: {
         defaultMessage: 'Editor Settings',
         description: 'Title for the editor settings modal',
         id: 'pm.gui.editorSettings.title'
+    },
+    blocks: {
+        defaultMessage: 'Blocks',
+        id: 'pm.gui.editorSettings.blocks'
+    },
+    misc: {
+        defaultMessage: 'Miscellaneous',
+        id: 'pm.gui.editorSettings.misc'
     }
 });
+
+const Separator = props => <div className={styles.separator}></div>
 
 class EditorSettingsModal extends React.Component {
     constructor (props) {
@@ -42,15 +53,18 @@ class EditorSettingsModal extends React.Component {
             contentLabel={this.props.intl.formatMessage(messages.title)}
             tabs={[
                 {
-                    title: "tab 1",
+                    title: this.props.intl.formatMessage(messages.blocks),
                     content: <React.Fragment>
-                        <settings.test />
-                        <settings.showExtensionIds />
+                        <settings.hexagonalRoundness />
                     </React.Fragment>
                 },
                 {
-                    title: "tab 2",
-                    content: <div>tab 2 content</div>
+                    title: this.props.intl.formatMessage(messages.misc),
+                    content: <React.Fragment>
+                        <settings.showExtensionIds />
+                        <Separator />
+                        <settings.test />
+                    </React.Fragment>
                 }
             ]}
             currentTab={this.state.currentTab}

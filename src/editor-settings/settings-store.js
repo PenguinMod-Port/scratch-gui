@@ -66,6 +66,8 @@ class SettingsStore extends EventTargetShim {
                             const value = result[key];
                             if (typeof value !== undefined) {
                                 base[key] = value;
+                                let temp = new settings[key];
+                                temp._setValue(value);
                             }
                         }
                     }

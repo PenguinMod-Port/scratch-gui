@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './boolean-setting.css';
 
 class BooleanSetting extends GenericSetting {
-    defaultValue = false
+    defaultValue() { return false; }
 
     render() {
         return <Setting
@@ -20,6 +20,7 @@ class BooleanSetting extends GenericSetting {
                 </label>
             }
             help={this.getHelp()}
+            secondary={this.getSecondary()}
         />
     }
 }

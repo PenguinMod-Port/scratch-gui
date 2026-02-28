@@ -38,7 +38,6 @@ class SettingsModal extends React.Component {
         };
     }
     handleTabChange(index) {
-        console.log("yo")
         this.setState({
             currentTab: index
         })
