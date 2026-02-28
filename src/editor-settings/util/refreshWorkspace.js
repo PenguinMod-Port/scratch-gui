@@ -3,7 +3,12 @@ export default function (ScratchBlocks) {
     let vm = window.vm;
 
     if (workspace && vm && vm.editingTarget) {
+        const eventsOriginallyEnabled = ScratchBlocks.Events.isEnabled();
+        ScratchBlocks.Events.disable();
+
         vm.emitWorkspaceUpdate();
+
+        workspace.toolboxRefreshEnabled_ = true;
         const flyout = workspace.getFlyout();
         if (flyout) {
             const flyoutWorkspace = flyout.getWorkspace();
@@ -12,5 +17,7 @@ export default function (ScratchBlocks) {
                 flyoutWorkspace
             );
         }
+
+        if (eventsOriginallyEnabled) ScratchBlocks.Events.enable();
     }
 }
