@@ -1,12 +1,12 @@
 const guiColors = {
-    'motion-primary': 'hsla(194, 100%, 65%, 1)',
-    'motion-primary-transparent': 'hsla(194, 100%, 65%, 0.9)',
-    'motion-tertiary': 'hsla(194, 100%, 40%, 1)',
+    'motion-primary': '#00c3ff',
+    'motion-primary-transparent': '#00c3ffe6',
+    'motion-tertiary': '#009ccc',
 
-    'looks-secondary': 'hsla(194, 100%, 65%, 1)',
-    'looks-transparent': 'hsla(194, 100%, 65%, 0.35)',
-    'looks-light-transparent': 'hsla(194, 100%, 65%, 0.15)',
-    'looks-secondary-dark': 'hsla(194, 100%, 40%, 1)',
+    'looks-secondary': '#00c3ff',
+    'looks-transparent': '#00c3ff59',
+    'looks-light-transparent': '#00c3ff26',
+    'looks-secondary-dark': '#009ccc',
     
     'extensions-primary': 'hsla(205, 100%, 65%, 1)',
     'extensions-tertiary': 'hsla(205, 100%, 40%, 1)',
@@ -15,7 +15,7 @@ const guiColors = {
 };
 
 const blockColors = {
-    checkboxActiveBackground: '#4dd5ff',
+    checkboxActiveBackground: '#00c3ff',
     checkboxActiveBorder: '#009ccc'
 };
 
