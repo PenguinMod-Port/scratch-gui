@@ -41,8 +41,10 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
         value = safeStringify(value);
     }
 
-    if (monitorColor.background == null) delete monitorColor.background;
-    if (monitorColor.text == null) delete monitorColor.text;
+    if (monitorColor) {
+        if (monitorColor.background == null) delete monitorColor.background;
+        if (monitorColor.text == null) delete monitorColor.text;
+    }
 
     return {id, label, category, value, monitorColor};
 }
