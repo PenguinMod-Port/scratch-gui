@@ -148,7 +148,10 @@ MonitorComponent.propTypes = {
     draggable: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    monitorColor: PropTypes.string,
+    monitorColor: PropTypes.shape({
+        background: PropTypes.string,
+        text: PropTypes.string
+    }),
     mode: PropTypes.oneOf(monitorModes),
     opcode: PropTypes.string.isRequired,
     onDragEnd: PropTypes.func.isRequired,
