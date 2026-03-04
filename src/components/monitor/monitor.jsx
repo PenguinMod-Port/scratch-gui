@@ -65,10 +65,9 @@ const MonitorComponent = props => (
                 data-opcode={props.opcode}
             >
                 {React.createElement(modes[props.mode], {
-                    categoryColor:
-                        props.category == 'extension'
-                            ? props.monitorColor
-                            : getCategoryColor(props.theme, props.category),
+                    categoryColor: props.category == "extension"
+                        ? Object.assign(getCategoryColor(props.theme, props.category), props.monitorColor)
+                        : getCategoryColor(props.theme, props.category),
                     ...props
                 })}
             </Box>
