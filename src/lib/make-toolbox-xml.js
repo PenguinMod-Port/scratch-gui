@@ -531,7 +531,12 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         <block type="control_forever" />
-        <block id="while" type="control_while">
+        <block type="control_while">
+            <value name="CONDITION">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="control_do_while">
             <value name="CONDITION">
                 <shadow type="checkbox" />
             </value>
