@@ -714,6 +714,11 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="sensing_keyoptions"/>
             </value>
         </block>
+        <block type="sensing_keyhit">
+            <value name="KEY_OPTION">
+                <shadow type="sensing_keyoptions"/>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="sensing_mousedown"/>
         ${blockSeparator}
