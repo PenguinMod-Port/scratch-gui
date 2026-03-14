@@ -634,6 +634,12 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
             <block type="control_is_clone" />
         `}
         ${blockSeparator}
+        <block type="control_run_as_sprite">
+            <value name="RUN_AS_OPTION">
+                <shadow type="control_run_as_sprite_menu" />
+            </value>
+        </block>
+        ${blockSeparator}
         <block type="control_inline_stack_output">
             <value name="SUBSTACK">
                 <block type="procedures_return">

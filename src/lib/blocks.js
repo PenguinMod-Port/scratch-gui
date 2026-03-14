@@ -321,6 +321,14 @@ export default function (vm) {
         this.jsonInit(json);
     };
 
+    ScratchBlocks.Blocks.control_run_as_sprite_menu.init = function () {
+        const stage = ScratchBlocks.ScratchMsgs.translate('SENSING_OF_STAGE', 'Stage');
+        const json = jsonForMenuBlock('RUN_AS_OPTION', spriteMenu, controlColors, [
+            [stage, '_stage_']
+        ]);
+        this.jsonInit(json);
+    };
+
     ScratchBlocks.VerticalFlyout.getCheckboxState = function (blockId) {
         const monitoredBlock = vm.runtime.monitorBlocks._blocks[blockId];
         return monitoredBlock ? monitoredBlock.isMonitored : false;
