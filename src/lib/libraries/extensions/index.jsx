@@ -685,6 +685,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Camera"
+                description="Name for the jwCamera extension"
+                id="pm.gui.extension.jwCamera.name"
+            />
+        ),
+        extensionId: 'jwCamera',
+        iconURL: require('../extensions/penguinmod/jwCamera.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Move, scale and rotate your view of the project."
+                description="Description for the jwCamera extension"
+                id="pm.gui.extension.jwCamera.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Temporary Variables"
                 description="Name for the tempVars extension"
                 id="pm.gui.extension.tempVars.name"
