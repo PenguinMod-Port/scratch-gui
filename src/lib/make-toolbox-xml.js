@@ -543,12 +543,12 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         <block type="control_from_to">
             <value name="FROM">
-                <shadow type="math_whole_number">
+                <shadow type="math_integer">
                     <field name="NUM">1</field>
                 </shadow>
             </value>
             <value name="TO">
-                <shadow type="math_whole_number">
+                <shadow type="math_integer">
                     <field name="NUM">10</field>
                 </shadow>
             </value>
