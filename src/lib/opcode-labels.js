@@ -228,6 +228,12 @@ const messages = defineMessages({
         defaultMessage: 'online?',
         description: 'Name of "online?" block',
         id: 'tw.opcode.online'
+    },
+
+    //pm sensing
+    sensing_getclipboard: {
+        defaultMessage: 'clipboard',
+        id: 'pm.gui.opcodeLabels.getClipboard'
     }
 });
 
@@ -281,7 +287,10 @@ class OpcodeLabels {
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
             sensing_dayssince2000: {category: 'sensing'},
-            sensing_online: {category: 'sensing'}
+            sensing_online: {category: 'sensing'},
+
+            // pm sensing
+            sensing_getclipboard: {category: 'sensing'}
         };
 
         // Initialize opcodeMap with default strings
@@ -385,6 +394,9 @@ class OpcodeLabels {
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
         this._opcodeMap.sensing_dayssince2000.labelFn = () => this._translator(messages.sensing_dayssince2000);
         this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);
+
+        //pm sensing
+        this._opcodeMap.sensing_getclipboard.labelFn = () => this._translator(messages.sensing_getclipboard);
     }
 
     /**

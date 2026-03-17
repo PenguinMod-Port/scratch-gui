@@ -507,7 +507,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block type="control_if_return_else_return">
+        <block type="control_if_return_else_return" inline="false">
             <value name="boolean">
                 <shadow type="checkbox" />
             </value>
@@ -725,6 +725,13 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="sensing_keyoptions"/>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="sensing_setclipboard">
+            <value name="ITEM">
+                <shadow type="text"/>
+            </value>
+        </block>
+        <block type="sensing_getclipboard"/>
         ${blockSeparator}
         <block type="sensing_mousedown"/>
         ${blockSeparator}
