@@ -4,6 +4,7 @@ import React from 'react';
 import VM from 'scratch-vm';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import log from '../lib/log';
+import twLibraryMixin from '../lib/libraries/tw-library-mixin';
 
 import extensionLibraryContent, {
     galleryError,
@@ -15,6 +16,7 @@ import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
+import extensions from '../lib/libraries/extensions/index.jsx';
 
 const messages = defineMessages({
     extensionTitle: {
@@ -62,7 +64,7 @@ const fetchLibrary = async () => {
         extensionId: extension.id,
         extensionURL: `https://extensions.turbowarp.org/${extension.slug}.js`,
         iconURL: `https://extensions.turbowarp.org/${extension.image || 'images/unknown.svg'}`,
-        tags: ['tw'],
+        tags: [],
         credits: [
             ...(extension.original || []),
             ...(extension.by || [])
@@ -88,7 +90,10 @@ const fetchLibrary = async () => {
         })) : null,
         incompatibleWithScratch: !extension.scratchCompatible,
         featured: true
-    }));
+    }))
+        .map(extension => twLibraryMixin[extension.extensionId] ? {...extension, ...twLibraryMixin[extension.extensionId]} : extension)
+        .map(extension => ({...extension, tags: [...extension.tags, "tw"]}))
+        .filter(extension => !extension.hide);
 };
 
 class ExtensionLibrary extends React.PureComponent {
@@ -169,7 +174,6 @@ class ExtensionLibrary extends React.PureComponent {
                 const locale = this.props.intl.locale;
                 library.push(
                     ...this.state.gallery
-                        .filter(i => i.extensionId !== 'faceSensing')
                         .map(i => translateGalleryItem(i, locale))
                         .map(toLibraryItem)
                 );

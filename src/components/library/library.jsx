@@ -14,6 +14,7 @@ import Spinner from '../spinner/spinner.jsx';
 import Separator from '../tw-extension-separator/separator.jsx';
 import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
 import {APP_NAME} from '../../lib/brand.js';
+import SettingsStore from '../../editor-settings/settings-store-singleton';
 
 import styles from './library.css';
 
@@ -246,7 +247,7 @@ class LibraryComponent extends React.Component {
                         }));
                     }
                 }
-                if (dataItem.extensionId) {
+                if (dataItem.extensionId && SettingsStore.store.showExtensionIds) {
                     search.push(dataItem.extensionId);
                 }
                 return search
