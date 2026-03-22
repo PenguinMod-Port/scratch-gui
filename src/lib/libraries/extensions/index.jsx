@@ -627,6 +627,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Promises"
+                description="Name for the jwPromise extension"
+                id="pm.gui.extension.jwPromise.name"
+            />
+        ),
+        extensionId: 'jwPromise',
+        iconURL: require('../extensions/penguinmod/jwPromise.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Run operations in parallel and await their results."
+                description="Description for the jwPromise extension"
+                id="pm.gui.extension.jwPromise.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Storage"
                 description="Name for the jgStorage extension"
                 id="pm.gui.extension.jgStorage.name"
