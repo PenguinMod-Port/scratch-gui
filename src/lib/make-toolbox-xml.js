@@ -733,7 +733,9 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         <block type="sensing_getclipboard"/>
         ${blockSeparator}
-        <block type="sensing_mousedown"/>
+        <block type="sensing_mouse_button_down" />
+        <block type="sensing_mouse_button_clicked" />
+        <block type="sensing_mouse_button_released" />
         ${blockSeparator}
         <block type="sensing_mousex"/>
         <block type="sensing_mousey"/>

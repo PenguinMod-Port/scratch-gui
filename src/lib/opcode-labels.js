@@ -234,6 +234,38 @@ const messages = defineMessages({
     sensing_getclipboard: {
         defaultMessage: 'clipboard',
         id: 'pm.gui.opcodeLabels.getClipboard'
+    },
+    sensing_mouse_any: {
+        defaultMessage: 'any',
+        id: 'pm.gui.opcodeLabels.mouseAny'
+    },
+    sensing_mouseclicked: {
+        defaultMessage: 'mouse clicked?',
+        id: 'pm.gui.opcodeLabels.mouseClicked'
+    },
+    sensing_mouse_button_clicked: {
+        defaultMessage: '{BUTTON} mouse clicked?',
+        id: 'pm.gui.opcodeLabels.mouseButtonClicked'
+    },
+    sensing_mouse_button_down: {
+        defaultMessage: '{BUTTON} mouse down?',
+        id: 'pm.gui.opcodeLabels.mouseButtonDown'
+    },
+    sensing_mouse_button_released: {
+        defaultMessage: '{BUTTON} mouse released?',
+        id: 'pm.gui.opcodeLabels.mouseButtonReleased'
+    },
+    sensing_mouse_left: {
+        defaultMessage: 'left',
+        id: 'pm.gui.opcodeLabels.mouseLeft'
+    },
+    sensing_mouse_middle: {
+        defaultMessage: 'middle',
+        id: 'pm.gui.opcodeLabels.mouseMiddle'
+    },
+    sensing_mouse_right: {
+        defaultMessage: 'right',
+        id: 'pm.gui.opcodeLabels.mouseRight'
     }
 });
 
@@ -290,7 +322,11 @@ class OpcodeLabels {
             sensing_online: {category: 'sensing'},
 
             // pm sensing
-            sensing_getclipboard: {category: 'sensing'}
+            sensing_getclipboard: {category: 'sensing'},
+            sensing_mouseclicked: {category: 'sensing'},
+            sensing_mouse_button_clicked: {category: 'sensing'},
+            sensing_mouse_button_down: {category: 'sensing'},
+            sensing_mouse_button_released: {category: 'sensing'},
         };
 
         // Initialize opcodeMap with default strings
@@ -396,7 +432,20 @@ class OpcodeLabels {
         this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);
 
         //pm sensing
+        const buttonMap = button => {
+            switch (button) {
+                case 'left': return this._translator(messages.sensing_mouse_left);
+                case 'middle': return this._translator(messages.sensing_mouse_middle);
+                case 'right': return this._translator(messages.sensing_mouse_right);
+            }
+            return this._translator(messages.sensing_mouse_any);
+        }
+
         this._opcodeMap.sensing_getclipboard.labelFn = () => this._translator(messages.sensing_getclipboard);
+        this._opcodeMap.sensing_mouse_button_clicked.labelFn = params => this._translator(messages.sensing_mouse_button_clicked, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouse_button_down.labelFn = params => this._translator(messages.sensing_mouse_button_down, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouse_button_released.labelFn = params => this._translator(messages.sensing_mouse_button_released, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouseclicked.labelFn = () => this._translator(messages.sensing_mouseclicked);
     }
 
     /**
