@@ -11,6 +11,7 @@ export default [
     {tag: 'math', intlLabel: messages.math},
     {tag: 'data', intlLabel: messages.data},
     {tag: 'hardware', intlLabel: messages.hardware},
+    {tag: 'internet', intlLabel: messages.internet},
 
     {type: 'divider'},
 

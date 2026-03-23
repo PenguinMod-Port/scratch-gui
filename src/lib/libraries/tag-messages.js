@@ -151,6 +151,11 @@ export default defineMessages({
         description: 'Tag for filtering a library for hardware',
         id: 'pm.gui.libraryTags.hardware'
     },
+    internet: {
+        defaultMessage: 'Internet',
+        description: 'Tag for filtering a library for internet',
+        id: 'pm.gui.libraryTags.internet'
+    },
     expansion: {
         defaultMessage: 'Category Expansion',
         description: 'Tag for filtering a library for expansions',

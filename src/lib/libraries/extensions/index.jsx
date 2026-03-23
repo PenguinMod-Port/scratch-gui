@@ -159,7 +159,7 @@ export default [
                 id="gui.extension.text2speech.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'sound'],
         featured: true,
         internetConnectionRequired: true
     },
