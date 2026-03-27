@@ -606,6 +606,11 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         ${blockSeparator}
         <block type="control_restartproject" />
         <block type="control_stop"/>
+        <block type="control_stop_sprite">
+            <value name="STOP_OPTION">
+                <shadow type="control_stop_sprite_menu" />
+            </value>
+        </block>
         ${blockSeparator}
         ${isStage ? `
             <block type="control_create_clone_of">
