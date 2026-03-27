@@ -143,6 +143,12 @@ const messages = defineMessages({
         id: 'gui.opcodeLabels.tempo'
     },
 
+    // pm control
+    control_get_counter: {
+        defaultMessage: 'counter',
+        id: 'pm.gui.opcodeLabels.getCounter'
+    },
+
     // Sensing
     sensing_answer: {
         defaultMessage: 'answer',
@@ -309,6 +315,9 @@ class OpcodeLabels {
             sound_volume: {category: 'sound'},
             sound_tempo: {category: 'sound'},
 
+            // pm control
+            control_get_counter: {category: 'control'},
+
             // Sensing
             sensing_answer: {category: 'sensing'},
             sensing_mousedown: {category: 'sensing'},
@@ -399,6 +408,9 @@ class OpcodeLabels {
         // Sound
         this._opcodeMap.sound_volume.labelFn = () => this._translator(messages.sound_volume);
         this._opcodeMap.sound_tempo.labelFn = () => this._translator(messages.sound_tempo);
+
+        // pm control
+        this._opcodeMap.control_get_counter.labelFn = () => this._translator(messages.control_get_counter);
 
         // Sensing
         this._opcodeMap.sensing_answer.labelFn = () => this._translator(messages.sensing_answer);
