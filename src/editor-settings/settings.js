@@ -1,5 +1,6 @@
 export default Object.fromEntries([
-    'test',
+    'hexagonalRoundness',
     'showExtensionIds',
-    'hexagonalRoundness'
+    'swatches',
+    'test',
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))

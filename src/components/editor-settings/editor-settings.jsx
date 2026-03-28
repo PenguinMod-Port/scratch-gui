@@ -5,7 +5,7 @@ import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-int
 import {connect} from 'react-redux';
 import {closeEditorSettingsModal} from '../../reducers/modals.js';
 import settings from '../../editor-settings/settings.js';
-import styles from './editor-settings.jsx';
+import styles from './editor-settings.css';
 
 import ModalTabsComponent from '../modal/modal-tabs.jsx';
 
@@ -55,6 +55,8 @@ class EditorSettingsModal extends React.Component {
                 {
                     title: this.props.intl.formatMessage(messages.blocks),
                     content: <React.Fragment>
+                        <settings.swatches />
+                        <Separator />
                         <settings.hexagonalRoundness />
                     </React.Fragment>
                 },

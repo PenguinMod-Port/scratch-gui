@@ -11,14 +11,14 @@ export default (class extends IntegerSetting {
 
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Hexagonal Curvature"
+            defaultMessage="Shape Curvature"
             id="pm.editorSettings.hexagonalRoundness.primary"
         />)
     }
 
     getHelp() {
         return (<FormattedMessage
-            defaultMessage="Makes the hexagonal and indented shapes more rounded."
+            defaultMessage="Makes shapes with pointy edges (hexagonal, indented, slanted) more rounded."
             id="pm.editorSettings.hexagonalRoundness.help"
         />)
     }
@@ -26,8 +26,6 @@ export default (class extends IntegerSetting {
     async setValue(value) {
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
-
-        console.log(ScratchBlocks);
         
         ScratchBlocks.BlockSvg.HEXAGONAL_SHAPE_ROUNDNESS = ScratchBlocks.BlockSvg.GRID_UNIT * value / 100;
         refreshWorkspace(ScratchBlocks);
