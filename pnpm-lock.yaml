@@ -18,11 +18,11 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       '@turbowarp/scratch-l10n':
-        specifier: ^3.1001.202405101234
-        version: 3.1001.202405101234
+        specifier: github:PenguinMod-Port/scratch-l10n#new-builds
+        version: https://codeload.github.com/PenguinMod-Port/scratch-l10n/tar.gz/f97d1d850a7b230dfca044000be5d79260f3f4e6
       '@turbowarp/scratch-svg-renderer':
-        specifier: ^1.0.202505311824
-        version: 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)
+        specifier: github:PenguinMod-Port/scratch-svg-renderer#develop
+        version: https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)
       '@turbowarp/startaudiocontext':
         specifier: ^1.0.0
         version: 1.0.0
@@ -220,7 +220,7 @@ importers:
         version: '@turbowarp/scratch-svg-renderer@https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)'
       scratch-vm:
         specifier: github:PenguinMod-Port/scratch-vm#develop
-        version: https://codeload.github.com/PenguinMod-Port/scratch-vm/tar.gz/9661195cb24c37ca8de8554518f25a37d569fb05(@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e))(webpack@4.47.0)
+        version: https://codeload.github.com/PenguinMod-Port/scratch-vm/tar.gz/9661195cb24c37ca8de8554518f25a37d569fb05(@turbowarp/scratch-svg-renderer@https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e))(webpack@4.47.0)
       startaudiocontext:
         specifier: 1.2.1
         version: 1.2.1
@@ -1213,15 +1213,10 @@ packages:
   '@turbowarp/sb3fix@0.4.0':
     resolution: {integrity: sha512-DC1u1B2nugkANEzQyioPFEYPYtZvr8NFvZkpYlxkoBOsn+LPJP1F486vNzvkGu2MAGTfWR0QmsBTRdanrppCrg==}
 
-  '@turbowarp/scratch-l10n@3.1001.202405101234':
-    resolution: {integrity: sha512-a0JTugOunBFQqAKtjdkViUSmLxuDWwtdNi+1gbqnbDQyGfHOBdOe1xVkmQekw/CzR2HgsBAlL8aS4rsuVXzR3Q==}
+  '@turbowarp/scratch-l10n@https://codeload.github.com/PenguinMod-Port/scratch-l10n/tar.gz/f97d1d850a7b230dfca044000be5d79260f3f4e6':
+    resolution: {tarball: https://codeload.github.com/PenguinMod-Port/scratch-l10n/tar.gz/f97d1d850a7b230dfca044000be5d79260f3f4e6}
+    version: 3.1001.0
     hasBin: true
-
-  '@turbowarp/scratch-svg-renderer@1.0.202505311824':
-    resolution: {integrity: sha512-EaKVqIuEwrr4SzQGOVyr8GBE+DGzUbbn38qiV6DMWFzb++/HgWl1qdlKA/j+mOK+GDwYydMFP0FuWYvWBkt6sA==}
-    version: 1.0.202505311824
-    peerDependencies:
-      scratch-render-fonts: github:TurboWarp/scratch-render-fonts#master
 
   '@turbowarp/scratch-svg-renderer@https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476':
     resolution: {tarball: https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476}
@@ -7777,7 +7772,7 @@ snapshots:
     dependencies:
       '@turbowarp/jszip': 3.12.0
 
-  '@turbowarp/scratch-l10n@3.1001.202405101234':
+  '@turbowarp/scratch-l10n@https://codeload.github.com/PenguinMod-Port/scratch-l10n/tar.gz/f97d1d850a7b230dfca044000be5d79260f3f4e6':
     dependencies:
       '@babel/cli': 7.28.6(@babel/core@7.29.0)
       '@babel/core': 7.29.0
@@ -7787,15 +7782,6 @@ snapshots:
       transifex: 1.6.6
     transitivePeerDependencies:
       - supports-color
-
-  '@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)':
-    dependencies:
-      '@turbowarp/nanolog': 0.2.0
-      base64-js: 1.2.1
-      base64-loader: 1.0.0
-      dompurify: 2.5.8
-      scratch-render-fonts: https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e
-      transformation-matrix: 1.15.0
 
   '@turbowarp/scratch-svg-renderer@https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)':
     dependencies:
@@ -13272,12 +13258,12 @@ snapshots:
 
   scratch-translate-extension-languages@1.0.7: {}
 
-  scratch-vm@https://codeload.github.com/PenguinMod-Port/scratch-vm/tar.gz/9661195cb24c37ca8de8554518f25a37d569fb05(@turbowarp/scratch-svg-renderer@1.0.202505311824(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e))(webpack@4.47.0):
+  scratch-vm@https://codeload.github.com/PenguinMod-Port/scratch-vm/tar.gz/9661195cb24c37ca8de8554518f25a37d569fb05(@turbowarp/scratch-svg-renderer@https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e))(webpack@4.47.0):
     dependencies:
       '@turbowarp/json': 0.1.2
       '@turbowarp/jszip': 3.12.0
       '@turbowarp/nanolog': 0.2.0
-      '@turbowarp/scratch-svg-renderer': 1.0.202505311824(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)
+      '@turbowarp/scratch-svg-renderer': https://codeload.github.com/PenguinMod-Port/scratch-svg-renderer/tar.gz/85f75160870ee85727a864c136dc3979d798c476(scratch-render-fonts@https://codeload.github.com/PenguinMod-Port/scratch-render-fonts/tar.gz/170d4f52478f721d6a50991d8a9a9b8a140a0c7e)
       '@vernier/godirect': 1.5.0
       arraybuffer-loader: 1.0.8
       atob: 2.1.2
