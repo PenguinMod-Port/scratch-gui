@@ -19,6 +19,10 @@ const messages = defineMessages({
         defaultMessage: 'Blocks',
         id: 'pm.gui.editorSettings.blocks'
     },
+    paint: {
+        defaultMessage: 'Paint',
+        id: 'pm.gui.editorSettings.paint'
+    },
     misc: {
         defaultMessage: 'Miscellaneous',
         id: 'pm.gui.editorSettings.misc'
@@ -58,6 +62,12 @@ class EditorSettingsModal extends React.Component {
                         <settings.swatches />
                         <Separator />
                         <settings.hexagonalRoundness />
+                    </React.Fragment>
+                },
+                {
+                    title: this.props.intl.formatMessage(messages.paint),
+                    content: <React.Fragment>
+                        <settings.paintMultiTool />
                     </React.Fragment>
                 },
                 {
