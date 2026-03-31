@@ -57,6 +57,7 @@ const Controls = function (props) {
             <GreenFlag
                 active={active}
                 title={intl.formatMessage(messages.goTitle)}
+                turbo={turbo}
                 onClick={onGreenFlagClick}
             />
             <PauseButton
@@ -69,9 +70,6 @@ const Controls = function (props) {
                 title={intl.formatMessage(messages.stopTitle)}
                 onClick={onStopAllClick}
             />
-            {turbo ? (
-                <TurboMode isSmall={isSmall} />
-            ) : null}
             {!isSmall && (
                 <FramerateIndicator
                     framerate={framerate}
