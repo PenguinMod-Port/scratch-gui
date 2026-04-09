@@ -454,6 +454,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Events Expansion"
+                description="Name for the pmEventsExpansion extension"
+                id="pm.gui.extension.pmEventsExpansion.name"
+            />
+        ),
+        extensionId: 'pmEventsExpansion',
+        iconURL: require('../extensions/penguinmod/pmEventsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More events for sending & receiving information, notifing specific sprites or better control when things should happen."
+                description="Description for the pmEventsExpansion extension"
+                id="pm.gui.extension.pmEventsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Controls Expansion"
                 description="Name for the pmControlsExpansion extension"
                 id="pm.gui.extension.pmControlsExpansion.name"
