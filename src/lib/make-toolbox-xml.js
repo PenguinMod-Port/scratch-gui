@@ -750,6 +750,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colors) {
                 <shadow type="sensing_scrolldirections" />
             </value>
         </block>
+        ${blockSeparator}
+        <block type="sensing_mobile" />
         ${isStage ? '' : `
             ${blockSeparator}
             <block type="sensing_setdragmode" id="sensing_setdragmode"></block>
