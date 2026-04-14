@@ -374,7 +374,7 @@ const StrictEquality = props => (
         help={
             <FormattedMessage
                 // eslint-disable-next-line max-len
-                defaultMessage="Makes the 'equals' block case sensitive."
+                defaultMessage="Makes blocks that use equality more strict, such as case sensitivity and better type checking."
                 description="Strict Equality help"
                 id="pm.gui.settingsModal.strictEqualityHelp"
             />
