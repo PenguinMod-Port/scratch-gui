@@ -607,6 +607,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Classes"
+                description="Name for the jwClass extension"
+                id="pm.gui.extension.jwClass.name"
+            />
+        ),
+        extensionId: 'jwClass',
+        iconURL: require('../extensions/penguinmod/jwClass.svg'),
+        description: ""/*(
+            <FormattedMessage
+                defaultMessage=""
+                description="Description for the jwClass extension"
+                id="pm.gui.extension.jwClass.description"
+            />
+        )*/,
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Infinity"
                 description="Name for the jwNum extension"
                 id="pm.gui.extension.jwNum.name"
