@@ -1,7 +1,8 @@
 export default Object.fromEntries([
+    'disableExpandables',
     'hexagonalRoundness',
+    'paintMultiTool',
     'showExtensionIds',
     'swatches',
-    'paintMultiTool',
     'test',
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))
