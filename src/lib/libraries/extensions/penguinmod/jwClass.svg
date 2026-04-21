@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
   <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; stroke: #3C9945; fill: #4BBF56;" rx="48" ry="48" id="object-0"></rect>
-  <!--<g style="" transform="matrix(18.04882, 0, 0, 18.04882, -5782.867187, -3146.743164)">
-    <path d="M 332.802 179.14 C 332.026 179.14 331.395 179.77 331.395 180.547 L 331.395 184.767 C 331.395 185.544 332.026 186.174 332.802 186.174 L 338.43 186.174 C 339.207 186.174 339.837 185.544 339.837 184.767 L 342.651 186.174 L 342.651 179.14 L 339.837 180.547 C 339.837 179.77 339.207 179.14 338.43 179.14 L 332.802 179.14 Z" stroke-width="0.5" fill="#fff" style="stroke-width: 0.5; stroke: rgb(255, 255, 255); stroke-linejoin: round; stroke-linecap: round;"></path>
-  </g>-->
+  <g transform="matrix(14.392911, 0, 0, 14.392911, 156.074493, 6.070892)" style="">
+    <path d="M 6.978 5.516 C 4.736 8.505 4.736 11.494 6.978 14.484" stroke="#fff" fill="none" style="stroke-linejoin: round; stroke-linecap: round; stroke-width: 2;"></path>
+    <path d="M 14.703 14.484 C 12.461 11.495 12.461 8.506 14.703 5.516" stroke="#fff" fill="none" style="stroke-linejoin: round; stroke-linecap: round; stroke-width: 2; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(-1, 0, 0, -1, -0.000002, 0)"></path>
+  </g>
 </svg>

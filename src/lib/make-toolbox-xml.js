@@ -989,27 +989,33 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             <field name="CHECKBOX">FALSE</field>
         </block>
         ${blockSeparator}
-        <block type="operator_and">
-            <value name="OPERAND1">
+        <block type="operator_expandableBool">
+            <field name="EXPANDABLE">2</field>
+            <value name="BOOL1">
                 <shadow type="checkbox" />
             </value>
-            <value name="OPERAND2">
-                <shadow type="checkbox" />
-            </value>
-        </block>
-        <block type="operator_or">
-            <value name="OPERAND1">
-                <shadow type="checkbox" />
-            </value>
-            <value name="OPERAND2">
+            <field name="OP2">a</field>
+            <value name="BOOL2">
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block type="operator_xor">
-            <value name="OPERAND1">
+        <block type="operator_expandableBool">
+            <field name="EXPANDABLE">2</field>
+            <value name="BOOL1">
                 <shadow type="checkbox" />
             </value>
-            <value name="OPERAND2">
+            <field name="OP2">o</field>
+            <value name="BOOL2">
+                <shadow type="checkbox" />
+            </value>
+        </block>
+        <block type="operator_expandableBool">
+            <field name="EXPANDABLE">2</field>
+            <value name="BOOL1">
+                <shadow type="checkbox" />
+            </value>
+            <field name="OP2">x</field>
+            <value name="BOOL2">
                 <shadow type="checkbox" />
             </value>
         </block>

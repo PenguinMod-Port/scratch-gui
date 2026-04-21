@@ -614,14 +614,14 @@ export const penguinmodGallery = [
         ),
         extensionId: 'jwClass',
         iconURL: require('../extensions/penguinmod/jwClass.svg'),
-        description: ""/*(
+        description: (
             <FormattedMessage
-                defaultMessage=""
+                defaultMessage="Advanced extension for creating classes and instances, knowledge of OOP required."
                 description="Description for the jwClass extension"
                 id="pm.gui.extension.jwClass.description"
             />
-        )*/,
-        tags: ['pm', 'data', 'type']
+        ),
+        tags: ['pm', 'type']
     },
     {
         name: (
