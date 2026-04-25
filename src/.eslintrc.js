@@ -43,5 +43,10 @@ module.exports = {
                 config: path.resolve(__dirname, '../webpack.config.js')
             }
         }
+    },
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true
+        }
     }
 };

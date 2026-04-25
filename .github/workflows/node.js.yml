@@ -1,22 +1,46 @@
-name: CI
-
 on:
+  workflow_dispatch:
+  repository_dispatch:
   push:
-  pull_request:
+    branches: ["develop"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "deploy"
+  cancel-in-progress: true
+  #ci-${{ github.ref }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v6-beta
+    - name: Setup GitHub Pages
+      uses: actions/configure-pages@v5.0.0
+      
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
       with:
-        persist-credentials: false
+        version: 10
     - name: Install Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6.0.0
       with:
-        node-version: 22
-        cache: npm
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test:unit
+        node-version: 24
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm up && pnpm i --frozen-lockfile --shamefully-hoist --force
+    - name: Build site
+      run: NODE_ENV="production" webpack --bail
+      
+    - name: Upload artifact 
+      uses: actions/upload-pages-artifact@v4.0.0
+      with:
+        path: ./build/
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v4.0.5

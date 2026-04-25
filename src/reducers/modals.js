@@ -13,6 +13,7 @@ const MODAL_CONNECTION = 'connectionModal';
 const MODAL_TIPS_LIBRARY = 'tipsLibrary';
 const MODAL_USERNAME = 'usernameModal';
 const MODAL_SETTINGS = 'settingsModal';
+const MODAL_EDITOR_SETTINGS = 'editorSettingsModal';
 const MODAL_CUSTOM_EXTENSION = 'customExtensionModal';
 const MODAL_RESTORE_POINTS = 'restorePointModal';
 const MODAL_FONTS = 'fontsModal';
@@ -32,6 +33,7 @@ const initialState = {
     [MODAL_TIPS_LIBRARY]: false,
     [MODAL_USERNAME]: false,
     [MODAL_SETTINGS]: false,
+    [MODAL_EDITOR_SETTINGS]: false,
     [MODAL_CUSTOM_EXTENSION]: false,
     [MODAL_RESTORE_POINTS]: false,
     [MODAL_FONTS]: false,
@@ -102,6 +104,9 @@ const openUsernameModal = function () {
 const openSettingsModal = function () {
     return openModal(MODAL_SETTINGS);
 };
+const openEditorSettingsModal = function () {
+    return openModal(MODAL_EDITOR_SETTINGS);
+};
 const openCustomExtensionModal = function () {
     return openModal(MODAL_CUSTOM_EXTENSION);
 };
@@ -153,6 +158,9 @@ const closeUsernameModal = function () {
 const closeSettingsModal = function () {
     return closeModal(MODAL_SETTINGS);
 };
+const closeEditorSettingsModal = function () {
+    return closeModal(MODAL_EDITOR_SETTINGS);
+};
 const closeCustomExtensionModal = function () {
     return closeModal(MODAL_CUSTOM_EXTENSION);
 };
@@ -183,6 +191,7 @@ export {
     openConnectionModal,
     openUsernameModal,
     openSettingsModal,
+    openEditorSettingsModal,
     openCustomExtensionModal,
     openRestorePointModal,
     openFontsModal,
@@ -200,6 +209,7 @@ export {
     closeConnectionModal,
     closeUsernameModal,
     closeSettingsModal,
+    closeEditorSettingsModal,
     closeCustomExtensionModal,
     closeRestorePointModal,
     closeFontsModal,

@@ -38,7 +38,7 @@ const ListMonitor = ({draggable, label, width, height, value, onResizeMouseDown,
                     description="Length label on list monitors. DO NOT translate {length} (with brackets)."
                     id="gui.monitor.listMonitor.listLength"
                     values={{
-                        length: value.length
+                        length: (value ?? []).length
                     }}
                 />
             </div>

@@ -6,6 +6,7 @@ import Box from '../box/box.jsx';
 import PlayButton from '../../containers/play-button.jsx';
 import styles from './library-item.css';
 import classNames from 'classnames';
+import SettingsStore from '../../editor-settings/settings-store-singleton';
 
 import bluetoothIconURL from './bluetooth.svg';
 import internetConnectionIconURL from './internet-connection.svg';
@@ -45,6 +46,8 @@ class LibraryItemComponent extends React.PureComponent {
                 />
             </button>
         );
+
+        const showIDS = SettingsStore.store.showExtensionIds;
 
         return this.props.featured ? (
             <div
@@ -90,8 +93,14 @@ class LibraryItemComponent extends React.PureComponent {
                         classNames(styles.featuredExtensionText, styles.featuredText) : styles.featuredText
                     }
                 >
-                    <span className={styles.libraryItemName}>{this.props.name}</span>
+                    <span className={styles.libraryItemName}>{this.props.name}{(() => {
+                        if (!showIDS || typeof this.props.extensionId !== 'string') return "";
+                        let id = this.props.extensionId
+                        if (id.startsWith("https://")) id = id.split("/").pop().split(".").shift();
+                        return <span className={styles.extensionId}> ({id})</span>;
+                    })()}</span>
                     <br />
+                    
                     <span className={styles.featuredDescription}>{this.props.description}</span>
                 </div>
 
@@ -129,28 +138,7 @@ class LibraryItemComponent extends React.PureComponent {
                     </div>
                 )}
 
-                {this.props.credits && this.props.credits.length > 0 && (
-                    <div className={styles.extensionLinks}>
-                        <div>
-                            <FormattedMessage
-                                defaultMessage="Created by:"
-                                description="Appears in the extension list. Followed by a list of names."
-                                id="tw.createdBy"
-                            />
-                            {' '}
-                            {this.props.credits.map((credit, index) => (
-                                <React.Fragment key={index}>
-                                    {credit}
-                                    {index !== this.props.credits.length - 1 && (
-                                        ', '
-                                    )}
-                                </React.Fragment>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator ? (
+                {this.props.bluetoothRequired || this.props.internetConnectionRequired || this.props.collaborator || (this.props.credits && this.props.credits.length > 0) ? (
                     <div className={styles.featuredExtensionMetadata}>
                         <div className={styles.featuredExtensionRequirement}>
                             {this.props.bluetoothRequired || this.props.internetConnectionRequired ? (
@@ -198,6 +186,29 @@ class LibraryItemComponent extends React.PureComponent {
                                     </div>
                                 </div>
                             ) : null}
+                            {this.props.credits && this.props.credits.length > 0 && (
+                                <div>
+                                    <div>
+                                        <FormattedMessage
+                                            defaultMessage="Created by"
+                                            description="Appears in the extension list. Followed by a list of names."
+                                            id="pm.gui.createdBy"
+                                        />
+                                    </div>
+                                    <div
+                                        className={styles.featuredExtensionMetadataDetail}
+                                    >
+                                    {this.props.credits.map((credit, index) => (
+                                        <React.Fragment key={index}>
+                                            {credit}
+                                            {index !== this.props.credits.length - 1 && (
+                                                ', '
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 ) : null}

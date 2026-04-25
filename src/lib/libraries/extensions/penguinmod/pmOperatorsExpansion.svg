@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:export></bx:export>
+  </defs>
+  <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; fill: hsl(108, 100%, 80%); stroke: hsl(108, 74%, 67%);" rx="48" ry="48" id="object-0"></rect>
+  <ellipse style="stroke-width: 10; filter: none; fill: rgb(89, 192, 89); stroke: rgb(56, 148, 56);" cx="300" cy="150" rx="95" ry="95"></ellipse>
+</svg>
