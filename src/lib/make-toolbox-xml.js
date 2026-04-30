@@ -981,6 +981,16 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_expandableCompare">
+            <field name="EXPANDABLE">2</field>
+            <value name="INPUT1">
+                <shadow type="text" />
+            </value>
+            <field name="OP2">e</field>
+            <value name="INPUT2">
+                <shadow type="text" />
+            </value>
+        </block>
         ${blockSeparator}
         <block type="operator_checkboxBoolean">
             <field name="CHECKBOX">TRUE</field>
