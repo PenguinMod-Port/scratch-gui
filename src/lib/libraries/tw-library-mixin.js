@@ -98,5 +98,8 @@ export default {
 	"itch": {tags: ["internet"]},
 	"GameJoltAPI": {tags: ["internet"]},
 	"NGIO": {tags: ["internet"]},
-	"lmsmcutils": {}
+	"lmsmcutils": {},
+	"SPtuneShark3": {tags: ["sound"]},
+	"cubesterWebhooks": {tags: ["internet"]},
+	"nishiowoDectalk": {tags: ["sound"]}
 }

@@ -91,7 +91,10 @@ const fetchLibrary = async () => {
         incompatibleWithScratch: !extension.scratchCompatible,
         featured: true
     }))
-        .map(extension => twLibraryMixin[extension.extensionId] ? {...extension, ...twLibraryMixin[extension.extensionId]} : extension)
+        .map(extension => twLibraryMixin[extension.extensionId] ?
+            {...extension, ...twLibraryMixin[extension.extensionId]} :
+            (console.debug(`no mixin for ${extension.extensionId}`) || extension)
+        )
         .map(extension => ({...extension, tags: [...extension.tags, "tw"]}))
         .filter(extension => !extension.hide);
 };
