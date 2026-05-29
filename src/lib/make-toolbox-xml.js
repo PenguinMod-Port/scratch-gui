@@ -1060,6 +1060,23 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_getLettersFromIndexToIndexInTextFixed">
+            <value name="INDEX1">
+                <shadow type="math_whole_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="INDEX2">
+                <shadow type="math_whole_number">
+                    <field name="NUM">3</field>
+                </shadow>
+            </value>
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
         <block type="operator_length">
             <value name="STRING">
                 <shadow type="text">
@@ -1127,6 +1144,21 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="operator_readLineInMultilineText">
+            <value name="LINE">
+                <shadow type="math_whole_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${apple}\n${banana}</field>
+                </shadow>
+            </value>
+        </block> 
+        <block type="operator_newLine" />
+        <block type="operator_tabCharacter" />
         ${blockSeparator}
         <block type="operator_toUpperLowerCase">
             <value name="TEXT">
@@ -1199,8 +1231,6 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
         </block>
         ${blockSeparator}
         <block type="operator_null" />
-        <block type="operator_newLine" />
-        <block type="operator_tabCharacter" />
         ${categorySeparator}
     </category>
     `;
