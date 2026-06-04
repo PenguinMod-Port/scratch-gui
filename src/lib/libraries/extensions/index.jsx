@@ -891,4 +891,23 @@ export const penguinmodGallery = [
         ),
         tags: ['pm', 'type']
     },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Labels"
+                description="Name for the jwProto extension"
+                id="pm.gui.extension.jwProto.name"
+            />
+        ),
+        extensionId: 'jwProto',
+        iconURL: require('../extensions/penguinmod/jwProto.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Annotate your code with extra blocks."
+                description="Description for the jwProto extension"
+                id="pm.gui.extension.jwProto.description"
+            />
+        ),
+        tags: ['pm']
+    },
 ]
