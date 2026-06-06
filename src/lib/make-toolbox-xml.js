@@ -1085,6 +1085,31 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="operator_indexOfTextInText">
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">world</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">Hello world!</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_lastIndexOfTextInText">
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">world</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">Hello world!</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
         <block type="operator_contains" id="operator_contains">
             <value name="STRING1">
                 <shadow type="text">
