@@ -555,7 +555,7 @@ export const penguinmodGallery = [
             />
         ),
         credits: ['DogeisCut'],
-        extensionId: 'https://extensions.penguinmod.com/extensions/DogeisCut/dogeiscutObject.js',
+        extensionId: 'dogeiscutObject',
         iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
         description: (
             <FormattedMessage
