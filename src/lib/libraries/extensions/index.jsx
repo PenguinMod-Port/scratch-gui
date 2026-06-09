@@ -910,4 +910,23 @@ export const penguinmodGallery = [
         ),
         tags: ['pm']
     },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Runtime"
+                description="Name for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.name"
+            />
+        ),
+        extensionId: 'jgRuntime',
+        iconURL: require('../extensions/penguinmod/jgRuntime.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Blocks for modifying project data and settings."
+                description="Description for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.description"
+            />
+        ),
+        tags: ['pm', 'data', 'internet']
+    }
 ]
