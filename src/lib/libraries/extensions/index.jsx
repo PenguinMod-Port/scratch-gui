@@ -723,6 +723,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Requests"
+                description="Name for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.name"
+            />
+        ),
+        extensionId: 'jwFetch',
+        iconURL: require('../extensions/penguinmod/jwFetch.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Make HTTP requests."
+                description="Description for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.description"
+            />
+        ),
+        tags: ['pm', 'internet']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Scope"
                 description="Name for the jwScope extension"
                 id="pm.gui.extension.jwScope.name"
