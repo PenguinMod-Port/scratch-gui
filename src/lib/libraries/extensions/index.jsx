@@ -555,7 +555,7 @@ export const penguinmodGallery = [
             />
         ),
         credits: ['DogeisCut'],
-        extensionId: 'https://extensions.penguinmod.com/extensions/DogeisCut/dogeiscutObject.js',
+        extensionId: 'dogeiscutObject',
         iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
         description: (
             <FormattedMessage
@@ -719,6 +719,25 @@ export const penguinmodGallery = [
             />
         ),
         tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Requests"
+                description="Name for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.name"
+            />
+        ),
+        extensionId: 'jwFetch',
+        iconURL: require('../extensions/penguinmod/jwFetch.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Make HTTP requests."
+                description="Description for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.description"
+            />
+        ),
+        tags: ['pm', 'internet']
     },
     {
         name: (
@@ -891,4 +910,42 @@ export const penguinmodGallery = [
         ),
         tags: ['pm', 'type']
     },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Labels"
+                description="Name for the jwProto extension"
+                id="pm.gui.extension.jwProto.name"
+            />
+        ),
+        extensionId: 'jwProto',
+        iconURL: require('../extensions/penguinmod/jwProto.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Annotate your code with extra blocks."
+                description="Description for the jwProto extension"
+                id="pm.gui.extension.jwProto.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Runtime"
+                description="Name for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.name"
+            />
+        ),
+        extensionId: 'jgRuntime',
+        iconURL: require('../extensions/penguinmod/jgRuntime.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Blocks for modifying project data and settings."
+                description="Description for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.description"
+            />
+        ),
+        tags: ['pm', 'data', 'internet']
+    }
 ]

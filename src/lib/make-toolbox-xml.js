@@ -336,7 +336,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
         </block>
         <block type="looks_getEffectValue" />
         ${blockSeparator}
-        <block type="looks_cleargraphiceffects"/>
+        <block type="looks_cleargraphiceffects" />
+        <block type="looks_set_blend_mode" />
         ${blockSeparator}
         ${isStage ? '' : `
             <block type="looks_show"/>
@@ -1081,6 +1082,31 @@ const operators = function (isInitialSetup, isStage, targetId, colors) {
             <value name="STRING">
                 <shadow type="text">
                     <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_indexOfTextInText">
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">world</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">Hello world!</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_lastIndexOfTextInText">
+            <value name="TEXT1">
+                <shadow type="text">
+                    <field name="TEXT">world</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                    <field name="TEXT">Hello world!</field>
                 </shadow>
             </value>
         </block>
