@@ -14,39 +14,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import {
-    FormattedMessage,
-    defineMessages,
-    injectIntl,
-    intlShape,
-} from "react-intl";
-import { getIsLoading } from "../reducers/project-state.js";
-import AppStateHOC from "../lib/app-state-hoc.jsx";
-import ErrorBoundaryHOC from "../lib/error-boundary-hoc.jsx";
-import TWProjectMetaFetcherHOC from "../lib/tw-project-meta-fetcher-hoc.jsx";
-import TWStateManagerHOC from "../lib/tw-state-manager-hoc.jsx";
-import SBFileUploaderHOC from "../lib/sb-file-uploader-hoc.jsx";
-import TWPackagerIntegrationHOC from "../lib/tw-packager-integration-hoc.jsx";
-import SettingsStore from "../addons/settings-store-singleton";
-import "../lib/tw-fix-history-api";
-import GUI from "./render-gui.jsx";
-import MenuBar from "../components/menu-bar/menu-bar.jsx";
-// import ProjectInput from '../components/tw-project-input/project-input.jsx';
-import FeaturedProjects from "../components/tw-featured-projects/featured-projects.jsx";
-import Description from "../components/tw-description/description.jsx";
-import BrowserModal from "../components/browser-modal/browser-modal.jsx";
-import CloudVariableBadge from "../containers/tw-cloud-variable-badge.jsx";
-import { isBrowserSupported } from "../lib/tw-environment-support-prober";
-import AddonChannels from "../addons/channels";
-import { loadServiceWorker } from "./load-service-worker";
-import runAddons from "../addons/entry";
-import InvalidEmbed from "../components/tw-invalid-embed/invalid-embed.jsx";
-import { APP_NAME } from "../lib/brand.js";
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {FormattedMessage, defineMessages, injectIntl, intlShape} from 'react-intl';
+import {getIsLoading} from '../reducers/project-state.js';
+import AppStateHOC from '../lib/app-state-hoc.jsx';
+import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
+import TWProjectMetaFetcherHOC from '../lib/tw-project-meta-fetcher-hoc.jsx';
+import TWStateManagerHOC from '../lib/tw-state-manager-hoc.jsx';
+import SBFileUploaderHOC from '../lib/sb-file-uploader-hoc.jsx';
+import TWPackagerIntegrationHOC from '../lib/tw-packager-integration-hoc.jsx';
+import SettingsStore from '../addons/settings-store-singleton';
+import '../lib/tw-fix-history-api';
+import GUI from './render-gui.jsx';
+import MenuBar from '../components/menu-bar/menu-bar.jsx';
+import ProjectInput from '../components/tw-project-input/project-input.jsx';
+import FeaturedProjects from '../components/tw-featured-projects/featured-projects.jsx';
+import Description from '../components/tw-description/description.jsx';
+import BrowserModal from '../components/browser-modal/browser-modal.jsx';
+import CloudVariableBadge from '../containers/tw-cloud-variable-badge.jsx';
+import TWWindchimeSubmitter from '../containers/tw-windchime-submitter.jsx';
+import {isBrowserSupported} from '../lib/tw-environment-support-prober';
+import AddonChannels from '../addons/channels';
+import {loadServiceWorker} from './load-service-worker';
+import runAddons from '../addons/entry';
+import InvalidEmbed from '../components/tw-invalid-embed/invalid-embed.jsx';
+import {APP_NAME} from '../lib/brand.js';
 
 import styles from "./interface.css";
 
@@ -237,6 +233,7 @@ class Interface extends React.Component {
                 })}
                 dir={isRtl ? "rtl" : "ltr"}
             >
+                <TWWindchimeSubmitter />
                 {isHomepage ? (
                     <div className={styles.menu}>
                         <WrappedMenuBar
