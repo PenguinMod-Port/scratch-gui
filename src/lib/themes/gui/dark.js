@@ -8,7 +8,7 @@ const guiColors = {
     'ui-modal-overlay': '#333333aa',
     'ui-modal-background': '#111111',
     'ui-modal-foreground': '#eeeeee',
-    'ui-modal-header-background': '#333333',
+    'ui-modal-header-background': 'var(--menu-bar-background)',
     'ui-modal-header-foreground': '#ffffff',
 
     'ui-white': '#111111',
@@ -17,7 +17,7 @@ const guiColors = {
 
     'text-primary': '#eeeeee',
 
-    'menu-bar-background': '#333333',
+    'menu-bar-background': 'var(--looks-secondary-dark)',
 
     'assets-background': '#111111',
 
@@ -57,6 +57,9 @@ const blockColors = {
     valueReportBackground: '#1e1e1e',
     valueReportBorder: '#333333',
     valueReportForeground: '#eeeeee',
+    errorReportBackground: '#2e1818',
+    errorReportBorder: '#552222',
+    errorReportForeground: '#eecccc',
     contextMenuBackground: '#111111',
     contextMenuBorder: '#ffffff26',
     contextMenuForeground: '#eeeeee',
