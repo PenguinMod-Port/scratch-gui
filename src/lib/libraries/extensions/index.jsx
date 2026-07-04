@@ -454,6 +454,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Motion Expansion"
+                description="Name for the pmMotionExpansion extension"
+                id="pm.gui.extension.pmMotionExpansion.name"
+            />
+        ),
+        extensionId: 'pmMotionExpansion',
+        iconURL: require('../extensions/penguinmod/pmMotionExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More small motion blocks for movement or collision."
+                description="Description for the pmMotionExpansion extension"
+                id="pm.gui.extension.pmMotionExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Events Expansion"
                 description="Name for the pmEventsExpansion extension"
                 id="pm.gui.extension.pmEventsExpansion.name"
