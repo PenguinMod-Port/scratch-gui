@@ -160,9 +160,10 @@ const motion = function (isInitialSetup, isStage, targetId, colors) {
             </value>
         </block>
         ${blockSeparator}
-        <block type="motion_ifonedgebounce"/>
-        ${blockSeparator}
         <block type="motion_setrotationstyle"/>
+        <block type="motion_move_sprite_to_scene_side">
+            <field name="ALIGNMENT">center</field>
+        </block>
         ${blockSeparator}
         <block id="${targetId}_xposition" type="motion_xposition"/>
         <block id="${targetId}_yposition" type="motion_yposition"/>
