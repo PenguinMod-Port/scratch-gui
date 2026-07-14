@@ -29,7 +29,7 @@ const projectData = translateFunction => {
                 variables: {
                     '`jEk@4|i[#Fk?(8x)AV.-my variable': [
                         translator(messages.variable),
-                        0
+                        null
                     ]
                 },
                 lists: {},
