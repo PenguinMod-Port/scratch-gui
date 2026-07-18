@@ -209,33 +209,42 @@ const CustomProcedures = props => (
                         id="gui.customProcedures.runWithoutScreenRefresh"
                     />
                 </label>
-            </div>
-            <div className={styles.checkboxRow}>
+                <label>
+                    <input
+                        checked={props.terminal}
+                        type="checkbox"
+                        onChange={props.onToggleTerminal}
+                    />
+                    <FormattedMessage
+                        defaultMessage="Capped block"
+                        id="gui.customProcedures.terminal"
+                    />
+                </label>
                 <label>
                     <FormattedMessage
                         defaultMessage="Output: "
                         description="Label for forced output shapes"
                         id="pm.gui.customProcedures.forceOutput"
                     />
+                    <select
+                        value={props.forceOutput}
+                        onChange={e => props.onForceOutput(e.target.value)}
+                    >
+                        <option value="0">{props.intl.formatMessage(messages.forceOutputAuto)}</option>
+                        <option value="1">{props.intl.formatMessage(messages.forceOutputHexagonal)}</option>
+                        <option value="2">{props.intl.formatMessage(messages.forceOutputRound)}</option>
+                        <option value="3">{props.intl.formatMessage(messages.forceOutputSquare)}</option>
+                        <option value="4">{props.intl.formatMessage(messages.forceOutputLeaf)}</option>
+                        <option value="5">{props.intl.formatMessage(messages.forceOutputPlus)}</option>
+                        <option value="6">{props.intl.formatMessage(messages.forceOutputOctagonal)}</option>
+                        <option value="7">{props.intl.formatMessage(messages.forceOutputBumped)}</option>
+                        <option value="8">{props.intl.formatMessage(messages.forceOutputIndented)}</option>
+                        <option value="9">{props.intl.formatMessage(messages.forceOutputScrapped)}</option>
+                        <option value="10">{props.intl.formatMessage(messages.forceOutputArrow)}</option>
+                        <option value="11">{props.intl.formatMessage(messages.forceOutputTicket)}</option>
+                        <option value="12">{props.intl.formatMessage(messages.forceOutputSlanted)}</option>
+                    </select>
                 </label>
-                <select
-                    value={props.forceOutput}
-                    onChange={e => props.onForceOutput(e.target.value)}
-                >
-                    <option value="0">{props.intl.formatMessage(messages.forceOutputAuto)}</option>
-                    <option value="1">{props.intl.formatMessage(messages.forceOutputHexagonal)}</option>
-                    <option value="2">{props.intl.formatMessage(messages.forceOutputRound)}</option>
-                    <option value="3">{props.intl.formatMessage(messages.forceOutputSquare)}</option>
-                    <option value="4">{props.intl.formatMessage(messages.forceOutputLeaf)}</option>
-                    <option value="5">{props.intl.formatMessage(messages.forceOutputPlus)}</option>
-                    <option value="6">{props.intl.formatMessage(messages.forceOutputOctagonal)}</option>
-                    <option value="7">{props.intl.formatMessage(messages.forceOutputBumped)}</option>
-                    <option value="8">{props.intl.formatMessage(messages.forceOutputIndented)}</option>
-                    <option value="9">{props.intl.formatMessage(messages.forceOutputScrapped)}</option>
-                    <option value="10">{props.intl.formatMessage(messages.forceOutputArrow)}</option>
-                    <option value="11">{props.intl.formatMessage(messages.forceOutputTicket)}</option>
-                    <option value="12">{props.intl.formatMessage(messages.forceOutputSlanted)}</option>
-                </select>
             </div>
             <Box className={styles.buttonRow}>
                 <button
@@ -266,6 +275,9 @@ const CustomProcedures = props => (
 CustomProcedures.propTypes = {
     componentRef: PropTypes.func.isRequired,
     intl: intlShape,
+    warp: PropTypes.bool.isRequired,
+    terminal: PropTypes.bool.isRequired,
+    forceOutput: PropTypes.number.isRequired,
     onAddBoolean: PropTypes.func.isRequired,
     onAddCommand: PropTypes.func.isRequired,
     onAddLabel: PropTypes.func.isRequired,
@@ -273,8 +285,7 @@ CustomProcedures.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
-    warp: PropTypes.bool.isRequired,
-    forceOutput: PropTypes.number.isRequired,
+    onToggleTerminal: PropTypes.func.isRequired,
     onForceOutput: PropTypes.func.isRequired
 };
 

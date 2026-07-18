@@ -15,6 +15,7 @@ class CustomProcedures extends React.Component {
             'handleAddCommand',
             'handleAddTextNumber',
             'handleToggleWarp',
+            'handleToggleTerminal',
             'handleForceOutput',
             'handleCancel',
             'handleOk',
@@ -23,7 +24,8 @@ class CustomProcedures extends React.Component {
         this.state = {
             rtlOffset: 0,
             warp: false,
-            forceOutput: 0
+            isTerminal: false,
+            forceOutput: 0,
         };
     }
     componentWillUnmount () {
@@ -147,6 +149,14 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    handleToggleTerminal () {
+        if (this.mutationRoot) {
+            const newTerminal = !this.mutationRoot.isTerminal_;
+            this.mutationRoot.isTerminal_ = newTerminal;
+            this.mutationRoot.updateDisplay_();
+            this.setState({terminal: newTerminal});
+        }
+    } 
     handleForceOutput (value) {
         if (this.mutationRoot) {
             this.mutationRoot.setForceOutput(value);
@@ -158,6 +168,8 @@ class CustomProcedures extends React.Component {
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
+                terminal={this.state.terminal}
+                forceOutput={this.state.forceOutput}
                 onAddBoolean={this.handleAddBoolean}
                 onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
@@ -165,7 +177,7 @@ class CustomProcedures extends React.Component {
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
-                forceOutput={this.state.forceOutput}
+                onToggleTerminal={this.handleToggleTerminal}
                 onForceOutput={this.handleForceOutput}
             />
         );
