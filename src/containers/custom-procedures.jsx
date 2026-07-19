@@ -17,6 +17,8 @@ class CustomProcedures extends React.Component {
             'handleToggleWarp',
             'handleToggleTerminal',
             'handleForceOutput',
+            'handleSetProcColor',
+            'handleCustomColorChange',
             'handleCancel',
             'handleOk',
             'setBlocks'
@@ -163,6 +165,15 @@ class CustomProcedures extends React.Component {
             this.setState({forceOutput: value});
         }
     }
+    handleSetProcColor (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.procColour_ = value;
+            this.mutationRoot.updateDisplay_();
+        }
+    }
+    handleCustomColorChange (e) {
+        this.handleSetProcColor(e.target.value);
+    }
     render () {
         return (
             <CustomProceduresComponent
@@ -179,6 +190,8 @@ class CustomProcedures extends React.Component {
                 onToggleWarp={this.handleToggleWarp}
                 onToggleTerminal={this.handleToggleTerminal}
                 onForceOutput={this.handleForceOutput}
+                setProcColor={this.handleSetProcColor}
+                onCustomColorChange={this.handleCustomColorChange}
             />
         );
     }

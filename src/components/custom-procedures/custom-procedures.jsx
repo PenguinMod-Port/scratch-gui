@@ -3,6 +3,9 @@ import React from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
+import LazyScratchBlocks from '../../lib/tw-lazy-scratch-blocks';
+
+import dropperIcon from './icon--dropper.svg';
 
 import booleanInputIcon from './icon--boolean-input.svg';
 import branchInputIcon from './icon--branch-input.svg';
@@ -85,7 +88,10 @@ const messages = defineMessages({
     }
 });
 
-const CustomProcedures = props => (
+const CustomProcedures = props => {
+    const ScratchBlocks = LazyScratchBlocks.get();
+
+    return (
     <Modal
         className={styles.modalContent}
         contentLabel={props.intl.formatMessage(messages.myblockModalTitle)}
@@ -196,6 +202,79 @@ const CustomProcedures = props => (
                     </div>
                 </div>
             </div>
+
+            <div className={styles.colorPickerArea}>
+                <div>
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.motion.primary }}
+                        onClick={() => props.setProcColor("motion")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.looks.primary }}
+                        onClick={() => props.setProcColor("looks")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.sounds.primary }}
+                        onClick={() => props.setProcColor("sounds")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.event.primary }}
+                        onClick={() => props.setProcColor("event")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.control.primary }}
+                        onClick={() => props.setProcColor("control")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.sensing.primary }}
+                        onClick={() => props.setProcColor("sensing")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.operators.primary }}
+                        onClick={() => props.setProcColor("operators")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.data.primary }}
+                        onClick={() => props.setProcColor("data")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.data_lists.primary }}
+                        onClick={() => props.setProcColor("data_lists")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.more.primary }}
+                        onClick={() => props.setProcColor("more")}
+                    />
+                    <button
+                        className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.pen.primary }}
+                        onClick={() => props.setProcColor("pen")}
+                    />
+                    <div className={styles.parentCustom}>
+                        <input
+                            type="color"
+                            value="#222"
+                            className={styles.presetColor}
+                            onChange={props.onCustomColorChange}
+                        />
+                        <img
+                            src={dropperIcon}
+                            className={styles.customPlus}
+                        />
+                    </div>
+                </div>
+            </div>
+
             <div className={styles.checkboxRow}>
                 <label>
                     <input
@@ -270,7 +349,7 @@ const CustomProcedures = props => (
             </Box>
         </Box>
     </Modal>
-);
+)};
 
 CustomProcedures.propTypes = {
     componentRef: PropTypes.func.isRequired,
@@ -286,7 +365,9 @@ CustomProcedures.propTypes = {
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
     onToggleTerminal: PropTypes.func.isRequired,
-    onForceOutput: PropTypes.func.isRequired
+    onForceOutput: PropTypes.func.isRequired,
+    setProcColor: PropTypes.func.isRequired,
+    onCustomColorChange: PropTypes.func.isRequired
 };
 
 export default injectIntl(CustomProcedures);
