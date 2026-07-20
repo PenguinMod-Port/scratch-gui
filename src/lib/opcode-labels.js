@@ -137,6 +137,21 @@ const messages = defineMessages({
         description: 'Label for the volume monitor when shown on the stage',
         id: 'gui.opcodeLabels.volume'
     },
+    sound_getEffectValue: {
+        defaultMessage: 'effect',
+        description: 'Label for the sound effect monitor with no effect chosen when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue'
+    },
+    sound_getEffectValue_pitch: {
+        defaultMessage: 'pitch',
+        description: 'Label for the pitch effect monitor when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue.pitch'
+    },
+    sound_getEffectValue_pan: {
+        defaultMessage: 'pan left/right',
+        description: 'Label for the pan left/right effect monitor when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue.pan'
+    },
     sound_tempo: {
         defaultMessage: 'tempo',
         description: 'Label for the tempo monitor when shown on the stage',
@@ -313,6 +328,7 @@ class OpcodeLabels {
 
             // Sound
             sound_volume: {category: 'sound'},
+            sound_getEffectValue: {category: 'sound'},
             sound_tempo: {category: 'sound'},
 
             // pm control
@@ -407,6 +423,13 @@ class OpcodeLabels {
 
         // Sound
         this._opcodeMap.sound_volume.labelFn = () => this._translator(messages.sound_volume);
+        this._opcodeMap.sound_getEffectValue.labelFn = params => {
+            const effect = params.EFFECT.toLowerCase();
+            if (messages[`sound_getEffectValue_${effect}`]) {
+                return this._translator(messages[`sound_getEffectValue_${effect}`]);
+            }
+            return this._translator(messages.sound_getEffectValue);
+        };
         this._opcodeMap.sound_tempo.labelFn = () => this._translator(messages.sound_tempo);
 
         // pm control
