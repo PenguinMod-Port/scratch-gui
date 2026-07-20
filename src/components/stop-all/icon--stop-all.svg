@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#EC5959;stroke:#B84848;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-</style>
-<polygon class="st0" points="4.3,0.5 9.7,0.5 13.5,4.3 13.5,9.7 9.7,13.5 4.3,13.5 0.5,9.7 0.5,4.3 "/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="9" y1="1" x2="9" y2="17" id="gradient-0">
+      <stop offset="0" style="stop-color: rgb(92.157% 27.843% 38.824%)"></stop>
+      <stop offset="1" style="stop-color: rgb(64.699% 0% 19.129%)"></stop>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="9" y1="1" x2="9" y2="17" id="gradient-1">
+      <stop offset="0" style="stop-color: rgb(63.922% 16.078% 23.922%)"></stop>
+      <stop offset="1" style="stop-color: rgb(46.619% 0% 11.438%)"></stop>
+    </linearGradient>
+  </defs>
+  <path d="M 11.917 1.001 C 12.181 1 12.407 1.094 12.594 1.281 L 16.719 5.405 C 16.907 5.593 17 5.819 17 6.084 L 17 11.916 C 17 12.181 16.906 12.407 16.719 12.594 L 12.595 16.719 C 12.407 16.906 12.181 17 11.916 17 L 6.084 16.999 C 5.819 16.999 5.593 16.906 5.406 16.719 L 1.281 12.595 C 1.094 12.407 1.001 12.181 1 11.916 L 1.001 6.084 C 1.001 5.819 1.094 5.593 1.282 5.406 L 5.406 1.281 C 5.593 1.094 5.819 1 6.084 1 L 11.917 1.001 Z" style="stroke-width: 1; transform-origin: 9px 9px; fill: url(#gradient-0); stroke: url(#gradient-1);"></path>
 </svg>

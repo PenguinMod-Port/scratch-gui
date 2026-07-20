@@ -12,7 +12,9 @@ import Dial from './dial.jsx';
 import styles from './direction-picker.css';
 
 import allAroundIcon from '!../../lib/tw-recolor/build!./icon--all-around.svg';
+import lookAtIcon from '!../../lib/tw-recolor/build!./icon--look-at.svg';
 import leftRightIcon from '!../../lib/tw-recolor/build!./icon--left-right.svg';
+import upDownIcon from '!../../lib/tw-recolor/build!./icon--up-down.svg';
 import dontRotateIcon from '!../../lib/tw-recolor/build!./icon--dont-rotate.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
@@ -27,7 +29,9 @@ const directionLabel = (
 
 const RotationStyles = {
     ALL_AROUND: 'all around',
+    LOOK_AT: 'look at',
     LEFT_RIGHT: 'left-right',
+    UP_DOWN: 'up-down',
     DONT_ROTATE: "don't rotate"
 };
 
@@ -37,10 +41,20 @@ const messages = defineMessages({
         description: 'Button to change to the all around rotation style',
         defaultMessage: 'All Around'
     },
+    lookAt: {
+        id: 'pm.gui.directionPicker.rotationStyles.lookAt',
+        description: 'Button to change to the look at rotation style',
+        defaultMessage: 'Look At'
+    },
     leftRight: {
         id: 'gui.directionPicker.rotationStyles.leftRight',
         description: 'Button to change to the left-right rotation style',
         defaultMessage: 'Left/Right'
+    },
+    upDown: {
+        id: 'pm.gui.directionPicker.rotationStyles.upDown',
+        description: 'Button to change to the up-down rotation style',
+        defaultMessage: 'Up/Down'
     },
     dontRotate: {
         id: 'gui.directionPicker.rotationStyles.dontRotate',
@@ -72,10 +86,22 @@ const DirectionPicker = props => (
                                 title: props.intl.formatMessage(messages.allAround)
                             },
                             {
+                                handleClick: props.onClickLookAt,
+                                icon: lookAtIcon,
+                                isSelected: props.rotationStyle === RotationStyles.LOOK_AT,
+                                title: props.intl.formatMessage(messages.lookAt)
+                            },
+                            {
                                 handleClick: props.onClickLeftRight,
                                 icon: leftRightIcon,
                                 isSelected: props.rotationStyle === RotationStyles.LEFT_RIGHT,
                                 title: props.intl.formatMessage(messages.leftRight)
+                            },
+                            {
+                                handleClick: props.onClickUpDown,
+                                icon: upDownIcon,
+                                isSelected: props.rotationStyle === RotationStyles.UP_DOWN,
+                                title: props.intl.formatMessage(messages.upDown)
                             },
                             {
                                 handleClick: props.onClickDontRotate,
@@ -115,6 +141,8 @@ DirectionPicker.propTypes = {
     onClickAllAround: PropTypes.func.isRequired,
     onClickDontRotate: PropTypes.func.isRequired,
     onClickLeftRight: PropTypes.func.isRequired,
+    onClickUpDown: PropTypes.func.isRequired,
+    onClickLookAt: PropTypes.func.isRequired,
     onClosePopover: PropTypes.func.isRequired,
     onOpenPopover: PropTypes.func.isRequired,
     popoverOpen: PropTypes.bool.isRequired,

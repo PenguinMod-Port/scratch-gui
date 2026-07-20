@@ -4,22 +4,30 @@ import React from 'react';
 import VM from 'scratch-vm';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import log from '../lib/log';
+import twLibraryMixin from '../lib/libraries/tw-library-mixin';
 
 import extensionLibraryContent, {
     galleryError,
     galleryLoading,
-    galleryMore
+    galleryMore,
+    penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
-import extensionTags from '../lib/libraries/tw-extension-tags';
+import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
+import extensions from '../lib/libraries/extensions/index.jsx';
 
 const messages = defineMessages({
     extensionTitle: {
         defaultMessage: 'Choose an Extension',
         description: 'Heading for the extension library',
         id: 'gui.extensionLibrary.chooseAnExtension'
+    },
+    header: {
+        defaultMessage: 'Extensions',
+        description: 'Header for extension library',
+        id: 'pm.gui.extensionLibrary.header'
     }
 });
 
@@ -27,6 +35,7 @@ const toLibraryItem = extension => {
     if (typeof extension === 'object') {
         return ({
             rawURL: extension.iconURL || extensionIcon,
+            featured: true,
             ...extension
         });
     }
@@ -55,7 +64,7 @@ const fetchLibrary = async () => {
         extensionId: extension.id,
         extensionURL: `https://extensions.turbowarp.org/${extension.slug}.js`,
         iconURL: `https://extensions.turbowarp.org/${extension.image || 'images/unknown.svg'}`,
-        tags: ['tw'],
+        tags: [],
         credits: [
             ...(extension.original || []),
             ...(extension.by || [])
@@ -81,7 +90,13 @@ const fetchLibrary = async () => {
         })) : null,
         incompatibleWithScratch: !extension.scratchCompatible,
         featured: true
-    }));
+    }))
+        .map(extension => twLibraryMixin[extension.extensionId] ?
+            {...extension, ...twLibraryMixin[extension.extensionId]} :
+            (console.debug(`no mixin for ${extension.extensionId}`) || extension)
+        )
+        .map(extension => ({...extension, tags: [...extension.tags, "tw"]}))
+        .filter(extension => !extension.hide);
 };
 
 class ExtensionLibrary extends React.PureComponent {
@@ -133,12 +148,6 @@ class ExtensionLibrary extends React.PureComponent {
             return;
         }
 
-        if (extensionId === 'procedures_enable_return') {
-            this.props.onEnableProcedureReturns();
-            this.props.onCategorySelected('myBlocks');
-            return;
-        }
-
         const url = item.extensionURL ? item.extensionURL : extensionId;
         if (!item.disabled) {
             if (this.props.vm.extensionManager.isExtensionLoaded(extensionId)) {
@@ -161,12 +170,13 @@ class ExtensionLibrary extends React.PureComponent {
         if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
             library = extensionLibraryContent.map(toLibraryItem);
             library.push('---');
+            library = library.concat(penguinmodGallery.map(toLibraryItem));
+            library.push('---');
             if (this.state.gallery) {
                 library.push(toLibraryItem(galleryMore));
                 const locale = this.props.intl.locale;
                 library.push(
                     ...this.state.gallery
-                        .filter(i => i.extensionId !== 'faceSensing')
                         .map(i => translateGalleryItem(i, locale))
                         .map(toLibraryItem)
                 );
@@ -185,6 +195,7 @@ class ExtensionLibrary extends React.PureComponent {
                 id="extensionLibrary"
                 tags={extensionTags}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}

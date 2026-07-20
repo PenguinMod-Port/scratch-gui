@@ -22,7 +22,8 @@ const categoryColorMap = {
     looks: 'looks',
     motion: 'motion',
     list: 'data_lists',
-    extension: 'pen'
+    extension: 'pen',
+    control: 'control'
 };
 
 const modes = {
@@ -65,7 +66,9 @@ const MonitorComponent = props => (
                 data-opcode={props.opcode}
             >
                 {React.createElement(modes[props.mode], {
-                    categoryColor: getCategoryColor(props.theme, props.category),
+                    categoryColor: props.category == "extension"
+                        ? Object.assign(getCategoryColor(props.theme, props.category), props.monitorColor)
+                        : getCategoryColor(props.theme, props.category),
                     ...props
                 })}
             </Box>
@@ -146,6 +149,10 @@ MonitorComponent.propTypes = {
     draggable: PropTypes.bool.isRequired,
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    monitorColor: PropTypes.shape({
+        background: PropTypes.string,
+        text: PropTypes.string
+    }),
     mode: PropTypes.oneOf(monitorModes),
     opcode: PropTypes.string.isRequired,
     onDragEnd: PropTypes.func.isRequired,

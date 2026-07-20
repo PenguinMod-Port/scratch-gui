@@ -18,7 +18,9 @@ const isUndefined = a => typeof a === 'undefined';
 export default function ({id, mode, spriteName, opcode, params, value, vm}) {
     // Extension monitors get their labels from the Runtime through `getLabelForOpcode`.
     // Other monitors' labels are hard-coded in `OpcodeLabels`.
-    let {label, category, labelFn} = (vm && vm.runtime.getLabelForOpcode(opcode)) || OpcodeLabels.getLabel(opcode);
+    let {
+        label, category, labelFn, monitorColor
+    } = (vm && vm.runtime.getLabelForOpcode(opcode)) || OpcodeLabels.getLabel(opcode);
 
     // Use labelFn if provided for dynamic labelling (e.g. variables)
     if (!isUndefined(labelFn)) label = labelFn(params);
@@ -33,11 +35,39 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
         value = Number(value.toFixed(6));
     }
 
-    // Convert scalars to a string now. That should help avoid unnecessary re-renders in a few edge cases.
-    // For lists, we stringify when we display the list row instead of doing a full list copy on every change.
-    if (mode !== 'list') {
-        value = safeStringify(value);
+    const customTypeHandler = (value, list = false) => {
+        let func = (list && value.toListItem) || value.toMonitorContent || value.toReporterContent;
+        if (!func) {
+            return value.toString();
+            return;
+        }
+
+        return func.call(value);
     }
 
-    return {id, label, category, value};
+    if (mode !== 'list') {
+        if (value === null || value === undefined) {
+            value = document.createElement('i');
+            value.textContent = 'null';
+        } else if (![Object.prototype, null].includes(Object.getPrototypeOf(value))) {
+            value = customTypeHandler(value);
+        } else value = safeStringify(value);
+    } else if (value instanceof Array) {
+        value = value.map(v => {
+            if (v === null || v === undefined) {
+                v = document.createElement('i');
+                v.textContent = 'null';
+                return v;
+            }
+            if (![Object.prototype, null].includes(Object.getPrototypeOf(v))) return customTypeHandler(v, true);
+            return v;
+        });
+    }
+
+    if (monitorColor) {
+        if (monitorColor.background == null) delete monitorColor.background;
+        if (monitorColor.text == null) delete monitorColor.text;
+    }
+
+    return {id, label, category, value, monitorColor};
 }

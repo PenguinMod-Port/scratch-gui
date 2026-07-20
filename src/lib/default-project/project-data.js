@@ -29,7 +29,7 @@ const projectData = translateFunction => {
                 variables: {
                     '`jEk@4|i[#Fk?(8x)AV.-my variable': [
                         translator(messages.variable),
-                        0
+                        null
                     ]
                 },
                 lists: {},
@@ -60,13 +60,13 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: '927d672925e7b99f7813735c484c6922',
+                        assetId: 'd1c55bd7b6ad8b25d5470f24b25ff5ea',
                         name: translator(messages.costume, {index: 1}),
                         bitmapResolution: 1,
-                        md5ext: '927d672925e7b99f7813735c484c6922.svg',
+                        md5ext: 'd1c55bd7b6ad8b25d5470f24b25ff5ea.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 30.74937882782359,
-                        rotationCenterY: 58.864768144346826
+                        rotationCenterX: 25.48413426585367,
+                        rotationCenterY: 45.967250000000035
                     }
                 ],
                 sounds: [],

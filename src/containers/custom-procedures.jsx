@@ -12,15 +12,22 @@ class CustomProcedures extends React.Component {
         bindAll(this, [
             'handleAddLabel',
             'handleAddBoolean',
+            'handleAddCommand',
             'handleAddTextNumber',
             'handleToggleWarp',
+            'handleToggleTerminal',
+            'handleForceOutput',
+            'handleSetProcColor',
+            'handleCustomColorChange',
             'handleCancel',
             'handleOk',
             'setBlocks'
         ]);
         this.state = {
             rtlOffset: 0,
-            warp: false
+            warp: false,
+            isTerminal: false,
+            forceOutput: 0,
         };
     }
     componentWillUnmount () {
@@ -104,7 +111,7 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp()});
+        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput()});
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
@@ -127,6 +134,11 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addBooleanExternal();
         }
     }
+    handleAddCommand () {
+        if (this.mutationRoot) {
+            this.mutationRoot.addCommandExternal();
+        }
+    }
     handleAddTextNumber () {
         if (this.mutationRoot) {
             this.mutationRoot.addStringNumberExternal();
@@ -139,17 +151,47 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    handleToggleTerminal () {
+        if (this.mutationRoot) {
+            const newTerminal = !this.mutationRoot.isTerminal_;
+            this.mutationRoot.isTerminal_ = newTerminal;
+            this.mutationRoot.updateDisplay_();
+            this.setState({terminal: newTerminal});
+        }
+    } 
+    handleForceOutput (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.setForceOutput(value);
+            this.setState({forceOutput: value});
+        }
+    }
+    handleSetProcColor (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.procColour_ = value;
+            this.mutationRoot.updateDisplay_();
+        }
+    }
+    handleCustomColorChange (e) {
+        this.handleSetProcColor(e.target.value);
+    }
     render () {
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
+                terminal={this.state.terminal}
+                forceOutput={this.state.forceOutput}
                 onAddBoolean={this.handleAddBoolean}
+                onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
                 onAddTextNumber={this.handleAddTextNumber}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
+                onToggleTerminal={this.handleToggleTerminal}
+                onForceOutput={this.handleForceOutput}
+                setProcColor={this.handleSetProcColor}
+                onCustomColorChange={this.handleCustomColorChange}
             />
         );
     }

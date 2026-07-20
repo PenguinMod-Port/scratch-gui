@@ -11,6 +11,8 @@ class DirectionPicker extends React.Component {
             'handleOpenPopover',
             'handleClosePopover',
             'handleClickLeftRight',
+            'handleClickUpDown',
+            'handleClickLookAt',
             'handleClickDontRotate',
             'handleClickAllAround'
         ]);
@@ -27,8 +29,14 @@ class DirectionPicker extends React.Component {
     handleClickAllAround () {
         this.props.onChangeRotationStyle(RotationStyles.ALL_AROUND);
     }
+    handleClickLookAt () {
+        this.props.onChangeRotationStyle(RotationStyles.LOOK_AT);
+    }
     handleClickLeftRight () {
         this.props.onChangeRotationStyle(RotationStyles.LEFT_RIGHT);
+    }
+    handleClickUpDown () {
+        this.props.onChangeRotationStyle(RotationStyles.UP_DOWN);
     }
     handleClickDontRotate () {
         this.props.onChangeRotationStyle(RotationStyles.DONT_ROTATE);
@@ -45,6 +53,8 @@ class DirectionPicker extends React.Component {
                 onClickAllAround={this.handleClickAllAround}
                 onClickDontRotate={this.handleClickDontRotate}
                 onClickLeftRight={this.handleClickLeftRight}
+                onClickUpDown={this.handleClickUpDown}
+                onClickLookAt={this.handleClickLookAt}
                 onClosePopover={this.handleClosePopover}
                 onOpenPopover={this.handleOpenPopover}
             />
