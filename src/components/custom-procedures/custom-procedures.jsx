@@ -263,7 +263,7 @@ const CustomProcedures = props => {
                     <div className={styles.parentCustom}>
                         <input
                             type="color"
-                            value="#222"
+                            value={props.currentColor}
                             className={styles.presetColor}
                             onChange={props.onCustomColorChange}
                         />
@@ -367,7 +367,8 @@ CustomProcedures.propTypes = {
     onToggleTerminal: PropTypes.func.isRequired,
     onForceOutput: PropTypes.func.isRequired,
     setProcColor: PropTypes.func.isRequired,
-    onCustomColorChange: PropTypes.func.isRequired
+    onCustomColorChange: PropTypes.func.isRequired,
+    currentColor: PropTypes.string
 };
 
 export default injectIntl(CustomProcedures);

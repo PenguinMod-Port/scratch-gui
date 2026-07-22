@@ -28,6 +28,7 @@ class CustomProcedures extends React.Component {
             warp: false,
             isTerminal: false,
             forceOutput: 0,
+            color: '#222'
         };
     }
     componentWillUnmount () {
@@ -111,7 +112,7 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput()});
+        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput(), color: this.mutationRoot.getColour()});
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
@@ -169,6 +170,7 @@ class CustomProcedures extends React.Component {
         if (this.mutationRoot) {
             this.mutationRoot.procColour_ = value;
             this.mutationRoot.updateDisplay_();
+            this.setState({color: value});
         }
     }
     handleCustomColorChange (e) {
@@ -192,6 +194,7 @@ class CustomProcedures extends React.Component {
                 onForceOutput={this.handleForceOutput}
                 setProcColor={this.handleSetProcColor}
                 onCustomColorChange={this.handleCustomColorChange}
+                currentColor={this.state.color}
             />
         );
     }
