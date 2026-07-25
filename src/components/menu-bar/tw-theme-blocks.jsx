@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {BLOCKS_CUSTOM, BLOCKS_DARK, BLOCKS_HIGH_CONTRAST, BLOCKS_THREE, Theme} from '../../lib/themes/index.js';
+import {BLOCKS_DARK, BLOCKS_HIGH_CONTRAST, BLOCKS_THREE, Theme} from '../../lib/themes/index.js';
 import {openBlocksThemeMenu, blocksThemeMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -33,19 +33,13 @@ const options = defineMessages({
         defaultMessage: 'Dark (Beta)',
         description: 'Name of the dark block colors',
         id: 'tw.blockColors.dark'
-    },
-    [BLOCKS_CUSTOM]: {
-        defaultMessage: 'Customize in Addon Settings',
-        description: 'Link in block color list to open addon settings for more customization',
-        id: 'tw.blockColors.custom'
     }
 });
 
 const icons = {
     [BLOCKS_THREE]: threeIcon,
     [BLOCKS_HIGH_CONTRAST]: highContrastIcon,
-    [BLOCKS_DARK]: darkIcon,
-    [BLOCKS_CUSTOM]: customIcon
+    [BLOCKS_DARK]: darkIcon
 };
 
 const ThemeIcon = ({id}) => (
@@ -72,15 +66,6 @@ const ThemeMenuItem = ({id, disabled, isSelected, onClick}) => (
             />
             <ThemeIcon id={id} />
             <FormattedMessage {...options[id]} />
-            {id === BLOCKS_CUSTOM && (
-                <img
-                    width={20}
-                    height={20}
-                    className={styles.openLink}
-                    src={openLinkIcon}
-                    draggable={false}
-                />
-            )}
         </div>
     </MenuItem>
 );
@@ -123,20 +108,14 @@ const BlocksThemeMenu = ({
             {[
                 BLOCKS_THREE,
                 BLOCKS_HIGH_CONTRAST,
-                BLOCKS_DARK,
-                ...(onOpenCustomSettings ? [BLOCKS_CUSTOM] : [])
+                BLOCKS_DARK
             ].map(i => (
                 <ThemeMenuItem
                     key={i}
                     id={i}
                     isSelected={theme.blocks === i}
                     // eslint-disable-next-line react/jsx-no-bind
-                    onClick={
-                        i === BLOCKS_CUSTOM ?
-                            onOpenCustomSettings :
-                            () => onChangeTheme(theme.set('blocks', i))
-                    }
-                    disabled={i !== BLOCKS_CUSTOM && theme.blocks === BLOCKS_CUSTOM}
+                    onClick={() => onChangeTheme(theme.set('blocks', i))}
                 />
             ))}
         </Submenu>

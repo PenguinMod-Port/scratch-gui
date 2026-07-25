@@ -7,7 +7,7 @@ import LazyScratchBlocks from './tw-lazy-scratch-blocks';
  */
 export default function (vm) {
     const ScratchBlocks = LazyScratchBlocks.get();
-    const jsonForMenuBlock = function (name, menuOptionsFn, colors, start) {
+    const jsonForMenuBlock = function (name, menuOptionsFn, colour, start) {
         return {
             message0: '%1',
             args0: [
@@ -21,15 +21,12 @@ export default function (vm) {
             ],
             inputsInline: true,
             output: 'String',
-            colour: colors.secondary,
-            colourSecondary: colors.secondary,
-            colourTertiary: colors.tertiary,
-            colourQuaternary: colors.quaternary,
+            colour,
             outputShape: ScratchBlocks.OUTPUT_SHAPE_ROUND
         };
     };
 
-    const jsonForHatBlockMenu = function (hatName, name, menuOptionsFn, colors, start) {
+    const jsonForHatBlockMenu = function (hatName, name, menuOptionsFn, colour, start) {
         return {
             message0: hatName,
             args0: [
@@ -41,10 +38,7 @@ export default function (vm) {
                     }
                 }
             ],
-            colour: colors.primary,
-            colourSecondary: colors.secondary,
-            colourTertiary: colors.tertiary,
-            colourQuaternary: colors.quaternary,
+            colour,
             extensions: ['shape_hat']
         };
     };
