@@ -62,10 +62,7 @@ export default function (vm) {
                 }
             ],
             output: true,
-            colour: ScratchBlocks.Colours.sensing.primary,
-            colourSecondary: ScratchBlocks.Colours.sensing.secondary,
-            colourTertiary: ScratchBlocks.Colours.sensing.tertiary,
-            colourQuaternary: ScratchBlocks.Colours.sensing.quaternary,
+            colour: ScratchBlocks.Colours.sensing,
             outputShape: ScratchBlocks.OUTPUT_SHAPE_ROUND
         };
     };

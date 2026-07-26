@@ -1,3 +1,5 @@
+import {hex2hsl, hsl2hex} from '../../tw-color-utils';
+
 const blockColors = {
     motion: "#4C97FF",
     looks: "#9966FF",
@@ -69,7 +71,35 @@ const blockColors = {
 
 const extensions = {};
 
+const colourModifier = function(colour) {
+  const contrast = (c, amt) => {
+    const hsl = hex2hsl(c);
+    console.log(hsl);
+    hsl[2] /= amt;
+
+    // stupid purple color fixes
+    const diff = Math.max(30 - Math.abs(240 - hsl[0]), 0) / 30;
+    console.log(diff);
+    hsl[1] /= 1 + diff * amt;
+
+    return hsl2hex(hsl);
+  };
+
+  return [
+    colour,
+    contrast(colour, 1.1),
+    contrast(colour, 1.2),
+    contrast(colour, 1.2)
+  ];
+}
+
+const textColourModifier = function(colour) {
+  return colour;
+}
+
 export {
     blockColors,
-    extensions
+    extensions,
+    colourModifier,
+    textColourModifier
 };

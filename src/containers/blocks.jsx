@@ -152,6 +152,16 @@ class Blocks extends React.Component {
         Msg.PROCEDURES_TO_STATEMENT = this.props.intl.formatMessage(messages.PROCEDURES_TO_STATEMENT);
         Msg.PROCEDURES_DOCS = this.props.intl.formatMessage(messages.PROCEDURES_DOCS);
 
+        const colourModifier = this.props.theme.getColourModifier();
+        if (colourModifier) {
+            this.ScratchBlocks.Block.colourModifier = colourModifier;
+        }
+
+        const textColourModifier = this.props.theme.getTextColourModifier();
+        if (textColourModifier) {
+            this.ScratchBlocks.Block.textColourModifier = textColourModifier;
+        }
+
         const workspaceConfig = defaultsDeep({},
             this.props.options,
             {

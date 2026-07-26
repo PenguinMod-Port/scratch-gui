@@ -39,17 +39,10 @@ const injectExtensionCategoryTheme = (dynamicBlockXML, theme) => {
         const dom = parser.parseFromString(extension.xml, 'text/xml');
 
         const primaryColor = dom.documentElement.getAttribute('colour');
-        const usesCustomColors = primaryColor.toLowerCase() !== DEFAULT_EXTENSION_PRIMARY;
-        if (usesCustomColors) {
-            const converters = theme.getCustomExtensionColors();
-            dom.documentElement.setAttribute('colour', converters.categoryIconBackground(primaryColor));
-            dom.documentElement.setAttribute('secondaryColour', converters.categoryIconBorder(primaryColor));
-        } else {
-            dom.documentElement.setAttribute('colour', extensionColors.primary);
-            // Note: the category's secondaryColour matches up with the blocks' tertiary color,
-            // both used for border color.
-            dom.documentElement.setAttribute('secondaryColour', extensionColors.tertiary);
-        }
+        dom.documentElement.setAttribute('colour', extensionColors.primary);
+        // Note: the category's secondaryColour matches up with the blocks' tertiary color,
+        // both used for border color.
+        dom.documentElement.setAttribute('secondaryColour', extensionColors.tertiary);
 
         const categoryIconURI = getCategoryIconURI(extensionIcons[extension.id]);
         if (categoryIconURI) {
@@ -97,18 +90,6 @@ const injectBlockIcons = (blockInfoJson, theme) => {
 const injectExtensionBlockTheme = (blockInfoJson, theme) => {
     // Minor optimization -- don't do anything at all for the default theme.
     if (theme.blocks === BLOCKS_THREE) return blockInfoJson;
-
-    if (!blockInfoJson.extensions?.includes('default_extension_colors')) {
-        const converters = theme.getCustomExtensionColors();
-        return {
-            ...blockInfoJson,
-            colour: converters.primary(blockInfoJson.colour),
-            colourSecondary: converters.secondary(blockInfoJson.colour),
-            colourTertiary: converters.tertiary(blockInfoJson.colour),
-            colourQuaternary: converters.quaternary(blockInfoJson.colour),
-            blockText: blockInfoJson.blockText && converters.blockText(blockInfoJson) 
-        };
-    }
 
     const extensionColors = getExtensionColors(theme);
 

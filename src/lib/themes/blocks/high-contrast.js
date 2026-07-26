@@ -3,7 +3,7 @@ import penIcon from './high-contrast-media/extensions/penIcon.svg';
 import text2speechIcon from './high-contrast-media/extensions/text2speechIcon.svg';
 import translateIcon from './high-contrast-media/extensions/translateIcon.svg';
 import videoSensingIcon from './high-contrast-media/extensions/videoSensingIcon.svg';
-import {hex2hsv, hsv2hex} from '../../tw-color-utils';
+import {hex2rgb, rgb2hex, hex2hsl, hsl2hex} from '../../tw-color-utils';
 
 const blockColors = {
     text: '#000000',
@@ -16,7 +16,8 @@ const blockColors = {
     insertionMarkerOpacity: 0.2,
     fieldShadow: 'rgba(255, 255, 255, 0.3)',
     dragShadowOpacity: 0.6,
-    menuHover: 'rgba(255, 255, 255, 0.3)'
+    menuHover: 'rgba(255, 255, 255, 0.3)',
+    checkboxFieldBackground: '#5dff5d'
 };
 
 const extensions = {
@@ -37,7 +38,41 @@ const extensions = {
     }
 };
 
+const colourModifier = function(colour) {
+  const contrast = (c, amt) => {
+    const hsl = hex2hsl(c)
+    hsl[2] /= amt;
+
+    // stupid purple color fixes
+    const diff = Math.max(30 - Math.abs(240 - hsl[0]), 0) / 30;
+    hsl[1] /= 1 + diff * amt;
+
+    return hsl2hex(hsl);
+  };
+  const lighten = (c, amt) => {
+    const rgb = hex2rgb(c);
+    return rgb2hex([
+      Math.round(rgb[0] * (1 - amt) + 255 * amt),
+      Math.round(rgb[1] * (1 - amt) + 255 * amt),
+      Math.round(rgb[2] * (1 - amt) + 255 * amt)
+    ]);
+  };
+
+  return [
+    lighten(colour, 0.4),
+    lighten(colour, 0.6),
+    lighten(contrast(colour, 1.2), 0.2),
+    lighten(colour, 0.8),
+  ];
+}
+
+const textColourModifier = function(colour) {
+  return "#000000";
+}
+
 export {
     blockColors,
-    extensions
+    extensions,
+    colourModifier,
+    textColourModifier,
 };
