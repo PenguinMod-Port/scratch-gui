@@ -89,7 +89,7 @@ const injectBlockIcons = (blockInfoJson, theme) => {
  */
 const injectExtensionBlockTheme = (blockInfoJson, theme) => {
     // Minor optimization -- don't do anything at all for the default theme.
-    if (theme.blocks === BLOCKS_THREE) return blockInfoJson;
+    if (theme.blocks === BLOCKS_THREE || !blockInfoJson.extensions?.includes('default_extension_colors')) return blockInfoJson;
 
     const extensionColors = getExtensionColors(theme);
 

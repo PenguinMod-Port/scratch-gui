@@ -43,9 +43,8 @@ const colourModifier = function(colour) {
     const hsl = hex2hsl(c)
     hsl[2] /= amt;
 
-    // stupid purple color fixes
-    const diff = Math.max(30 - Math.abs(240 - hsl[0]), 0) / 30;
-    hsl[1] /= 1 + diff * amt;
+    // stupid thing that makes pink colors not bad
+    hsl[1] /= (1 - Math.max(30 - Math.abs(330 - hsl[0]), 0) / 30) * (amt - 1) * 2 + 1;
 
     return hsl2hex(hsl);
   };
