@@ -1,5 +1,4 @@
 import GenericSetting, {Setting} from "../generic-setting/generic-setting.jsx";
-import FancyCheckbox from '../../../components/tw-fancy-checkbox/checkbox.jsx';
 import Input from '../../../components/forms/input.jsx';
 import BufferedInputHOC from '../../../components/forms/buffered-input-hoc.jsx';
 import React from 'react';

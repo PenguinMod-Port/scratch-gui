@@ -1,4 +1,5 @@
 export default Object.fromEntries([
+    'blockColors',
     'disableExpandables',
     'hexagonalRoundness',
     'paintMultiTool',

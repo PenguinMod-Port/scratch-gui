@@ -1,0 +1,59 @@
+@import "../../../css/colors.css";
+
+.space {
+    margin-right: 0.5em;
+}
+
+.label {
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.palette {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.color {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.color input[type="color"] {
+    width: 2em;
+    height: 2em;
+    border-radius: 0.5em;
+    overflow: none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    padding: 0;
+    border: 0 !important;
+    cursor: pointer;
+}
+.color input[type="color"]::-webkit-color-swatch-wrapper {
+    margin: 0;
+    padding: 0;
+}
+.color input[type="color"]::-webkit-color-swatch {
+    margin: 0;
+    overflow: none;
+    padding: 0;
+    border: 0 !important;
+}
+.color input[type="color"]::-moz-color-swatch {
+    margin: 0;
+    overflow: none;
+    padding: 0;
+    border: 0 !important;
+}

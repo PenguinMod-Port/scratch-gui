@@ -39,10 +39,10 @@ const injectExtensionCategoryTheme = (dynamicBlockXML, theme) => {
         const dom = parser.parseFromString(extension.xml, 'text/xml');
 
         const primaryColor = dom.documentElement.getAttribute('colour');
-        dom.documentElement.setAttribute('colour', extensionColors.primary);
+        dom.documentElement.setAttribute('colour', extensionColors);
         // Note: the category's secondaryColour matches up with the blocks' tertiary color,
         // both used for border color.
-        dom.documentElement.setAttribute('secondaryColour', extensionColors.tertiary);
+        dom.documentElement.setAttribute('secondaryColour', "#0004");
 
         const categoryIconURI = getCategoryIconURI(extensionIcons[extension.id]);
         if (categoryIconURI) {
@@ -95,10 +95,7 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
 
     return {
         ...injectBlockIcons(blockInfoJson, theme),
-        colour: extensionColors.primary,
-        colourSecondary: extensionColors.secondary,
-        colourTertiary: extensionColors.tertiary,
-        colourQuaternary: extensionColors.quaternary
+        colour: extensionColors
     };
 };
 

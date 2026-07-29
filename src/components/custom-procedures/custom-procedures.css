@@ -140,33 +140,23 @@
     border: 0 !important;
     cursor: pointer;
 }
-::-webkit-color-swatch-wrapper {
+.body input[type="color"]::-webkit-color-swatch-wrapper {
     margin: 0;
     padding: 0;
 }
 
-::-webkit-color-swatch {
+.body input[type="color"]::-webkit-color-swatch {
     margin: 0;
     border-radius: 100%;
     border: 2px solid $ui-black-transparent;
     overflow: none;
     padding: 0;
 }
-::-moz-color-swatch {
+.body input[type="color"]::-moz-color-swatch {
     margin: 0;
     border-radius: 100%;
     border: 2px solid $ui-black-transparent;
     overflow: none;
-    padding: 0;
-}
-
-::-moz-focus-inner {
-    margin: 0;
-    border: 0;
-}
-
-::-moz-focus-inner {
-    margin: 0;
     padding: 0;
 }
 
