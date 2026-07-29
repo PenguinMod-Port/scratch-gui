@@ -207,57 +207,57 @@ const CustomProcedures = props => {
                 <div>
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.motion.primary }}
+                        style={{ background: ScratchBlocks.Colours.motion }}
                         onClick={() => props.setProcColor("motion")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.looks.primary }}
+                        style={{ background: ScratchBlocks.Colours.looks }}
                         onClick={() => props.setProcColor("looks")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.sounds.primary }}
+                        style={{ background: ScratchBlocks.Colours.sounds }}
                         onClick={() => props.setProcColor("sounds")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.event.primary }}
+                        style={{ background: ScratchBlocks.Colours.event }}
                         onClick={() => props.setProcColor("event")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.control.primary }}
+                        style={{ background: ScratchBlocks.Colours.control }}
                         onClick={() => props.setProcColor("control")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.sensing.primary }}
+                        style={{ background: ScratchBlocks.Colours.sensing }}
                         onClick={() => props.setProcColor("sensing")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.operators.primary }}
+                        style={{ background: ScratchBlocks.Colours.operators }}
                         onClick={() => props.setProcColor("operators")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.data.primary }}
+                        style={{ background: ScratchBlocks.Colours.data }}
                         onClick={() => props.setProcColor("data")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.data_lists.primary }}
+                        style={{ background: ScratchBlocks.Colours.data_lists }}
                         onClick={() => props.setProcColor("data_lists")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.more.primary }}
+                        style={{ background: ScratchBlocks.Colours.more }}
                         onClick={() => props.setProcColor("more")}
                     />
                     <button
                         className={styles.presetColor}
-                        style={{ background: ScratchBlocks.Colours.pen.primary }}
+                        style={{ background: ScratchBlocks.Colours.pen }}
                         onClick={() => props.setProcColor("pen")}
                     />
                     <div className={styles.parentCustom}>
