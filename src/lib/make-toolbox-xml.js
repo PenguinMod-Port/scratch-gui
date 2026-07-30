@@ -610,7 +610,7 @@ const control = function (isInitialSetup, isStage, targetId, colors) {
         <block type="control_exitLoop" />
         <block type="control_continueLoop" />
         ${blockSeparator}
-        <block type="control_all_at_once" />
+        <block type="control_runwithoutscreenrefresh" />
         ${blockSeparator}
         <block type="control_try_catch">
             <value name="SHADOW">
