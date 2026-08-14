@@ -120,6 +120,11 @@ const messages = defineMessages({
         description: 'Label for the visibility monitor when shown on the stage',
         id: 'pm.gui.opcodeLabels.spriteVisible'
     },
+    looks_layersGetLayer: {
+        defaultMessage: 'layer',
+        description: 'Label for the layer monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getLayer'
+    },
     looks_stretchGetX: {
         defaultMessage: 'stretch x',
         description: 'Label for the stretch x monitor when shown on the stage',
@@ -324,6 +329,7 @@ class OpcodeLabels {
             // pm looks
             looks_getEffectValue: {category: 'looks'},
             looks_getSpriteVisible: {category: 'looks'},
+            looks_layersGetLayer: {category: 'looks'},
             looks_stretchGetX: {category: 'looks'},
             looks_stretchGetY: {category: 'looks'},
             looks_tintColor: {category: 'looks'},
@@ -420,6 +426,7 @@ class OpcodeLabels {
             }
         }
         this._opcodeMap.looks_getSpriteVisible.labelFn = () => this._translator(messages.looks_getSpriteVisible);
+        this._opcodeMap.looks_layersGetLayer.labelFn = () => this._translator(messages.looks_layersGetLayer);
         this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
         this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
         this._opcodeMap.looks_tintColor.labelFn = () => this._translator(messages.looks_tintColor);

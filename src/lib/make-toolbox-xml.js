@@ -310,8 +310,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
-            <block type="looks_stretchGetX"/>
-            <block type="looks_stretchGetY"/>
+            <block id="${targetId}_stretchGetX" type="looks_stretchGetX"/>
+            <block id="${targetId}_stretchGetY" type="looks_stretchGetY"/>
         `}
         ${blockSeparator}
         <block type="looks_setTintColor">
@@ -319,7 +319,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 <shadow type="colour_picker"/>
             </value>
         </block>
-        <block type="looks_tintColor" />
+        <block id="${targetId}_tintColor" type="looks_tintColor" />
         ${blockSeparator}
         <block type="looks_changeeffectby">
             <value name="CHANGE">
@@ -335,7 +335,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
-        <block type="looks_getEffectValue" />
+        <block id="${targetId}_getEffectValue" type="looks_getEffectValue" />
         ${blockSeparator}
         <block type="looks_cleargraphiceffects" />
         <block type="looks_set_blend_mode" />
@@ -348,8 +348,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     <shadow type="checkbox" />
                 </value>
             </block>
-            <block type="looks_getSpriteVisible" />
-        ${blockSeparator}
+            <block id="${targetId}_getSpriteVisible" type="looks_getSpriteVisible" />
+            ${blockSeparator}
             <block type="looks_gotofrontback"/>
             <block type="looks_goforwardbackwardlayers">
                 <value name="NUM">
@@ -358,6 +358,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
+            <block id="${targetId}_layersGetLayer" type="looks_layersGetLayer" />
         `}
         ${categorySeparator}
     </category>
@@ -432,7 +433,7 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colors) {
             </value>
         </block>
         <block type="sound_cleareffects"/>
-        <block type="sound_getEffectValue"/>
+        <block id="${targetId}_getEffectValue" type="sound_getEffectValue"/>
         ${blockSeparator}
         <block type="sound_changevolumeby">
             <value name="VOLUME">
