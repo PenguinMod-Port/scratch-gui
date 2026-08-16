@@ -329,11 +329,27 @@ export default function (vm) {
         this.jsonInit(json);
     };
 
-
     ScratchBlocks.Blocks.control_stop_sprite_menu.init = function () {
         const stage = ScratchBlocks.ScratchMsgs.translate('SENSING_OF_STAGE', 'Stage');
         const json = jsonForMenuBlock('STOP_OPTION', spriteMenu, controlColors, [
             [stage, '_stage_']
+        ]);
+        this.jsonInit(json);
+    };
+
+    
+    ScratchBlocks.Blocks.looks_getOtherSpriteVisible_menu.init = function () {
+        const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
+        const json = jsonForMenuBlock('VISIBLE_OPTION', spriteMenu, looksColors, [
+            [thisSprite, '_myself_']
+        ]);
+        this.jsonInit(json);
+    };
+
+    ScratchBlocks.Blocks.looks_changeVisibilityOfSprite_menu.init = function () {
+        const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
+        const json = jsonForMenuBlock('VISIBLE_OPTION', spriteMenu, looksColors, [
+            [thisSprite, '_myself_']
         ]);
         this.jsonInit(json);
     };
