@@ -350,6 +350,17 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
             </block>
             <block id="${targetId}_getSpriteVisible" type="looks_getSpriteVisible" />
             ${blockSeparator}
+            <block type="looks_changeVisibilityOfSpriteShow">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
+            <block type="looks_changeVisibilityOfSpriteHide">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
+            ${blockSeparator}
             <block type="looks_gotofrontback"/>
             <block type="looks_goforwardbackwardlayers">
                 <value name="NUM">
