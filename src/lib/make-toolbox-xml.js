@@ -360,6 +360,11 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     <shadow type="looks_changeVisibilityOfSprite_menu"/>
                 </value>
             </block>
+            <block type="looks_getOtherSpriteVisible">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
             ${blockSeparator}
             <block type="looks_gotofrontback"/>
             <block type="looks_goforwardbackwardlayers">
