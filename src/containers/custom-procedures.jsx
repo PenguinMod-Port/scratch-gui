@@ -26,11 +26,10 @@ class CustomProcedures extends React.Component {
         this.state = {
             rtlOffset: 0,
             warp: false,
-            terminal: true,//false,
+            terminal: false,
             forceOutput: 0,
             color: '#000000'
         };
-        console.log("INIT", this);
     }
     componentWillUnmount () {
         if (this.workspace) {
@@ -116,23 +115,22 @@ class CustomProcedures extends React.Component {
         this.setState({
             warp: this.mutationRoot.getWarp(),
             forceOutput: this.mutationRoot.getForceOutput(),
-            terminal: this.isTerminal_,
+            terminal: this.mutationRoot.isTerminal_,
             color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
         });
-        console.log("EDIT", this.state.warp, this.state.terminal, this.props);
-
-        if (this.state.forceOutput === 0) {
-            this.mutationRoot.setNextStatement(!this.state.terminal);
-        } else {
-            this.mutationRoot.setOutputShape(this.state.forceOutput);
-            this.mutationRoot.setOutput(true);
-            this.mutationRoot.setNextStatement(false);
-            this.mutationRoot.setPreviousStatement(false);
-        }
 
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
+
+            if (this.state.forceOutput === 0) {
+                this.mutationRoot.setNextStatement(!this.state.terminal);
+            } else {
+                this.mutationRoot.setOutputShape(this.state.forceOutput);
+                this.mutationRoot.setOutput(true);
+                this.mutationRoot.setNextStatement(false);
+                this.mutationRoot.setPreviousStatement(false);
+            }
         });
     }
     handleCancel () {
@@ -209,7 +207,6 @@ class CustomProcedures extends React.Component {
         this.handleSetProcColor(e.target.value);
     }
     render () {
-        console.log("RENDER", this.state.warp, this.state.terminal, this.props);
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
