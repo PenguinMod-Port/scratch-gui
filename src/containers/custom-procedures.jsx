@@ -154,8 +154,13 @@ class CustomProcedures extends React.Component {
     }
     handleToggleTerminal () {
         if (this.mutationRoot) {
+            const isReporter = this.mutationRoot.getForceOutput() == 0;
             const newTerminal = !this.mutationRoot.isTerminal_;
+
             this.mutationRoot.isTerminal_ = newTerminal;
+            if (isReporter) {
+                this.mutationRoot.setNextStatement(false)
+            }
             this.mutationRoot.updateDisplay_();
             this.setState({terminal: newTerminal});
         }
@@ -163,6 +168,14 @@ class CustomProcedures extends React.Component {
     handleForceOutput (value) {
         if (this.mutationRoot) {
             this.mutationRoot.setForceOutput(value);
+
+            this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
+            this.mutationRoot.setOutput(value != 0);
+            this.mutationRoot.setPreviousStatement(value == 0);
+            if (!this.isTerminal_) {
+                this.mutationRoot.setNextStatement(value == 0);
+            }
+ 
             this.setState({forceOutput: value});
         }
     }
@@ -170,6 +183,7 @@ class CustomProcedures extends React.Component {
         if (this.mutationRoot) {
             this.mutationRoot.procColour_ = value;
             this.mutationRoot.updateDisplay_();
+            this.mutationRoot.updateDisplay_(); // Call a second time to fix shadow outlines
             this.setState({color: value.startsWith("#") ? value : "#000000"});
         }
     }
