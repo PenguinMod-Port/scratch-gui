@@ -159,7 +159,7 @@ class CustomProcedures extends React.Component {
 
             this.mutationRoot.isTerminal_ = newTerminal;
             if (isReporter) {
-                this.mutationRoot.setNextStatement(false)
+                this.mutationRoot.setNextStatement(!newTerminal)
             }
             this.mutationRoot.updateDisplay_();
             this.setState({terminal: newTerminal});
