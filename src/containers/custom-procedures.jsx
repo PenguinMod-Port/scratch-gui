@@ -26,10 +26,11 @@ class CustomProcedures extends React.Component {
         this.state = {
             rtlOffset: 0,
             warp: false,
-            isTerminal: false,
+            terminal: false,
             forceOutput: 0,
             color: '#000000'
         };
+        console.log(this);
     }
     componentWillUnmount () {
         if (this.workspace) {
@@ -118,7 +119,7 @@ class CustomProcedures extends React.Component {
             terminal: this.isTerminal_,
             color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
         });
-        console.log("EDIT", this.state, this.mutationRoot);
+        console.log("EDIT", this.state, this.mutationRoot, this.props);
         if (window.test) debugger;
 
         if (this.state.forceOutput === 0) {
