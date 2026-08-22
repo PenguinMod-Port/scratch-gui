@@ -112,7 +112,22 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput(), color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"});
+        this.setState({
+            warp: this.mutationRoot.getWarp(),
+            forceOutput: this.mutationRoot.getForceOutput(),
+            terminal: this.isTerminal_,
+            color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
+        });
+
+        if (this.state.forceOutput === 0) {
+            this.mutationRoot.setNextStatement(!this.state.terminal);
+        } else {
+            this.mutationRoot.setOutputShape(this.state.forceOutput);
+            this.mutationRoot.setOutput(true);
+            this.mutationRoot.setNextStatement(false);
+            this.mutationRoot.setPreviousStatement(false);
+        }
+
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
@@ -172,9 +187,8 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
             this.mutationRoot.setOutput(value != 0);
             this.mutationRoot.setPreviousStatement(value == 0);
-            console.log("OUTPUT CHANGED", value == 0, `${this.isTerminal_} -> ${!this.isTerminal_}`);
             this.mutationRoot.setNextStatement(value == 0
-                ? !this.isTerminal_
+                ? !this.state.terminal
                 : false
             );
 
