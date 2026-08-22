@@ -118,6 +118,8 @@ class CustomProcedures extends React.Component {
             terminal: this.isTerminal_,
             color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
         });
+        console.log("EDIT", this.state, this.mutationRoot);
+        if (window.test) debugger;
 
         if (this.state.forceOutput === 0) {
             this.mutationRoot.setNextStatement(!this.state.terminal);
@@ -207,6 +209,7 @@ class CustomProcedures extends React.Component {
         this.handleSetProcColor(e.target.value);
     }
     render () {
+        console.log("RENDER", this.state.terminal)
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
