@@ -172,10 +172,11 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
             this.mutationRoot.setOutput(value != 0);
             this.mutationRoot.setPreviousStatement(value == 0);
-            if (value == 0) {
-                this.mutationRoot.setNextStatement(!this.isTerminal_);
-            }
- 
+            this.mutationRoot.setNextStatement(value == 0
+                ? !this.isTerminal_
+                : false
+            );
+
             this.setState({forceOutput: value});
         }
     }
