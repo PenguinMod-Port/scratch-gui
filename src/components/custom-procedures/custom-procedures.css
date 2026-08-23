@@ -13,7 +13,7 @@
 
 .body input[type="checkbox"],
 .body input[type="radio"] {
-    margin: 3px;
+    margin: 3px 8px 5px 3px;
 }
 
 /* Blocks workspace for custom procedure declaration editor */
@@ -76,6 +76,29 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+/* Forced output type select */
+.checkbox-row select {
+    height: 2rem;
+    padding: 0 0.75rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    background-color: var(--input-background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--ui-black-transparent);
+    border-radius: 0.5rem;
+    outline: none;
+    cursor: pointer;
+    transition: 0.25s ease-out;
+    box-shadow: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 5px;
 }
 
 /* Confirmation buttons at the bottom of the modal */
