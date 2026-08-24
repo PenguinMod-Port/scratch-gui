@@ -52,6 +52,8 @@ class CustomProcedures extends React.Component {
         this.workspace = ScratchBlocks.inject(this.blocks, workspaceConfig);
         ScratchBlocks.Blocks.defaultToolbox = oldDefaultToolbox;
 
+        this.blockly = ScratchBlocks;
+
         // Create the procedure declaration block for editing the mutation.
         this.mutationRoot = this.workspace.newBlock('procedures_declaration');
         // Make the declaration immovable, undeletable and have no context menu
@@ -191,6 +193,10 @@ class CustomProcedures extends React.Component {
                 ? !this.state.terminal
                 : false
             );
+
+            // If we are currently editing a argument/label name,
+            // calling this will fix any incorrect positioning on the screen.
+            this.blockly.WidgetDiv.repositionForWindowResize();
 
             this.setState({forceOutput: value});
         }
