@@ -62,6 +62,7 @@ class EditorSettingsModal extends React.Component {
                         <settings.hexagonalRoundness />
                         <Separator />
                         <settings.swatches />
+                        <settings.cascadeProcedureColors />
                         <settings.disableExpandables />
                     </React.Fragment>
                 },
