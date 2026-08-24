@@ -3,6 +3,7 @@ export default Object.fromEntries([
     'hexagonalRoundness',
     'paintMultiTool',
     'showExtensionIds',
+    'cascadeProcedureColors',
     'swatches',
     'test',
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))
