@@ -7,14 +7,14 @@ import refreshWorkspace from "../../util/refreshWorkspace.js";
 export default (class extends BooleanSetting {
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Hide Expandables"
+            defaultMessage="Disable custom block color cascading"
             id="pm.editorSettings.cascadeProcedureColors.primary"
         />)
     }
 
     getHelp() {
         return (<FormattedMessage
-            defaultMessage="Disables custom block colors from cascading down the stack. Only the block inside the define block keeps its color."
+            defaultMessage="Disables custom block colors from cascading down the define block stack. If disabled, only the block inside the define block keeps its color."
             id="pm.editorSettings.cascadeProcedureColors.help"
         />)
     }
@@ -23,7 +23,7 @@ export default (class extends BooleanSetting {
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
 
-        ScratchBlocks.Procedures.COLOR_EXTENSION_ENABLED = value;
+        ScratchBlocks.Procedures.COLOR_EXTENSION_ENABLED = !value;
         refreshWorkspace(ScratchBlocks);
     }
 });
