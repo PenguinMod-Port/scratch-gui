@@ -3,7 +3,12 @@
 
 .modal-content {
     width: 700px;
-    margin: 50px auto; /* This modal is taller than most, reduce top margin */
+    margin: 0;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .body {
