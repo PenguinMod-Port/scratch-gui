@@ -3,12 +3,6 @@
 
 .modal-content {
     width: 700px;
-    margin: 0;
-    align-self: center;
-    justify-self: center;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .body {

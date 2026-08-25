@@ -1,0 +1,12 @@
+@import "../../css/colors.css";
+@import "../../css/z-index.css";
+
+.modal-content {
+    width: 640px;
+    z-index: calc($z-index-loader - 1);
+}
+
+.body {
+    background: $ui-modal-background;
+    padding: 1.5rem 2.25rem;
+}
