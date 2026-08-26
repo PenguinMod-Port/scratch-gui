@@ -3,6 +3,7 @@ export default Object.fromEntries([
     'disableExpandables',
     'hexagonalRoundness',
     'paintMultiTool',
+    'paintScrollZoom',
     'showExtensionIds',
     'splashModal',
     'swatches',

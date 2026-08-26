@@ -72,9 +72,9 @@ class EditorSettingsModal extends React.Component {
                     title: this.props.intl.formatMessage(messages.blocks),
                     content: <React.Fragment>
                         <settings.hexagonalRoundness />
+                        <settings.cascadeProcedureColors />
                         <Separator />
                         <settings.swatches />
-                        <settings.cascadeProcedureColors />
                         <settings.disableExpandables />
                     </React.Fragment>
                 },
@@ -82,6 +82,8 @@ class EditorSettingsModal extends React.Component {
                     title: this.props.intl.formatMessage(messages.paint),
                     content: <React.Fragment>
                         <settings.paintMultiTool />
+                        <Separator />
+                        <settings.paintScrollZoom />
                     </React.Fragment>
                 },
                 {
