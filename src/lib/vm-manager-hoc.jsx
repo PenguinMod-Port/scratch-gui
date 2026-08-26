@@ -15,6 +15,8 @@ import {
 } from '../reducers/project-state';
 import log from './log';
 
+import SettingsStore from '../editor-settings/settings-store-singleton';
+
 /**
  * List of fonts that could be used by security prompts.
  */
@@ -51,6 +53,9 @@ const vmManagerHOC = function (WrappedComponent) {
                 }
                 this.props.vm.initialized = true;
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
+
+                // perfect place to load settings!
+                SettingsStore.readLocalStorage();
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();

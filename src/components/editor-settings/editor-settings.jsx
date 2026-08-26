@@ -89,6 +89,7 @@ class EditorSettingsModal extends React.Component {
                 {
                     title: this.props.intl.formatMessage(messages.misc),
                     content: <React.Fragment>
+                        <settings.vmDebug />
                         <settings.test />
                     </React.Fragment>
                 }

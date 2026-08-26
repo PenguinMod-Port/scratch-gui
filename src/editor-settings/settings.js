@@ -8,4 +8,5 @@ export default Object.fromEntries([
     'splashModal',
     'swatches',
     'test',
+    'vmDebug',
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))
