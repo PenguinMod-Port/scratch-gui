@@ -16,6 +16,7 @@ import {
     setProjectId,
 } from "../reducers/project-state";
 import { activateTab, BLOCKS_TAB_INDEX } from "../reducers/editor-tab";
+import { API_SITE, ASSET_CDN_SITE } from "./brand";
 
 import log from "./log";
 import storage from "./storage";
@@ -180,9 +181,9 @@ const ProjectFetcherHOC = function (WrappedComponent) {
     };
     ProjectFetcherComponent.defaultProps = {
         assetHost:
-            "https://asset-cdn.penguinmod.com/file/penguinmod-warm-tier-s2-cf",
+            `${ASSET_CDN_SITE}/file/penguinmod-warm-tier-s2-cf`,
         projectHost:
-            "https://projects.penguinmod.com/api/v1/projects/getproject?requestType=protobuf&safe=true&projectID",
+            `${API_SITE}/api/v1/projects/getproject?requestType=protobuf&safe=true&projectID`,
     };
 
     const mapStateToProps = (state) => ({
