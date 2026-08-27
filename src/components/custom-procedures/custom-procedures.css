@@ -78,7 +78,7 @@
 }
 
 /* Forced output type select */
-.checkbox-row select {
+select {
     height: 2rem;
     padding: 0 0.75rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -100,7 +100,7 @@
     white-space: nowrap;
     margin: 5px;
 }
-.checkbox-row select option {
+select option {
     padding: 0;
     margin: 0;
 }

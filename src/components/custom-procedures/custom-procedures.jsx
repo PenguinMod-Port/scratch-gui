@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import {defineMessages, injectIntl, intlShape, FormattedMessage} from 'react-intl';
@@ -7,12 +7,24 @@ import LazyScratchBlocks from '../../lib/tw-lazy-scratch-blocks';
 
 import dropperIcon from './icon--dropper.svg';
 
-import booleanInputIcon from './icon--boolean-input.svg';
 import branchInputIcon from './icon--branch-input.svg';
+import booleanInputIcon from './icon--boolean-input.svg';
 import textInputIcon from './icon--text-input.svg';
+import numberInputIcon from './icon--number-input.svg';
+import angleInputIcon from './icon--angle-input.svg';
+import colorInputIcon from './icon--color-input.svg';
+import pianoInputIcon from './icon--piano-input.svg';
 import labelIcon from './icon--label.svg';
 
 import styles from './custom-procedures.css';
+
+const inputIcons = {
+    'number or text': textInputIcon,
+    number: numberInputIcon,
+    angle: angleInputIcon,
+    color: colorInputIcon,
+    piano: pianoInputIcon
+};
 
 const messages = defineMessages({
     myblockModalTitle: {
@@ -86,10 +98,46 @@ const messages = defineMessages({
         description: 'Label for forced output shapes',
         id: 'pm.gui.customProcedures.forceOutput.12'
     }
+
+    inputText: {
+        defaultMessage: "number or text",
+        description: "Description of the number/text input type",
+        id: "pm.gui.customProcedures.numberTextType"
+    },
+    inputNumber: {
+        defaultMessage: "number",
+        description: "Description of the number input type",
+        id: "pm.gui.customProcedures.numberType"
+    },
+    inputAngle: {
+        defaultMessage: "angle",
+        description: "Description of the angle input type",
+        id: "pm.gui.customProcedures.angleType"
+    },
+    inputColor: {
+        defaultMessage: "color",
+        description: "Description of the color input type",
+        id: "pm.gui.customProcedures.colorType"
+    },
+    inputPiano: {
+        defaultMessage: "piano",
+        description: "Description of the piano input type",
+        id: "pm.gui.customProcedures.pianoType"
+    },
 });
 
 const CustomProcedures = props => {
     const ScratchBlocks = LazyScratchBlocks.get();
+
+    const [argumentType, setArgumentType] = useState('number or text');
+
+    const handleAddArgumentClick = () => {
+        props.onAddTextNumber(argumentType);
+    };
+
+    const handleArgumentSelectChange = e => {
+        setArgumentType(e.target.value);
+    };
 
     return (
     <Modal
@@ -108,26 +156,32 @@ const CustomProcedures = props => {
                     className={styles.optionCard}
                     role="button"
                     tabIndex="0"
-                    onClick={props.onAddTextNumber}
+                    onClick={handleAddArgumentClick}
                 >
                     <img
                         className={styles.optionIcon}
-                        src={textInputIcon}
+                        src={inputIcons[argumentType] || textInputIcon}
                         draggable={false}
                     />
                     <div className={styles.optionTitle}>
                         <FormattedMessage
                             defaultMessage="Add an input"
-                            description="Label for button to add a number/text input"
+                            description="Label for button to add an number/text/other input"
                             id="gui.customProcedures.addAnInputNumberText"
                         />
                     </div>
                     <div className={styles.optionDescription}>
-                        <FormattedMessage
-                            defaultMessage="number or text"
-                            description="Description of the number/text input type"
-                            id="gui.customProcedures.numberTextType"
-                        />
+                        <select
+                            value={argumentType}
+                            onChange={handleArgumentSelectChange}
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <option value="number or text">{props.intl.formatMessage(messages.inputText)}</option>
+                            <option value="number">{props.intl.formatMessage(messages.inputNumber)}</option>
+                            <option value="angle">{props.intl.formatMessage(messages.inputAngle)}</option>
+                            <option value="color">{props.intl.formatMessage(messages.inputColor)}</option>
+                            <option value="piano">{props.intl.formatMessage(messages.inputPiano)}</option>
+                        </select>
                     </div>
                 </div>
                 <div
