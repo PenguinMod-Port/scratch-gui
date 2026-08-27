@@ -154,7 +154,6 @@ class Theme {
 
 export {
     Theme,
-    defaultBlockColors,
 
     ACCENT_RED,
     ACCENT_PURPLE,

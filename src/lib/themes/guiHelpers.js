@@ -51,10 +51,10 @@ const applyGuiColors = theme => {
     doc.style.setProperty('--editorTheme3-inputColor', blockColors.textField);
     doc.style.setProperty('--editorTheme3-inputColor-text', blockColors.textFieldText);
     for (const color of BLOCK_COLOR_NAMES) {
-        doc.style.setProperty(`--editorTheme3-${color}-primary`, blockColors[color].primary);
-        doc.style.setProperty(`--editorTheme3-${color}-secondary`, blockColors[color].secondary);
-        doc.style.setProperty(`--editorTheme3-${color}-tertiary`, blockColors[color].tertiary);
-        doc.style.setProperty(`--editorTheme3-${color}-field-background`, blockColors[color].quaternary);
+        doc.style.setProperty(`--editorTheme3-${color}-primary`, blockColors[color]);
+        //doc.style.setProperty(`--editorTheme3-${color}-secondary`, blockColors[color].secondary);
+        //doc.style.setProperty(`--editorTheme3-${color}-tertiary`, blockColors[color].tertiary);
+        //doc.style.setProperty(`--editorTheme3-${color}-field-background`, blockColors[color].quaternary);
     }
 
     // Some browsers will color their interfaces to match theme-color, so if we make it the same color as our

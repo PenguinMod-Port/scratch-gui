@@ -1,5 +1,5 @@
 import LazyScratchBlocks from './tw-lazy-scratch-blocks';
-import {defaultBlockColors} from './themes';
+import defaultBlockColors from './default-block-colors';
 
 const categorySeparator = '<sep gap="36"/>';
 

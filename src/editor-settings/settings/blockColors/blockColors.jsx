@@ -1,21 +1,13 @@
 import PaletteSetting from "../../components/palette-setting/palette-setting.jsx";
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
+import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
+import refreshWorkspace from "../../util/refreshWorkspace.js";
+import defaultBlockColors from "../../../lib/default-block-colors.js";
 
 export default (class extends PaletteSetting {
     defaultValue() {
-        return {
-            motion: "#4C97FF",
-            looks: "#9966FF",
-            sounds: "#CF63CF",
-            control: "#FFAB19",
-            event: "#FFBF00",
-            sensing: "#5CB1D6",
-            operators: "#59C059",
-            data: "#FF8C1A",
-            data_lists: "#FF661A",
-            more: "#FF6680",
-        };
+        return defaultBlockColors;
     }
     getNames() {
         return {
@@ -74,5 +66,16 @@ export default (class extends PaletteSetting {
             defaultMessage="poopy"
             id="pm.editorSettings.blockColors.help"
         />)
+    }
+
+    async setValue(value) {
+        await LazyScratchBlocks.load();
+        let ScratchBlocks = LazyScratchBlocks.get();
+        
+        for (let colour in this.state.value) {
+            ScratchBlocks.Colours[colour] = this.state.value[colour];
+        }
+
+        refreshWorkspace(ScratchBlocks);
     }
 });
