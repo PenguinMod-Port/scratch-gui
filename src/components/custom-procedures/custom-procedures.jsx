@@ -132,6 +132,11 @@ const messages = defineMessages({
         description: "Description of the piano input type",
         id: "pm.gui.customProcedures.pianoType"
     },
+    inputEmpty: {
+        defaultMessage: "empty",
+        description: "Description of the empty input type",
+        id: "pm.gui.customProcedures.emptyType"
+    },
 });
 
 const CustomProcedures = props => {
