@@ -63,7 +63,7 @@ export default (class extends PaletteSetting {
 
     getHelp() {
         return (<FormattedMessage
-            defaultMessage="poopy"
+            defaultMessage="Choose what colors you want for certain blocks."
             id="pm.editorSettings.blockColors.help"
         />)
     }
