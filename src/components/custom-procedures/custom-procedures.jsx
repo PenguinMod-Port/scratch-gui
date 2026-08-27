@@ -14,6 +14,7 @@ import numberInputIcon from './icon--number-input.svg';
 import angleInputIcon from './icon--angle-input.svg';
 import colorInputIcon from './icon--color-input.svg';
 import pianoInputIcon from './icon--piano-input.svg';
+import emptyInputIcon from './icon--empty-input.svg';
 import labelIcon from './icon--label.svg';
 
 import styles from './custom-procedures.css';
@@ -22,8 +23,10 @@ const inputIcons = {
     'number or text': textInputIcon,
     number: numberInputIcon,
     angle: angleInputIcon,
+    boolean: booleanInputIcon,
     color: colorInputIcon,
-    piano: pianoInputIcon
+    piano: pianoInputIcon,
+    empty: emptyInputIcon
 };
 
 const messages = defineMessages({
@@ -104,6 +107,11 @@ const messages = defineMessages({
         description: "Description of the 'any' input type",
         id: "pm.gui.customProcedures.numberTextType"
     },
+    inputBoolean: {
+        defaultMessage: "boolean",
+        description: "Description of the boolean input type",
+        id: "pm.gui.customProcedures.booleanTextType"
+    },
     inputNumber: {
         defaultMessage: "number",
         description: "Description of the number input type",
@@ -177,37 +185,12 @@ const CustomProcedures = props => {
                             onClick={e => e.stopPropagation()}
                         >
                             <option value="number or text">{props.intl.formatMessage(messages.inputText)}</option>
+                            <option value="boolean">{props.intl.formatMessage(messages.inputBoolean)}</option>
                             <option value="number">{props.intl.formatMessage(messages.inputNumber)}</option>
                             <option value="angle">{props.intl.formatMessage(messages.inputAngle)}</option>
                             <option value="color">{props.intl.formatMessage(messages.inputColor)}</option>
                             <option value="piano">{props.intl.formatMessage(messages.inputPiano)}</option>
                         </select>
-                    </div>
-                </div>
-                <div
-                    className={styles.optionCard}
-                    role="button"
-                    tabIndex="0"
-                    onClick={props.onAddBoolean}
-                >
-                    <img
-                        className={styles.optionIcon}
-                        src={booleanInputIcon}
-                        draggable={false}
-                    />
-                    <div className={styles.optionTitle}>
-                        <FormattedMessage
-                            defaultMessage="Add an input"
-                            description="Label for button to add a boolean input"
-                            id="gui.customProcedures.addAnInputBoolean"
-                        />
-                    </div>
-                    <div className={styles.optionDescription}>
-                        <FormattedMessage
-                            defaultMessage="boolean"
-                            description="Description of the boolean input type"
-                            id="gui.customProcedures.booleanType"
-                        />
                     </div>
                 </div>
                 <div
@@ -411,7 +394,6 @@ CustomProcedures.propTypes = {
     warp: PropTypes.bool.isRequired,
     terminal: PropTypes.bool.isRequired,
     forceOutput: PropTypes.number.isRequired,
-    onAddBoolean: PropTypes.func.isRequired,
     onAddCommand: PropTypes.func.isRequired,
     onAddLabel: PropTypes.func.isRequired,
     onAddTextNumber: PropTypes.func.isRequired,

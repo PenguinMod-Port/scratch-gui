@@ -213,14 +213,12 @@ class CustomProcedures extends React.Component {
         this.handleSetProcColor(e.target.value);
     }
     render () {
-        // TODO
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 terminal={this.state.terminal}
                 forceOutput={this.state.forceOutput}
-                onAddBoolean={this.handleAddBoolean}
                 onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
                 onAddTextNumber={this.handleAddArgument}
