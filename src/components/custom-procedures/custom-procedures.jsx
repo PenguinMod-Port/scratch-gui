@@ -97,7 +97,7 @@ const messages = defineMessages({
         defaultMessage: 'slanted',
         description: 'Label for forced output shapes',
         id: 'pm.gui.customProcedures.forceOutput.12'
-    }
+    },
 
     inputText: {
         defaultMessage: "number or text",
