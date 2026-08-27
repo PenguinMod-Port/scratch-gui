@@ -100,8 +100,8 @@ const messages = defineMessages({
     },
 
     inputText: {
-        defaultMessage: "number or text",
-        description: "Description of the number/text input type",
+        defaultMessage: "any",
+        description: "Description of the 'any' input type",
         id: "pm.gui.customProcedures.numberTextType"
     },
     inputNumber: {
