@@ -11,6 +11,7 @@ import LargeMonitor from './large-monitor.jsx';
 import SliderMonitor from '../../containers/slider-monitor.jsx';
 import ListMonitor from '../../containers/list-monitor.jsx';
 import {Theme} from '../../lib/themes/index.js';
+import defaultBlockColors from '../../lib/default-block-colors.js';
 
 import styles from './monitor.css';
 
@@ -34,10 +35,10 @@ const modes = {
 };
 
 const getCategoryColor = (theme, category) => {
-    const colors = theme.getStageBlockColors();
+    // TODO: make this follow editor setting colors
     return {
-        background: colors[categoryColorMap[category]].primary,
-        text: colors.text
+        background: defaultBlockColors[categoryColorMap[category]],
+        text: theme.getStageBlockColors().text
     };
 };
 
