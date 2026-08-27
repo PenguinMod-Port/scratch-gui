@@ -40,7 +40,8 @@ class SettingsStore extends EventTargetShim {
     createEmptyStore () {
         const result = {};
         for (const id of Object.keys(settings)) {
-            result[id] = undefined;
+            let temp = new settings[id];
+            result[id] = temp.state.value;
             let the = this;
             settings[id].prototype._setStorage = function(v) {
                 the.store[id] = v;
@@ -61,12 +62,12 @@ class SettingsStore extends EventTargetShim {
                 let result = JSON.parse(local);
                 if (result && typeof result === 'object') {
                     result = migrateSettings(result);
-                    for (const key of Object.keys(result)) {
-                        if (Object.prototype.hasOwnProperty.call(base, key)) {
-                            const value = result[key];
+                    for (const id of Object.keys(result)) {
+                        if (Object.prototype.hasOwnProperty.call(base, id)) {
+                            const value = result[id];
                             if (typeof value !== undefined) {
-                                base[key] = value;
-                                let temp = new settings[key];
+                                base[id] = value;
+                                let temp = new settings[id];
                                 temp._setValue(value);
                             }
                         }

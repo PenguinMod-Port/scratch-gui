@@ -5,7 +5,7 @@ const guiColors = {
     'ui-secondary': 'hsla(215, 75%, 95%, 1)', /* #E9F1FC */
     'ui-tertiary': 'hsla(215, 50%, 90%, 1)', /* #D9E3F2 */
 
-    'ui-modal-overlay': 'var(--motion-primary-transparent)',
+    'ui-modal-overlay': 'var(--looks-transparent)',
     'ui-modal-background': 'hsla(0, 100%, 100%, 1)', /* #FFFFFF */
     'ui-modal-foreground': 'hsla(225, 15%, 40%, 1)', /* #575E75 */
     'ui-modal-header-background': 'var(--looks-secondary)',

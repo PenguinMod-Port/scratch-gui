@@ -250,6 +250,17 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
             </block>
             <block type="looks_nextbackdrop"/>
             <block id="backdropnumbername" type="looks_backdropnumbername"/>
+            ${blockSeparator}
+            <block type="looks_getinputofcostumenew">
+                <value name="INPUT">
+                    <shadow type="looks_getinput_menu"/>
+                </value>
+                <value name="COSTUME">
+                    <shadow type="looks_backdrops">
+                        <field name="BACKDROP">${backdropName}</field>
+                    </shadow>
+                </value>
+            </block>
         ` : `
             <block id="${targetId}_switchcostumeto" type="looks_switchcostumeto">
                 <value name="COSTUME">
@@ -269,6 +280,17 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
             <block type="looks_nextbackdrop"/>
             <block id="${targetId}_costumenumbername" type="looks_costumenumbername"/>
             <block id="backdropnumbername" type="looks_backdropnumbername"/>
+            ${blockSeparator}
+            <block type="looks_getinputofcostumenew">
+                <value name="INPUT">
+                    <shadow type="looks_getinput_menu"/>
+                </value>
+                <value name="COSTUME">
+                    <shadow type="looks_costume">
+                        <field name="COSTUME">${costumeName}</field>
+                    </shadow>
+                </value>
+            </block>
             ${blockSeparator}
             <block type="looks_changesizeby">
                 <value name="CHANGE">
@@ -310,8 +332,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
-            <block type="looks_stretchGetX"/>
-            <block type="looks_stretchGetY"/>
+            <block id="${targetId}_stretchGetX" type="looks_stretchGetX"/>
+            <block id="${targetId}_stretchGetY" type="looks_stretchGetY"/>
         `}
         ${blockSeparator}
         <block type="looks_setTintColor">
@@ -319,7 +341,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 <shadow type="colour_picker"/>
             </value>
         </block>
-        <block type="looks_tintColor" />
+        <block id="${targetId}_tintColor" type="looks_tintColor" />
         ${blockSeparator}
         <block type="looks_changeeffectby">
             <value name="CHANGE">
@@ -335,7 +357,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                 </shadow>
             </value>
         </block>
-        <block type="looks_getEffectValue" />
+        <block id="${targetId}_getEffectValue" type="looks_getEffectValue" />
         ${blockSeparator}
         <block type="looks_cleargraphiceffects" />
         <block type="looks_set_blend_mode" />
@@ -343,7 +365,29 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
         ${isStage ? '' : `
             <block type="looks_show"/>
             <block type="looks_hide"/>
-        ${blockSeparator}
+            <block type="looks_setSpriteVisible">
+                <value name="VISIBILITY">
+                    <shadow type="checkbox" />
+                </value>
+            </block>
+            <block id="${targetId}_getSpriteVisible" type="looks_getSpriteVisible" />
+            ${blockSeparator}
+            <block type="looks_changeVisibilityOfSpriteShow">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
+            <block type="looks_changeVisibilityOfSpriteHide">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
+            <block type="looks_getOtherSpriteVisible">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_changeVisibilityOfSprite_menu"/>
+                </value>
+            </block>
+            ${blockSeparator}
             <block type="looks_gotofrontback"/>
             <block type="looks_goforwardbackwardlayers">
                 <value name="NUM">
@@ -352,6 +396,12 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
+            <block type="looks_goTargetLayer">
+                <value name="VISIBLE_OPTION">
+                    <shadow type="looks_getOtherSpriteVisible_menu"/>
+                </value>
+            </block>
+            <block id="${targetId}_layersGetLayer" type="looks_layersGetLayer" />
         `}
         ${categorySeparator}
     </category>
@@ -426,7 +476,7 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colour) {
             </value>
         </block>
         <block type="sound_cleareffects"/>
-        <block type="sound_getEffectValue"/>
+        <block id="${targetId}_getEffectValue" type="sound_getEffectValue"/>
         ${blockSeparator}
         <block type="sound_changevolumeby">
             <value name="VOLUME">
@@ -610,7 +660,7 @@ const control = function (isInitialSetup, isStage, targetId, colour) {
         <block type="control_exitLoop" />
         <block type="control_continueLoop" />
         ${blockSeparator}
-        <block type="control_all_at_once" />
+        <block type="control_runwithoutscreenrefresh" />
         ${blockSeparator}
         <block type="control_try_catch">
             <value name="SHADOW">

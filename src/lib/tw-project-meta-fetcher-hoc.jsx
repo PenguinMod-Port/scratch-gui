@@ -5,9 +5,10 @@ import log from "./log";
 
 import { setProjectTitle } from "../reducers/project-title";
 import { setAuthor, setDescription } from "../reducers/tw";
+import { API_SITE } from "./brand";
 
 export const fetchProjectMeta = async (projectId) => {
-    const url = `https://projects.penguinmod.com/api/v1/projects/getproject?requestType=metadata&safe=true&projectID=${projectId}`;
+    const url = `${API_SITE}/api/v1/projects/getproject?requestType=metadata&safe=true&projectID=${projectId}`;
     const res = await fetch(url);
     const data = await res.json();
     if (res.ok) {
@@ -59,7 +60,7 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
                                 this.props.onSetProjectTitle(title);
                             }
                             const authorName = data.author.username;
-                            const authorThumbnail = `https://projects.penguinmod.com/api/v1/users/getpfp?username=${authorName}`;
+                            const authorThumbnail = `${API_SITE}/api/v1/users/getpfp?username=${authorName}`;
                             this.props.onSetAuthor(authorName, authorThumbnail);
                             const instructions = data.instructions || "";
                             const notes = data.notes || "";

@@ -13,7 +13,7 @@ import TagCheckbox from '../../containers/tag-checkbox.jsx';
 import Spinner from '../spinner/spinner.jsx';
 import Separator from '../tw-extension-separator/separator.jsx';
 import RemovedTrademarks from '../tw-removed-trademarks/removed-trademarks.jsx';
-import {APP_NAME} from '../../lib/brand.js';
+import {APP_NAME, LIBRARY_API_SITE} from '../../lib/brand.js';
 import SettingsStore from '../../editor-settings/settings-store-singleton';
 
 import styles from './library.css';
@@ -30,8 +30,6 @@ const messages = defineMessages({
         description: 'Label for library tag to revert to all items after filtering by tag.'
     }
 });
-
-const PM_LIBRARY_API = "https://library.penguinmod.com/";
 
 const ALL_TAG = {tag: 'all', intlLabel: messages.allTag};
 const tagListPrefix = [];
@@ -406,7 +404,7 @@ class LibraryComponent extends React.Component {
                                     featured={dataItem.featured}
                                     hidden={dataItem.hidden}
                                     iconMd5={dataItem.costumes ? dataItem.costumes[0].md5ext : dataItem.md5ext}
-                                    iconRawURL={this.props.actor === "CostumeLibrary" ? `${PM_LIBRARY_API}files/${dataItem.libraryFilePage}` : dataItem.rawURL}
+                                    iconRawURL={this.props.actor === "CostumeLibrary" ? `${LIBRARY_API_SITE}files/${dataItem.libraryFilePage}` : dataItem.rawURL}
                                     icons={dataItem.costumes}
                                     id={index}
                                     //incompatibleWithScratch={dataItem.incompatibleWithScratch}

@@ -26,7 +26,7 @@ class CustomProcedures extends React.Component {
         this.state = {
             rtlOffset: 0,
             warp: false,
-            isTerminal: false,
+            terminal: false,
             forceOutput: 0,
             color: '#000000'
         };
@@ -51,6 +51,8 @@ class CustomProcedures extends React.Component {
         ScratchBlocks.Blocks.defaultToolbox = null;
         this.workspace = ScratchBlocks.inject(this.blocks, workspaceConfig);
         ScratchBlocks.Blocks.defaultToolbox = oldDefaultToolbox;
+
+        this.blockly = ScratchBlocks;
 
         // Create the procedure declaration block for editing the mutation.
         this.mutationRoot = this.workspace.newBlock('procedures_declaration');
@@ -112,10 +114,25 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp(), forceOutput: this.mutationRoot.getForceOutput(), color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"});
+        this.setState({
+            warp: this.mutationRoot.getWarp(),
+            forceOutput: this.mutationRoot.getForceOutput(),
+            terminal: this.mutationRoot.isTerminal_,
+            color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
+        });
+
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
+
+            if (this.state.forceOutput === 0) {
+                this.mutationRoot.setNextStatement(!this.state.terminal);
+            } else {
+                this.mutationRoot.setOutputShape(this.state.forceOutput);
+                this.mutationRoot.setOutput(true);
+                this.mutationRoot.setNextStatement(false);
+                this.mutationRoot.setPreviousStatement(false);
+            }
         });
     }
     handleCancel () {
@@ -154,8 +171,13 @@ class CustomProcedures extends React.Component {
     }
     handleToggleTerminal () {
         if (this.mutationRoot) {
+            const isReporter = this.mutationRoot.getForceOutput() == 0;
             const newTerminal = !this.mutationRoot.isTerminal_;
+
             this.mutationRoot.isTerminal_ = newTerminal;
+            if (isReporter) {
+                this.mutationRoot.setNextStatement(!newTerminal)
+            }
             this.mutationRoot.updateDisplay_();
             this.setState({terminal: newTerminal});
         }
@@ -163,6 +185,19 @@ class CustomProcedures extends React.Component {
     handleForceOutput (value) {
         if (this.mutationRoot) {
             this.mutationRoot.setForceOutput(value);
+
+            this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
+            this.mutationRoot.setOutput(value != 0);
+            this.mutationRoot.setPreviousStatement(value == 0);
+            this.mutationRoot.setNextStatement(value == 0
+                ? !this.state.terminal
+                : false
+            );
+
+            // If we are currently editing a argument/label name,
+            // calling this will fix any incorrect positioning on the screen.
+            this.blockly.WidgetDiv.repositionForWindowResize();
+
             this.setState({forceOutput: value});
         }
     }
@@ -170,6 +205,7 @@ class CustomProcedures extends React.Component {
         if (this.mutationRoot) {
             this.mutationRoot.procColour_ = value;
             this.mutationRoot.updateDisplay_();
+            this.mutationRoot.updateDisplay_(); // Call a second time to fix shadow outlines
             this.setState({color: value.startsWith("#") ? value : "#000000"});
         }
     }

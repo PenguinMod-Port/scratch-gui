@@ -15,6 +15,10 @@ const messages = defineMessages({
         description: 'Title for the editor settings modal',
         id: 'pm.gui.editorSettings.title'
     },
+    gui: {
+        defaultMessage: 'GUI',
+        id: 'pm.gui.editorSettings.gui'
+    },
     blocks: {
         defaultMessage: 'Blocks',
         id: 'pm.gui.editorSettings.blocks'
@@ -57,11 +61,20 @@ class EditorSettingsModal extends React.Component {
             contentLabel={this.props.intl.formatMessage(messages.title)}
             tabs={[
                 {
+                    title: this.props.intl.formatMessage(messages.gui),
+                    content: <React.Fragment>
+                        <settings.splashModal />
+                        <Separator />
+                        <settings.showExtensionIds />
+                    </React.Fragment>
+                },
+                {
                     title: this.props.intl.formatMessage(messages.blocks),
                     content: <React.Fragment>
                         <settings.blockColors />
                         <Separator />
                         <settings.hexagonalRoundness />
+                        <settings.cascadeProcedureColors />
                         <Separator />
                         <settings.swatches />
                         <settings.disableExpandables />
@@ -71,13 +84,14 @@ class EditorSettingsModal extends React.Component {
                     title: this.props.intl.formatMessage(messages.paint),
                     content: <React.Fragment>
                         <settings.paintMultiTool />
+                        <Separator />
+                        <settings.paintScrollZoom />
                     </React.Fragment>
                 },
                 {
                     title: this.props.intl.formatMessage(messages.misc),
                     content: <React.Fragment>
-                        <settings.showExtensionIds />
-                        <Separator />
+                        <settings.vmDebug />
                         <settings.test />
                     </React.Fragment>
                 }
