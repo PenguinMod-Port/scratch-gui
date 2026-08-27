@@ -190,6 +190,7 @@ const CustomProcedures = props => {
                             <option value="angle">{props.intl.formatMessage(messages.inputAngle)}</option>
                             <option value="color">{props.intl.formatMessage(messages.inputColor)}</option>
                             <option value="piano">{props.intl.formatMessage(messages.inputPiano)}</option>
+                            <option value="empty">{props.intl.formatMessage(messages.inputEmpty)}</option>
                         </select>
                     </div>
                 </div>
