@@ -77,9 +77,7 @@
     gap: 0.5rem;
 }
 
-/* Forced output type select */
 select {
-    height: 2rem;
     padding: 0 0.75rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.8rem;
@@ -98,11 +96,19 @@ select {
     text-overflow: ellipsis;
     text-align: center;
     white-space: nowrap;
-    margin: 5px;
 }
 select option {
     padding: 0;
     margin: 0;
+}
+
+.option-card select {
+    height: 1.5rem;
+    margin: 2px;
+}
+.checkbox-row select {
+    height: 2rem;
+    margin: 5px;
 }
 
 /* Confirmation buttons at the bottom of the modal */
