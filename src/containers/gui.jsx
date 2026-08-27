@@ -22,8 +22,7 @@ import {
     closeCostumeLibrary,
     closeBackdropLibrary,
     closeTelemetryModal,
-    openExtensionLibrary,
-    openSplashModal
+    openExtensionLibrary
 } from '../reducers/modals';
 
 import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
@@ -63,10 +62,6 @@ class GUI extends React.Component {
         this.props.onStorageInit(storage);
         this.props.onVmInit(this.props.vm);
         setProjectIdMetadata(this.props.projectId);
-
-        if (!this.props.isPlayerOnly && SettingsStore.store.splashModal) {
-            this.props.onOpenSplashModal();
-        }
     }
     componentDidUpdate (prevProps) {
         if (this.props.projectId !== prevProps.projectId) {
@@ -140,7 +135,6 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
-    onOpenSplashModal: PropTypes.func,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -199,8 +193,7 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
-    onOpenSplashModal: () => dispatch(openSplashModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
 });
 
 const ConnectedGUI = injectIntl(connect(
