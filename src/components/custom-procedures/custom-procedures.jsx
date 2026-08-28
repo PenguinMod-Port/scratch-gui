@@ -344,6 +344,17 @@ const CustomProcedures = props => {
                 </label>
                 <label>
                     <input
+                        checked={props.dualBlock}
+                        type="checkbox"
+                        onChange={props.onToggleDualBlock}
+                    />
+                    <FormattedMessage
+                        defaultMessage="Dual block"
+                        id="gui.customProcedures.dualBlock"
+                    />
+                </label>
+                <label>
+                    <input
                         checked={props.global}
                         type="checkbox"
                         onChange={props.onToggleGlobal}
@@ -410,6 +421,7 @@ CustomProcedures.propTypes = {
     intl: intlShape,
     warp: PropTypes.bool.isRequired,
     terminal: PropTypes.bool.isRequired,
+    dualBlock: PropTypes.bool.isRequired,
     global: PropTypes.bool.isRequired,
     forceOutput: PropTypes.number.isRequired,
     onAddCommand: PropTypes.func.isRequired,
@@ -419,6 +431,7 @@ CustomProcedures.propTypes = {
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
     onToggleTerminal: PropTypes.func.isRequired,
+    onToggleDualBlock: PropTypes.func.isRequired,
     onToggleGlobal: PropTypes.func.isRequired,
     onForceOutput: PropTypes.func.isRequired,
     setProcColor: PropTypes.func.isRequired,

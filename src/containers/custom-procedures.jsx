@@ -15,6 +15,7 @@ class CustomProcedures extends React.Component {
             'handleAddArgument',
             'handleToggleWarp',
             'handleToggleTerminal',
+            'handleToggleDualBlock',
             'handleToggleGlobal',
             'handleForceOutput',
             'handleSetProcColor',
@@ -27,6 +28,7 @@ class CustomProcedures extends React.Component {
             rtlOffset: 0,
             warp: false,
             terminal: false,
+            dualBlock: false,
             global: false,
             forceOutput: 0,
             color: '#000000'
@@ -120,6 +122,7 @@ class CustomProcedures extends React.Component {
             global: this.mutationRoot.getGlobal(),
             forceOutput: this.mutationRoot.getForceOutput(),
             terminal: this.mutationRoot.isTerminal_,
+            dualBlock: this.mutationRoot.isDualBlock_,
             color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
         });
 
@@ -132,8 +135,8 @@ class CustomProcedures extends React.Component {
             } else {
                 this.mutationRoot.setOutputShape(this.state.forceOutput);
                 this.mutationRoot.setOutput(true);
-                this.mutationRoot.setNextStatement(false);
-                this.mutationRoot.setPreviousStatement(false);
+                this.mutationRoot.setNextStatement(this.state.dualBlock && !this.state.terminal);
+                this.mutationRoot.setPreviousStatement(this.state.dualBlock);
             }
         });
     }
@@ -175,25 +178,43 @@ class CustomProcedures extends React.Component {
     }
     handleToggleTerminal () {
         if (this.mutationRoot) {
-            const isReporter = this.mutationRoot.getForceOutput() == 0;
+            const isNotReporter = this.mutationRoot.getForceOutput() == 0;
             const newTerminal = !this.mutationRoot.isTerminal_;
+            const isDualBlock = this.mutationRoot.isDualBlock_;
 
             this.mutationRoot.isTerminal_ = newTerminal;
-            if (isReporter) {
+            if (isNotReporter || isDualBlock) {
                 this.mutationRoot.setNextStatement(!newTerminal)
             }
             this.mutationRoot.updateDisplay_();
             this.setState({terminal: newTerminal});
         }
     } 
+    handleToggleDualBlock () {
+        if (this.mutationRoot) {
+            const isReporter = this.mutationRoot.getForceOutput() != 0;
+            const newDualBlock = !this.mutationRoot.isDualBlock_;
+            const isTerminal = this.mutationRoot.isTerminal_;
+
+            this.mutationRoot.isDualBlock_ = newDualBlock;
+            if (isReporter) {
+                this.mutationRoot.setPreviousStatement(newDualBlock);
+                this.mutationRoot.setNextStatement(newDualBlock && !isTerminal);
+            }
+            this.mutationRoot.updateDisplay_();
+            this.setState({dualBlock: newDualBlock});
+        }
+    } 
     handleForceOutput (value) {
         if (this.mutationRoot) {
+            const isDualBlock = this.mutationRoot.isDualBlock_;
+
             this.mutationRoot.setForceOutput(value);
 
             this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
             this.mutationRoot.setOutput(value != 0);
-            this.mutationRoot.setPreviousStatement(value == 0);
-            this.mutationRoot.setNextStatement(value == 0
+            this.mutationRoot.setPreviousStatement(value == 0 || isDualBlock);
+            this.mutationRoot.setNextStatement(value == 0 || isDualBlock
                 ? !this.state.terminal
                 : false
             );
@@ -222,6 +243,7 @@ class CustomProcedures extends React.Component {
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 terminal={this.state.terminal}
+                dualBlock={this.state.dualBlock}
                 global={this.state.global}
                 forceOutput={this.state.forceOutput}
                 onAddCommand={this.handleAddCommand}
@@ -231,6 +253,7 @@ class CustomProcedures extends React.Component {
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
                 onToggleTerminal={this.handleToggleTerminal}
+                onToggleDualBlock={this.handleToggleDualBlock}
                 onToggleGlobal={this.handleToggleGlobal}
                 onForceOutput={this.handleForceOutput}
                 setProcColor={this.handleSetProcColor}
