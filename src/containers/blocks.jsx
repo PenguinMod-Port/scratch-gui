@@ -109,6 +109,7 @@ class Blocks extends React.Component {
             'handlePromptCallback',
             'handlePromptClose',
             'handleCustomProceduresClose',
+            'handleBeforeEditCustomProcedure',
             'onScriptGlowOn',
             'onScriptGlowOff',
             'onBlockGlowOn',
@@ -142,6 +143,7 @@ class Blocks extends React.Component {
 
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
+        this.ScratchBlocks.Procedures.beforeEditCallback = this.handleBeforeEditCustomProcedure;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const Msg = this.ScratchBlocks.Msg;
@@ -642,6 +644,11 @@ class Blocks extends React.Component {
         const ws = this.workspace;
         ws.refreshToolboxSelection_();
         ws.toolbox_.scrollToCategoryById('myBlocks');
+    }
+    handleBeforeEditCustomProcedure (block) {
+        // TODO
+        console.log(this, block);
+        debugger;
     }
     handleDrop (dragInfo) {
         fetch(dragInfo.payload.bodyUrl)
