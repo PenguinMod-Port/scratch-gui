@@ -128,8 +128,8 @@ const messages = defineMessages({
         id: "pm.gui.customProcedures.colorType"
     },
     inputPiano: {
-        defaultMessage: "piano",
-        description: "Description of the piano input type",
+        defaultMessage: "note",
+        description: "Description of the note input type",
         id: "pm.gui.customProcedures.pianoType"
     },
     inputEmpty: {
