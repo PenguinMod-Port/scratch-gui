@@ -343,6 +343,17 @@ const CustomProcedures = props => {
                     />
                 </label>
                 <label>
+                    <input
+                        checked={props.global}
+                        type="checkbox"
+                        onChange={props.onToggleGlobal}
+                    />
+                    <FormattedMessage
+                        defaultMessage="Available for all sprites"
+                        id="gui.customProcedures.global"
+                    />
+                </label>
+                <label>
                     <FormattedMessage
                         defaultMessage="Output: "
                         description="Label for forced output shapes"
@@ -399,6 +410,7 @@ CustomProcedures.propTypes = {
     intl: intlShape,
     warp: PropTypes.bool.isRequired,
     terminal: PropTypes.bool.isRequired,
+    global: PropTypes.bool.isRequired,
     forceOutput: PropTypes.number.isRequired,
     onAddCommand: PropTypes.func.isRequired,
     onAddLabel: PropTypes.func.isRequired,
@@ -407,6 +419,7 @@ CustomProcedures.propTypes = {
     onOk: PropTypes.func.isRequired,
     onToggleWarp: PropTypes.func.isRequired,
     onToggleTerminal: PropTypes.func.isRequired,
+    onToggleGlobal: PropTypes.func.isRequired,
     onForceOutput: PropTypes.func.isRequired,
     setProcColor: PropTypes.func.isRequired,
     onCustomColorChange: PropTypes.func.isRequired,

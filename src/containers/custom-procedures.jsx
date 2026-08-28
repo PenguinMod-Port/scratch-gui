@@ -11,11 +11,11 @@ class CustomProcedures extends React.Component {
         super(props);
         bindAll(this, [
             'handleAddLabel',
-            'handleAddBoolean',
             'handleAddCommand',
             'handleAddArgument',
             'handleToggleWarp',
             'handleToggleTerminal',
+            'handleToggleGlobal',
             'handleForceOutput',
             'handleSetProcColor',
             'handleCustomColorChange',
@@ -27,6 +27,7 @@ class CustomProcedures extends React.Component {
             rtlOffset: 0,
             warp: false,
             terminal: false,
+            global: false,
             forceOutput: 0,
             color: '#000000'
         };
@@ -116,6 +117,7 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.render();
         this.setState({
             warp: this.mutationRoot.getWarp(),
+            global: this.mutationRoot.getGlobal(),
             forceOutput: this.mutationRoot.getForceOutput(),
             terminal: this.mutationRoot.isTerminal_,
             color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
@@ -147,11 +149,6 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addLabelExternal();
         }
     }
-    handleAddBoolean () {
-        if (this.mutationRoot) {
-            this.mutationRoot.addBooleanExternal();
-        }
-    }
     handleAddCommand () {
         if (this.mutationRoot) {
             this.mutationRoot.addCommandExternal();
@@ -167,6 +164,13 @@ class CustomProcedures extends React.Component {
             const newWarp = !this.mutationRoot.getWarp();
             this.mutationRoot.setWarp(newWarp);
             this.setState({warp: newWarp});
+        }
+    }
+    handleToggleGlobal () {
+        if (this.mutationRoot) {
+            const newGlobal = !this.mutationRoot.getGlobal();
+            this.mutationRoot.setGlobal(newGlobal);
+            this.setState({global: newGlobal});
         }
     }
     handleToggleTerminal () {
@@ -218,6 +222,7 @@ class CustomProcedures extends React.Component {
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 terminal={this.state.terminal}
+                global={this.state.global}
                 forceOutput={this.state.forceOutput}
                 onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
@@ -226,6 +231,7 @@ class CustomProcedures extends React.Component {
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
                 onToggleTerminal={this.handleToggleTerminal}
+                onToggleGlobal={this.handleToggleGlobal}
                 onForceOutput={this.handleForceOutput}
                 setProcColor={this.handleSetProcColor}
                 onCustomColorChange={this.handleCustomColorChange}
