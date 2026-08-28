@@ -38,7 +38,7 @@ class Waveform extends React.PureComponent {
         ];
         const pathComponents = points.map(([x, y], i) => {
             const [nx, ny] = points[i < points.length - 1 ? i + 1 : 0];
-            return `Q${x} ${y} ${(x + nx) / 2} ${(y + ny) / 2}`;
+            return `L${x} ${y} ${(x + nx) / 2} ${(y + ny) / 2}`;
         });
 
         return (
