@@ -5,12 +5,18 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './generic-setting.css';
 import helpIcon from './help-icon.svg';
+import resetIcon from './reset-icon.svg';
 
 const messages = defineMessages({
     help: {
         defaultMessage: 'Click for help',
         description: 'Hover text of help icon in settings',
         id: 'tw.settingsModal.help'
+    },
+    reset: {
+        defaultMessage: 'Reset to Default',
+        description: 'Hover text of reset icon in settings',
+        id: 'pm.gui.settingsModal.reset'
     }
 });
 
@@ -18,7 +24,8 @@ class UnwrappedSetting extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleClickHelp'
+            'handleClickHelp',
+            'handleClickReset'
         ]);
         this.state = {
             helpVisible: false
@@ -37,6 +44,11 @@ class UnwrappedSetting extends React.Component {
             helpVisible: !prevState.helpVisible
         }));
     }
+    handleClickReset () {
+        if (this.props.onReset) {
+            this.props.onReset();
+        }
+    }
     render () {
         return (
             <div
@@ -46,6 +58,18 @@ class UnwrappedSetting extends React.Component {
             >
                 <div className={styles.label}>
                     {this.props.primary}
+                    {this.props.active && (
+                        <button
+                            className={styles.resetIcon}
+                            onClick={this.handleClickReset}
+                            title={this.props.intl.formatMessage(messages.reset)}
+                        >
+                            <img
+                                src={resetIcon}
+                                draggable={false}
+                            />
+                        </button>
+                    )}
                     <button
                         className={styles.helpIcon}
                         onClick={this.handleClickHelp}
@@ -73,7 +97,8 @@ UnwrappedSetting.propTypes = {
     help: PropTypes.node,
     primary: PropTypes.node,
     secondary: PropTypes.node,
-    slug: PropTypes.string
+    slug: PropTypes.string,
+    onReset: PropTypes.func
 };
 export const Setting = injectIntl(UnwrappedSetting);
 
@@ -89,7 +114,8 @@ class GenericSetting extends React.Component {
             'isActive',
             'getPrimary',
             'getHelp',
-            'getSecondary'
+            'getSecondary',
+            'resetToDefault'
         ]);
 
         this.state = {
@@ -115,6 +141,10 @@ class GenericSetting extends React.Component {
 
     _readStorage(value) {
 
+    }
+
+    resetToDefault() {
+        this._setValue(this.defaultValue())
     }
 
     setValue(value) {
@@ -149,6 +179,7 @@ class GenericSetting extends React.Component {
             primary={this.getPrimary()}
             help={this.getHelp()}
             secondary={this.getSecondary()}
+            onReset={this.resetToDefault}
         />
     }
 }

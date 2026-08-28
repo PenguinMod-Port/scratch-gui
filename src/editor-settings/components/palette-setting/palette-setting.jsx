@@ -3,7 +3,7 @@ import bindAll from 'lodash.bindall';
 import React from 'react';
 import styles from './palette-setting.css';
 
-class PaletteSeting extends GenericSetting {
+class PaletteSetting extends GenericSetting {
     defaultValue() { return {}; }
     getNames() { return {}; }
 
@@ -46,8 +46,16 @@ class PaletteSeting extends GenericSetting {
                     ))}
                 </div>
             }
+            onReset={this.resetToDefault}
         />
     }
+
+    isActive(value) {
+        const defaultVal = this.defaultValue();
+        return Object.keys(defaultVal).some(
+            key => value[key] !== defaultVal[key]
+    );
+}
 }
 
-export default PaletteSeting
+export default PaletteSetting

@@ -35,6 +35,7 @@ class IntegerSetting extends GenericSetting {
             }
             help={this.getHelp()}
             secondary={this.getSecondary()}
+            onReset={this.resetToDefault}
         />
     }
 }
