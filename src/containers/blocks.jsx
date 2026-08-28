@@ -646,9 +646,16 @@ class Blocks extends React.Component {
         ws.toolbox_.scrollToCategoryById('myBlocks');
     }
     handleBeforeEditCustomProcedure (block) {
-        // TODO
-        console.log(this, block);
-        debugger;
+        if (block.type === 'procedures_call' && block.global_) {
+            // If this global block is not being edited from the source
+            // sprite, switch workspaces.
+            const proccode = block.procCode_;
+            const editingTargetId = this.props.vm.editingTarget.id;
+            const targetId = this.props.vm.runtime._globalProcedureSourceMap[proccode];
+            if (editingTargetId !== targetId) {
+                this.props.vm.setEditingTarget(targetId)
+            }
+        }
     }
     handleDrop (dragInfo) {
         fetch(dragInfo.payload.bodyUrl)
