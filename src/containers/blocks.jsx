@@ -653,7 +653,10 @@ class Blocks extends React.Component {
             const editingTargetId = this.props.vm.editingTarget.id;
             const targetId = this.props.vm.runtime._globalProcedureSourceMap[proccode];
             if (editingTargetId !== targetId) {
-                this.props.vm.setEditingTarget(targetId)
+                this.props.vm.setEditingTarget(targetId);
+
+                const proto = this.ScratchBlocks.Procedures.getPrototypeBlock(proccode, this.workspace);
+                if (proto) return proto;
             }
         }
     }
