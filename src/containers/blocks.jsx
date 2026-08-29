@@ -121,6 +121,7 @@ class Blocks extends React.Component {
             'onVisualReport',
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
+            'onProjectDispose',
             'setBlocks',
             'setLocale',
             'handleEnableProcedureReturns'
@@ -381,6 +382,8 @@ class Blocks extends React.Component {
         this.props.vm.addListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.addListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+
+        this.props.vm.runtime.addListener("RUNTIME_DISPOSED", this.onProjectDispose);
     }
     detachVM () {
         this.props.vm.removeListener('SCRIPT_GLOW_ON', this.onScriptGlowOn);
@@ -447,6 +450,11 @@ class Blocks extends React.Component {
     }
     onVisualReport (data) {
         this.workspace.reportValue(data.id, data.value, data.error);
+    }
+    onProjectDispose() {
+        // Clear some data when the project is disposed.
+
+        this.ScratchBlocks.Procedures.GLOBAL_BLOCKS.clear();
     }
     getToolboxXML () {
         // Use try/catch because this requires digging pretty deep into the VM
