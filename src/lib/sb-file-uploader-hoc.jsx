@@ -140,7 +140,6 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             const thisFileInput = e.target;
             if (thisFileInput.files && thisFileInput.files.length) { // Don't attempt to load if no file was selected
                 this.fileToUpload = thisFileInput.files[0];
-                console.log("sb-file-uploader", this.fileToUpload);
 
                 // If user owns the project, or user has changed the project,
                 // we must confirm with the user that they really intend to
@@ -170,6 +169,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                     this.removeFileObjects();
                 }
                 this.props.closeFileMenu();
+            } else {
+                this.expectingFileUploadFinish = false;
             }
         }
         // step 4 is below, in mapDispatchToProps
