@@ -351,6 +351,18 @@ const TWStateManager = function (WrappedComponent) {
                 });
             }
 
+            if (urlParams.has('nooffscreen')) {
+                this.props.vm.setRuntimeOptions({
+                    disableOffscreenRendering: true
+                });
+            }
+
+            if (urlParams.has('nodirectionclamping')) {
+                this.props.vm.setRuntimeOptions({
+                    disableDirectionClamping: true
+                });
+            }
+
             if (urlParams.has("limitless")) {
                 this.props.vm.setRuntimeOptions({
                     miscLimits: false,
@@ -490,6 +502,12 @@ const TWStateManager = function (WrappedComponent) {
                     searchParams.set("limitless", "");
                 }
 
+                if (runtimeOptions.disableDirectionClamping) {
+                    searchParams.set('nodirectionclamping', '');
+                } else {
+                    searchParams.delete('nodirectionclamping');
+                }
+
                 setSearchParams(searchParams);
             }
         }
@@ -570,6 +588,8 @@ const TWStateManager = function (WrappedComponent) {
             miscLimits: PropTypes.bool,
             fencing: PropTypes.bool,
             maxClones: PropTypes.number,
+            disableDirectionClamping: PropTypes.bool,
+            disableOffscreenRendering: PropTypes.bool,
         }),
         highQualityPen: PropTypes.bool,
         framerate: PropTypes.number,

@@ -314,6 +314,27 @@ const RemoveMiscLimits = props => (
     />
 );
 
+const DirectionClamping = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Disable Direction Clamping"
+                description="Disable Direction setting"
+                id="pm.settingsModal.directionClamping"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Removes the restriction that limits sprite directions to -179 to 180 degrees."
+                description="Disable Direction help"
+                id="pm.settingsModal.directionClampingHelp"
+            />
+        }
+    />
+);
+
 const WarpTimer = props => (
     <BooleanSetting
         {...props}
@@ -358,6 +379,27 @@ const DisableCompiler = props => (
             />
         }
         slug="disable-compiler"
+    />
+);
+
+const OffscreenRendering = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Disable Offscreen Rendering"
+                description="Disable Offscreen Rendering setting"
+                id="pm.gui.settingsModal.offscreenRendering"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Optimizes performance by disabling the rendering of sprites that are outside the stage viewport."
+                description="Disable Offscreen Rendering help"
+                id="pm.gui.settingsModal.offscreenRenderingHelp"
+            />
+        }
     />
 );
 
@@ -518,6 +560,10 @@ const SettingsModalComponent = props => (
                         value={props.highQualityPen}
                         onChange={props.onHighQualityPenChange}
                     />
+                    <OffscreenRendering
+                        value={props.offscreenRendering}
+                        onChange={props.onOffscreenRenderingChange}
+                    />
                 </React.Fragment>
             },
             {
@@ -531,6 +577,10 @@ const SettingsModalComponent = props => (
                         value={props.removeFencing}
                         onChange={props.onRemoveFencingChange}
                     />
+                    <DirectionClamping
+                        value={props.directionClamping}
+                        onChange={props.onDirectionClampingChange}
+                    />
                     <RemoveMiscLimits
                         value={props.removeLimits}
                         onChange={props.onRemoveLimitsChange}
@@ -543,6 +593,10 @@ const SettingsModalComponent = props => (
                     <WarpTimer
                         value={props.warpTimer}
                         onChange={props.onWarpTimerChange}
+                    />
+                    <OffscreenRendering
+                        value={props.offscreenRendering}
+                        onChange={props.onOffscreenRenderingChange}
                     />
                     <StrictEquality
                         value={props.strictEquality}
@@ -573,6 +627,10 @@ SettingsModalComponent.propTypes = {
     onRemoveLimitsChange: PropTypes.func,
     warpTimer: PropTypes.bool,
     onWarpTimerChange: PropTypes.func,
+    directionClamping: PropTypes.bool,
+    onDirectionClampingChange: PropTypes.func,
+    offscreenRendering: PropTypes.bool,
+    onOffscreenRenderingChange: PropTypes.func,
     disableCompiler: PropTypes.bool,
     onDisableCompilerChange: PropTypes.func,
     strictEquality: PropTypes.bool,

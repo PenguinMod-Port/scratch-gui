@@ -25,6 +25,8 @@ class SettingsModal extends React.Component {
             'handleInfiniteClonesChange',
             'handleRemoveFencingChange',
             'handleRemoveLimitsChange',
+            'handleDirectionClampingChange',
+            'handleOffscreenRenderingChange',
             'handleWarpTimerChange',
             'handleStageWidthChange',
             'handleStageHeightChange',
@@ -64,6 +66,16 @@ class SettingsModal extends React.Component {
     handleRemoveLimitsChange (e) {
         this.props.vm.setRuntimeOptions({
             miscLimits: !e.target.checked
+        });
+    }
+    handleDirectionClampingChange (e) {
+        this.props.vm.setRuntimeOptions({
+            disableDirectionClamping: e.target.checked
+        });
+    }
+    handleOffscreenRenderingChange (e) {
+        this.props.vm.setRuntimeOptions({
+            disableOffscreenRendering: e.target.checked
         });
     }
     handleWarpTimerChange (e) {
@@ -107,6 +119,8 @@ class SettingsModal extends React.Component {
                 onInfiniteClonesChange={this.handleInfiniteClonesChange}
                 onRemoveFencingChange={this.handleRemoveFencingChange}
                 onRemoveLimitsChange={this.handleRemoveLimitsChange}
+                onDirectionClampingChange={this.handleDirectionClampingChange}
+                onOffscreenRenderingChange={this.handleOffscreenRenderingChange}
                 onWarpTimerChange={this.handleWarpTimerChange}
                 onStageWidthChange={this.handleStageWidthChange}
                 onStageHeightChange={this.handleStageHeightChange}
@@ -149,6 +163,8 @@ SettingsModal.propTypes = {
     removeFencing: PropTypes.bool,
     removeLimits: PropTypes.bool,
     warpTimer: PropTypes.bool,
+    disableOffscreenRendering: PropTypes.bool,
+    disableDirectionClamping: PropTypes.bool,
     customStageSize: PropTypes.shape({
         width: PropTypes.number,
         height: PropTypes.number
@@ -167,6 +183,8 @@ const mapStateToProps = state => ({
     removeFencing: !state.scratchGui.tw.runtimeOptions.fencing,
     removeLimits: !state.scratchGui.tw.runtimeOptions.miscLimits,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
+    disableOffscreenRendering: state.scratchGui.tw.runtimeOptions.disableOffscreenRendering,
+    disableDirectionClamping: state.scratchGui.tw.runtimeOptions.disableDirectionClamping,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
     strictEquality: state.scratchGui.tw.compilerOptions.strictEquality

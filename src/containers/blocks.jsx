@@ -453,8 +453,16 @@ class Blocks extends React.Component {
     }
     onProjectDispose() {
         // Clear some data when the project is disposed.
-
         this.ScratchBlocks.Procedures.GLOBAL_BLOCKS.clear();
+
+        this.props.vm.setFramerate(30);
+        this.props.vm.setRuntimeOptions({
+            maxClones: 300,
+            miscLimits: true,
+            fencing: true,
+            disableDirectionClamping: false,
+            disableOffscreenRendering: false,
+        });
     }
     getToolboxXML () {
         // Use try/catch because this requires digging pretty deep into the VM
