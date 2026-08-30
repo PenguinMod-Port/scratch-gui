@@ -64,7 +64,12 @@
 
     position: relative;
 
-    background: hsla(300, 53%, 60%, 0.15);
+    background: linear-gradient(
+        hsla(300, 53%, 60%, 0.15) 0%,
+        hsla(300, 53%, 60%, 0.15) 50%,
+        hsla(300, 53%, 60%, 0.30) 50%,
+        hsla(300, 53%, 60%, 0.30) 100%
+    );
     border: 1px solid $ui-black-transparent;
     border-radius: 5px;
 
