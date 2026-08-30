@@ -171,6 +171,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 this.props.closeFileMenu();
             } else {
                 this.expectingFileUploadFinish = false;
+                this.removeFileObjects();
             }
         }
         // step 4 is below, in mapDispatchToProps
