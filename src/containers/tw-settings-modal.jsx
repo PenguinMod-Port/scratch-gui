@@ -163,8 +163,8 @@ SettingsModal.propTypes = {
     removeFencing: PropTypes.bool,
     removeLimits: PropTypes.bool,
     warpTimer: PropTypes.bool,
-    disableOffscreenRendering: PropTypes.bool,
-    disableDirectionClamping: PropTypes.bool,
+    offscreenRendering: PropTypes.bool,
+    directionClamping: PropTypes.bool,
     customStageSize: PropTypes.shape({
         width: PropTypes.number,
         height: PropTypes.number
