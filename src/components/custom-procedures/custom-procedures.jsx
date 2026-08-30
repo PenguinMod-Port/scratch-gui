@@ -355,7 +355,7 @@ const CustomProcedures = props => {
                 </label>
                 <label>
                     <FormattedMessage
-                        defaultMessage="Output: "
+                        defaultMessage="Shape: "
                         description="Label for forced output shapes"
                         id="pm.gui.customProcedures.forceOutput"
                     />
