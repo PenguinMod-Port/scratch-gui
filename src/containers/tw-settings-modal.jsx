@@ -183,8 +183,8 @@ const mapStateToProps = state => ({
     removeFencing: !state.scratchGui.tw.runtimeOptions.fencing,
     removeLimits: !state.scratchGui.tw.runtimeOptions.miscLimits,
     warpTimer: state.scratchGui.tw.compilerOptions.warpTimer,
-    disableOffscreenRendering: state.scratchGui.tw.runtimeOptions.disableOffscreenRendering,
-    disableDirectionClamping: state.scratchGui.tw.runtimeOptions.disableDirectionClamping,
+    offscreenRendering: state.scratchGui.tw.runtimeOptions.disableOffscreenRendering,
+    directionClamping: state.scratchGui.tw.runtimeOptions.disableDirectionClamping,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
     strictEquality: state.scratchGui.tw.compilerOptions.strictEquality
