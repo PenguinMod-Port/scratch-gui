@@ -21,8 +21,8 @@ import redoIcon from '!../../lib/tw-recolor/build!./icon--redo.svg';
 import undoIcon from '!../../lib/tw-recolor/build!./icon--undo.svg';
 
 import earCenter from '!../../lib/tw-recolor/build!./icon--ear-center.svg';
-import earLeft from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
-import earRight from '!../../lib/tw-recolor/build!./icon--ear-left.svg';
+import earLeft from '!../../lib/tw-recolor/build!./icon--ear-left.svg';
+import earRight from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
 
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';

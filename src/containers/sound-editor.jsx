@@ -161,7 +161,7 @@ class SoundEditor extends React.Component {
         });
     }
     submitNewSamples (newChannelSamples, sampleRate, skipUndo) {
-        console.log(newChannelSamples);
+        console.log("SUBMIT", newChannelSamples);
         const soundBuffer = {
             mainLeftSamples: newChannelSamples[0],
             rightSamples: newChannelSamples[1],
@@ -245,10 +245,10 @@ class SoundEditor extends React.Component {
         };
 
         const newChannelSamples = [];
-        if (this.focusedChannel === -1 || this.focusedChannel === 0) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 0) {
             newChannelSamples.push(deleteInChannel(mainLeftSamples));
         }
-        if (this.focusedChannel === -1 || this.focusedChannel === 1) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 1) {
             newChannelSamples.push(deleteInChannel(rightSamples));
         }
         if (newChannelSamples.length === 1) {
@@ -280,10 +280,10 @@ class SoundEditor extends React.Component {
         };
 
         const newChannelSamples = [];
-        if (this.focusedChannel === -1 || this.focusedChannel === 0) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 0) {
             newChannelSamples.push(deleteInChannel(mainLeftSamples));
         }
-        if (this.focusedChannel === -1 || this.focusedChannel === 1) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 1) {
             newChannelSamples.push(deleteInChannel(rightSamples));
         }
         if (newChannelSamples.length === 1) {
@@ -531,11 +531,11 @@ class SoundEditor extends React.Component {
 
         const newChannelSamples = [];
         let channelResult;
-        if (this.focusedChannel === -1 || this.focusedChannel === 0) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 0) {
             channelResult = pasteInChannel(mainLeftSamples);
             newChannelSamples.push(channelResult.samples);
         }
-        if (this.focusedChannel === -1 || this.focusedChannel === 1) {
+        if (this.state.focusedChannel === -1 || this.state.focusedChannel === 1) {
             channelResult = pasteInChannel(rightSamples);
             newChannelSamples.push(channelResult.samples);
         }
@@ -563,6 +563,7 @@ class SoundEditor extends React.Component {
             this.paste();
         } else {
             this.resampleBufferToRate(this.state.copyBuffer, this.props.sampleRate).then(buffer => {
+                console.log("PASTE", buffer)
                 this.setState({
                     copyBuffer: buffer
                 }, this.paste);
@@ -579,7 +580,9 @@ class SoundEditor extends React.Component {
         }
     }
     handleChannelFocus(channelId) {
-        this.state.focusedChannel = channelId;
+        this.setState({
+            focusedChannel: channelId
+        });
     }
     handleWaveformDetail(detail) {
         const LOWEST_DETAIL = 1024 * 10;
@@ -614,7 +617,7 @@ class SoundEditor extends React.Component {
                 canPaste={this.state.copyBuffer !== null}
                 canRedo={this.redoStack.length > 0}
                 canUndo={this.undoStack.length > 0}
-                waveformDetail={this.getNormalizedWaveformDetail}
+                waveformDetail={this.getNormalizedWaveformDetail()}
                 focusedChannel={this.state.focusedChannel}
                 mainLeftChunkLevels={this.state.mainLeftChunkLevels}
                 rightChunkLevels={this.state.rightChunkLevels}

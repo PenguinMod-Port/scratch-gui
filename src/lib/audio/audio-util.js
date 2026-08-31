@@ -36,7 +36,7 @@ const computeChunkedRMS = function (samples, chunkSize = 1024) {
  @property {number} sampleRate Audio sample rate
  */
 
-const encodeAndAddSoundToVM = function (vm, sampleBuffer, samples, name, callback) {
+const encodeAndAddSoundToVM = function (vm, sampleBuffer, name, callback) {
     WavEncoder.encode({
         sampleRate: sampleBuffer.sampleRate,
         channelData: [sampleBuffer.mainLeftSamples, sampleBuffer.rightSamples]
@@ -82,7 +82,6 @@ const downsampleIfNeeded = (buffer, resampler) => {
         rightSamples,
         sampleRate
     } = buffer;
-    console.log(buffer);
 
     /* bitDepth 16 bit */
     const encodedLeftByteLength = mainLeftSamples.length * 2;
