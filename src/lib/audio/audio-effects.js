@@ -22,11 +22,12 @@ class AudioEffects {
     static get effectTypes () {
         return effectTypes;
     }
-    constructor (buffer, name, trimStart, trimEnd) {
+    constructor (buffer, name, trimStart, trimEnd, targetChannel) {
         this.trimStartSeconds = (trimStart * buffer.length) / buffer.sampleRate;
         this.trimEndSeconds = (trimEnd * buffer.length) / buffer.sampleRate;
         this.adjustedTrimStartSeconds = this.trimStartSeconds;
         this.adjustedTrimEndSeconds = this.trimEndSeconds;
+        this.targetChannel = targetChannel;
 
         // Some effects will modify the playback rate and/or number of samples.
         // Need to precompute those values to create the offline audio context.

@@ -44,6 +44,8 @@ class SoundEditor extends React.Component {
             'paste',
             'handleKeyPress',
             'handleContainerClick',
+            'handleChannelFocus',
+            'handleWaveformDetail',
             'setRef',
             'resampleBufferToRate'
         ]);
@@ -54,8 +56,8 @@ class SoundEditor extends React.Component {
             playhead: null, // null is not playing, [0 -> 1] is playing percent
             trimStart: null,
             trimEnd: null,
-            focusedChannel: -1, // Edit both channels, TOODO needs setter
-            waveformDetail: 1024, // TOODO needs setter
+            focusedChannel: -1, // Edit both channels by default
+            waveformDetail: 1024,
         };
 
         this.redoStack = [];
@@ -158,7 +160,12 @@ class SoundEditor extends React.Component {
         });
     }
     submitNewSamples (newChannelSamples, sampleRate, skipUndo) {
-        return downsampleIfNeeded({newChannelSamples, sampleRate}, this.resampleBufferToRate)
+        const soundBuffer = {
+            mainLeftSamples: newChannelSamples[0],
+            rightSamples: newChannelSamples[1],
+            sampleRate
+        };
+        return downsampleIfNeeded(soundBuffer, this.resampleBufferToRate)
             .then((downsampledBuffer) =>
                 WavEncoder.encode({
                     sampleRate: downsampledBuffer.sampleRate,
@@ -309,7 +316,13 @@ class SoundEditor extends React.Component {
             return;
         }
 
-        const effects = new AudioEffects(this.audioBufferPlayer.buffer, name, trimStart, trimEnd);
+        const effects = new AudioEffects(
+            this.audioBufferPlayer.buffer,
+            name,
+            trimStart,
+            trimEnd,
+            this.state.focusedChannel
+        );
         effects.process((renderedBuffer, adjustedTrimStart, adjustedTrimEnd) => {
             const mainLeftSamples = renderedBuffer.getChannelData(0);
             const rightSamples = renderedBuffer.getChannelData(renderedBuffer.numberOfChannels === 1 ? 0 : 1);
@@ -554,6 +567,18 @@ class SoundEditor extends React.Component {
             this.handleUpdateTrim(null, null);
         }
     }
+    handleChannelFocus(channelId) {
+        this.state.focusedChannel = channelId;
+    }
+    handleWaveformDetail(detail) {
+        // TOODO normalize
+        const buffer = this.copyCurrentBuffer();
+        this.setState({
+            waveformDetail: detail,
+            mainLeftChunkLevels: computeChunkedRMS(buffer.mainLeftSamples, detail),
+            rightChunkLevels: computeChunkedRMS(buffer.rightSamples, detail)
+        });
+    }
     render () {
         const {effectTypes} = AudioEffects;
         return (
@@ -564,6 +589,8 @@ class SoundEditor extends React.Component {
                 canPaste={this.state.copyBuffer !== null}
                 canRedo={this.redoStack.length > 0}
                 canUndo={this.undoStack.length > 0}
+                waveformDetail={this.state.waveformDetail}
+                focusedChannel={this.state.focusedChannel}
                 mainLeftChunkLevels={this.state.mainLeftChunkLevels}
                 rightChunkLevels={this.state.rightChunkLevels}
                 name={this.props.name}
@@ -574,6 +601,8 @@ class SoundEditor extends React.Component {
                 trimStart={this.state.trimStart}
                 onChangeName={this.handleChangeName}
                 onContainerClick={this.handleContainerClick}
+                onChannelFocusChange={this.handleChannelFocus}
+                onWaveformDetailChange={this.handleWaveformDetail}
                 onCopy={this.handleCopy}
                 onCopyToNew={this.handleCopyToNew}
                 onDelete={this.handleDelete}

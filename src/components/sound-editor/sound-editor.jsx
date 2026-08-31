@@ -19,6 +19,11 @@ import playIcon from './icon--play.svg';
 import stopIcon from './icon--stop.svg';
 import redoIcon from '!../../lib/tw-recolor/build!./icon--redo.svg';
 import undoIcon from '!../../lib/tw-recolor/build!./icon--undo.svg';
+
+import earCenter from './icon--ear-center.svg';
+import earLeft from './icon--ear-right.svg';
+import earRight from './icon--ear-left.svg';
+
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';
 import louderIcon from './icon--louder.svg';
@@ -87,6 +92,31 @@ const messages = defineMessages({
         id: 'gui.soundEditor.redo',
         description: 'Title of the button to redo',
         defaultMessage: 'Redo'
+    },
+    channelFocus: {
+        id: 'pm.gui.soundEditor.channelFocus',
+        description: 'Label for the button to change the target channel',
+        defaultMessage: 'Target Channel'
+    },
+    channelLeft: {
+        id: 'pm.gui.soundEditor.channelLeft',
+        description: 'Title of the button to use the left channel',
+        defaultMessage: 'Left Channel'
+    },
+    channelRight: {
+        id: 'pm.gui.soundEditor.channelRight',
+        description: 'Title of the button to use the right channel',
+        defaultMessage: 'Right Channel'
+    },
+    channelBoth: {
+        id: 'pm.gui.soundEditor.channelBoth',
+        description: 'Title of the button to use both channels',
+        defaultMessage: 'Both Channels'
+    },
+    changeDetail: {
+        id: 'pm.gui.soundEditor.changeDetail',
+        description: 'Label for the button to change the waveform detail',
+        defaultMessage: 'Sound Display Detail'
     },
     faster: {
         id: 'gui.soundEditor.faster',
@@ -250,6 +280,56 @@ const SoundEditor = props => (
                 onClick={props.onDelete}
             />
         </div>
+        <div className={classNames(styles.row, styles.advancedControls)}>
+            <div className={classNames(styles.inputGroup, styles.advancedContainer)}>
+                <Label text={props.intl.formatMessage(messages.changeDetail)}>
+                    <BufferedInput
+                        tabIndex="1"
+                        type="number"
+                        value={props.waveformDetail}
+                        onSubmit={props.onWaveformDetailChange}
+                        className={styles.nameInput}
+                    />
+                </Label>
+                <Label text={props.intl.formatMessage(messages.channelFocus)}>
+                    <div>
+                        <button
+                            className={styles.button}
+                            disabled={props.focusedChannel !== 0}
+                            title={props.intl.formatMessage(messages.channelLeft)}
+                            onClick={() => props.onChannelFocusChange(0)}
+                        >
+                            <TWRenderRecoloredImage
+                                draggable={false}
+                                src={earLeft}
+                            />
+                        </button>
+                        <button
+                            className={styles.button}
+                            disabled={props.focusedChannel !== -1}
+                            title={props.intl.formatMessage(messages.channelBoth)}
+                            onClick={() => props.onChannelFocusChange(-1)}
+                        >
+                            <TWRenderRecoloredImage
+                                draggable={false}
+                                src={earCenter}
+                            />
+                        </button>
+                        <button
+                            className={styles.button}
+                            disabled={props.focusedChannel !== 1}
+                            title={props.intl.formatMessage(messages.channelRight)}
+                            onClick={() => props.onChannelFocusChange(1)}
+                        >
+                            <TWRenderRecoloredImage
+                                draggable={false}
+                                src={earRight}
+                            />
+                        </button>
+                    </div>
+                </Label>
+            </div>
+        </div>
         <div className={styles.row}>
             <div className={styles.waveformContainer}>
                 <Waveform
@@ -407,12 +487,16 @@ SoundEditor.propTypes = {
     canPaste: PropTypes.bool.isRequired,
     canRedo: PropTypes.bool.isRequired,
     canUndo: PropTypes.bool.isRequired,
+    waveformDetail: PropTypes.number.isRequired,
+    focusedChannel: PropTypes.number.isRequired,
     mainLeftChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
     rightChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
     intl: intlShape,
     name: PropTypes.string.isRequired,
     onChangeName: PropTypes.func.isRequired,
     onContainerClick: PropTypes.func.isRequired,
+    onChannelFocusChange: PropTypes.func.isRequired,
+    onWaveformDetailChange: PropTypes.func.isRequired,
     onCopy: PropTypes.func.isRequired,
     onCopyToNew: PropTypes.func.isRequired,
     onDelete: PropTypes.func,

@@ -79,6 +79,13 @@
 
 $border-radius: 0.25rem;
 
+.advanced-controls {
+    margin-top: 0 !important;
+}
+.advanced-container {
+    border-right: none !important;
+}
+
 .button {
     height: 2rem;
     padding: 0.35rem;

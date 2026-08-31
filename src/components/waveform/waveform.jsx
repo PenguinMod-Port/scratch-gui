@@ -13,40 +13,52 @@ class Waveform extends React.PureComponent {
             mainLeftData,
             rightData,
         } = this.props;
-        // TOODO
 
-        let pathComponents;
-        if (window.test) {
-            pathComponents = window.test(this);
-        } else {
-        // Never want a density of points higher than the number of pixels
-        // This is very conservative, could be far fewer points because of curve smoothing.
-        // Drawing too many points seems to cause an explosion in browser
-        // composite time when animating the playhead
-        const takeEveryN = Math.ceil(mainLeftData.length / width);
+        const createPoints = (data, direction) => {
+            // Never want a density of points higher than the number of pixels
+            // This is very conservative, could be far fewer points because of curve smoothing.
+            // Drawing too many points seems to cause an explosion in browser
+            // composite time when animating the playhead
+            const takeEveryN = Math.ceil(data.length / width);
 
-        const filteredData = takeEveryN === 1 ? mainLeftData.slice(0) :
-            mainLeftData.filter((_, i) => i % takeEveryN === 0);
+            const filteredData = takeEveryN === 1
+                ? data.slice(0)
+                : data.filter((_, i) => i % takeEveryN === 0);
 
-        // Need at least two points to render waveform.
-        if (filteredData.length === 1) {
-            filteredData.push(filteredData[0]);
-        }
+            // Need at least two points to render waveform.
+            if (filteredData.length === 1) {
+                filteredData.push(filteredData[0]);
+            }
 
-        const maxIndex = filteredData.length - 1;
-        const points = [
-            ...filteredData.map((v, i) =>
-                [width * (i / maxIndex), height * v / 2]
-            ),
-            ...filteredData.reverse().map((v, i) =>
-                [width * (1 - (i / maxIndex)), -height * v / 2]
-            )
-        ];
-        pathComponents = points.map(([x, y], i) => {
-            const [nx, ny] = points[i < points.length - 1 ? i + 1 : 0];
+            const maxIndex = filteredData.length - 1;
+            return [
+                ...filteredData.map((v, i) =>
+                    [width * (i / maxIndex), direction * height * v / 2]
+                ),
+                ...filteredData.reverse().map((v, i) =>
+                    [width * (1 - (i / maxIndex)), 0]
+                )
+            ];
+        };
+
+        const topPoints = createPoints(mainLeftData, 1);
+        const bottomPoints = createPoints(rightData, -1);
+
+        const topPath = topPoints.map(([x, y], i) => {
+            const [nx, ny] = topPoints[i < topPoints.length - 1 ? i + 1 : 0];
+
             return `L${x} ${y} ${(x + nx) / 2} ${(y + ny) / 2}`;
         });
-        }
+        const bottomPath = bottomPoints.map(([x, y], i) => {
+            const [nx, ny] = bottomPoints[i < bottomPoints.length - 1 ? i + 1 : 0];
+
+            return `L${x} ${y} ${(x + nx) / 2} ${(y + ny) / 2}`;
+        });
+
+        const pathComponents = [
+            ...topPath,
+            ...bottomPath,
+        ];
 
         return (
             <svg
