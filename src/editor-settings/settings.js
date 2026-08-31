@@ -1,6 +1,7 @@
 export default Object.fromEntries([
     'blockColors',
     'cascadeProcedureColors',
+    'outputBubbleAutoTyping',
     'disableExpandables',
     'hexagonalRoundness',
     'paintMultiTool',
