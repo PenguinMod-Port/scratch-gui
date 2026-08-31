@@ -100,10 +100,15 @@ const downsampleIfNeeded = (buffer, resampler) => {
 
     // TW: Don't check if the sound will still fit at this reduced sample rate.
     // Instead the GUI will show a warning if it's too large.
-    return resampler({
+    const resampled = resampler({
         channelSamples: [mainLeftSamples, rightSamples],
         sampleRate
     }, 22050);
+
+    return {
+        channelSamples: [resampled.mainLeftSamples, resampled.rightSamples],
+        sampleRate: resampled.sampleRate
+    };
 };
 
 /**

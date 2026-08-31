@@ -734,7 +734,7 @@ class SoundEditor extends React.Component {
             [mainLeftSamples, rightSamples],
             buffer.sampleRate,
             undefined,
-            !this.props.isStereo
+            this.props.isStereo
         ).then(() => {
             this.setState({
                 trimStart: null,
