@@ -559,9 +559,9 @@ class SoundEditor extends React.Component {
             // (e.g. Safari/webkitOAC does not support lower than 44khz).
             try {
                 if (window.OfflineAudioContext) {
-                    offlineContext = new window.OfflineAudioContext(1, newLength, newRate);
+                    offlineContext = new window.OfflineAudioContext(2, newLength, newRate);
                 } else if (window.webkitOfflineAudioContext) {
-                    offlineContext = new window.webkitOfflineAudioContext(1, newLength, newRate);
+                    offlineContext = new window.webkitOfflineAudioContext(2, newLength, newRate);
                 }
             } catch {
                 // If no OAC available and downsampling by 2, downsample by dropping every other sample.
@@ -712,7 +712,7 @@ class SoundEditor extends React.Component {
 
         let mainLeftSamples;
         let rightSamples;
-        if (props.isStereo) {
+        if (this.props.isStereo) {
             // Mono -> Stereo
             mainLeftSamples = buffer.getChannelData(0);
             rightSamples = new Float32Array(mainLeftSamples);
@@ -734,7 +734,7 @@ class SoundEditor extends React.Component {
             [mainLeftSamples, rightSamples],
             buffer.sampleRate,
             undefined,
-            !props.isStereo
+            !this.props.isStereo
         ).then(() => {
             this.setState({
                 trimStart: null,
