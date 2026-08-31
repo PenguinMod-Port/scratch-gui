@@ -466,7 +466,7 @@ export const sharkpoolGallery = {
     description: (
         <FormattedMessage
             // eslint-disable-next-line max-len
-            defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension while this menu is open to add it to your project."
+            defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
             description="Name for the sharkpoolGallery gallery"
             id="pm.sharkpoolGallery.more"
         />

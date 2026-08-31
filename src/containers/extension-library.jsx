@@ -51,6 +51,7 @@ const translateGalleryItem = (extension, locale) => ({
 });
 
 let cachedGallery = null;
+let externalGalleryListenerAttached = false;
 
 const fetchLibrary = async () => {
     const res = await fetch('https://extensions.turbowarp.org/generated-metadata/extensions-v0.json');
@@ -112,14 +113,11 @@ class ExtensionLibrary extends React.PureComponent {
             gallery: cachedGallery,
             galleryError: null,
             galleryTimedOut: false,
-            externalGalleryListenerAttached: false,
         };
     }
     componentDidMount () {
-        if (!this.state.externalGalleryListenerAttached) {
-            console.log("ATTACHED");
+        if (!externalGalleryListenerAttached) {
             window.addEventListener('message', this.wrapperEventHandler);
-            this.state.externalGalleryListenerAttached = true;
         }
         if (!this.state.gallery) {
             const timeout = setTimeout(() => {
@@ -183,6 +181,7 @@ class ExtensionLibrary extends React.PureComponent {
         // Don't recursively try to run this event.
         if (e.origin === window.origin) return;
 
+        console.log(e, isTrustedExtension(e.origin));
         // 'isTrustedExtension' checks the extension url.
         if (!isTrustedExtension(e.origin)) {
             e.source.postMessage({
