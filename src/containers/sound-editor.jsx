@@ -323,8 +323,19 @@ class SoundEditor extends React.Component {
             return;
         }
 
+        let buffer = this.audioBufferPlayer.buffer;
+        if (this.state.focusedChannel !== -1) {
+            const focusedBuffer = this.audioBufferPlayer.audioContext.createBuffer(2, buffer.length, buffer.sampleRate);
+            const sourceChannelIndex = buffer.numberOfChannels === 1 ? 0 : this.state.focusedChannel;
+            const sourceData = buffer.getChannelData(sourceChannelIndex);
+            const destinationChannel = focusedBuffer.getChannelData(this.state.focusedChannel);
+
+            destinationChannel.set(sourceData);
+            buffer = focusedBuffer;
+        }
+
         const effects = new AudioEffects(
-            this.audioBufferPlayer.buffer,
+            buffer,
             name,
             trimStart,
             trimEnd,
