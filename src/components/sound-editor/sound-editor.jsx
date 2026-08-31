@@ -327,10 +327,10 @@ const SoundEditor = props => (
                         </button>
                     </div>
                 </Label>
-                <Label text={props.intl.formatMessage(rops.isStereo ? messages.convertMono : messages.convertStereo)}>
+                <Label text={props.intl.formatMessage(props.isStereo ? messages.convertMono : messages.convertStereo)}>
                     <button
                         className={styles.button}
-                        title={props.intl.formatMessage(rops.isStereo ? messages.convertMono : messages.convertStereo)}
+                        title={props.intl.formatMessage(props.isStereo ? messages.convertMono : messages.convertStereo)}
                         onClick={props.onToggleFormat}
                     >
                         <TWRenderRecoloredImage
