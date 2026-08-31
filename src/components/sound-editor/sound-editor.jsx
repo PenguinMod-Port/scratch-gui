@@ -335,7 +335,7 @@ const SoundEditor = props => (
                     >
                         <TWRenderRecoloredImage
                             draggable={false}
-                            src={props.isStereo ? stereoIcon : monoIcon}
+                            src={props.isStereo ? monoIcon : stereoIcon}
                         />
                     </button>
                 </Label>

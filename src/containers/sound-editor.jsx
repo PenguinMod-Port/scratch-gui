@@ -533,6 +533,7 @@ class SoundEditor extends React.Component {
     }
     resampleBufferToRate (buffer, newRate) {
         return new Promise((resolve, reject) => {
+            console.log("TEST", buffer);
             const sampleRateRatio = newRate / buffer.sampleRate;
             const newLeftLength = sampleRateRatio * buffer.mainLeftSamples.length;
             const newRightLength = sampleRateRatio * buffer.rightSamples.length;
@@ -720,7 +721,12 @@ class SoundEditor extends React.Component {
             buffer.sampleRate,
             undefined,
             !isStereo
-        );
+        ).then(() => {
+            this.setState({
+                trimStart: null,
+                trimEnd: null
+            });
+        });
     }
     getNormalizedWaveformDetail() {
         const LOWEST_DETAIL = 1024 * 10;
