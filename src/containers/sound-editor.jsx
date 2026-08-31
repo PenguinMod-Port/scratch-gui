@@ -46,6 +46,7 @@ class SoundEditor extends React.Component {
             'handleContainerClick',
             'handleChannelFocus',
             'handleWaveformDetail',
+            'getNormalizedWaveformDetail',
             'setRef',
             'resampleBufferToRate'
         ]);
@@ -160,6 +161,7 @@ class SoundEditor extends React.Component {
         });
     }
     submitNewSamples (newChannelSamples, sampleRate, skipUndo) {
+        console.log(newChannelSamples);
         const soundBuffer = {
             mainLeftSamples: newChannelSamples[0],
             rightSamples: newChannelSamples[1],
@@ -249,6 +251,9 @@ class SoundEditor extends React.Component {
         if (this.focusedChannel === -1 || this.focusedChannel === 1) {
             newChannelSamples.push(deleteInChannel(rightSamples));
         }
+        if (newChannelSamples.length === 1) {
+            newChannelSamples.push(newChannelSamples[0]);
+        }
 
         this.submitNewSamples(newChannelSamples, sampleRate).then(() => {
             this.setState({
@@ -280,6 +285,9 @@ class SoundEditor extends React.Component {
         }
         if (this.focusedChannel === -1 || this.focusedChannel === 1) {
             newChannelSamples.push(deleteInChannel(rightSamples));
+        }
+        if (newChannelSamples.length === 1) {
+            newChannelSamples.push(newChannelSamples[0]);
         }
 
         this.submitNewSamples(newChannelSamples, sampleRate).then(success => {
@@ -531,6 +539,9 @@ class SoundEditor extends React.Component {
             channelResult = pasteInChannel(rightSamples);
             newChannelSamples.push(channelResult.samples);
         }
+        if (newChannelSamples.length === 1) {
+            newChannelSamples.push(newChannelSamples[0]);
+        }
 
         if (isPastingFullSound) {
             this.submitNewSamples(newChannelSamples, this.props.sampleRate, false).then(success => {
@@ -571,13 +582,27 @@ class SoundEditor extends React.Component {
         this.state.focusedChannel = channelId;
     }
     handleWaveformDetail(detail) {
-        // TOODO normalize
+        const LOWEST_DETAIL = 1024 * 10;
+        detail = Math.max(0, Math.min(100, Number(detail)));
+        detail = Math.round(LOWEST_DETAIL - detail * ((LOWEST_DETAIL - 1) / 150));
+
         const buffer = this.copyCurrentBuffer();
         this.setState({
             waveformDetail: detail,
             mainLeftChunkLevels: computeChunkedRMS(buffer.mainLeftSamples, detail),
             rightChunkLevels: computeChunkedRMS(buffer.rightSamples, detail)
         });
+    }
+    getNormalizedWaveformDetail() {
+        const LOWEST_DETAIL = 1024 * 10;
+
+        let detail = this.state.waveformDetail;
+        detail = Math.max(1, Math.min(LOWEST_DETAIL, detail));
+        detail = Math.round(
+            (LOWEST_DETAIL - detail) * (150 / (LOWEST_DETAIL - 1))
+        );
+
+        return detail;
     }
     render () {
         const {effectTypes} = AudioEffects;
@@ -589,7 +614,7 @@ class SoundEditor extends React.Component {
                 canPaste={this.state.copyBuffer !== null}
                 canRedo={this.redoStack.length > 0}
                 canUndo={this.undoStack.length > 0}
-                waveformDetail={this.state.waveformDetail}
+                waveformDetail={this.getNormalizedWaveformDetail}
                 focusedChannel={this.state.focusedChannel}
                 mainLeftChunkLevels={this.state.mainLeftChunkLevels}
                 rightChunkLevels={this.state.rightChunkLevels}

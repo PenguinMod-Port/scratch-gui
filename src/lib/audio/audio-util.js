@@ -82,6 +82,7 @@ const downsampleIfNeeded = (buffer, resampler) => {
         rightSamples,
         sampleRate
     } = buffer;
+    console.log(buffer);
 
     /* bitDepth 16 bit */
     const encodedLeftByteLength = mainLeftSamples.length * 2;

@@ -80,10 +80,17 @@
 $border-radius: 0.25rem;
 
 .advanced-controls {
-    margin-top: 0 !important;
+    margin-top: calc(1 * 0.5rem) !important;
 }
 .advanced-container {
+    gap: 10px;
     border-right: none !important;
+}
+.no-margin {
+    margin: 0 !important;
+}
+.advanced-container .button[aria-pressed='true'] {
+    background-color: var(--looks-light-transparent);
 }
 
 .button {
@@ -157,7 +164,6 @@ $border-radius: 0.25rem;
     color: $text-primary;
     font-size: 0.625rem;
     user-select: none;
-
 }
 
 [dir="ltr"] .trim-button {

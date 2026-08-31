@@ -20,9 +20,9 @@ import stopIcon from './icon--stop.svg';
 import redoIcon from '!../../lib/tw-recolor/build!./icon--redo.svg';
 import undoIcon from '!../../lib/tw-recolor/build!./icon--undo.svg';
 
-import earCenter from './icon--ear-center.svg';
-import earLeft from './icon--ear-right.svg';
-import earRight from './icon--ear-left.svg';
+import earCenter from '!../../lib/tw-recolor/build!./icon--ear-center.svg';
+import earLeft from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
+import earRight from '!../../lib/tw-recolor/build!./icon--ear-left.svg';
 
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';
@@ -292,10 +292,10 @@ const SoundEditor = props => (
                     />
                 </Label>
                 <Label text={props.intl.formatMessage(messages.channelFocus)}>
-                    <div>
+                    <div className={classNames(styles.buttonGroup, styles.noMargin)}>
                         <button
                             className={styles.button}
-                            disabled={props.focusedChannel !== 0}
+                            aria-pressed={props.focusedChannel === 0}
                             title={props.intl.formatMessage(messages.channelLeft)}
                             onClick={() => props.onChannelFocusChange(0)}
                         >
@@ -306,7 +306,7 @@ const SoundEditor = props => (
                         </button>
                         <button
                             className={styles.button}
-                            disabled={props.focusedChannel !== -1}
+                            aria-pressed={props.focusedChannel === -1}
                             title={props.intl.formatMessage(messages.channelBoth)}
                             onClick={() => props.onChannelFocusChange(-1)}
                         >
@@ -317,7 +317,7 @@ const SoundEditor = props => (
                         </button>
                         <button
                             className={styles.button}
-                            disabled={props.focusedChannel !== 1}
+                            aria-pressed={props.focusedChannel === 1}
                             title={props.intl.formatMessage(messages.channelRight)}
                             onClick={() => props.onChannelFocusChange(1)}
                         >
