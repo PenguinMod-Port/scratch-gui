@@ -712,21 +712,9 @@ class SoundEditor extends React.Component {
         let mainLeftSamples;
         let rightSamples;
         if (this.props.isStereo) {
-            // Mono -> Stereo
-            mainLeftSamples = buffer.getChannelData(0);
-            rightSamples = new Float32Array(mainLeftSamples);
-        } else {
             // Stereo -> Mono
             const left = buffer.getChannelData(0);
             const right = buffer.getChannelData(1);
-
-console.log("Original:", {
-    channels: buffer.numberOfChannels,
-    leftFirst: left.slice(0, 10),
-    rightFirst: right.slice(0, 10),
-    leftRMS: Math.sqrt(left.reduce((sum, x) => sum + x * x, 0) / left.length),
-    rightRMS: Math.sqrt(right.reduce((sum, x) => sum + x * x, 0) / right.length)
-});
 
             const mono = new Float32Array(buffer.length);
             for (let i = 0; i < buffer.length; i++) {
@@ -735,11 +723,10 @@ console.log("Original:", {
 
             mainLeftSamples = mono;
             rightSamples = mono;
-
-console.log("Mono:", {
-    first: mono.slice(0, 10),
-    rms: Math.sqrt(mono.reduce((sum, x) => sum + x * x, 0) / mono.length)
-});
+        } else {
+            // Mono -> Stereo
+            mainLeftSamples = buffer.getChannelData(0);
+            rightSamples = new Float32Array(mainLeftSamples);
         }
 
         this.submitNewSamples(
