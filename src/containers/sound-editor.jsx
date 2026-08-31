@@ -220,11 +220,23 @@ class SoundEditor extends React.Component {
                         downsampledBuffer.channelSamples[1],
                         downsampledBuffer.sampleRate
                     );
+
+                    let bufferToUpdate = this.audioBufferPlayer.buffer;
+                    if (forceMono) {
+                        bufferToUpdate = this.audioBufferPlayer.audioContext.createBuffer(
+                            1,
+                            downsampledBuffer.channelSamples[0].length,
+                            downsampledBuffer.sampleRate
+                        );
+                        bufferToUpdate
+                            .getChannelData(0)
+                            .set(downsampledBuffer.channelSamples[0]);
+                    }
+
                     this.props.vm.updateSoundBuffer(
                         this.props.soundIndex,
-                        this.audioBufferPlayer.buffer,
+                        bufferToUpdate,
                         new Uint8Array(wavBuffer),
-                        forceMono
                     );
                     return true; // Edit was successful
                 })
@@ -533,10 +545,12 @@ class SoundEditor extends React.Component {
     }
     resampleBufferToRate (buffer, newRate) {
         return new Promise((resolve, reject) => {
-            console.log("TEST", buffer);
+            const mainLeftSamples = buffer.channelSamples[0];
+            const rightSamples = buffer.channelSamples[1];
+
             const sampleRateRatio = newRate / buffer.sampleRate;
-            const newLeftLength = sampleRateRatio * buffer.mainLeftSamples.length;
-            const newRightLength = sampleRateRatio * buffer.rightSamples.length;
+            const newLeftLength = sampleRateRatio * mainLeftSamples.length;
+            const newRightLength = sampleRateRatio * rightSamples.length;
             const newLength = Math.max(newLeftLength, newRightLength);
             let offlineContext;
  
@@ -560,11 +574,11 @@ class SoundEditor extends React.Component {
             const source = offlineContext.createBufferSource();
             const audioBuffer = offlineContext.createBuffer(
                 2,
-                Math.max(buffer.mainLeftSamples.length, buffer.rightSamples.length),
+                Math.max(mainLeftSamples.length, rightSamples.length),
                 buffer.sampleRate
             );
-            audioBuffer.getChannelData(0).set(buffer.mainLeftSamples);
-            audioBuffer.getChannelData(1).set(buffer.rightSamples);
+            audioBuffer.getChannelData(0).set(mainLeftSamples);
+            audioBuffer.getChannelData(1).set(rightSamples);
             source.buffer = audioBuffer;
             source.connect(offlineContext.destination);
 
@@ -693,12 +707,12 @@ class SoundEditor extends React.Component {
             rightChunkLevels: computeChunkedRMS(buffer.rightSamples, detail)
         });
     }
-    handleToggleFormat(isStereo) {
+    handleToggleFormat() {
         const buffer = this.audioBufferPlayer.buffer;
 
         let mainLeftSamples;
         let rightSamples;
-        if (isStereo) {
+        if (props.isStereo) {
             // Mono -> Stereo
             mainLeftSamples = buffer.getChannelData(0);
             rightSamples = new Float32Array(mainLeftSamples);
@@ -720,7 +734,7 @@ class SoundEditor extends React.Component {
             [mainLeftSamples, rightSamples],
             buffer.sampleRate,
             undefined,
-            !isStereo
+            !props.isStereo
         ).then(() => {
             this.setState({
                 trimStart: null,

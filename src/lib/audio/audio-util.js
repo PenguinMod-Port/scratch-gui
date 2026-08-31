@@ -36,10 +36,10 @@ const computeChunkedRMS = function (samples, chunkSize = 1024) {
  @property {number} sampleRate Audio sample rate
  */
 
-const encodeAndAddSoundToVM = function (vm, sampleBuffer, name, callback, forceMono) {
+const encodeAndAddSoundToVM = function (vm, sampleBuffer, name, callback) {
     WavEncoder.encode({
         sampleRate: sampleBuffer.sampleRate,
-        channelData: forceMono ? [sampleBuffer.mainLeftSamples] : [sampleBuffer.mainLeftSamples, sampleBuffer.rightSamples]
+        channelData: [sampleBuffer.mainLeftSamples, sampleBuffer.rightSamples]
     }).then(wavBuffer => {
         const vmSound = {
             format: '',
