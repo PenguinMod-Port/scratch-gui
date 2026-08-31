@@ -54,6 +54,8 @@ import customExtensionIcon from './custom/custom.svg';
 import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
 
+import sharkpoolGalleryIcon from './sharkpool-gallery/gallery.svg';
+
 export default [
     {
         name: (
@@ -447,6 +449,29 @@ export const galleryError = {
         />
     ),
     tags: ['tw', 'library'],
+    featured: true
+};
+
+export const sharkpoolGallery = {
+    name: (
+        <FormattedMessage
+            defaultMessage="SharkPool's Extension Gallery"
+            description="Name of sharkpools-extensions.vercel.app/ in extension library"
+            id="pm.sharkpoolGallery.name"
+        />
+    ),
+    href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
+    extensionId: 'sharkpool-gallery',
+    iconURL: sharkpoolGalleryIcon,
+    description: (
+        <FormattedMessage
+            // eslint-disable-next-line max-len
+            defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension while this menu is open to add it to your project."
+            description="Name for the sharkpoolGallery gallery"
+            id="pm.sharkpoolGallery.more"
+        />
+    ),
+    tags: ['sharkpool', 'library'],
     featured: true
 };
 

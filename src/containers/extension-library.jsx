@@ -10,6 +10,7 @@ import extensionLibraryContent, {
     galleryError,
     galleryLoading,
     galleryMore,
+    sharkpoolGallery,
     penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
 import extensionTags from '../lib/libraries/extension-tags';
@@ -174,6 +175,7 @@ class ExtensionLibrary extends React.PureComponent {
             library.push('---');
             if (this.state.gallery) {
                 library.push(toLibraryItem(galleryMore));
+                library.push(toLibraryItem(sharkpoolGallery));
                 const locale = this.props.intl.locale;
                 library.push(
                     ...this.state.gallery
