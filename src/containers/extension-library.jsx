@@ -181,7 +181,6 @@ class ExtensionLibrary extends React.PureComponent {
         // Don't recursively try to run this event.
         if (e.origin === window.origin) return;
 
-        console.log(e, isTrustedExtension(e.origin));
         // 'isTrustedExtension' checks the extension url.
         if (!isTrustedExtension(e.origin)) {
             e.source.postMessage({

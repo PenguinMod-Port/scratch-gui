@@ -25,16 +25,16 @@ const manuallyTrustExtension = url => {
  */
 const isTrustedExtension = url => (
     // Always trust our official extension repostiory.
-    url.startsWith('https://extensions.turbowarp.org/') ||
-    url.startsWith('https://extensions.penguinmod.com/') ||
+    url.startsWith('https://extensions.turbowarp.org') ||
+    url.startsWith('https://extensions.penguinmod.com') ||
 
     /* Trust other people's galleries. These can be removed in the future, they will just show a pop-up on load if they are */
-    url.startsWith('https://sharkpools-extensions.vercel.app/') || // SharkPool
-    url.startsWith('https://sharkpool-sp.github.io/SharkPools-Extensions/') || // SharkPool (github link)
-    url.startsWith('https://pen-group.github.io/') || // Pen-Group / ObviousAlexC
+    url.startsWith('https://sharkpools-extensions.vercel.app') || // SharkPool
+    url.startsWith('https://sharkpool-sp.github.io/SharkPools-Extensions') || // SharkPool (github link)
+    url.startsWith('https://pen-group.github.io') || // Pen-Group / ObviousAlexC
 
     // For development.
-    url.startsWith('http://localhost:8000/') ||
+    url.startsWith('http://localhost:8000') ||
 
     extensionsTrustedByUser.has(url)
 );
