@@ -10,17 +10,23 @@ class Waveform extends React.PureComponent {
         const {
             width,
             height,
-            data
+            mainLeftData,
+            rightData,
         } = this.props;
+        // TOODO
 
+        let pathComponents;
+        if (window.test) {
+            pathComponents = window.test(this);
+        } else {
         // Never want a density of points higher than the number of pixels
         // This is very conservative, could be far fewer points because of curve smoothing.
         // Drawing too many points seems to cause an explosion in browser
         // composite time when animating the playhead
-        const takeEveryN = Math.ceil(data.length / width);
+        const takeEveryN = Math.ceil(mainLeftData.length / width);
 
-        const filteredData = takeEveryN === 1 ? data.slice(0) :
-            data.filter((_, i) => i % takeEveryN === 0);
+        const filteredData = takeEveryN === 1 ? mainLeftData.slice(0) :
+            mainLeftData.filter((_, i) => i % takeEveryN === 0);
 
         // Need at least two points to render waveform.
         if (filteredData.length === 1) {
@@ -36,10 +42,11 @@ class Waveform extends React.PureComponent {
                 [width * (1 - (i / maxIndex)), -height * v / 2]
             )
         ];
-        const pathComponents = points.map(([x, y], i) => {
+        pathComponents = points.map(([x, y], i) => {
             const [nx, ny] = points[i < points.length - 1 ? i + 1 : 0];
             return `L${x} ${y} ${(x + nx) / 2} ${(y + ny) / 2}`;
         });
+        }
 
         return (
             <svg
@@ -60,7 +67,8 @@ class Waveform extends React.PureComponent {
 }
 
 Waveform.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.number),
+    mainLeftData: PropTypes.arrayOf(PropTypes.number),
+    rightData: PropTypes.arrayOf(PropTypes.number),
     height: PropTypes.number,
     width: PropTypes.number
 };

@@ -17,6 +17,7 @@ const effectTypes = {
     MUTE: 'mute'
 };
 
+// TOODO getChannelData should use other channels
 class AudioEffects {
     static get effectTypes () {
         return effectTypes;

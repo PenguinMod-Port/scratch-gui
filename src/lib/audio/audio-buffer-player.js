@@ -1,10 +1,11 @@
 import SharedAudioContext from './shared-audio-context.js';
 
 class AudioBufferPlayer {
-    constructor (samples, sampleRate) {
+    constructor (mainLeftSamples, rightSamples, sampleRate) {
         this.audioContext = new SharedAudioContext();
-        this.buffer = this.audioContext.createBuffer(1, samples.length, sampleRate);
-        this.buffer.getChannelData(0).set(samples);
+        this.buffer = this.audioContext.createBuffer(2, Math.max(mainLeftSamples.length, rightSamples.length), sampleRate);
+        this.buffer.getChannelData(0).set(mainLeftSamples);
+        this.buffer.getChannelData(1).set(rightSamples);
         this.source = null;
 
         this.startTime = null;

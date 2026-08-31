@@ -28,16 +28,24 @@ const computeChunkedRMS = function (samples, chunkSize = 1024) {
     return chunkLevels;
 };
 
-const encodeAndAddSoundToVM = function (vm, samples, sampleRate, name, callback) {
+/**
+ @typedef SoundBuffer
+ @type {Object}
+ @property {Float32Array} mainLeftSamples Array of main (or left) channel audio samples
+ @property {Float32Array} rightSamples Array of main (or right) channel audio samples
+ @property {number} sampleRate Audio sample rate
+ */
+
+const encodeAndAddSoundToVM = function (vm, sampleBuffer, samples, name, callback) {
     WavEncoder.encode({
-        sampleRate: sampleRate,
-        channelData: [samples]
+        sampleRate: sampleBuffer.sampleRate,
+        channelData: [sampleBuffer.mainLeftSamples, sampleBuffer.rightSamples]
     }).then(wavBuffer => {
         const vmSound = {
             format: '',
             dataFormat: 'wav',
-            rate: sampleRate,
-            sampleCount: samples.length
+            rate: sampleBuffer.sampleRate,
+            sampleCount: Math.max(sampleBuffer.mainLeftSamples.length, sampleBuffer.rightSamples.length)
         };
 
         // Create an asset from the encoded .wav and get resulting md5
@@ -63,28 +71,41 @@ const encodeAndAddSoundToVM = function (vm, samples, sampleRate, name, callback)
 };
 
 /**
- @typedef SoundBuffer
- @type {Object}
- @property {Float32Array} samples Array of audio samples
- @property {number} sampleRate Audio sample rate
- */
-
-/**
  * Downsample the given buffer to try to reduce file size below SOUND_BYTE_LIMIT
  * @param {SoundBuffer} buffer - Buffer to resample
  * @param {function(SoundBuffer):Promise<SoundBuffer>} resampler - resampler function
  * @returns {SoundBuffer} Downsampled buffer with half the sample rate
  */
 const downsampleIfNeeded = (buffer, resampler) => {
-    const {samples, sampleRate} = buffer;
-    const encodedByteLength = samples.length * 2; /* bitDepth 16 bit */
+    const {
+        mainLeftSamples,
+        rightSamples,
+        sampleRate
+    } = buffer;
+
+    /* bitDepth 16 bit */
+    const encodedLeftByteLength = mainLeftSamples.length * 2;
+    const encodedRightByteLength = rightSamples.length * 2;
+
     // Resolve immediately if already within byte limit
-    if (encodedByteLength < SOUND_BYTE_LIMIT) {
-        return Promise.resolve({samples, sampleRate});
+    if (
+        encodedLeftByteLength < SOUND_BYTE_LIMIT &&
+        encodedRightByteLength < SOUND_BYTE_LIMIT 
+    ) {
+        return Promise.resolve({
+            mainLeftSamples,
+            rightSamples,
+            sampleRate
+        });
     }
+
     // TW: Don't check if the sound will still fit at this reduced sample rate.
     // Instead the GUI will show a warning if it's too large.
-    return resampler({samples, sampleRate}, 22050);
+    return resampler({
+        mainLeftSamples,
+        rightSamples,
+        sampleRate
+    }, 22050);
 };
 
 /**
@@ -92,14 +113,23 @@ const downsampleIfNeeded = (buffer, resampler) => {
  * @param {SoundBuffer} buffer - Buffer to resample
  * @returns {SoundBuffer} Downsampled buffer with half the sample rate
  */
-const dropEveryOtherSample = buffer => {
-    const newLength = Math.floor(buffer.samples.length / 2);
-    const newSamples = new Float32Array(newLength);
-    for (let i = 0; i < newLength; i++) {
-        newSamples[i] = buffer.samples[i * 2];
+const dropEveryOtherSample = (buffer) => {
+    const newLeftLength = Math.floor(buffer.mainLeftSamples.length / 2);
+    const newRightLength = Math.floor(buffer.rightSamples.length / 2);
+
+    const newLeftSamples = new Float32Array(newLeftLength);
+    for (let i = 0; i < newLeftLength; i++) {
+        newLeftSamples[i] = buffer.mainLeftSamples[i * 2];
     }
+
+    const newRightSamples = new Float32Array(newRightLength);
+    for (let i = 0; i < newRightLength; i++) {
+        newRightSamples[i] = buffer.rightSamples[i * 2];
+    }
+
     return {
-        samples: newSamples,
+        mainLeftSamples: newLeftSamples,
+        rightSamples: newRightSamples,
         sampleRate: buffer.sampleRate / 2
     };
 };

@@ -173,6 +173,7 @@ const formatSoundSize = bytes => {
     if (bytes > 1000 * 1000) {
         return `${(bytes / 1000 / 1000).toFixed(2)}MB`;
     }
+
     return `${(bytes / 1000).toFixed(2)}KB`;
 };
 
@@ -252,7 +253,8 @@ const SoundEditor = props => (
         <div className={styles.row}>
             <div className={styles.waveformContainer}>
                 <Waveform
-                    data={props.chunkLevels}
+                    mainLeftData={props.mainLeftData}
+                    rightData={props.rightChunkLevels}
                     height={160}
                     width={600}
                 />
@@ -377,7 +379,6 @@ const SoundEditor = props => (
                 {` (${formatSoundSize(props.size)})`}
             </div>
         </div>
-        {/* TODO: don't know whether this should be > or >=. Using >= for now to be safe */}
         {props.size >= SOUND_BYTE_LIMIT && (
             <div className={classNames(styles.alert, styles.tooLarge)}>
                 <FormattedMessage
@@ -406,7 +407,8 @@ SoundEditor.propTypes = {
     canPaste: PropTypes.bool.isRequired,
     canRedo: PropTypes.bool.isRequired,
     canUndo: PropTypes.bool.isRequired,
-    chunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
+    mainLeftChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
+    rightChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
     intl: intlShape,
     name: PropTypes.string.isRequired,
     onChangeName: PropTypes.func.isRequired,
