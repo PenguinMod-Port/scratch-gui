@@ -341,6 +341,7 @@ class SoundEditor extends React.Component {
             trimEnd,
             this.state.focusedChannel
         );
+        // TOODO fix this with channelling
         effects.process((renderedBuffer, adjustedTrimStart, adjustedTrimEnd) => {
             const mainLeftSamples = renderedBuffer.getChannelData(0);
             const rightSamples = renderedBuffer.getChannelData(renderedBuffer.numberOfChannels === 1 ? 0 : 1);
