@@ -692,7 +692,7 @@ class SoundEditor extends React.Component {
             rightChunkLevels: computeChunkedRMS(buffer.rightSamples, detail)
         });
     }
-    handleStereoToggle(isStereo) {
+    handleToggleFormat(isStereo) {
         const buffer = this.audioBufferPlayer.buffer;
 
         let mainLeftSamples;
