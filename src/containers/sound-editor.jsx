@@ -365,8 +365,6 @@ class SoundEditor extends React.Component {
         const mainLeftSamples = new Float32Array(buffer.getChannelData(0));
         const rightSamples = new Float32Array(buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1));
 
-        const mainLeftSamples = buffer.getChannelData(0);
-        const rightSamples = buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1);
         this.audioBufferPlayer.muteChannel(this.state.focusedChannel);
         return {
             mainLeftSamples: buffer.getChannelData(0),
