@@ -253,7 +253,7 @@ const SoundEditor = props => (
         <div className={styles.row}>
             <div className={styles.waveformContainer}>
                 <Waveform
-                    mainLeftData={props.mainLeftData}
+                    mainLeftData={props.mainLeftChunkLevels}
                     rightData={props.rightChunkLevels}
                     height={160}
                     width={600}
