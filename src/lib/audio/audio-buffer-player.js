@@ -1,17 +1,26 @@
 import SharedAudioContext from './shared-audio-context.js';
 
 class AudioBufferPlayer {
-    constructor (mainLeftSamples, rightSamples, sampleRate) {
-        this.audioContext = new SharedAudioContext();
-        this.buffer = this.audioContext.createBuffer(2, Math.max(mainLeftSamples.length, rightSamples.length), sampleRate);
-        this.buffer.getChannelData(0).set(mainLeftSamples);
-        this.buffer.getChannelData(1).set(rightSamples);
-        this.source = null;
-
+    constructor (mainLeftSamples, rightSamples, sampleRate, focusChannel) {
         this.startTime = null;
         this.updateCallback = null;
         this.trimStart = null;
         this.trimEnd = null;
+        this.mutedChannel = null;
+        
+        this.mainLeftSamples = mainLeftSamples;
+        this.rightSamples = rightSamples;
+
+        this.audioContext = new SharedAudioContext();
+        this.buffer = this.audioContext.createBuffer(
+            2,
+            Math.max(this.mainLeftSamples.length, this.rightSamples.length),
+            sampleRate
+        );
+
+        this.muteChannel(focusChannel);
+
+        this.source = null;
     }
 
     play (trimStart, trimEnd, onUpdate, onEnded) {
@@ -53,6 +62,27 @@ class AudioBufferPlayer {
                 // which the spec says is allowed: https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode
                 console.log('Caught error while stopping buffer source node.'); // eslint-disable-line no-console
             }
+        }
+    }
+
+    muteChannel(channelId) {
+        this.mutedChannel = channelId;
+
+        const leftChannel = this.buffer.getChannelData(0);
+        const rightChannel = this.buffer.getChannelData(1);
+
+        leftChannel.fill(0);
+        rightChannel.fill(0);
+
+        if (this.mutedChannel === -1) {
+            leftChannel.set(this.mainLeftSamples);
+            rightChannel.set(this.rightSamples);
+        } else if (this.mutedChannel === 0) {
+            // Left channel muted.
+            rightChannel.set(this.rightSamples);
+        } else if (this.mutedChannel === 1) {
+            // Right channel muted.
+            leftChannel.set(this.mainLeftSamples);
         }
     }
 }
