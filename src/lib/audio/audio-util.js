@@ -94,8 +94,7 @@ const downsampleIfNeeded = (buffer, resampler) => {
         encodedRightByteLength < SOUND_BYTE_LIMIT 
     ) {
         return Promise.resolve({
-            mainLeftSamples,
-            rightSamples,
+            channelSamples: [mainLeftSamples, rightSamples],
             sampleRate
         });
     }
@@ -103,8 +102,7 @@ const downsampleIfNeeded = (buffer, resampler) => {
     // TW: Don't check if the sound will still fit at this reduced sample rate.
     // Instead the GUI will show a warning if it's too large.
     return resampler({
-        mainLeftSamples,
-        rightSamples,
+        channelSamples: [mainLeftSamples, rightSamples],
         sampleRate
     }, 22050);
 };

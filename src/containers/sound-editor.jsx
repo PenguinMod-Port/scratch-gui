@@ -161,7 +161,6 @@ class SoundEditor extends React.Component {
         });
     }
     submitNewSamples (newChannelSamples, sampleRate, skipUndo) {
-        console.log("SUBMIT", newChannelSamples);
         const soundBuffer = {
             mainLeftSamples: newChannelSamples[0],
             rightSamples: newChannelSamples[1],
@@ -564,7 +563,6 @@ class SoundEditor extends React.Component {
             this.paste();
         } else {
             this.resampleBufferToRate(this.state.copyBuffer, this.props.sampleRate).then(buffer => {
-                console.log("PASTE", buffer)
                 this.setState({
                     copyBuffer: buffer
                 }, this.paste);
@@ -601,7 +599,7 @@ class SoundEditor extends React.Component {
         const LOWEST_DETAIL = 1024 * 10;
 
         let detail = this.state.waveformDetail;
-        detail = Math.max(1, Math.min(LOWEST_DETAIL, detail)) + 200;
+        detail = Math.max(1, Math.min(LOWEST_DETAIL, detail));
         detail = Math.round(
             (LOWEST_DETAIL - detail) * (200 / (LOWEST_DETAIL - 1))
         );
