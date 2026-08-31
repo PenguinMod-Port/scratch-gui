@@ -77,10 +77,10 @@ class AudioBufferPlayer {
         if (this.mutedChannel === -1) {
             leftChannel.set(this.mainLeftSamples);
             rightChannel.set(this.rightSamples);
-        } else if (this.mutedChannel === 0) {
+        } else if (this.mutedChannel === 1) {
             // Left channel muted.
             rightChannel.set(this.rightSamples);
-        } else if (this.mutedChannel === 1) {
+        } else if (this.mutedChannel === 0) {
             // Right channel muted.
             leftChannel.set(this.mainLeftSamples);
         }
