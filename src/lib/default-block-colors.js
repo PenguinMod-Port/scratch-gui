@@ -6,6 +6,7 @@ export default {
     event: "#FFBF00",
     sensing: "#5CB1D6",
     operators: "#59C059",
+    operators_strings: "#47C18A",
     data: "#FF8C1A",
     data_lists: "#FF661A",
     more: "#FF6680",
