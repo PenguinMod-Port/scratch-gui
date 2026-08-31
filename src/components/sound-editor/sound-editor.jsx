@@ -331,7 +331,7 @@ const SoundEditor = props => (
             </div>
         </div>
         <div className={styles.row}>
-            <div className={styles.waveformContainer} data-channel={props.focusedChannel === 1}>
+            <div className={styles.waveformContainer} data-channel={props.focusedChannel}>
                 <Waveform
                     mainLeftData={props.mainLeftChunkLevels}
                     rightData={props.rightChunkLevels}

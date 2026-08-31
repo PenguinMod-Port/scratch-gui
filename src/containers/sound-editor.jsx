@@ -323,15 +323,25 @@ class SoundEditor extends React.Component {
             return;
         }
 
-        let buffer = this.audioBufferPlayer.buffer;
-        if (this.state.focusedChannel !== -1) {
-            const focusedBuffer = this.audioBufferPlayer.audioContext.createBuffer(2, buffer.length, buffer.sampleRate);
-            const sourceChannelIndex = buffer.numberOfChannels === 1 ? 0 : this.state.focusedChannel;
-            const sourceData = buffer.getChannelData(sourceChannelIndex);
-            const destinationChannel = focusedBuffer.getChannelData(this.state.focusedChannel);
+        const originalBuffer = this.audioBufferPlayer.buffer;
+        const targetChannel = this.state.focusedChannel;
 
-            destinationChannel.set(sourceData);
-            buffer = focusedBuffer;
+        let buffer;
+
+        if (targetChannel === -1) {
+            // Apply the effect to both channels.
+            buffer = originalBuffer;
+        } else {
+            // Apply the effect only to the selected channel.
+            const sourceChannelIndex = originalBuffer.numberOfChannels === 1 ? 0 : targetChannel;
+            const channelData = originalBuffer.getChannelData(sourceChannelIndex);
+
+            buffer = this.audioBufferPlayer.audioContext.createBuffer(
+                1,
+                originalBuffer.length,
+                originalBuffer.sampleRate
+            );
+            buffer.getChannelData(0).set(channelData);
         }
 
         const effects = new AudioEffects(
@@ -339,19 +349,52 @@ class SoundEditor extends React.Component {
             name,
             trimStart,
             trimEnd,
-            this.state.focusedChannel
+            targetChannel
         );
-        // TOODO fix this with channelling
         effects.process((renderedBuffer, adjustedTrimStart, adjustedTrimEnd) => {
-            const mainLeftSamples = renderedBuffer.getChannelData(0);
-            const rightSamples = renderedBuffer.getChannelData(renderedBuffer.numberOfChannels === 1 ? 0 : 1);
+            let mainLeftSamples;
+            let rightSamples;
+
+            if (targetChannel === -1) {
+                // Both channels were processed.
+                mainLeftSamples = renderedBuffer.getChannelData(0);
+                rightSamples = renderedBuffer.getChannelData(renderedBuffer.numberOfChannels === 1 ? 0 : 1);
+            } else {
+                // One channel was processed. Preserve the other channel.
+                const renderedSamples = renderedBuffer.getChannelData(0);
+
+                const untouchedChannel = originalBuffer.numberOfChannels === 1 ?
+                    originalBuffer.getChannelData(0) :
+                    originalBuffer.getChannelData(targetChannel === 0 ? 1 : 0);
+
+                const newLength = renderedBuffer.length;
+                const preservedSamples = new Float32Array(newLength);
+
+                // Preserve the unaffected channel for the new duration.
+                preservedSamples.set(untouchedChannel.slice(0, newLength));
+
+                if (targetChannel === 0) {
+                    mainLeftSamples = renderedSamples;
+                    rightSamples = preservedSamples;
+                } else {
+                    mainLeftSamples = preservedSamples;
+                    rightSamples = renderedSamples;
+                }
+            }
+
             const sampleRate = renderedBuffer.sampleRate;
-            this.submitNewSamples([mainLeftSamples, rightSamples], sampleRate).then(success => {
+            this.submitNewSamples(
+                [mainLeftSamples, rightSamples],
+                sampleRate
+            ).then(success => {
                 if (success) {
                     if (this.state.trimStart === null) {
                         this.handlePlay();
                     } else {
-                        this.setState({trimStart: adjustedTrimStart, trimEnd: adjustedTrimEnd}, this.handlePlay);
+                        this.setState({
+                            trimStart: adjustedTrimStart,
+                            trimEnd: adjustedTrimEnd
+                        }, this.handlePlay);
                     }
                 }
             });
