@@ -24,6 +24,9 @@ import earCenter from '!../../lib/tw-recolor/build!./icon--ear-center.svg';
 import earLeft from '!../../lib/tw-recolor/build!./icon--ear-left.svg';
 import earRight from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
 
+import stereoIcon from '!../../lib/tw-recolor/build!./icon--stereo.svg';
+import monoIcon from '!../../lib/tw-recolor/build!./icon--mono.svg';
+
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';
 import louderIcon from './icon--louder.svg';
@@ -162,6 +165,16 @@ const messages = defineMessages({
         id: 'gui.soundEditor.mute',
         description: 'Title of the button to apply the mute effect',
         defaultMessage: 'Mute'
+    },
+    convertStereo: {
+        id: 'pm.gui.soundEditor.convertStereo',
+        description: 'Title of the button to convert to stereo',
+        defaultMessage: 'Convert to Stereo'
+    },
+    convertMono: {
+        id: 'pm.gui.soundEditor.convertMono',
+        description: 'Title of the button to convert to mono',
+        defaultMessage: 'Convert to Mono'
     }
 });
 
@@ -314,6 +327,18 @@ const SoundEditor = props => (
                         </button>
                     </div>
                 </Label>
+                <Label text={props.intl.formatMessage(rops.isStereo ? messages.convertMono : messages.convertStereo)}>
+                    <button
+                        className={styles.button}
+                        title={props.intl.formatMessage(rops.isStereo ? messages.convertMono : messages.convertStereo)}
+                        onClick={props.onToggleFormat}
+                    >
+                        <TWRenderRecoloredImage
+                            draggable={false}
+                            src={props.isStereo ? stereoIcon : monoIcon}
+                        />
+                    </button>
+                </Label>
             </div>
         </div>
         <div className={styles.row}>
@@ -454,15 +479,6 @@ const SoundEditor = props => (
                 />
             </div>
         )}
-        {props.isStereo && (
-            <div className={classNames(styles.alert, styles.stereo)}>
-                <FormattedMessage
-                    defaultMessage="Editing this stereo sound will irreversibly convert it to mono."
-                    description="Message that appears when editing a stereo sound."
-                    id="tw.stereoAlert"
-                />
-            </div>
-        )}
     </div>
 );
 
@@ -482,7 +498,7 @@ SoundEditor.propTypes = {
     onChangeName: PropTypes.func.isRequired,
     onContainerClick: PropTypes.func.isRequired,
     onChannelFocusChange: PropTypes.func.isRequired,
-    onWaveformDetailChange: PropTypes.func.isRequired,
+    onToggleFormat: PropTypes.func.isRequired,
     onCopy: PropTypes.func.isRequired,
     onCopyToNew: PropTypes.func.isRequired,
     onDelete: PropTypes.func,

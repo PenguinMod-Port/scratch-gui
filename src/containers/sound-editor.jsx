@@ -23,6 +23,32 @@ const UNDO_STACK_SIZE = 99;
 const MAX_RMS = 1.2;
 
 class SoundEditor extends React.Component {
+    static EDITOR_SETTINGS_LISTENER_ATTACHED = false;
+    static EDITOR_SETTING_CALLBACK = null;
+
+    static listenToEditorSettings () {
+        if (SoundEditor.EDITOR_SETTINGS_LISTENER_ATTACHED) return;
+
+        // Force bind this editor setting to the GUI by attaching a 'set' listener.
+        const originalDescriptor = Object.getOwnPropertyDescriptor(SettingsStore.store, 'soundDisplayDetail');
+        let soundDisplayDetail = SettingsStore.store.soundDisplayDetail;
+        Object.defineProperty(SettingsStore.store, 'soundDisplayDetail', {
+            configurable: true,
+            enumerable: originalDescriptor?.enumerable ?? true,
+            get() {
+                return soundDisplayDetail;
+            },
+            set(value) {
+                soundDisplayDetail = value;
+                if (SoundEditor.EDITOR_SETTING_CALLBACK) {
+                    SoundEditor.EDITOR_SETTING_CALLBACK();
+                }
+            }
+        });
+
+        SoundEditor.EDITOR_SETTINGS_LISTENER_ATTACHED = true;
+    }
+
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -47,6 +73,7 @@ class SoundEditor extends React.Component {
             'handleKeyPress',
             'handleContainerClick',
             'handleChannelFocus',
+            'handleToggleFormat',
             'handleWaveformDetail',
             'getNormalizedWaveformDetail',
             'setRef',
@@ -67,6 +94,9 @@ class SoundEditor extends React.Component {
         this.undoStack = [];
 
         this.ref = null;
+
+        SoundEditor.listenToEditorSettings();
+        SoundEditor.EDITOR_SETTING_CALLBACK = this.handleSettingsChange;
     }
     componentDidMount () {
         this.audioBufferPlayer = new AudioBufferPlayer(
@@ -164,7 +194,7 @@ class SoundEditor extends React.Component {
             playhead: null
         });
     }
-    submitNewSamples (newChannelSamples, sampleRate, skipUndo) {
+    submitNewSamples (newChannelSamples, sampleRate, skipUndo, forceMono) {
         const soundBuffer = {
             mainLeftSamples: newChannelSamples[0],
             rightSamples: newChannelSamples[1],
@@ -174,7 +204,7 @@ class SoundEditor extends React.Component {
             .then((downsampledBuffer) =>
                 WavEncoder.encode({
                     sampleRate: downsampledBuffer.sampleRate,
-                    channelData: downsampledBuffer.channelSamples
+                    channelData: forceMono ? [downsampledBuffer.channelSamples[0]] : downsampledBuffer.channelSamples
                 }).then(wavBuffer => {
                     if (!skipUndo) {
                         this.redoStack = [];
@@ -193,7 +223,9 @@ class SoundEditor extends React.Component {
                     this.props.vm.updateSoundBuffer(
                         this.props.soundIndex,
                         this.audioBufferPlayer.buffer,
-                        new Uint8Array(wavBuffer));
+                        new Uint8Array(wavBuffer),
+                        forceMono
+                    );
                     return true; // Edit was successful
                 })
             )
@@ -660,6 +692,36 @@ class SoundEditor extends React.Component {
             rightChunkLevels: computeChunkedRMS(buffer.rightSamples, detail)
         });
     }
+    handleStereoToggle(isStereo) {
+        const buffer = this.audioBufferPlayer.buffer;
+
+        let mainLeftSamples;
+        let rightSamples;
+        if (isStereo) {
+            // Mono -> Stereo
+            mainLeftSamples = buffer.getChannelData(0);
+            rightSamples = new Float32Array(mainLeftSamples);
+        } else {
+            // Stereo -> Mono
+            const left = buffer.getChannelData(0);
+            const right = buffer.getChannelData(1);
+
+            const mono = new Float32Array(buffer.length);
+            for (let i = 0; i < buffer.length; i++) {
+                mono[i] = (left[i] + right[i]) / 2;
+            }
+
+            mainLeftSamples = mono;
+            rightSamples = mono;
+        }
+
+        this.submitNewSamples(
+            [mainLeftSamples, rightSamples],
+            buffer.sampleRate,
+            undefined,
+            !isStereo
+        );
+    }
     getNormalizedWaveformDetail() {
         const LOWEST_DETAIL = 1024 * 10;
 
@@ -694,6 +756,7 @@ class SoundEditor extends React.Component {
                 onChangeName={this.handleChangeName}
                 onContainerClick={this.handleContainerClick}
                 onChannelFocusChange={this.handleChannelFocus}
+                onToggleFormat={this.handleToggleFormat}
                 onCopy={this.handleCopy}
                 onCopyToNew={this.handleCopyToNew}
                 onDelete={this.handleDelete}
