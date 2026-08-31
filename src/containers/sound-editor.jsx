@@ -529,14 +529,15 @@ class SoundEditor extends React.Component {
             }
         };
 
+        const copyBuffer = this.state.copyBuffer;
         const newChannelSamples = [];
         let channelResult;
         if (this.state.focusedChannel === -1 || this.state.focusedChannel === 0) {
-            channelResult = pasteInChannel(mainLeftSamples);
+            channelResult = pasteInChannel(mainLeftSamples, copyBuffer.mainLeftSamples);
             newChannelSamples.push(channelResult.samples);
         }
         if (this.state.focusedChannel === -1 || this.state.focusedChannel === 1) {
-            channelResult = pasteInChannel(rightSamples);
+            channelResult = pasteInChannel(rightSamples, copyBuffer.rightSamples);
             newChannelSamples.push(channelResult.samples);
         }
         if (newChannelSamples.length === 1) {
@@ -586,8 +587,8 @@ class SoundEditor extends React.Component {
     }
     handleWaveformDetail(detail) {
         const LOWEST_DETAIL = 1024 * 10;
-        detail = Math.max(0, Math.min(100, Number(detail)));
-        detail = Math.round(LOWEST_DETAIL - detail * ((LOWEST_DETAIL - 1) / 150));
+        detail = Math.max(0, Math.min(200, Number(detail)));
+        detail = Math.round(LOWEST_DETAIL - detail * ((LOWEST_DETAIL - 1) / 200));
 
         const buffer = this.copyCurrentBuffer();
         this.setState({
@@ -600,9 +601,9 @@ class SoundEditor extends React.Component {
         const LOWEST_DETAIL = 1024 * 10;
 
         let detail = this.state.waveformDetail;
-        detail = Math.max(1, Math.min(LOWEST_DETAIL, detail));
+        detail = Math.max(1, Math.min(LOWEST_DETAIL, detail)) + 200;
         detail = Math.round(
-            (LOWEST_DETAIL - detail) * (150 / (LOWEST_DETAIL - 1))
+            (LOWEST_DETAIL - detail) * (200 / (LOWEST_DETAIL - 1))
         );
 
         return detail;

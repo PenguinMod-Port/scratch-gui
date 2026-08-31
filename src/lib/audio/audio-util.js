@@ -37,6 +37,7 @@ const computeChunkedRMS = function (samples, chunkSize = 1024) {
  */
 
 const encodeAndAddSoundToVM = function (vm, sampleBuffer, name, callback) {
+    console.log(sampleBuffer, WavEncoder);
     WavEncoder.encode({
         sampleRate: sampleBuffer.sampleRate,
         channelData: [sampleBuffer.mainLeftSamples, sampleBuffer.rightSamples]
