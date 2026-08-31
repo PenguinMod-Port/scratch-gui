@@ -27,6 +27,10 @@ const messages = defineMessages({
         defaultMessage: 'Paint',
         id: 'pm.gui.editorSettings.paint'
     },
+    sound: {
+        defaultMessage: 'Sound',
+        id: 'pm.gui.editorSettings.sound'
+    },
     misc: {
         defaultMessage: 'Miscellaneous',
         id: 'pm.gui.editorSettings.misc'
@@ -87,6 +91,12 @@ class EditorSettingsModal extends React.Component {
                         <settings.paintMultiTool />
                         <Separator />
                         <settings.paintScrollZoom />
+                    </React.Fragment>
+                },
+                {
+                    title: this.props.intl.formatMessage(messages.sound),
+                    content: <React.Fragment>
+                        <settings.soundDisplayDetail />
                     </React.Fragment>
                 },
                 {

@@ -6,6 +6,7 @@ export default Object.fromEntries([
     'hexagonalRoundness',
     'paintMultiTool',
     'paintScrollZoom',
+    'soundDisplayDetail',
     'showExtensionIds',
     'splashModal',
     'swatches',

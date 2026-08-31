@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import WavEncoder from 'wav-encoder';
 import VM from 'scratch-vm';
+import SettingsStore from '../editor-settings/settings-store-singleton';
 
 import {connect} from 'react-redux';
 
@@ -38,6 +39,7 @@ class SoundEditor extends React.Component {
             'handleEffect',
             'handleUndo',
             'handleRedo',
+            'handleSettingsChange',
             'submitNewSamples',
             'handleCopy',
             'handlePaste',
@@ -74,6 +76,8 @@ class SoundEditor extends React.Component {
         );
 
         document.addEventListener('keydown', this.handleKeyPress);
+
+        this.handleSettingsChange();
     }
     componentWillReceiveProps (newProps) {
         if (newProps.soundId !== this.props.soundId) { // A different sound has been selected
@@ -460,6 +464,12 @@ class SoundEditor extends React.Component {
             });
         }
     }
+    handleSettingsChange () {
+        const newDetail = SettingsStore.store.soundDisplayDetail;
+        if (newDetail !== this.getNormalizedWaveformDetail()) {
+            this.handleWaveformDetail(newDetail);
+        }
+    }
     handleCopy () {
         this.copy();
     }
@@ -684,7 +694,6 @@ class SoundEditor extends React.Component {
                 onChangeName={this.handleChangeName}
                 onContainerClick={this.handleContainerClick}
                 onChannelFocusChange={this.handleChannelFocus}
-                onWaveformDetailChange={this.handleWaveformDetail}
                 onCopy={this.handleCopy}
                 onCopyToNew={this.handleCopyToNew}
                 onDelete={this.handleDelete}

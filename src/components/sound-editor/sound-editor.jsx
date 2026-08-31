@@ -113,11 +113,6 @@ const messages = defineMessages({
         description: 'Title of the button to use both channels',
         defaultMessage: 'Both Channels'
     },
-    changeDetail: {
-        id: 'pm.gui.soundEditor.changeDetail',
-        description: 'Label for the button to change the waveform detail',
-        defaultMessage: 'Sound Display Detail'
-    },
     faster: {
         id: 'gui.soundEditor.faster',
         description: 'Title of the button to apply the faster effect',
@@ -282,15 +277,6 @@ const SoundEditor = props => (
         </div>
         <div className={classNames(styles.row, styles.advancedControls)}>
             <div className={classNames(styles.inputGroup, styles.advancedContainer)}>
-                <Label text={props.intl.formatMessage(messages.changeDetail)}>
-                    <BufferedInput
-                        tabIndex="1"
-                        type="number"
-                        value={props.waveformDetail}
-                        onSubmit={props.onWaveformDetailChange}
-                        className={styles.nameInput}
-                    />
-                </Label>
                 <Label text={props.intl.formatMessage(messages.channelFocus)}>
                     <div className={classNames(styles.buttonGroup, styles.noMargin)}>
                         <button
