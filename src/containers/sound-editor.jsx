@@ -361,6 +361,10 @@ class SoundEditor extends React.Component {
         // Cannot reliably use props.samples because it gets detached by Firefox.
         this.audioBufferPlayer.muteChannel(-1);
         const buffer = this.audioBufferPlayer.buffer;
+
+        const mainLeftSamples = new Float32Array(buffer.getChannelData(0));
+        const rightSamples = new Float32Array(buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1));
+
         const mainLeftSamples = buffer.getChannelData(0);
         const rightSamples = buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1);
         this.audioBufferPlayer.muteChannel(this.state.focusedChannel);
