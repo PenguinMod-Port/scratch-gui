@@ -586,8 +586,7 @@ class SoundEditor extends React.Component {
             offlineContext.startRendering();
             offlineContext.oncomplete = ({renderedBuffer}) => {
                 resolve({
-                    mainLeftSamples: renderedBuffer.getChannelData(0),
-                    rightSamples: renderedBuffer.getChannelData(1),
+                    channelSamples: [renderedBuffer.getChannelData(0), renderedBuffer.getChannelData(1)],
                     sampleRate: newRate
                 });
             };
@@ -721,14 +720,27 @@ class SoundEditor extends React.Component {
             const left = buffer.getChannelData(0);
             const right = buffer.getChannelData(1);
 
+console.log("Original:", {
+    channels: buffer.numberOfChannels,
+    leftFirst: left.slice(0, 10),
+    rightFirst: right.slice(0, 10),
+    leftRMS: Math.sqrt(left.reduce((sum, x) => sum + x * x, 0) / left.length),
+    rightRMS: Math.sqrt(right.reduce((sum, x) => sum + x * x, 0) / right.length)
+});
+
             const mono = new Float32Array(buffer.length);
             for (let i = 0; i < buffer.length; i++) {
-                mono[i] = (left[i] + right[i]) / 2;
+                mono[i] = (left[i] + right[i]) * 0.5;
             }
 
             mainLeftSamples = mono;
             rightSamples = mono;
         }
+
+console.log("Mono:", {
+    first: mono.slice(0, 10),
+    rms: Math.sqrt(mono.reduce((sum, x) => sum + x * x, 0) / mono.length)
+});
 
         this.submitNewSamples(
             [mainLeftSamples, rightSamples],
