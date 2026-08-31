@@ -735,12 +735,12 @@ console.log("Original:", {
 
             mainLeftSamples = mono;
             rightSamples = mono;
-        }
 
 console.log("Mono:", {
     first: mono.slice(0, 10),
     rms: Math.sqrt(mono.reduce((sum, x) => sum + x * x, 0) / mono.length)
 });
+        }
 
         this.submitNewSamples(
             [mainLeftSamples, rightSamples],
