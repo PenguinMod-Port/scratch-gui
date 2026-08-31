@@ -359,7 +359,11 @@ class SoundEditor extends React.Component {
     }
     copyCurrentBuffer () {
         // Cannot reliably use props.samples because it gets detached by Firefox.
+        this.audioBufferPlayer.muteChannel(-1);
         const buffer = this.audioBufferPlayer.buffer;
+        const mainLeftSamples = buffer.getChannelData(0);
+        const rightSamples = buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1);
+        this.audioBufferPlayer.muteChannel(this.state.focusedChannel);
         return {
             mainLeftSamples: buffer.getChannelData(0),
             rightSamples: buffer.getChannelData(buffer.numberOfChannels === 1 ? 0 : 1),
@@ -369,6 +373,7 @@ class SoundEditor extends React.Component {
     handleEffect (name) {
         const trimStart = this.state.trimStart === null ? 0.0 : this.state.trimStart;
         const trimEnd = this.state.trimEnd === null ? 1.0 : this.state.trimEnd;
+        this.audioBufferPlayer.muteChannel(-1);
 
         // Offline audio context needs at least 2 samples
         if (this.audioBufferPlayer.buffer.length < 2) {
@@ -434,6 +439,7 @@ class SoundEditor extends React.Component {
                 }
             }
 
+            this.audioBufferPlayer.muteChannel(this.state.focusedChannel);
             const sampleRate = renderedBuffer.sampleRate;
             this.submitNewSamples(
                 [mainLeftSamples, rightSamples],
@@ -714,6 +720,7 @@ class SoundEditor extends React.Component {
         });
     }
     handleToggleFormat() {
+        this.audioBufferPlayer.muteChannel(-1);
         const buffer = this.audioBufferPlayer.buffer;
 
         let mainLeftSamples;
@@ -736,6 +743,7 @@ class SoundEditor extends React.Component {
             rightSamples = new Float32Array(mainLeftSamples);
         }
 
+        this.audioBufferPlayer.muteChannel(this.state.focusedChannel);
         this.submitNewSamples(
             [mainLeftSamples, rightSamples],
             buffer.sampleRate,
