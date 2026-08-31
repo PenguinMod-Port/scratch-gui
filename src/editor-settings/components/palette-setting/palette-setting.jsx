@@ -16,12 +16,10 @@ class PaletteSetting extends GenericSetting {
     }
 
     getColor(name) {
-        console.log(this.state.value)
         return this.state.value[name] ?? this.defaultValue()[name];
     }
 
     setColor(name, color) {
-        console.log(name, color)
         this._setValue({...this.state.value, [name]: color});
     }
 

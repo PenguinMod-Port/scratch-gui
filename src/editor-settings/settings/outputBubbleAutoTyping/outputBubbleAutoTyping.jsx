@@ -2,7 +2,6 @@ import BooleanSetting from "../../components/boolean-setting/boolean-setting.jsx
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
-import refreshWorkspace from "../../util/refreshWorkspace.js";
 
 export default (class extends BooleanSetting {
     getPrimary() {
@@ -24,6 +23,5 @@ export default (class extends BooleanSetting {
         let ScratchBlocks = LazyScratchBlocks.get();
 
         ScratchBlocks.WorkspaceSvg.VALUE_REPORT_COLORS = !value;
-        refreshWorkspace(ScratchBlocks);
     }
 });
