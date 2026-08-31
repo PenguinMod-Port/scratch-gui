@@ -13,6 +13,7 @@ import extensionLibraryContent, {
     sharkpoolGallery,
     penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
+import { isTrustedExtension } from "./tw-security-manager.jsx";
 import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
@@ -104,15 +105,22 @@ class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleItemSelect'
+            'handleItemSelect',
+            'wrapperEventHandler',
         ]);
         this.state = {
             gallery: cachedGallery,
             galleryError: null,
-            galleryTimedOut: false
+            galleryTimedOut: false,
+            externalGalleryListenerAttached: false,
         };
     }
     componentDidMount () {
+        if (!this.state.externalGalleryListenerAttached) {
+            console.log("ATTACHED");
+            window.addEventListener('message', this.wrapperEventHandler);
+            this.state.externalGalleryListenerAttached = true;
+        }
         if (!this.state.gallery) {
             const timeout = setTimeout(() => {
                 this.setState({
@@ -143,7 +151,6 @@ class ExtensionLibrary extends React.PureComponent {
         }
 
         const extensionId = item.extensionId;
-
         if (extensionId === 'custom_extension') {
             this.props.onOpenCustomExtensionModal();
             return;
@@ -164,6 +171,69 @@ class ExtensionLibrary extends React.PureComponent {
                         alert(err);
                     });
             }
+        }
+    }
+    async wrapperEventHandler(e) {
+        /**
+         * External gallery support.
+         * 
+         * Supports galleries outside the editor to automatically load extensions without
+         * having to manually input the extension code.
+         */
+        // Don't recursively try to run this event.
+        if (e.origin === window.origin) return;
+
+        // 'isTrustedExtension' checks the extension url.
+        if (!isTrustedExtension(e.origin)) {
+            e.source.postMessage({
+                p4: {
+                    type: 'error',
+                    error: 'not_trusted'
+                }
+            }, e.origin);
+            return;
+        }
+
+        const extensionSource = e.data.loadExt;
+        if (!extensionSource || typeof extensionSource !== 'string') {
+            e.source.postMessage({
+                p4: {
+                    type: 'error',
+                    error: 'no_extension_source_string'
+                }
+            }, e.origin);
+            return;
+        }
+
+        // Load the extension like any other custom extension url (this means sandboxing for some urls)
+        if (this.props.vm.extensionManager.isExtensionLoaded(extensionSource)) {
+            this.props.onCategorySelected(extensionSource);
+            e.source.postMessage({
+                p4: {
+                    type: 'success'
+                }
+            }, e.origin);
+        } else {
+            this.props.vm.extensionManager.loadExtensionURL(extensionSource)
+                .then(() => {
+                    this.props.onCategorySelected(extensionSource);
+                    e.source.postMessage({
+                        p4: {
+                            type: 'success'
+                        }
+                    }, e.origin);
+                })
+                .catch(err => {
+                    log.error(err);
+                    // The source website is expected to display the error
+                    e.source.postMessage({
+                        p4: {
+                            type: 'error',
+                            error: 'couldnt_load',
+                            pmerror: String(err.stack ? err.stack : err)
+                        }
+                    }, e.origin);
+                });
         }
     }
     render () {

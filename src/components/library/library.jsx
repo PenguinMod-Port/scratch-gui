@@ -84,8 +84,11 @@ class LibraryComponent extends React.Component {
             }
         }
     }
-    handleSelect (id) {
-        this.handleClose();
+    handleSelect (id, event) {
+        if (event.shiftKey !== true) {
+            this.handleClose();
+        }
+
         this.props.onItemSelected(this.getFilteredData()[id]);
     }
     readFavoritesFromStorage () {
