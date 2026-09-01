@@ -70,7 +70,7 @@ const activateCommentFont = (data, callback) => ({
  * @param {?Element} data The visual data for the comment, or null if the callback should not be called.
  * @returns {object} An action object with type ACTIVATE_COMMENT_COLOR_EDITOR.
  */
-const deactivateCommentColorEditor = data => ({
+const deactivateCommentColor = data => ({
     type: DEACTIVATE_COMMENT_COLOR_EDITOR,
     data: data
 });
@@ -80,7 +80,7 @@ const deactivateCommentColorEditor = data => ({
  * @param {?Element} data The visual data for the comment, or null if the callback should not be called.
  * @returns {object} An action object with type ACTIVATE_COMMENT_FONT_EDITOR.
  */
-const deactivateCommentFontEditor = data => ({
+const deactivateCommentFont = data => ({
     type: DEACTIVATE_COMMENT_FONT_EDITOR,
     data: data
 });
