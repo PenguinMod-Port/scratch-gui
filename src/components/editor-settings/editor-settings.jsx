@@ -72,6 +72,7 @@ class EditorSettingsModal extends React.Component {
                     title: this.props.intl.formatMessage(messages.blocks),
                     content: <React.Fragment>
                         <settings.blockColors />
+                        <settings.mergeOperators />
                         <Separator />
                         <settings.hexagonalRoundness />
                         <settings.cascadeProcedureColors />

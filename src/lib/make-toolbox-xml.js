@@ -1,5 +1,6 @@
 import LazyScratchBlocks from './tw-lazy-scratch-blocks';
 import defaultBlockColors from './default-block-colors';
+import SettingsStore from '../editor-settings/settings-store-singleton';
 
 const categorySeparator = '<sep gap="36"/>';
 
@@ -881,9 +882,6 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
 
 const operators = function (isInitialSetup, isStage, targetId, colour) {
     const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
-    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
-    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
-    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
@@ -1199,16 +1197,13 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
         </block>
         ${blockSeparator}
         <block type="operator_null" />
+        ${SettingsStore.store.mergeOperators ? blockSeparator + _strings() : ''}
         ${categorySeparator}
     </category>
     `;
 };
 
 const strings = function (isInitialSetup, isStage, targetId, colour) {
-    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
-    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
-    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
-    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
@@ -1216,6 +1211,18 @@ const strings = function (isInitialSetup, isStage, targetId, colour) {
         id="strings"
         colour="${colour}"
         secondaryColour="#00000044">
+        ${_strings()}
+        ${categorySeparator}
+    </category>
+    `;
+};
+
+const _strings = function() {
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
+    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
+    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
+    return `
         <block type="operator_expandablejoininputs">
             <field name="EXPANDABLE">2</field>
             <value name="INPUT1">
@@ -1373,10 +1380,8 @@ const strings = function (isInitialSetup, isStage, targetId, colour) {
                 </shadow>
             </value>
         </block>
-        ${categorySeparator}
-    </category>
-    `;
-};
+    `
+}
 
 const variables = function (isInitialSetup, isStage, targetId, colour) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
@@ -1481,6 +1486,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         turbowarpXML = turbowarpXML.replace('<block', `${extraTurboWarpBlocks}<block`);
     }
 
+    const mergeOperators = SettingsStore.store.mergeOperators;
     const everything = [
         xmlOpen,
         motionXML, gap,
@@ -1490,7 +1496,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         controlXML, gap,
         sensingXML, gap,
         operatorsXML, gap,
-        stringsXML, gap,
+        mergeOperators ? '' : stringsXML, mergeOperators ? '' : gap,
         variablesXML, gap,
         listsXML, gap,
         myBlocksXML
