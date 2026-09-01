@@ -39,6 +39,10 @@ export default (class extends PaletteSetting {
                 defaultMessage="Operators"
                 id="pm.editorSettings.blockColors.operators"
             />),
+            operators_strings: (<FormattedMessage
+                defaultMessage="Strings"
+                id="pm.editorSettings.blockColors.operators_strings"
+            />),
             data: (<FormattedMessage
                 defaultMessage="Variables"
                 id="pm.editorSettings.blockColors.data"

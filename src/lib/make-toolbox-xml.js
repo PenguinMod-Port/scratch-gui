@@ -1,5 +1,6 @@
 import LazyScratchBlocks from './tw-lazy-scratch-blocks';
 import defaultBlockColors from './default-block-colors';
+import SettingsStore from '../editor-settings/settings-store-singleton';
 
 const categorySeparator = '<sep gap="36"/>';
 
@@ -881,9 +882,6 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
 
 const operators = function (isInitialSetup, isStage, targetId, colour) {
     const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
-    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
-    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
-    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category
@@ -1136,6 +1134,95 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
             </value>
         </block>
         ${blockSeparator}
+        <block type="operator_mod">
+            <value name="NUM1">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+            <value name="NUM2">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_round">
+            <value name="NUM">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_advMath">
+            <value name="ONE">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="TWO">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_mathop">
+            <value name="NUM">
+                <shadow type="math_number">
+                    <field name="NUM"/>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_stringify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_boolify">
+            <value name="ONE">
+                <shadow type="text">
+                    <field name="TEXT">true</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_valid_type">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">1</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_null" />
+        ${SettingsStore.store.mergeOperators ? blockSeparator + _strings() : ''}
+        ${categorySeparator}
+    </category>
+    `;
+};
+
+const strings = function (isInitialSetup, isStage, targetId, colour) {
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category
+        name="%{BKY_PM_CATEGORY_STRINGS}"
+        id="strings"
+        colour="${colour}"
+        secondaryColour="#00000044">
+        ${_strings()}
+        ${categorySeparator}
+    </category>
+    `;
+};
+
+const _strings = function() {
+    const apple = translate('OPERATORS_JOIN_APPLE', 'apple');
+    const banana = translate('OPERATORS_JOIN_BANANA', 'banana');
+    const pear = translate('PM_OPERATORS_JOIN_PEAR', 'pear');
+    const letter = translate('OPERATORS_LETTEROF_APPLE', 'a');
+    return `
         <block type="operator_expandablejoininputs">
             <field name="EXPANDABLE">2</field>
             <value name="INPUT1">
@@ -1293,74 +1380,8 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
                 </shadow>
             </value>
         </block>
-        ${blockSeparator}
-        <block type="operator_mod">
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM"/>
-                </shadow>
-            </value>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM"/>
-                </shadow>
-            </value>
-        </block>
-        <block type="operator_round">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM"/>
-                </shadow>
-            </value>
-        </block>
-        ${blockSeparator}
-        <block type="operator_advMath">
-            <value name="ONE">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-            <value name="TWO">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="operator_mathop">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM"/>
-                </shadow>
-            </value>
-        </block>
-        ${blockSeparator}
-        <block type="operator_stringify">
-            <value name="ONE">
-                <shadow type="text">
-                    <field name="TEXT">${apple}</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="operator_boolify">
-            <value name="ONE">
-                <shadow type="text">
-                    <field name="TEXT">true</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="operator_valid_type">
-            <value name="TEXT">
-                <shadow type="text">
-                    <field name="TEXT">1</field>
-                </shadow>
-            </value>
-        </block>
-        ${blockSeparator}
-        <block type="operator_null" />
-        ${categorySeparator}
-    </category>
-    `;
-};
+    `
+}
 
 const variables = function (isInitialSetup, isStage, targetId, colour) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
@@ -1453,6 +1474,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
     const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
+    const stringsXML = moveCategory('strings') || strings(isInitialSetup, isStage, targetId, colors.operators_strings);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
     const listsXML = moveCategory('list') || lists(isInitialSetup, isStage, targetId, colors.data_lists);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
@@ -1464,6 +1486,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         turbowarpXML = turbowarpXML.replace('<block', `${extraTurboWarpBlocks}<block`);
     }
 
+    const mergeOperators = SettingsStore.store.mergeOperators;
     const everything = [
         xmlOpen,
         motionXML, gap,
@@ -1473,6 +1496,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         controlXML, gap,
         sensingXML, gap,
         operatorsXML, gap,
+        mergeOperators ? '' : stringsXML, mergeOperators ? '' : gap,
         variablesXML, gap,
         listsXML, gap,
         myBlocksXML
