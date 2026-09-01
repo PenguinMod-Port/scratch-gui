@@ -2,7 +2,7 @@ import bindAll from 'lodash.bindall';
 import defaultsDeep from 'lodash.defaultsdeep';
 import PropTypes from 'prop-types';
 import React from 'react';
-import CustomProceduresComponent from '../components/comment-editor/comment-editor.jsx';
+import CommentEditorComponent from '../components/comment-editor/comment-editor.jsx';
 import LazyScratchBlocks from '../lib/tw-lazy-scratch-blocks';
 import {connect} from 'react-redux';
 
@@ -218,7 +218,7 @@ class CommentEditor extends React.Component {
     }
     render () {
         return (
-            <CustomProceduresComponent
+            <CommentEditorComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
                 terminal={this.state.terminal}
@@ -273,8 +273,7 @@ CommentEditor.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    isRtl: state.locales.isRtl,
-    data: state.scratchGui.commentEditor.mutator
+    data: state.scratchGui.commentEditor.data
 });
 
 export default connect(

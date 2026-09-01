@@ -900,8 +900,8 @@ const mapStateToProps = state => ({
     locale: state.locales.locale,
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
-    commentColorEditorVisible: state.scratchGui.commentEditor.active,
-    commentFontEditorVisible: state.scratchGui.commentEditor.active,
+    commentColorEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'color',
+    commentFontEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'font',
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     useCatBlocks: isTimeTravel2020(state)

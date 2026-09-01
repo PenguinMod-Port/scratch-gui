@@ -5,6 +5,7 @@ const DEACTIVATE_COMMENT_FONT_EDITOR = 'scratch-gui/comment-editor/DEACTIVATE_CO
 const SET_CALLBACK = 'scratch-gui/comment-editor/SET_CALLBACK';
 
 const initialState = {
+    mode: null,
     active: false,
     data: null,
     callback: null
@@ -14,8 +15,15 @@ const reducer = function (state, action) {
     if (typeof state === 'undefined') state = initialState;
     switch (action.type) {
     case ACTIVATE_COMMENT_COLOR_EDITOR:
+        return Object.assign({}, state, {
+            mode: 'color',
+            active: true,
+            data: action.data,
+            callback: action.callback
+        });
     case ACTIVATE_COMMENT_FONT_EDITOR:
         return Object.assign({}, state, {
+            mode: 'font',
             active: true,
             data: action.data,
             callback: action.callback
@@ -28,6 +36,7 @@ const reducer = function (state, action) {
             state.callback(action.data);
         }
         return Object.assign({}, state, {
+            mode: null,
             active: false,
             data: null,
             callback: null
