@@ -4,6 +4,7 @@ import assetDragReducer, {assetDragInitialState} from './asset-drag';
 import cardsReducer, {cardsInitialState} from './cards';
 import colorPickerReducer, {colorPickerInitialState} from './color-picker';
 import connectionModalReducer, {connectionModalInitialState} from './connection-modal';
+import commentEditorReducer, {commentEditorInitialState} from './custom-procedures';
 import customProceduresReducer, {customProceduresInitialState} from './custom-procedures';
 import blockDragReducer, {blockDragInitialState} from './block-drag';
 import editorTabReducer, {editorTabInitialState} from './editor-tab';
@@ -44,6 +45,7 @@ const guiInitialState = {
     colorPicker: colorPickerInitialState,
     connectionModal: connectionModalInitialState,
     customStageSize: customStageSizeInitialState,
+    commentEditor: commentEditorInitialState,
     customProcedures: customProceduresInitialState,
     editorTab: editorTabInitialState,
     mode: modeInitialState,
@@ -150,6 +152,7 @@ const guiReducer = combineReducers({
     colorPicker: colorPickerReducer,
     connectionModal: connectionModalReducer,
     customStageSize: customStageSizeReducer,
+    commentEditor: commentEditorReducer,
     customProcedures: customProceduresReducer,
     editorTab: editorTabReducer,
     mode: modeReducer,
