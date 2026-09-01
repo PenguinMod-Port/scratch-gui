@@ -6,14 +6,14 @@ import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
 export default (class extends BooleanSetting {
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Disable type-based colors for block output bubbles"
+            defaultMessage="Typed Output Displays"
             id="pm.editorSettings.outputBubbleAutoTyping.primary"
         />)
     }
 
     getHelp() {
         return (<FormattedMessage
-            defaultMessage="Disables colors that represent data types inside block output bubbles."
+            defaultMessage="When enabled, types are coloured differently to help differentiate between them."
             id="pm.editorSettings.outputBubbleAutoTyping.help"
         />)
     }
@@ -22,6 +22,6 @@ export default (class extends BooleanSetting {
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
 
-        ScratchBlocks.WorkspaceSvg.VALUE_REPORT_COLORS = !value;
+        ScratchBlocks.WorkspaceSvg.VALUE_REPORT_COLORS = value;
     }
 });
