@@ -36,17 +36,22 @@ class CommentEditor extends React.Component {
             italic: false
         };
     }
+    componentDidMount () {
+        this.setupState();
+    }
     setupState () {
         const currentData = this.props.comment.data;
 
-        this.state.color = currentData.color ?? DEFAULT_COMMENT_COLOR;
-        this.state.txtColor = currentData.txtColor ?? '#000000';
-        this.state.opacity = currentData.opacity ?? 100;
-        this.state.font = currentData.font ?? 'arial';
-        this.state.textAlign = currentData.textAlign ?? 'left';
-        this.state.fontSize = currentData.fontSize ?? 16;
-        this.state.bold = currentData.bold ?? false;
-        this.state.italic = currentData.italic ?? false;
+        this.setState({
+            color: currentData.color ?? DEFAULT_COMMENT_COLOR,
+            txtColor: currentData.txtColor ?? '#000000',
+            opacity: currentData.opacity ?? 100,
+            font: currentData.font ?? 'arial',
+            textAlign: currentData.textAlign ?? 'left',
+            fontSize: currentData.fontSize ?? 16,
+            bold: currentData.bold ?? false,
+            italic: currentData.italic ?? false
+        });
     }
     handleCancel () {
         this.props.onRequestClose();
@@ -85,18 +90,18 @@ class CommentEditor extends React.Component {
         this.setState({txtColor: hex});
     }
     handleSetOpacity (event) {
-        value = Number(event.target.value) || 100;
-        const opacity = Math.max(10, Math.min(100, value));
+        let opacity = Number(event.target.value) || 100;
+        opacity = Math.max(10, Math.min(100, opacity));
 
         this.setState({opacity: opacity});
     }
     handleSetFont (event) {
         const font = String(event.target.value) || 'arial';
-        this.setState({font: font });
+        this.setState({font: font});
     }
     handleSetFontSize (event) {
-        value = Number(event.target.value) || 16;
-        const size = Math.max(2, Math.min(150, value));
+        let size = Number(event.target.value) || 16;
+        size = Math.max(2, Math.min(150, size));
 
         this.setState({fontSize: size});
     }
@@ -104,8 +109,8 @@ class CommentEditor extends React.Component {
         const validAlignments = ['left', 'center', 'right'];
         const value = String(event.target.value).toLowerCase();
 
-        if (validAlignments.includes(alignment)) {
-            this.setState({textAlign: alignment});
+        if (validAlignments.includes(value)) {
+            this.setState({textAlign: value});
         }
     }
     handleSetBold (event) {
@@ -115,7 +120,6 @@ class CommentEditor extends React.Component {
         this.setState({italic: event.target.checked});
     }
     render () {
-        this.setupState();
         return (
             <CommentEditorComponent
                 data={this.state}
@@ -138,8 +142,8 @@ class CommentEditor extends React.Component {
 }
 
 CommentEditor.propTypes = {
-    data: PropTypes.instanceOf(Object),
-    onRequestClose: PropTypes.func.isRequired,
+    comment: PropTypes.object.isRequired,
+    onRequestClose: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

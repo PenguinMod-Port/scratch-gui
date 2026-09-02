@@ -89,7 +89,7 @@ const CommentEditor = props => {
                     type="color"
                     value={props.data.color}
                     className={styles.presetColor}
-                    onInput={props.onSetColor}
+                    onChange={props.onSetColor}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.commentOpacity)}>
@@ -99,7 +99,7 @@ const CommentEditor = props => {
                     max="100"
                     value={props.data.opacity}
                     className={styles.opacitySlider}
-                    onInput={props.onSetOpacity}
+                    onChange={props.onSetOpacity}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.textColor)}>
@@ -107,7 +107,7 @@ const CommentEditor = props => {
                     type="color"
                     value={props.data.txtColor}
                     className={styles.presetColor}
-                    onInput={props.onSetTextColor}
+                    onChange={props.onSetTextColor}
                 />
             </Label>
             <div className={styles.breaker}></div>
@@ -143,7 +143,6 @@ const CommentEditor = props => {
             <label>
                 <input
                     type="checkbox"
-                    value={props.data.bold}
                     checked={props.data.bold}
                     className={styles.checkbox}
                     onChange={props.onSetBold}
@@ -157,7 +156,6 @@ const CommentEditor = props => {
             <label>
                 <input
                     type="checkbox"
-                    value={props.data.italic}
                     checked={props.data.italic}
                     className={styles.checkbox}
                     onChange={props.onSetItalic}
