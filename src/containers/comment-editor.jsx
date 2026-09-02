@@ -97,7 +97,7 @@ class CommentEditor extends React.Component {
         this.setState({opacity: opacity});
     }
     handleSetFont (event) {
-        const font = String(event.target.value) || 'arial';
+        const font = String(event.target.value);
         this.setState({font: font});
     }
     handleSetFontSize (event) {
