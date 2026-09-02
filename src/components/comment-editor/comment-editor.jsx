@@ -26,7 +26,7 @@ const messages = defineMessages({
         id: 'pm.gui.commentEditor.textColor'
     },
     commentOpacity: {
-        defaultMessage: 'Background opacity',
+        defaultMessage: 'Comment opacity',
         description: 'Title for the input where you customize comment opacity.',
         id: 'pm.gui.commentEditor.commentOpacity'
     },
@@ -114,6 +114,15 @@ const CommentEditor = props => {
                         onChange={props.onSetTextColor}
                     />
                 </Label>
+                <button
+                    onClick={props.onUseBlockColor}
+                >
+                    <FormattedMessage
+                        defaultMessage="Use Block Colors"
+                        description="Label for the button where you use the parent block color as the comment color."
+                        id="pm.gui.commentEditor.parentColor"
+                    />
+                </button>
             </div>
             <div className={styles.breaker}></div>
             <div className={classNames(styles.container, styles.labelContent)}>
@@ -227,6 +236,7 @@ CommentEditor.propTypes = {
     onSetBold: PropTypes.func.isRequired,
     onSetItalic: PropTypes.func.isRequired,
     onMarkdownHelp: PropTypes.func.isRequired,
+    onUseBlockColor: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
 };

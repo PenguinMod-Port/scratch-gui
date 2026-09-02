@@ -15,6 +15,7 @@ class CommentEditor extends React.Component {
             'getPreviewStyles',
             'handleChangeColor',
             'handleChangeTextColor',
+            'handleUseBlockColor',
             'handleSetOpacity',
             'handleSetFont',
             'handleSetFontSize',
@@ -61,7 +62,22 @@ class CommentEditor extends React.Component {
         this.props.onRequestClose();
     }
     handleMarkdownHelp () {
-        alert("TOODO write this");
+        alert([
+            'Comment Markdown Help\n',
+            'TEXT FORMATTING\n',
+            '**text**          Bold\n',
+            '*text*             Italic\n',
+            '~~text~~      Strikethrough\n\n',
+            'HEADERS\n',
+            '#1 text        Header 1\n',
+            '#2 text        Header 2\n\n',
+            'COLOR\n',
+            '@c[#ff0000]text@c\n',
+            'Changes the text color.\n\n',
+            'IMAGES\n',
+            '<i url i>\n',
+            'Displays an image from the given URL.'
+        ].join(''));
     }
     getPreviewColor () {
         return `${this.state.color}${Math.round(this.state.opacity * 2.55)
@@ -73,7 +89,7 @@ class CommentEditor extends React.Component {
             color: this.state.txtColor,
             fontFamily: this.state.font,
             textAlign: this.state.textAlign,
-            fontSize: this.state.fontSize + "px",
+            fontSize: this.state.fontSize + 'px',
             fontWeight: this.state.bold ? 'bold' : 'normal',
             fontStyle: this.state.italic ? 'italic' : 'normal'
         };
@@ -90,6 +106,21 @@ class CommentEditor extends React.Component {
 
         this.setState({txtColor: hex});
     }
+    handleUseBlockColor () {
+        const isWorkspaceComment = this.props.comment.isComment;
+
+        if (isWorkspaceComment) {
+            this.setState({color: DEFAULT_COMMENT_COLOR, txtColor: '#000000'});
+        } else {
+            const block = this.props.comment?.comment?.block_;
+            if (!block) {
+                console.warn("Block comment not connected to block?");
+                return;
+            }
+
+            this.setState({color: block.colour_, txtColor: block.textColour});
+        }
+    }
     handleSetOpacity (event) {
         let opacity = Number(event.target.value) || 100;
         opacity = Math.max(10, Math.min(100, opacity));
@@ -98,7 +129,9 @@ class CommentEditor extends React.Component {
     }
     handleSetFont (event) {
         const font = String(event.target.value);
-        this.setState({font: font});
+        if (font) {
+            this.setState({font: font});
+        }
     }
     handleSetFontSize (event) {
         let size = Number(event.target.value) || 16;
@@ -109,7 +142,6 @@ class CommentEditor extends React.Component {
     handleSetAlignment (event) {
         const validAlignments = ['left', 'center', 'right'];
         const value = String(event.target.value).toLowerCase();
-
         if (validAlignments.includes(value)) {
             this.setState({textAlign: value});
         }
@@ -135,6 +167,7 @@ class CommentEditor extends React.Component {
                 onSetBold={this.handleSetBold}
                 onSetItalic={this.handleSetItalic}
                 onMarkdownHelp={this.handleMarkdownHelp}
+                onUseBlockColor={this.handleUseBlockColor}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
             />
