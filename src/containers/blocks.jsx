@@ -756,7 +756,7 @@ class Blocks extends React.Component {
             workspaceMetrics,
             ...props
         } = this.props;
-        console.log("DEBUG RENDER", editCommentFontCallback, commentColorEditorVisible, commentFontEditorVisible)
+        console.log("DEBUG RENDER", commentColorEditorVisible, commentFontEditorVisible);
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
@@ -910,7 +910,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCommentColor: data => dispatch(activateCommentColor(data)),
+    onActivateCommentColor: data => {
+        console.log("DISPATCHED", dispatch);
+        return dispatch(activateCommentColor(data))
+    },
     onActivateCommentFont: data => dispatch(activateCommentFont(data)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {
