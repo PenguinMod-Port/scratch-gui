@@ -60,11 +60,13 @@ class CommentEditor extends React.Component {
     getPreviewStyles () {
         let styles = '';
 
-        `color: ${props.data.txtColor}; font-family: ${props.data.font}; text-align: ${props.data.textAlign}; font-weight
-            bold: false,
-            italic: false`
+        styles += `color: ${this.state.txtColor};`;
+        styles += `font-family: ${this.state.font};`;
+        styles += `text-align: ${this.state.textAlign};`;
+        styles += `font-weight: ${this.state.bold ? 'bold' : 'normal'};`;
+        styles += `font-style: ${this.state.italic ? 'italic' : 'normal'};`;
 
-            return styles;
+        return styles;
     }
     handleChangeColor (event) {
         let hex = String(event.target.value);
@@ -110,8 +112,9 @@ class CommentEditor extends React.Component {
         this.setupState();
         return (
             <CommentEditorComponent
-                mode={this.props.mode}
-                data={this.props.comment.data}
+                data={this.state}
+                getPreviewColor={this.getPreviewColor}
+                getPreviewStyles={this.getPreviewStyles}
                 onSetColor={this.handleChangeColor}
                 onSetTextColor={this.handleChangeTextColor}
                 onSetOpacity={this.handleSetOpacity}
@@ -128,7 +131,6 @@ class CommentEditor extends React.Component {
 }
 
 CommentEditor.propTypes = {
-    mode: PropTypes.string,
     data: PropTypes.instanceOf(Object),
     onRequestClose: PropTypes.func.isRequired,
 };
