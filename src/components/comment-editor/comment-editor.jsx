@@ -89,7 +89,7 @@ const CommentEditor = props => {
                     type="color"
                     value={props.data.color}
                     className={styles.presetColor}
-                    oninput={props.onSetColor}
+                    onInput={props.onSetColor}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.commentOpacity)}>
@@ -99,7 +99,7 @@ const CommentEditor = props => {
                     max="100"
                     value={props.data.opacity}
                     className={styles.opacitySlider}
-                    oninput={props.onSetOpacity}
+                    onInput={props.onSetOpacity}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.textColor)}>
@@ -107,7 +107,7 @@ const CommentEditor = props => {
                     type="color"
                     value={props.data.txtColor}
                     className={styles.presetColor}
-                    oninput={props.onSetTextColor}
+                    onInput={props.onSetTextColor}
                 />
             </Label>
             <div className={styles.breaker}></div>
@@ -116,7 +116,7 @@ const CommentEditor = props => {
                     type="text"
                     value={props.data.font}
                     className={styles.textField}
-                    onchange={props.onSetFont}
+                    onChange={props.onSetFont}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.fontSize)}>
@@ -126,7 +126,7 @@ const CommentEditor = props => {
                     max="150"
                     value={props.data.fontSize}
                     className={styles.textField}
-                    onchange={props.onSetFontSize}
+                    onChange={props.onSetFontSize}
                 />
             </Label>
             <Label text={props.intl.formatMessage(messages.alignment)}>
@@ -144,8 +144,9 @@ const CommentEditor = props => {
                 <input
                     type="checkbox"
                     value={props.data.bold}
+                    checked={props.data.bold}
                     className={styles.checkbox}
-                    onchange={props.onSetBold}
+                    onChange={props.onSetBold}
                 />
                 <FormattedMessage
                     defaultMessage="Bold letters"
@@ -157,8 +158,9 @@ const CommentEditor = props => {
                 <input
                     type="checkbox"
                     value={props.data.italic}
+                    checked={props.data.italic}
                     className={styles.checkbox}
-                    onchange={props.onSetItalic}
+                    onChange={props.onSetItalic}
                 />
                 <FormattedMessage
                     defaultMessage="Italic letters"
@@ -166,28 +168,28 @@ const CommentEditor = props => {
                     id="pm.gui.commentEditor.italics"
                 />
             </label>
-        </Box>
-        <Box className={styles.buttonRow}>
-            <button
-                className={styles.cancelButton}
-                onClick={props.onCancel}
-            >
-                <FormattedMessage
-                    defaultMessage="Cancel"
-                    description="Label for button to cancel comment edits"
-                    id="pm.gui.commentEditor.cancel"
-                />
-            </button>
-            <button
-                className={styles.okButton}
-                onClick={props.onOk}
-            >
-                <FormattedMessage
-                    defaultMessage="OK"
-                    description="Label for button to save new comment settings"
-                    id="pm.gui.commentEditor.ok"
-                />
-            </button>
+            <Box className={styles.buttonRow}>
+                <button
+                    className={styles.cancelButton}
+                    onClick={props.onCancel}
+                >
+                    <FormattedMessage
+                        defaultMessage="Cancel"
+                        description="Label for button to cancel comment edits"
+                        id="pm.gui.commentEditor.cancel"
+                    />
+                </button>
+                <button
+                    className={styles.okButton}
+                    onClick={props.onOk}
+                >
+                    <FormattedMessage
+                        defaultMessage="OK"
+                        description="Label for button to save new comment settings"
+                        id="pm.gui.commentEditor.ok"
+                    />
+                </button>
+            </Box>
         </Box>
     </Modal>
 )};
