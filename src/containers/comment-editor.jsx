@@ -73,6 +73,7 @@ class CommentEditor extends React.Component {
             color: this.state.txtColor,
             fontFamily: this.state.font,
             textAlign: this.state.textAlign,
+            fontSize: this.state.fontSize + "px",
             fontWeight: this.state.bold ? 'bold' : 'normal',
             fontStyle: this.state.italic ? 'italic' : 'normal'
         };
@@ -101,7 +102,7 @@ class CommentEditor extends React.Component {
     }
     handleSetFontSize (event) {
         let size = Number(event.target.value) || 16;
-        size = Math.max(2, Math.min(150, size));
+        size = Math.max(2, Math.min(100, size));
 
         this.setState({fontSize: size});
     }

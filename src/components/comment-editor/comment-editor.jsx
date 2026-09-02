@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 import Modal from '../../containers/modal.jsx';
 import Box from '../box/box.jsx';
 import Label from '../forms/label.jsx';
@@ -84,24 +85,26 @@ const CommentEditor = props => {
                     </span>
                 </div>
             </div>
-            <Label text={props.intl.formatMessage(messages.commentColor)}>
-                <input
-                    type="color"
-                    value={props.data.color}
-                    className={styles.presetColor}
-                    onChange={props.onSetColor}
-                />
-            </Label>
-            <Label text={props.intl.formatMessage(messages.commentOpacity)}>
-                <input
-                    type="range"
-                    min="10"
-                    max="100"
-                    value={props.data.opacity}
-                    className={styles.opacitySlider}
-                    onChange={props.onSetOpacity}
-                />
-            </Label>
+            <div className={styles.container}>
+                <Label text={props.intl.formatMessage(messages.commentColor)}>
+                    <input
+                        type="color"
+                        value={props.data.color}
+                        className={styles.presetColor}
+                        onChange={props.onSetColor}
+                    />
+                </Label>
+                <Label text={props.intl.formatMessage(messages.commentOpacity)}>
+                    <input
+                        type="range"
+                        min="10"
+                        max="100"
+                        value={props.data.opacity}
+                        className={styles.opacitySlider}
+                        onChange={props.onSetOpacity}
+                    />
+                </Label>
+            </div>
             <Label text={props.intl.formatMessage(messages.textColor)}>
                 <input
                     type="color"
@@ -111,27 +114,30 @@ const CommentEditor = props => {
                 />
             </Label>
             <div className={styles.breaker}></div>
-            <Label text={props.intl.formatMessage(messages.font)}>
-                <input
-                    type="text"
-                    value={props.data.font}
-                    className={styles.textField}
-                    onChange={props.onSetFont}
-                />
-            </Label>
-            <Label text={props.intl.formatMessage(messages.fontSize)}>
-                <input
-                    type="number"
-                    min="2"
-                    max="150"
-                    value={props.data.fontSize}
-                    className={styles.textField}
-                    onChange={props.onSetFontSize}
-                />
-            </Label>
+            <div className={styles.container}>
+                <Label text={props.intl.formatMessage(messages.font)}>
+                    <input
+                        type="text"
+                        value={props.data.font}
+                        className={styles.textField}
+                        onChange={props.onSetFont}
+                    />
+                </Label>
+                <Label text={props.intl.formatMessage(messages.fontSize)}>
+                    <input
+                        type="number"
+                        min="2"
+                        max="100"
+                        value={props.data.fontSize}
+                        className={styles.textField}
+                        onChange={props.onSetFontSize}
+                    />
+                </Label>
+            </div>
             <Label text={props.intl.formatMessage(messages.alignment)}>
                 <select
                     value={props.data.textAlign}
+                    className={styles.textField}
                     onChange={props.onSetAlignment}
                     onClick={e => e.stopPropagation()}
                 >
@@ -140,7 +146,7 @@ const CommentEditor = props => {
                     <option value="right">{props.intl.formatMessage(messages.right)}</option>
                 </select>
             </Label>
-            <label>
+            <label className={styles.labelContainer}>
                 <input
                     type="checkbox"
                     checked={props.data.bold}
@@ -153,7 +159,7 @@ const CommentEditor = props => {
                     id="pm.gui.commentEditor.bolds"
                 />
             </label>
-            <label>
+            <label className={styles.labelContainer}>
                 <input
                     type="checkbox"
                     checked={props.data.italic}
@@ -166,7 +172,7 @@ const CommentEditor = props => {
                     id="pm.gui.commentEditor.italics"
                 />
             </label>
-             <Box className={styles.buttonRow}>
+             <Box className={classNames(styles.buttonRow, styles.centerRow)}>
                 <button
                     className={styles.markdownHelp}
                     onClick={props.onMarkdownHelp}

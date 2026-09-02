@@ -21,27 +21,81 @@
 
 /* Preview */
 .preview-outer {
-
+    border: solid $ui-black-transparent-default 3px;
+    border-radius: 20px;
+    width: fit-content;
+    justify-self: center;
+    margin-bottom: 15px;
 }
 
 .preview-inner {
-
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    border: inset $ui-black-transparent-default 3px;
+    padding: 10px;
+    border-radius: 16px;
+}
+.preview-inner span {
+    width: 100%;
+    display: block;
 }
 
 .preset-color {
 
 }
 
-.breaker {
-
+.text-field {
+    padding: 0.5rem 0.75rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    background-color: var(--input-background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--ui-black-transparent);
+    border-radius: 0.5rem;
+    outline: none;
+    cursor: pointer;
+    transition: 0.25s ease-out;
+    box-shadow: none;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
 }
 
-.text-field {
+label span {
+    font-size: 0.7rem;
+}
 
+.label-container {
+    display: block;
+    margin-top: 10px;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.breaker {
+    width: 100%;
+    border-top: dotted 3px var(--ui-black-transparent-default);
+    margin: 15px 0;
+}
+
+.center-row {
+    text-align: center !important;
 }
 
 .markdown-help {
-    
+    padding: 0.5rem 1rem !important;
+    background: var(--looks-secondary) !important;
+    border: var(--looks-secondary) !important;
+    color: white !important;
 }
 
 /* Confirmation buttons at the bottom of the modal */
