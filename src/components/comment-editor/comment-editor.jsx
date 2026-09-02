@@ -82,7 +82,7 @@ const CommentEditor = props => {
                         style={props.getPreviewStyles()}
                     >
                         Aa
-                    <span>
+                    </span>
                 </div>
             </div>
             <Label text={props.intl.formatMessage(messages.commentColor)}>
