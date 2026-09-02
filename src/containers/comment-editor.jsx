@@ -112,7 +112,7 @@ class CommentEditor extends React.Component {
             }
             this.mutationRoot.moveBy(dx, dy);
         });
-        this.mutationRoot.domToMutation(this.props.mutator);
+        this.mutationRoot.domToMutation(this.props.object);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
         this.setState({
@@ -243,7 +243,7 @@ class CommentEditor extends React.Component {
 
 CommentEditor.propTypes = {
     isRtl: PropTypes.bool,
-    mutator: PropTypes.instanceOf(Element),
+    data: PropTypes.instanceOf(Object),
     onRequestClose: PropTypes.func.isRequired,
     options: PropTypes.shape({
         media: PropTypes.string,
