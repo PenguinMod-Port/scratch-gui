@@ -6,7 +6,7 @@ const DEACTIVATE_COMMENT_FONT_EDITOR = 'scratch-gui/comment-editor/DEACTIVATE_CO
 const initialState = {
     mode: null,
     active: false,
-    data: null
+    comment: null
 };
 
 const reducer = function (state, action) {
@@ -16,20 +16,20 @@ const reducer = function (state, action) {
         return Object.assign({}, state, {
             mode: 'color',
             active: true,
-            data: action.data
+            comment: action.comment
         });
     case ACTIVATE_COMMENT_FONT_EDITOR:
         return Object.assign({}, state, {
             mode: 'font',
             active: true,
-            data: action.data
+            comment: action.comment
         });
     case DEACTIVATE_COMMENT_COLOR_EDITOR:
     case DEACTIVATE_COMMENT_FONT_EDITOR:
         return Object.assign({}, state, {
             mode: null,
             active: false,
-            data: null
+            comment: null
         });
     default:
         return state;
@@ -38,42 +38,42 @@ const reducer = function (state, action) {
 
 /**
  * Action creator to open the comment editor modal.
- * @param {!Object} data The visual data for the comment.
+ * @param {!Object} comment The blockly comment.
  * @returns {object} An action object with type ACTIVATE_COMMENT_COLOR_EDITOR.
  */
-const activateCommentColor = data => ({
+const activateCommentColor = comment => ({
     type: ACTIVATE_COMMENT_COLOR_EDITOR,
-    data: data
+    comment: comment
 });
 
 /**
  * Action creator to open the comment editor modal.
- * @param {!Object} data The visual data for the comment.
+ * @param {!Object} comment The blockly comment.
  * @returns {object} An action object with type ACTIVATE_COMMENT_FONT_EDITOR.
  */
-const activateCommentFont = data => ({
+const activateCommentFont = comment => ({
     type: ACTIVATE_COMMENT_FONT_EDITOR,
-    data: data
+    comment: comment
 });
 
 /**
  * Action creator to close the comment editor modal.
- * @param {?Object} data The visual data for the comment.
+ * @param {?Object} comment The blockly comment.
  * @returns {object} An action object with type ACTIVATE_COMMENT_COLOR_EDITOR.
  */
-const deactivateCommentColor = data => ({
+const deactivateCommentColor = comment => ({
     type: DEACTIVATE_COMMENT_COLOR_EDITOR,
-    data: data
+    comment: comment
 });
 
 /**
  * Action creator to close the comment editor modal.
- * @param {?Object} data The visual data for the comment.
+ * @param {?Object} comment The blockly comment.
  * @returns {object} An action object with type ACTIVATE_COMMENT_FONT_EDITOR.
  */
-const deactivateCommentFont = data => ({
+const deactivateCommentFont = comment => ({
     type: DEACTIVATE_COMMENT_FONT_EDITOR,
-    data: data
+    comment: comment
 });
 
 export {

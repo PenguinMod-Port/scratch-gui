@@ -668,11 +668,11 @@ class Blocks extends React.Component {
     handlePromptClose () {
         this.setState({prompt: null});
     }
-    handleCommentColorEditorClose (data) {
-        this.props.onRequestCloseCommentColor(data);
+    handleCommentColorEditorClose () {
+        this.props.onRequestCloseCommentColor();
     }
-    handleCommentFontEditorClose (data) {
-        this.props.onRequestCloseCommentFont(data);
+    handleCommentFontEditorClose () {
+        this.props.onRequestCloseCommentFont();
     }
     handleCustomProceduresClose (data) {
         this.props.onRequestCloseCustomProcedures(data);
@@ -807,9 +807,6 @@ class Blocks extends React.Component {
                 {commentFontEditorVisible ? (
                     <CommentEditor
                         mode='font'
-                        options={{
-                            media: options.media
-                        }}
                         onRequestClose={this.handleCommentFontEditorClose}
                     />
                 ) : null}
@@ -909,8 +906,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCommentColor: data => dispatch(activateCommentColor(data)),
-    onActivateCommentFont: data => dispatch(activateCommentFont(data)),
+    onActivateCommentColor: comment => dispatch(activateCommentColor(comment)),
+    onActivateCommentFont: comment => dispatch(activateCommentFont(comment)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {
         dispatch(setConnectionModalExtensionId(id));
