@@ -85,7 +85,7 @@ const CommentEditor = props => {
                     </span>
                 </div>
             </div>
-            <div className={styles.container}>
+            <div className={classNames(styles.container, styles.labelContent)}>
                 <Label text={props.intl.formatMessage(messages.commentColor)}>
                     <input
                         type="color"
@@ -105,16 +105,18 @@ const CommentEditor = props => {
                     />
                 </Label>
             </div>
-            <Label text={props.intl.formatMessage(messages.textColor)}>
-                <input
-                    type="color"
-                    value={props.data.txtColor}
-                    className={styles.presetColor}
-                    onChange={props.onSetTextColor}
-                />
-            </Label>
+            <div className={styles.labelContent}>
+                <Label text={props.intl.formatMessage(messages.textColor)}>
+                    <input
+                        type="color"
+                        value={props.data.txtColor}
+                        className={styles.presetColor}
+                        onChange={props.onSetTextColor}
+                    />
+                </Label>
+            </div>
             <div className={styles.breaker}></div>
-            <div className={styles.container}>
+            <div className={classNames(styles.container, styles.labelContent)}>
                 <Label text={props.intl.formatMessage(messages.font)}>
                     <input
                         type="text"
@@ -134,18 +136,20 @@ const CommentEditor = props => {
                     />
                 </Label>
             </div>
-            <Label text={props.intl.formatMessage(messages.alignment)}>
-                <select
-                    value={props.data.textAlign}
-                    className={styles.textField}
-                    onChange={props.onSetAlignment}
-                    onClick={e => e.stopPropagation()}
-                >
-                    <option value="left">{props.intl.formatMessage(messages.left)}</option>
-                    <option value="center">{props.intl.formatMessage(messages.center)}</option>
-                    <option value="right">{props.intl.formatMessage(messages.right)}</option>
-                </select>
-            </Label>
+            <div className={styles.labelContent}>
+                <Label text={props.intl.formatMessage(messages.alignment)}>
+                    <select
+                        value={props.data.textAlign}
+                        className={styles.textField}
+                        onChange={props.onSetAlignment}
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <option value="left">{props.intl.formatMessage(messages.left)}</option>
+                        <option value="center">{props.intl.formatMessage(messages.center)}</option>
+                        <option value="right">{props.intl.formatMessage(messages.right)}</option>
+                    </select>
+                </Label>
+            </div>
             <label className={styles.labelContainer}>
                 <input
                     type="checkbox"
