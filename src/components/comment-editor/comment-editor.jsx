@@ -76,7 +76,7 @@ const CommentEditor = props => {
             <div className={styles.previewOuter}>
                 <div
                     className={styles.previewInner}
-                    style={`background: ${props.getPreviewColor()}`}
+                    style={{background: props.getPreviewColor()}}
                 >
                     <span
                         style={props.getPreviewStyles()}
@@ -172,7 +172,6 @@ const CommentEditor = props => {
 )};
 
 CommentEditor.propTypes = {
-    mode: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
     getPreviewColor: PropTypes.func.isRequired,
     getPreviewStyles: PropTypes.func.isRequired,

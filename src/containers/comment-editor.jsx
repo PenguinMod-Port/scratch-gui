@@ -55,18 +55,18 @@ class CommentEditor extends React.Component {
         this.props.onRequestClose();
     }
     getPreviewColor () {
-        return this.state.color + (this.state.opacity * 2.55).toString(16);
+        return `${this.state.color}${Math.round(this.state.opacity * 2.55)
+            .toString(16)
+            .padStart(2, '0')}`;
     }
     getPreviewStyles () {
-        let styles = '';
-
-        styles += `color: ${this.state.txtColor};`;
-        styles += `font-family: ${this.state.font};`;
-        styles += `text-align: ${this.state.textAlign};`;
-        styles += `font-weight: ${this.state.bold ? 'bold' : 'normal'};`;
-        styles += `font-style: ${this.state.italic ? 'italic' : 'normal'};`;
-
-        return styles;
+        return {
+            color: this.state.txtColor,
+            fontFamily: this.state.font,
+            textAlign: this.state.textAlign,
+            fontWeight: this.state.bold ? 'bold' : 'normal',
+            fontStyle: this.state.italic ? 'italic' : 'normal'
+        };
     }
     handleChangeColor (event) {
         let hex = String(event.target.value);

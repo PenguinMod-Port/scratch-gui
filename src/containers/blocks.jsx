@@ -27,10 +27,8 @@ import {connect} from 'react-redux';
 import {updateToolbox} from '../reducers/toolbox';
 import {activateColorPicker} from '../reducers/color-picker';
 import {
-    activateCommentColor,
-    activateCommentFont,
-    deactivateCommentColor,
-    deactivateCommentFont,
+    activateCommentEditor,
+    deactivateCommentEditor,
 } from '../reducers/comment-editor';
 import {
     closeExtensionLibrary,
@@ -115,8 +113,7 @@ class Blocks extends React.Component {
             'handlePromptStart',
             'handlePromptCallback',
             'handlePromptClose',
-            'handleCommentColorEditorClose',
-            'handleCommentFontEditorClose',
+            'handleCommentEditorClose',
             'handleCustomProceduresClose',
             'handleBeforeEditCustomProcedure',
             'onScriptGlowOn',
@@ -151,8 +148,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
         this.ScratchBlocks.recordSoundCallback = this.handleOpenSoundRecorder;
 
-        this.ScratchBlocks.ScratchBubble.editCommentColorCallback = this.props.onActivateCommentColor;
-        this.ScratchBlocks.ScratchBubble.editCommentFontCallback = this.props.onActivateCommentFont;
+        this.ScratchBlocks.ScratchBubble.editCommentCallback = this.props.onActivateCommentEditor;
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.Procedures.beforeEditCallback = this.handleBeforeEditCustomProcedure;
@@ -261,8 +257,7 @@ class Blocks extends React.Component {
             this._renderedToolboxXML !== nextProps.toolboxXML ||
             this.props.extensionLibraryVisible !== nextProps.extensionLibraryVisible ||
             this.props.customProceduresVisible !== nextProps.customProceduresVisible ||
-            this.props.commentColorEditorVisible !== nextProps.commentColorEditorVisible ||
-            this.props.commentFontEditorVisible !== nextProps.commentFontEditorVisible ||
+            this.props.commentEditorVisible !== nextProps.commentEditorVisible ||
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
@@ -668,11 +663,8 @@ class Blocks extends React.Component {
     handlePromptClose () {
         this.setState({prompt: null});
     }
-    handleCommentColorEditorClose () {
-        this.props.onRequestCloseCommentColor();
-    }
-    handleCommentFontEditorClose () {
-        this.props.onRequestCloseCommentFont();
+    handleCommentEditorClose () {
+        this.props.onRequestCloseCommentEditor();
     }
     handleCustomProceduresClose (data) {
         this.props.onRequestCloseCustomProcedures(data);
@@ -730,8 +722,7 @@ class Blocks extends React.Component {
             anyModalVisible,
             canUseCloud,
             customStageSize,
-            commentColorEditorVisible,
-            commentFontEditorVisible,
+            commentEditorVisible,
             customProceduresVisible,
             extensionLibraryVisible,
             options,
@@ -745,8 +736,7 @@ class Blocks extends React.Component {
             onOpenCustomExtensionModal,
             reduxOnOpenCustomExtensionModal,
             updateToolboxState,
-            onActivateCommentFont,
-            onActivateCommentColor,
+            onActivateCommentEditor,
             onActivateCustomProcedures,
             onRequestCloseExtensionLibrary,
             onRequestCloseCustomProcedures,
@@ -795,19 +785,12 @@ class Blocks extends React.Component {
                         onRequestClose={this.handleCustomProceduresClose}
                     />
                 ) : null}
-                {commentColorEditorVisible ? (
+                {commentEditorVisible ? (
                     <CommentEditor
-                        mode='color'
                         options={{
                             media: options.media
                         }}
-                        onRequestClose={this.handleCommentColorEditorClose}
-                    />
-                ) : null}
-                {commentFontEditorVisible ? (
-                    <CommentEditor
-                        mode='font'
-                        onRequestClose={this.handleCommentFontEditorClose}
+                        onRequestClose={this.handleCommentEditorClose}
                     />
                 ) : null}
             </React.Fragment>
@@ -823,8 +806,7 @@ Blocks.propTypes = {
         width: PropTypes.number,
         height: PropTypes.number
     }),
-    commentColorEditorVisible: PropTypes.bool,
-    commentFontEditorVisible: PropTypes.bool,
+    commentEditorVisible: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
     isRtl: PropTypes.bool,
@@ -832,8 +814,7 @@ Blocks.propTypes = {
     locale: PropTypes.string.isRequired,
     messages: PropTypes.objectOf(PropTypes.string),
     onActivateColorPicker: PropTypes.func,
-    onActivateCommentFont: PropTypes.func,
-    onActivateCommentColor: PropTypes.func,
+    onActivateCommentEditor: PropTypes.func,
     onActivateCustomProcedures: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
     onOpenSoundRecorder: PropTypes.func,
@@ -897,8 +878,7 @@ const mapStateToProps = state => ({
     locale: state.locales.locale,
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
-    commentColorEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.mode === 'color',
-    commentFontEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.mode === 'font',
+    commentEditorVisible: state.scratchGui.commentEditor.active,
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     useCatBlocks: isTimeTravel2020(state)
@@ -906,8 +886,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCommentColor: comment => dispatch(activateCommentColor(comment)),
-    onActivateCommentFont: comment => dispatch(activateCommentFont(comment)),
+    onActivateCommentEditor: comment => dispatch(activateCommentEditor(comment)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {
         dispatch(setConnectionModalExtensionId(id));
@@ -924,11 +903,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseCustomProcedures: data => {
         dispatch(deactivateCustomProcedures(data));
     },
-    onRequestCloseCommentColor: () => {
-        dispatch(deactivateCommentColor());
-    },
-    onRequestCloseCommentFont: () => {
-        dispatch(deactivateCommentFont());
+    onRequestCloseCommentEditor: () => {
+        dispatch(deactivateCommentEditor());
     },
     updateToolboxState: toolboxXML => {
         dispatch(updateToolbox(toolboxXML));
