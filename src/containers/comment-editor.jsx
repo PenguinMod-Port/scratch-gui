@@ -21,6 +21,7 @@ class CommentEditor extends React.Component {
             'handleSetAlignment',
             'handleSetBold',
             'handleSetItalic',
+            'handleMarkdownHelp',
             'handleCancel',
             'handleOk'
         ]);
@@ -34,9 +35,6 @@ class CommentEditor extends React.Component {
             bold: false,
             italic: false
         };
-    }
-    componentDidMount () {
-        this.setupState();
     }
     setupState () {
         const currentData = this.props.comment.data;
@@ -56,6 +54,9 @@ class CommentEditor extends React.Component {
     handleOk () {
         this.props.comment.setData(this.state);
         this.props.onRequestClose();
+    }
+    handleMarkdownHelp () {
+        alert("TOODO write this");
     }
     getPreviewColor () {
         return `${this.state.color}${Math.round(this.state.opacity * 2.55)
@@ -83,34 +84,38 @@ class CommentEditor extends React.Component {
 
         this.setState({txtColor: hex});
     }
-    handleSetOpacity (value) {
+    handleSetOpacity (event) {
+        value = Number(event.target.value) || 100;
         const opacity = Math.max(10, Math.min(100, value));
 
         this.setState({opacity: opacity});
     }
-    handleSetFont (font) {
-        this.setState({font: String(font) || 'arial'});
+    handleSetFont (event) {
+        const font = String(event.target.value) || 'arial';
+        this.setState({font: font });
     }
-    handleSetFontSize (value) {
+    handleSetFontSize (event) {
+        value = Number(event.target.value) || 16;
         const size = Math.max(2, Math.min(150, value));
 
         this.setState({fontSize: size});
     }
-    handleSetAlignment (value) {
+    handleSetAlignment (event) {
         const validAlignments = ['left', 'center', 'right'];
-        const alignment = String(value).toLowerCase() ?? 'left';
+        const value = String(event.target.value).toLowerCase();
 
         if (validAlignments.includes(alignment)) {
             this.setState({textAlign: alignment});
         }
     }
-    handleSetBold (isBold) {
-        this.setState({bold: isBold});
+    handleSetBold (event) {
+        this.setState({bold: event.target.checked});
     } 
-    handleSetItalic (isItalic) {
-        this.setState({italic: isBold});
+    handleSetItalic (event) {
+        this.setState({italic: event.target.checked});
     }
     render () {
+        this.setupState();
         return (
             <CommentEditorComponent
                 data={this.state}
@@ -124,6 +129,7 @@ class CommentEditor extends React.Component {
                 onSetAlignment={this.handleSetAlignment}
                 onSetBold={this.handleSetBold}
                 onSetItalic={this.handleSetItalic}
+                onMarkdownHelp={this.handleMarkdownHelp}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
             />

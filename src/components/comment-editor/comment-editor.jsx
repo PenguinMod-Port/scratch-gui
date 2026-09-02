@@ -168,6 +168,18 @@ const CommentEditor = props => {
                     id="pm.gui.commentEditor.italics"
                 />
             </label>
+             <Box className={styles.buttonRow}>
+                <button
+                    className={styles.markdownHelp}
+                    onClick={props.onMarkdownHelp}
+                >
+                    <FormattedMessage
+                        defaultMessage="Markdown Help"
+                        description="Label for button to show markdown help message"
+                        id="pm.gui.commentEditor.mdHelp"
+                    />
+                </button>
+            </Box>
             <Box className={styles.buttonRow}>
                 <button
                     className={styles.cancelButton}
@@ -206,6 +218,7 @@ CommentEditor.propTypes = {
     onSetAlignment: PropTypes.func.isRequired,
     onSetBold: PropTypes.func.isRequired,
     onSetItalic: PropTypes.func.isRequired,
+    onMarkdownHelp: PropTypes.func.isRequired
     onCancel: PropTypes.func.isRequired,
     onOk: PropTypes.func.isRequired,
 };
