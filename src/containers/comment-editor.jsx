@@ -35,6 +35,9 @@ class CommentEditor extends React.Component {
             italic: false
         };
     }
+    componentDidMount () {
+        this.setupState();
+    }
     setupState () {
         const currentData = this.props.comment.data;
 
@@ -108,8 +111,6 @@ class CommentEditor extends React.Component {
         this.setState({italic: isBold});
     }
     render () {
-        console.log(this); // TOODO
-        this.setupState();
         return (
             <CommentEditorComponent
                 data={this.state}

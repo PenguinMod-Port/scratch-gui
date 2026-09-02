@@ -64,7 +64,6 @@ const messages = defineMessages({
 });
 
 const CommentEditor = props => {
-    console.log(props);
     return (
     <Modal
         className={styles.modalContent}
@@ -141,7 +140,7 @@ const CommentEditor = props => {
                     <option value="right">{props.intl.formatMessage(messages.right)}</option>
                 </select>
             </Label>
-            <div>
+            <label>
                 <input
                     type="checkbox"
                     value={props.data.bold}
@@ -153,8 +152,8 @@ const CommentEditor = props => {
                     description="Label for making comment text bold"
                     id="pm.gui.commentEditor.bolds"
                 />
-            </div>
-            <div>
+            </label>
+            <label>
                 <input
                     type="checkbox"
                     value={props.data.italic}
@@ -166,7 +165,29 @@ const CommentEditor = props => {
                     description="Label for button for making comment text italic"
                     id="pm.gui.commentEditor.italics"
                 />
-            </div>
+            </label>
+        </Box>
+        <Box className={styles.buttonRow}>
+            <button
+                className={styles.cancelButton}
+                onClick={props.onCancel}
+            >
+                <FormattedMessage
+                    defaultMessage="Cancel"
+                    description="Label for button to cancel comment edits"
+                    id="pm.gui.commentEditor.cancel"
+                />
+            </button>
+            <button
+                className={styles.okButton}
+                onClick={props.onOk}
+            >
+                <FormattedMessage
+                    defaultMessage="OK"
+                    description="Label for button to save new comment settings"
+                    id="pm.gui.commentEditor.ok"
+                />
+            </button>
         </Box>
     </Modal>
 )};
