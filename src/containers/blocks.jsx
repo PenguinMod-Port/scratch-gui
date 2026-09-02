@@ -756,7 +756,6 @@ class Blocks extends React.Component {
             workspaceMetrics,
             ...props
         } = this.props;
-        console.log("DEBUG RENDER", commentColorEditorVisible, commentFontEditorVisible);
         /* eslint-enable no-unused-vars */
         return (
             <React.Fragment>
@@ -901,8 +900,8 @@ const mapStateToProps = state => ({
     locale: state.locales.locale,
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
-    commentColorEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'color',
-    commentFontEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'font',
+    commentColorEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.mode === 'color',
+    commentFontEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.mode === 'font',
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     useCatBlocks: isTimeTravel2020(state)
@@ -910,10 +909,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCommentColor: data => {
-        console.log("DISPATCHED", dispatch);
-        return dispatch(activateCommentColor(data))
-    },
+    onActivateCommentColor: data => dispatch(activateCommentColor(data)),
     onActivateCommentFont: data => dispatch(activateCommentFont(data)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {

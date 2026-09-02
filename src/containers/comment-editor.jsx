@@ -217,6 +217,7 @@ class CommentEditor extends React.Component {
         this.handleSetProcColor(e.target.value);
     }
     render () {
+        console.log(this);
         return (
             <CommentEditorComponent
                 componentRef={this.setBlocks}
