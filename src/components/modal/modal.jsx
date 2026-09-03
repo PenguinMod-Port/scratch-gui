@@ -16,16 +16,21 @@ import styles from './modal.css';
 const ModalComponent = props => (
     <ReactModal
         isOpen
+        ref={props.componentRef}
         className={classNames(styles.modalContent, props.className, {
             [styles.fullScreen]: props.fullScreen
         })}
         contentLabel={props.contentLabel}
-        overlayClassName={styles.modalOverlay}
+        overlayClassName={classNames(styles.modalOverlay, {
+            [styles.scrollable]: props.scrollable
+        })}
         onRequestClose={props.onRequestClose}
+        style={{ content: props.styleContent, overlay: props.styleOverlay }}
     >
         <Box
             dir={props.isRtl ? 'rtl' : 'ltr'}
             direction="column"
+            componentRef={props.boxRef}
             grow={1}
         >
             <div className={classNames(styles.header, props.headerClassName)}>
@@ -97,6 +102,16 @@ const ModalComponent = props => (
 
 ModalComponent.propTypes = {
     children: PropTypes.node,
+    componentRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
+    boxRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
+    styleContent: PropTypes.object,
+    styleOverlay: PropTypes.object,
     className: PropTypes.string,
     contentLabel: PropTypes.oneOfType([
         PropTypes.string,
@@ -107,7 +122,8 @@ ModalComponent.propTypes = {
     headerImage: PropTypes.string,
     isRtl: PropTypes.bool,
     onHelp: PropTypes.func,
-    onRequestClose: PropTypes.func
+    onRequestClose: PropTypes.func,
+    scrollable: PropTypes.bool
 };
 
 export default ModalComponent;

@@ -113,6 +113,8 @@ class Blocks extends React.Component {
             'handlePromptStart',
             'handlePromptCallback',
             'handlePromptClose',
+            'handleCustomPrompt',
+            'handleCreateCustomPromptUtility',
             'handleCommentEditorClose',
             'handleCustomProceduresClose',
             'handleBeforeEditCustomProcedure',
@@ -133,18 +135,22 @@ class Blocks extends React.Component {
             'handleEnableProcedureReturns'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
+        this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
         this.ScratchBlocks.recordSoundCallback = this.handleOpenSoundRecorder;
 
         this.state = {
-            prompt: null
+            prompt: null,
+            customPrompts: [],
         };
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
     }
     componentDidMount () {
         this.ScratchBlocks = VMScratchBlocks(this.props.vm, this.props.useCatBlocks);
+        this.props.vm.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.prompt = this.handlePromptStart;
+        this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
         this.ScratchBlocks.recordSoundCallback = this.handleOpenSoundRecorder;
 
@@ -253,6 +259,8 @@ class Blocks extends React.Component {
     shouldComponentUpdate (nextProps, nextState) {
         return (
             this.state.prompt !== nextState.prompt ||
+            this.state.customPrompts !== nextState.customPrompts ||
+            (nextState.customPrompts && this.state.customPrompts.length !== nextState.customPrompts.length) ||
             this.props.isVisible !== nextProps.isVisible ||
             this._renderedToolboxXML !== nextProps.toolboxXML ||
             this.props.extensionLibraryVisible !== nextProps.extensionLibraryVisible ||
@@ -638,6 +646,72 @@ class Blocks extends React.Component {
         p.prompt.showCloudOption = (optVarType === this.ScratchBlocks.SCALAR_VARIABLE_TYPE) && this.props.canUseCloud;
         this.setState(p);
     }
+
+    /**
+     * @param {{title:string, scrollable:boolean?}} config The config for the modal
+     * @param {{content:CSSStyleDeclaration?, overlay:CSSStyleDeclaration?}?} styles Sets styles on parts of the modal. If specified, at least one of the parts should have styles.
+     * @param {Array<{
+     *      name:string,
+     *      role:"ok"|"close"|null,
+     *      class:"ok"|"cancel"|null,
+     *      style:CSSStyleDeclaration?,
+     *      dontClose:boolean?,
+     *      callback:function():void
+     * }>?} buttons Buttons to place onto the modal. `role` makes the button callback run for other types of interactions.
+     * @param {() -> ()} handleCallback A callback that runs when the modal is created, with more internal handles passed into it.
+     * @returns {Promise<HTMLElement>}
+     */
+    handleCustomPrompt (config, styles, buttons, handleCallback) {
+        const isObject = (value) => value && typeof value === 'object' && !Array.isArray(value);
+
+        return new Promise((resolve, reject) => {
+            /* validate arguments */
+            if (config && isObject(config)) {
+                if (!config.title) return reject("Custom Modal -- Missing 'title' (string) property in Param 1");
+            } else {
+                return reject("Custom Modal -- Param 1 must be an object with at least properties: 'title' (string)");
+            }
+            if (styles && !isObject(styles)) {
+                return reject("Custom Modal -- Param 2 must be an object");
+            }
+            if (styles && (!styles.content && !styles.overlay)) {
+                return reject("Custom Modal -- If Param 2 is specified, specify CSS styles within either: 'content' or 'overlay'");
+            }
+
+            // create the callback for when the node is created. an HTML element (or modal) with ref={functionHere} will run the function with the HTMLElement as 1st arg
+            const thisPromptId = uid();
+            const customPromptObject = {
+                id: thisPromptId,
+                config, styles, buttons
+            };
+            this.customModalRefs.set(thisPromptId, (node) => {
+                resolve(node);
+
+                // dont bother creating the util if handleCallback is undefined
+                if (typeof handleCallback !== "function") return;
+                const handle = this.handleCreateCustomPromptUtility(customPromptObject);
+                handleCallback(handle);
+            })
+
+            // Setting state with this info will cause blocks.jsx to re-render, rendering the modal before any code after setState can run.
+            // However, the callback & ref are not be usable until slightly later. this is why ref is set to a callback above.
+            // This is one of many reasons why React is pretty stupid.
+            this.setState({
+                customPrompts: this.state.customPrompts.concat(customPromptObject)
+            });
+        });
+    }
+    handleCreateCustomPromptUtility (customPromptObject) {
+        const handle = {};
+        handle.customPromptObject = customPromptObject;
+        handle.closePrompt = () => {
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPromptObject)
+            });
+        };
+
+        return handle;
+    }
     handleConnectionModalStart (extensionId) {
         this.props.onOpenConnectionModal(extensionId);
     }
@@ -660,7 +734,34 @@ class Blocks extends React.Component {
             variableOptions);
         this.handlePromptClose();
     }
-    handlePromptClose () {
+    handleCustomPromptButton(button, customPrompt) {
+        button.callback();
+        if (button.dontClose) return;
+        this.setState({
+            customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+        });
+    }
+    handleCustomPromptOk(customPrompt) {
+        const okButton = (customPrompt.buttons || []).find(button => button.role === "ok");
+        if (okButton) {
+            okButton.callback();
+            if (okButton.dontClose) return;
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+            });
+        }
+    }
+    handlePromptClose (customPrompt) {
+        if (customPrompt) {
+            const closeButton = (customPrompt.buttons || []).find(button => button.role === "close");
+            if (closeButton) {
+                closeButton.callback();
+            }
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+            });
+        }
+
         this.setState({prompt: null});
     }
     handleCommentEditorClose () {
@@ -768,13 +869,28 @@ class Blocks extends React.Component {
                         onOk={this.handlePromptCallback}
                     />
                 ) : null}
+                {this.state.customPrompts.map(prompt => (
+                    <Prompt
+                        isCustom={true}
+                        vm={vm}
+                        customRef={this.customModalRefs.get(prompt.id)}
+                        onOk={() => this.handleCustomPromptOk(prompt)}
+                        onCancel={() => this.handlePromptClose(prompt)}
+                        config={prompt.config}
+                        title={prompt.config.title}
+                        styleContent={prompt.styles ? prompt.styles.content : null}
+                        styleOverlay={prompt.styles ? prompt.styles.overlay : null}
+                        customButtons={prompt.buttons}
+                        onCustomButton={(button) => this.handleCustomPromptButton(button, prompt)}
+                    />
+                ))}
                 {extensionLibraryVisible ? (
                     <ExtensionLibrary
                         vm={vm}
                         onCategorySelected={this.handleCategorySelected}
                         onEnableProcedureReturns={this.handleEnableProcedureReturns}
                         onRequestClose={onRequestCloseExtensionLibrary}
-                        onOpenCustomExtensionModal={onOpenCustomExtensionModal || reduxOnOpenCustomExtensionModal}
+                        onOpenCustomExtensionModal={this.props.onOpenCustomExtensionModal}
                     />
                 ) : null}
                 {customProceduresVisible ? (

@@ -38,8 +38,7 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
     const customTypeHandler = (value, list = false) => {
         let func = (list && value.toListItem) || value.toMonitorContent || value.toReporterContent;
         if (!func) {
-            return value.toString();
-            return;
+            return safeStringify(value);
         }
 
         return func.call(value);
@@ -51,7 +50,9 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
             value.textContent = 'null';
         } else if (![Object.prototype, null].includes(Object.getPrototypeOf(value))) {
             value = customTypeHandler(value);
-        } else value = safeStringify(value);
+        } else {
+            value = safeStringify(value);
+        }
     } else if (value instanceof Array) {
         value = value.map(v => {
             if (v === null || v === undefined) {
@@ -59,8 +60,9 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
                 v.textContent = 'null';
                 return v;
             }
+
             if (![Object.prototype, null].includes(Object.getPrototypeOf(v))) return customTypeHandler(v, true);
-            return v;
+            return safeStringify(v);
         });
     }
 
