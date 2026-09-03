@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import CommentEditorComponent from '../components/comment-editor/comment-editor.jsx';
 import {connect} from 'react-redux';
-
-const DEFAULT_COMMENT_COLOR = '#fef49c';
+import LazyScratchBlocks from '../lib/tw-lazy-scratch-blocks';
 
 class CommentEditor extends React.Component {
     constructor (props) {
@@ -38,14 +37,18 @@ class CommentEditor extends React.Component {
         };
     }
     componentDidMount () {
+        const ScratchBlocks = LazyScratchBlocks.get();
+        this.DEFAULT_COMMENT_COLOR = ScratchBlocks.ScratchBubble.DEFAULT_COMMENT_COLOR;
+        this.DEFAULT_COMMENT_TEXT_COLOR = ScratchBlocks.ScratchBubble.DEFAULT_COMMENT_TEXT_COLOR;
+
         this.setupState();
     }
     setupState () {
         const currentData = this.props.comment.data;
 
         this.setState({
-            color: currentData.color ?? DEFAULT_COMMENT_COLOR,
-            txtColor: currentData.txtColor ?? '#000000',
+            color: currentData.color ?? this.DEFAULT_COMMENT_COLOR,
+            txtColor: currentData.txtColor ?? this.DEFAULT_COMMENT_TEXT_COLOR,
             opacity: currentData.opacity ?? 100,
             font: currentData.font ?? 'arial',
             textAlign: currentData.textAlign ?? 'left',
@@ -69,13 +72,15 @@ class CommentEditor extends React.Component {
             '*text*             Italic\n',
             '~~text~~      Strikethrough\n\n',
             'HEADERS\n',
-            '#1 text        Header 1\n',
-            '#2 text        Header 2\n\n',
+            '# text          Header 1\n',
+            '## text        Header 2\n\n',
             'COLOR\n',
             '@c[#ff0000]text@c\n',
             'Changes the text color.\n\n',
+            '@b[#ff0000]text@b\n',
+            'Changes the highlight color.\n\n',
             'IMAGES\n',
-            '<i url i>\n',
+            '@i url @i\n',
             'Displays an image from the given URL.'
         ].join(''));
     }
@@ -96,13 +101,13 @@ class CommentEditor extends React.Component {
     }
     handleChangeColor (event) {
         let hex = String(event.target.value);
-        if (!hex.startsWith('#')) hex = DEFAULT_COMMENT_COLOR;
+        if (!hex.startsWith('#')) hex = this.DEFAULT_COMMENT_COLOR;
 
         this.setState({color: hex});
     }
     handleChangeTextColor (event) {
         let hex = String(event.target.value);
-        if (!hex.startsWith('#')) hex = '#000000';
+        if (!hex.startsWith('#')) hex = this.DEFAULT_COMMENT_TEXT_COLOR;
 
         this.setState({txtColor: hex});
     }
@@ -110,7 +115,7 @@ class CommentEditor extends React.Component {
         const isWorkspaceComment = this.props.comment.isComment;
 
         if (isWorkspaceComment) {
-            this.setState({color: DEFAULT_COMMENT_COLOR, txtColor: '#000000'});
+            this.setState({color: this.DEFAULT_COMMENT_COLOR, txtColor: this.DEFAULT_COMMENT_TEXT_COLOR});
         } else {
             const block = this.props.comment?.comment?.block_;
             if (!block) {

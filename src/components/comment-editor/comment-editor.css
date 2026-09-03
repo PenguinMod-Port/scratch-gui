@@ -87,8 +87,15 @@
     white-space: nowrap;
 }
 
+.label-content {
+    gap: 15px;
+    display: flex;
+}
 .label-content span {
     font-size: 0.7rem !important;
+}
+.label-content button {
+    padding: 0.5rem 1rem !important;
 }
 
 .label-container {
