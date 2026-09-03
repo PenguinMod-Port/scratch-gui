@@ -3,6 +3,8 @@ import RobotEffect from './effects/robot-effect.js';
 import VolumeEffect from './effects/volume-effect.js';
 import FadeEffect from './effects/fade-effect.js';
 import MuteEffect from './effects/mute-effect.js';
+import LowPassEffect from './effects/lowpass-effect.js';
+import HighPassEffect from './effects/highpass-effect.js';
 
 const effectTypes = {
     ROBOT: 'robot',
@@ -14,7 +16,9 @@ const effectTypes = {
     ECHO: 'echo',
     FADEIN: 'fade in',
     FADEOUT: 'fade out',
-    MUTE: 'mute'
+    MUTE: 'mute',
+    LOWPASS: 'low pass',
+    HIGHPASS: 'high pass'
 };
 
 class AudioEffects {
@@ -136,6 +140,14 @@ class AudioEffects {
             break;
         case effectTypes.ROBOT:
             ({input, output} = new RobotEffect(this.audioContext,
+                this.adjustedTrimStartSeconds, this.adjustedTrimEndSeconds));
+            break;
+        case effectTypes.LOWPASS:
+            ({input, output} = new LowPassEffect(this.audioContext,
+                this.adjustedTrimStartSeconds, this.adjustedTrimEndSeconds));
+            break;
+        case effectTypes.HIGHPASS:
+            ({input, output} = new HighPassEffect(this.audioContext,
                 this.adjustedTrimStartSeconds, this.adjustedTrimEndSeconds));
             break;
         case effectTypes.FADEIN:

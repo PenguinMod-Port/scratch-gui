@@ -807,6 +807,8 @@ class SoundEditor extends React.Component {
                 onRedo={this.handleRedo}
                 onReverse={this.effectFactory(effectTypes.REVERSE)}
                 onRobot={this.effectFactory(effectTypes.ROBOT)}
+                onLowPass={this.effectFactory(effectTypes.LOWPASS)}
+                onHighPass={this.effectFactory(effectTypes.HIGHPASS)}
                 onSetTrim={this.handleUpdateTrim}
                 onSlower={this.effectFactory(effectTypes.SLOWER)}
                 onSofter={this.effectFactory(effectTypes.SOFTER)}

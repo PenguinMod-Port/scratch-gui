@@ -33,6 +33,8 @@ import louderIcon from './icon--louder.svg';
 import softerIcon from './icon--softer.svg';
 import robotIcon from './icon--robot.svg';
 import echoIcon from './icon--echo.svg';
+import highpassIcon from './icon--highpass.svg';
+import lowpassIcon from './icon--lowpass.svg';
 import reverseIcon from './icon--reverse.svg';
 import fadeOutIcon from './icon--fade-out.svg';
 import fadeInIcon from './icon--fade-in.svg';
@@ -165,6 +167,16 @@ const messages = defineMessages({
         id: 'gui.soundEditor.mute',
         description: 'Title of the button to apply the mute effect',
         defaultMessage: 'Mute'
+    },
+    lowPass: {
+        id: 'pm.gui.soundEditor.lowPass',
+        description: 'Title of the button to apply low pass on audio',
+        defaultMessage: 'Low Pass'
+    },
+    highPass: {
+        id: 'pm.gui.soundEditor.highPass',
+        description: 'Title of the button to apply high pass on audio',
+        defaultMessage: 'High Pass'
     },
     convertStereo: {
         id: 'pm.gui.soundEditor.convertStereo',
@@ -447,6 +459,18 @@ const SoundEditor = props => (
                     title={<FormattedMessage {...messages.echo} />}
                     onClick={props.onEcho}
                 />
+                <IconButton
+                    className={styles.effectButton}
+                    img={lowpassIcon}
+                    title={<FormattedMessage {...messages.lowPass} />}
+                    onClick={props.onLowPass}
+                />
+                <IconButton
+                    className={styles.effectButton}
+                    img={highpassIcon}
+                    title={<FormattedMessage {...messages.highPass} />}
+                    onClick={props.onHighPass}
+                />
             </div>
         </div>
         <div className={styles.infoRow}>
@@ -508,6 +532,8 @@ SoundEditor.propTypes = {
     onFaster: PropTypes.func.isRequired,
     onLouder: PropTypes.func.isRequired,
     onMute: PropTypes.func.isRequired,
+    onLowPass: PropTypes.func.isRequired,
+    onHighPass: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onRedo: PropTypes.func.isRequired,
