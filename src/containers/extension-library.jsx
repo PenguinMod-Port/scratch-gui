@@ -204,6 +204,7 @@ class ExtensionLibrary extends React.PureComponent {
         }
 
         // Load the extension like any other custom extension url (this means sandboxing for some urls)
+        console.log(extensionSource, this.props.vm.extensionManager)
         if (this.props.vm.extensionManager.isExtensionLoaded(extensionSource)) {
             this.props.onCategorySelected(extensionSource);
             e.source.postMessage({
