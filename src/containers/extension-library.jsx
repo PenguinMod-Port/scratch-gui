@@ -109,6 +109,7 @@ class ExtensionLibrary extends React.PureComponent {
             'handleItemSelect',
             'wrapperEventHandler',
         ]);
+        this.pendingExtensions = new Set();
         this.state = {
             gallery: cachedGallery,
             galleryError: null,
@@ -204,8 +205,10 @@ class ExtensionLibrary extends React.PureComponent {
         }
 
         // Load the extension like any other custom extension url (this means sandboxing for some urls)
-        console.log(extensionSource, this.props.vm.extensionManager)
-        if (this.props.vm.extensionManager.isExtensionLoaded(extensionSource)) {
+        if (
+            this.pendingExtensions.has(extensionSource) ||
+            this.props.vm.extensionManager.isExtensionLoaded(extensionSource)
+        ) {
             this.props.onCategorySelected(extensionSource);
             e.source.postMessage({
                 p4: {
@@ -213,8 +216,10 @@ class ExtensionLibrary extends React.PureComponent {
                 }
             }, e.origin);
         } else {
+            this.pendingExtensions.add(extensionSource);
             this.props.vm.extensionManager.loadExtensionURL(extensionSource)
                 .then(() => {
+                    this.pendingExtensions.delete(extensionSource);
                     this.props.onCategorySelected(extensionSource);
                     e.source.postMessage({
                         p4: {
