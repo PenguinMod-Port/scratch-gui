@@ -78,6 +78,9 @@ class EditorSettingsModal extends React.Component {
                         <settings.blockColors />
                         <settings.mergeOperators />
                         <Separator />
+                        <settings.commentColors />
+                        <settings.blockCommentParent />
+                        <Separator />
                         <settings.hexagonalRoundness />
                         <settings.cascadeProcedureColors />
                         <Separator />

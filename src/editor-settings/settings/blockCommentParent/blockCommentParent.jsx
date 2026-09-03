@@ -2,21 +2,20 @@ import BooleanSetting from "../../components/boolean-setting/boolean-setting.jsx
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
 import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
+import refreshWorkspace from "../../util/refreshWorkspace.js";
 
 export default (class extends BooleanSetting {
-    defaultValue() { return true }
-
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Typed Output Displays"
-            id="pm.editorSettings.outputBubbleAutoTyping.primary"
+            defaultMessage="Block comments inherit block color"
+            id="pm.editorSettings.blockCommentParent.primary"
         />)
     }
 
     getHelp() {
         return (<FormattedMessage
-            defaultMessage="When enabled, types are coloured differently to help differentiate between them."
-            id="pm.editorSettings.outputBubbleAutoTyping.help"
+            defaultMessage="Makes any comment attached to a block inherit its color."
+            id="pm.editorSettings.blockCommentParent.help"
         />)
     }
 
@@ -24,6 +23,7 @@ export default (class extends BooleanSetting {
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
 
-        ScratchBlocks.WorkspaceSvg.VALUE_REPORT_COLORS = value;
+        ScratchBlocks.ScratchBubble.COMMENT_USE_PARENT = value;
+        refreshWorkspace(ScratchBlocks);
     }
 });

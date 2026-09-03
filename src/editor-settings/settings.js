@@ -1,9 +1,11 @@
 export default Object.fromEntries([
     'blockColors',
+    'commentColors',
     'cascadeProcedureColors',
     'disableExpandables',
     'hexagonalRoundness',
     'mergeOperators',
+    'blockCommentParent',
     'outputBubbleAutoTyping',
     'paintMultiTool',
     'paintScrollZoom',
