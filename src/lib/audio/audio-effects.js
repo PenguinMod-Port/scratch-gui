@@ -92,7 +92,7 @@ class AudioEffects {
         }
 
         if (name === effectTypes.NORMALIZE) {
-            this.buffer = this.normalizeBuffer(buffer, this.trimStartSeconds, this.trimEndSeconds);
+            this.buffer = this.normalizeBuffer(buffer, 0.25, this.trimStartSeconds, this.trimEndSeconds);
         } else if (name === effectTypes.REVERSE) {
             // For the reverse effect we need to manually reverse the data into a new audio buffer
             // to prevent overwriting the original, so that the undo stack works correctly.
@@ -207,7 +207,7 @@ class AudioEffects {
 
         return newBuffer;
     }
-    normalizeBuffer(buffer, startSeconds, endSeconds) {
+    normalizeBuffer(buffer, strength, startSeconds, endSeconds) {
         const result = this.audioContext.createBuffer(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
         const startSample = Math.floor(startSeconds * buffer.sampleRate);
         const endSample = Math.min(buffer.length, Math.ceil(endSeconds * buffer.sampleRate));
@@ -245,8 +245,8 @@ class AudioEffects {
                 
                 // Quiet -> increase
                 // Loud -> decrease
-                const ratio = medium / magnitude;
-                const adjustment = Math.sqrt(ratio);
+                const targetRatio = medium / magnitude;
+                const adjustment = Math.pow(targetRatio, strength);
                 destination[i] = Math.max(-1, Math.min(1, sample * adjustment));
             }
         }
