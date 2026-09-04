@@ -13,7 +13,12 @@ class PlaybackStep extends React.Component {
         ]);
     }
     componentDidMount () {
-        this.audioBufferPlayer = new AudioBufferPlayer(this.props.samples, this.props.sampleRate);
+        this.audioBufferPlayer = new AudioBufferPlayer(
+            this.props.mainLeftSampleLevels,
+            this.props.rightSampleLevels,
+            this.props.sampleRate,
+            -1,
+        );
     }
     componentWillUnmount () {
         this.audioBufferPlayer.stop();
@@ -51,7 +56,8 @@ class PlaybackStep extends React.Component {
 
 PlaybackStep.propTypes = {
     sampleRate: PropTypes.number.isRequired,
-    samples: PropTypes.instanceOf(Float32Array).isRequired,
+    mainLeftSampleLevels: PropTypes.instanceOf(Float32Array).isRequired,
+    rightSampleLevels: PropTypes.instanceOf(Float32Array).isRequired,
     ...PlaybackStepComponent.propTypes
 };
 

@@ -16,7 +16,8 @@ class AudioRecorder {
         this.recordedSamples = 0;
         this.recording = false;
         this.started = false;
-        this.buffers = [];
+        this.buffersMainLeft = [];
+        this.buffersRight = [];
 
         this.disposed = false;
     }
@@ -55,7 +56,10 @@ class AudioRecorder {
 
         this.scriptProcessorNode.onaudioprocess = processEvent => {
             if (this.recording && !this.disposed) {
-                this.buffers.push(new Float32Array(processEvent.inputBuffer.getChannelData(0)));
+                this.buffersMainLeft.push(new Float32Array(processEvent.inputBuffer.getChannelData(0)));
+                this.buffersRight.push(new Float32Array(processEvent.inputBuffer.getChannelData(
+                    processEvent.inputBuffer.numberOfChannels === 1 ? 0 : 1
+                )));
             }
         };
 
@@ -83,30 +87,36 @@ class AudioRecorder {
     }
 
     stop () {
-        const buffer = new Float32Array(this.buffers.length * this.bufferLength);
+        const bufferMainLeft = new Float32Array(this.buffersMainLeft.length * this.bufferLength);
+        const bufferRight = new Float32Array(this.buffersRight.length * this.bufferLength);
 
         let offset = 0;
-        for (let i = 0; i < this.buffers.length; i++) {
-            const bufferChunk = this.buffers[i];
-            buffer.set(bufferChunk, offset);
-            offset += bufferChunk.length;
+        for (let i = 0; i < this.buffersMainLeft.length; i++) {
+            const bufferChunkMainLeft = this.buffersMainLeft[i];
+            const bufferChunkRight = this.buffersRight[i];
+
+            bufferMainLeft.set(bufferChunkMainLeft, offset);
+            bufferRight.set(bufferChunkRight, offset);
+            offset += bufferChunkMainLeft.length;
         }
 
-        const chunkLevels = computeChunkedRMS(buffer);
-        const maxRMS = Math.max.apply(null, chunkLevels);
+        const chunkLevelsMainLeft = computeChunkedRMS(bufferMainLeft);
+        const chunkLevelsRight = computeChunkedRMS(bufferRight);
+
+        const maxRMS = Math.max.apply(null, chunkLevelsMainLeft);
         const threshold = maxRMS / 8;
 
         let firstChunkAboveThreshold = null;
         let lastChunkAboveThreshold = null;
-        for (let i = 0; i < chunkLevels.length; i++) {
-            if (chunkLevels[i] > threshold) {
+        for (let i = 0; i < chunkLevelsMainLeft.length; i++) {
+            if (chunkLevelsMainLeft[i] > threshold) {
                 if (firstChunkAboveThreshold === null) firstChunkAboveThreshold = i + 1;
                 lastChunkAboveThreshold = i + 1;
             }
         }
 
-        let trimStart = Math.max(2, firstChunkAboveThreshold - 2) / this.buffers.length;
-        let trimEnd = Math.min(this.buffers.length - 2, lastChunkAboveThreshold + 2) / this.buffers.length;
+        let trimStart = Math.max(2, firstChunkAboveThreshold - 2) / this.buffersMainLeft.length;
+        let trimEnd = Math.min(this.buffersMainLeft.length - 2, lastChunkAboveThreshold + 2) / this.buffersMainLeft.length;
 
         // With very few samples, the automatic trimming can produce invalid values
         if (trimStart >= trimEnd) {
@@ -115,10 +125,11 @@ class AudioRecorder {
         }
 
         return {
-            levels: chunkLevels,
-            mainLeftSamples: buffer,
-            rightSamples: buffer,
+            mainLeftSampleLevels: bufferMainLeft,
+            rightSampleLevels: bufferRight,
             sampleRate: this.audioContext.sampleRate,
+            mainLeftChunkLevels: chunkLevelsMainLeft,
+            rightChunkLevels: chunkLevelsRight,
             trimStart: trimStart,
             trimEnd: trimEnd
         };

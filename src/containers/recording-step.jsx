@@ -28,7 +28,8 @@ class RecordingStep extends React.Component {
         this.state = {
             listening: false,
             level: 0,
-            levels: null
+            mainLeftChunkLevels: null,
+            rightChunkLevels: null,
         };
     }
     componentDidMount () {
@@ -48,7 +49,8 @@ class RecordingStep extends React.Component {
     handleLevelUpdate (level) {
         this.setState({
             level: level,
-            levels: this.props.recording ? (this.state.levels || []).concat([level]) : this.state.levels
+            mainLeftChunkLevels: ? (this.state.mainLeftChunkLevels || []).concat([level]) : this.state.mainLeftChunkLevels,
+            rightChunkLevels: ? (this.state.rightChunkLevels || []).concat([level]) : this.state.rightChunkLevels,
         });
     }
     handleRecord () {
@@ -56,8 +58,24 @@ class RecordingStep extends React.Component {
         this.props.onRecord();
     }
     handleStopRecording () {
-        const {samples, sampleRate, levels, trimStart, trimEnd} = this.audioRecorder.stop();
-        this.props.onStopRecording(samples, sampleRate, levels, trimStart, trimEnd);
+        const {
+            mainLeftSampleLevels,
+            rightSampleLevels,
+            sampleRate,
+            mainLeftChunkLevels,
+            rightChunkLevels,
+            trimStart,
+            trimEnd
+        } = this.audioRecorder.stop();
+        this.props.onStopRecording(
+            mainLeftSampleLevels,
+            rightSampleLevels,
+            sampleRate,
+            mainLeftChunkLevels,
+            rightChunkLevels,
+            trimStart,
+            trimEnd
+        );
     }
     render () {
         const {
@@ -68,7 +86,8 @@ class RecordingStep extends React.Component {
         return (
             <RecordingStepComponent
                 level={this.state.level}
-                levels={this.state.levels}
+                mainLeftChunkLevels={this.state.mainLeftChunkLevels}
+                rightChunkLevels={this.state.rightChunkLevels}
                 listening={this.state.listening}
                 onRecord={this.handleRecord}
                 onStopRecording={this.handleStopRecording}
