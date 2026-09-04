@@ -16,6 +16,10 @@ import {
 import AudioEffects from '../lib/audio/audio-effects.js';
 import SoundEditorComponent from '../components/sound-editor/sound-editor.jsx';
 import AudioBufferPlayer from '../lib/audio/audio-buffer-player.js';
+
+import { audioModifyPrompt } from '..lib/audio/prompts/audio-modify.js';
+import { sampleRatePrompt } from '..lib/audio/prompts/sample-rate.js';
+
 import log from '../lib/log.js';
 
 const UNDO_STACK_SIZE = 99;
@@ -77,7 +81,10 @@ class SoundEditor extends React.Component {
             'handleWaveformDetail',
             'getNormalizedWaveformDetail',
             'setRef',
-            'resampleBufferToRate'
+            'getSelectionBuffer',
+            'resampleBufferToRate',
+            'handleModifyMenu',
+            'handleSampleRateMenu',
         ]);
         this.state = {
             copyBuffer: null,
@@ -372,7 +379,7 @@ class SoundEditor extends React.Component {
             sampleRate: buffer.sampleRate
         };
     }
-    handleEffect (name) {
+    handleEffect (name, manualData) {
         const trimStart = this.state.trimStart === null ? 0.0 : this.state.trimStart;
         const trimEnd = this.state.trimEnd === null ? 1.0 : this.state.trimEnd;
         this.audioBufferPlayer.muteChannel(-1);
@@ -408,7 +415,8 @@ class SoundEditor extends React.Component {
             name,
             trimStart,
             trimEnd,
-            targetChannel
+            targetChannel,
+            manualData
         );
         effects.process((renderedBuffer, adjustedTrimStart, adjustedTrimEnd) => {
             let mainLeftSamples;
@@ -769,6 +777,28 @@ class SoundEditor extends React.Component {
 
         return detail;
     }
+    getSelectionBuffer() {
+        const trimStart = this.state.trimStart === null ? 0.0 : this.state.trimStart;
+        const trimEnd = this.state.trimEnd === null ? 1.0 : this.state.trimEnd;
+
+        const newCopyBuffer = this.copyCurrentBuffer();
+
+        const trimStartMainLeft = trimStart * newCopyBuffer.mainLeftSamples.length;
+        const trimEndMainLeft = trimEnd * newCopyBuffer.mainLeftSamples.length;
+        const trimStartRight = trimStart * newCopyBuffer.rightSamples.length;
+        const trimEndRight = trimEnd * newCopyBuffer.rightSamples.length;
+
+        newCopyBuffer.mainLeftSamples = newCopyBuffer.mainLeftSamples.slice(trimStartMainLeft, trimEndMainLeft);
+        newCopyBuffer.rightSamples = newCopyBuffer.rightSamples.slice(trimStartRight, trimEndRight);
+
+        return newCopyBuffer;
+    }
+    handleModifyMenu() {
+        audioModifyPrompt.call(this);
+    }
+    handleSampleRateMenu() {
+        sampleRatePrompt.call(this);
+    }
     render () {
         const {effectTypes} = AudioEffects;
         return (
@@ -793,6 +823,7 @@ class SoundEditor extends React.Component {
                 onContainerClick={this.handleContainerClick}
                 onChannelFocusChange={this.handleChannelFocus}
                 onToggleFormat={this.handleToggleFormat}
+                onSetSampleRate={this.handleSampleRateMenu}
                 onCopy={this.handleCopy}
                 onCopyToNew={this.handleCopyToNew}
                 onDelete={this.handleDelete}
@@ -809,6 +840,7 @@ class SoundEditor extends React.Component {
                 onRobot={this.effectFactory(effectTypes.ROBOT)}
                 onLowPass={this.effectFactory(effectTypes.LOWPASS)}
                 onHighPass={this.effectFactory(effectTypes.HIGHPASS)}
+                onModifySound={this.handleModifyMenu}
                 onSetTrim={this.handleUpdateTrim}
                 onSlower={this.effectFactory(effectTypes.SLOWER)}
                 onSofter={this.effectFactory(effectTypes.SOFTER)}

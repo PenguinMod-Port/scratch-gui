@@ -18,26 +18,30 @@ const effectTypes = {
     FADEOUT: 'fade out',
     MUTE: 'mute',
     LOWPASS: 'low pass',
-    HIGHPASS: 'high pass'
+    HIGHPASS: 'high pass',
+    MODIFY: 'modify',
+    SAMPLE_RATE: 'sample rate'
 };
+
+const pitchRatio = Math.pow(2, 4 / 12); // A major third
 
 class AudioEffects {
     static get effectTypes () {
         return effectTypes;
     }
-    constructor (buffer, name, trimStart, trimEnd, targetChannel) {
+    constructor (buffer, name, trimStart, trimEnd, targetChannel, manualData) {
         this.trimStartSeconds = (trimStart * buffer.length) / buffer.sampleRate;
         this.trimEndSeconds = (trimEnd * buffer.length) / buffer.sampleRate;
         this.adjustedTrimStartSeconds = this.trimStartSeconds;
         this.adjustedTrimEndSeconds = this.trimEndSeconds;
         this.targetChannel = targetChannel;
+        this.manualData = manualData;
 
         // Some effects will modify the playback rate and/or number of samples.
         // Need to precompute those values to create the offline audio context.
-        const pitchRatio = Math.pow(2, 4 / 12); // A major third
+        let sampleRate = buffer.sampleRate;
         let sampleCount = buffer.length;
-        const affectedSampleCount = Math.floor((this.trimEndSeconds - this.trimStartSeconds) *
-            buffer.sampleRate);
+        const affectedSampleCount = Math.floor((this.trimEndSeconds - this.trimStartSeconds) * sampleRate);
         let adjustedAffectedSampleCount = affectedSampleCount;
         const unaffectedSampleCount = sampleCount - affectedSampleCount;
 
@@ -45,34 +49,43 @@ class AudioEffects {
         switch (name) {
         case effectTypes.ECHO:
             sampleCount = Math.max(sampleCount,
-                Math.floor((this.trimEndSeconds + EchoEffect.TAIL_SECONDS) * buffer.sampleRate));
+                Math.floor((this.trimEndSeconds + EchoEffect.TAIL_SECONDS) * sampleRate));
             break;
         case effectTypes.FASTER:
             this.playbackRate = pitchRatio;
             adjustedAffectedSampleCount = Math.floor(affectedSampleCount / this.playbackRate);
             sampleCount = unaffectedSampleCount + adjustedAffectedSampleCount;
-
             break;
         case effectTypes.SLOWER:
             this.playbackRate = 1 / pitchRatio;
             adjustedAffectedSampleCount = Math.floor(affectedSampleCount / this.playbackRate);
             sampleCount = unaffectedSampleCount + adjustedAffectedSampleCount;
             break;
+        case effectTypes.MODIFY:
+            this.playbackRate = this.manualData.pitch;
+            adjustedAffectedSampleCount = Math.floor(affectedSampleCount / this.playbackRate);
+            sampleCount = unaffectedSampleCount + adjustedAffectedSampleCount;
+            break;
         }
 
-        const durationSeconds = sampleCount / buffer.sampleRate;
+        const durationSeconds = sampleCount / sampleRate;
         this.adjustedTrimEndSeconds = this.trimStartSeconds +
-            (adjustedAffectedSampleCount / buffer.sampleRate);
+            (adjustedAffectedSampleCount / sampleRate);
         this.adjustedTrimStart = this.adjustedTrimStartSeconds / durationSeconds;
         this.adjustedTrimEnd = this.adjustedTrimEndSeconds / durationSeconds;
 
+        if (trimStart !== 0 && trimEnd !== 1) {
+            sampleRate = this.manualData.rate;
+            sampleCount = Math.floor((sampleCount / buffer.sampleRate) * this.manualData.rate);
+        }
+
         const channelCount = this.targetChannel === -1 ? buffer.numberOfChannels : 1;
         if (window.OfflineAudioContext) {
-            this.audioContext = new window.OfflineAudioContext(channelCount, sampleCount, buffer.sampleRate);
+            this.audioContext = new window.OfflineAudioContext(channelCount, sampleCount, sampleRate);
         } else {
             // Need to use webkitOfflineAudioContext, which doesn't support all sample rates.
             // Resample by adjusting sample count to make room and set offline context to desired sample rate.
-            const sampleScale = 44100 / buffer.sampleRate;
+            const sampleScale = 44100 / sampleRate;
             this.audioContext = new window.webkitOfflineAudioContext(channelCount, sampleScale * sampleCount, 44100);
         }
 
@@ -84,12 +97,12 @@ class AudioEffects {
             const newBuffer = this.audioContext.createBuffer(
                 numberOfChannels,
                 buffer.length,
-                buffer.sampleRate
+                sampleRate
             );
 
             const bufferLength = buffer.length;
-            const startSamples = Math.floor(this.trimStartSeconds * buffer.sampleRate);
-            const endSamples = Math.floor(this.trimEndSeconds * buffer.sampleRate);
+            const startSamples = Math.floor(this.trimStartSeconds * sampleRate);
+            const endSamples = Math.floor(this.trimEndSeconds * sampleRate);
 
             for (let channel = 0; channel < numberOfChannels; channel++) {
                 const originalBufferData = buffer.getChannelData(channel);
@@ -107,6 +120,48 @@ class AudioEffects {
             }
 
             this.buffer = newBuffer;
+        } else if (name === effectTypes.SAMPLE_RATE) {
+            // For the sample rate effect we need to manually copy and transform
+            // The buffer to tie it to a specified sample rate.
+            const buffer = this.buffer;
+            const ogBufferLeftData = buffer.getChannelData(0);
+            const ogBufferRightData = buffer.getChannelData(1);
+
+            const newBuffer = this.audioContext.createBuffer(2, buffer.length, buffer.sampleRate);
+            const newBufferLeftData = newBuffer.getChannelData(0);
+            const newBufferRightData = newBuffer.getChannelData(1);
+
+            // Our clone from earlier also needs to keep the original buffer's sample rate, so we need to make yet another buffer.
+            const sampleRateBuffer = this.makeSampleRateBuffer(buffer, durationSeconds, this.manualData.rate);
+            const sampleRateBufferLeftData = sampleRateBuffer.getChannelData(0);
+            const sampleRateBufferRightData = sampleRateBuffer.getChannelData(1);
+
+            const startSamples = Math.floor(this.trimStartSeconds * buffer.sampleRate);
+            const endSamples = Math.floor(this.trimEndSeconds * buffer.sampleRate);
+
+            const transformChannel = (ogData, newData, sampleData) => {
+                for (let i = 0; i < buffer.length; i++) {
+                    if (i >= startSamples && i < endSamples) {
+                        // We need to convert sampleRate back to the current buffer's sampleRate
+                        const sampleRateModifiedIndex = i * (sampleRateBuffer.sampleRate / buffer.sampleRate);
+                        const lowerIndex = Math.floor(sampleRateModifiedIndex);
+                        const upperIndex = Math.min(lowerIndex + 1, sampleRateBuffer.length - 1);
+                        const interpolation = sampleRateModifiedIndex - lowerIndex;
+
+                        const sample =
+                            sampleData[lowerIndex] * (1 - interpolation) +
+                            sampleData[upperIndex] * interpolation;
+                        // This works without Number.isFinite but it breaks the waveform preview SVG because sample can be NaN
+                        newData[i] = Number.isFinite(sample) ? sample : 0;
+                    } else {
+                        newData[i] = ogData[i];
+                    }
+                }
+            };
+
+            transformChannel(ogBufferLeftData, newBufferLeftData, sampleRateBufferLeftData);
+            transformChannel(ogBufferRightData, newBufferRightData, sampleRateBufferRightData);
+            this.buffer = newBuffer;
         } else {
             // All other effects use the original buffer because it is not modified.
             this.buffer = buffer;
@@ -115,6 +170,36 @@ class AudioEffects {
         this.source = this.audioContext.createBufferSource();
         this.source.buffer = this.buffer;
         this.name = name;
+    }
+    makeSampleRateBuffer(buffer, durationSeconds, newSampleRate) {
+        const ogBufferLeftData = buffer.getChannelData(0);
+        const ogBufferRightData = buffer.getChannelData(1);
+        const newBufferLength = Math.floor(durationSeconds * newSampleRate);
+        const newBuffer = this.audioContext.createBuffer(2, newBufferLength, newSampleRate);
+        const newBufferDataLeft = newBuffer.getChannelData(0);
+        const newBufferDataRight = newBuffer.getChannelData(1);
+        const bufferLength = buffer.length;
+
+        // This does work with just bufferLength, but causes cut-off when newSampleRate is
+        // larger than the current sample rate.
+        const sampleChannel = (ogData, newData) => {
+            for (let i = 0; i < newBufferLength; i++) {
+                const originalIndex = i * (buffer.sampleRate / newSampleRate);
+                const lowerIndex = Math.floor(originalIndex);
+                const upperIndex = Math.min(lowerIndex + 1, bufferLength - 1);
+                const interpolation = originalIndex - lowerIndex;
+
+                const sample =
+                    ogData[lowerIndex] * (1 - interpolation) +
+                    ogData[upperIndex] * interpolation;
+                newData[i] = sample;
+            }
+        };
+
+        sampleChannel(ogBufferLeftData, newBufferDataLeft);
+        sampleChannel(ogBufferRightData, newBufferDataRight);
+
+        return newBuffer;
     }
     process (done) {
         // Some effects need to use more nodes and must expose an input and output
@@ -162,6 +247,16 @@ class AudioEffects {
             ({input, output} = new MuteEffect(this.audioContext,
                 this.adjustedTrimStartSeconds, this.adjustedTrimEndSeconds));
             break;
+        case effectTypes.MODIFY:
+            this.source.playbackRate.setValueAtTime(this.playbackRate, this.adjustedTrimStartSeconds);
+            this.source.playbackRate.setValueAtTime(1.0, this.adjustedTrimEndSeconds);
+            ({input, output} = new VolumeEffect(
+                this.audioContext,
+                this.manualData.volume,
+                this.adjustedTrimStartSeconds,
+                this.adjustedTrimEndSeconds
+            ));
+            break;
         }
 
         if (input && output) {
@@ -178,7 +273,6 @@ class AudioEffects {
         this.audioContext.oncomplete = ({renderedBuffer}) => {
             done(renderedBuffer, this.adjustedTrimStart, this.adjustedTrimEnd);
         };
-
     }
 }
 
