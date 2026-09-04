@@ -10,11 +10,11 @@ const msg = {
 };
 
 const styles = {
-    modal: 'margin-bottom: 15px;position: relative;display: flex;justify-content: flex-end;flex-direction: row;height: calc(100% - (3.125em + 2.125em + 16px));align-items: center;',
+    modal: 'margin-bottom: 15px;display: flex;justify-content: flex-end;flex-direction: row;align-items: center;',
     sliderDiv: 'margin: 0 10px 0 5px;width: 40px;display: flex;flex-direction: column;align-items: center;',
-    label: 'text-align: center;width: 40px;font-size: 12px;font-weight: bold;',
-    slider: 'transform: rotate(270deg);height: 40px;width: 120px;margin: 45px 10px;',
-    scalar: 'text-align: center;width: 40px;border: solid 1px var(--ui-black-transparent);color: var(--text-primary);background-color: var(--input-background);padding: 5px 2px; border-radius: 6px;font-size: x-small;',
+    label: 'text-align: center;width: 100%;font-size: 1rem;font-weight: bold;',
+    slider: 'writing-mode: vertical-lr;direction: rtl;appearance: slider-vertical;-webkit-appearance: slider-vertical;height: 135px;margin: 15px 35%;',
+    scalar: 'text-align: center;width: 60px;border: solid 1px var(--ui-black-transparent);color: var(--text-primary);background-color: var(--input-background);padding: 5px 2px;border-radius: 6px;font-size: x-small;',
     preview: 'border-radius: 100%;padding: 5px;width: 45px;height: 45px;border: none;display: flex;justify-content: center;align-items: center;background: var(--ui-modal-header-background-default);',
 };
 
@@ -93,7 +93,7 @@ const audioModifyPrompt = async function () {
     // Open modal prompt
     const modal = await this.props.vm.customPrompt(
         { title: msg.title },
-        { content: { width: '230px', height: 'auto' } },
+        { content: { width: '290px', height: 'auto' } },
         [
             { name: msg.apply, role: 'ok', callback: () => {
                 audio.close();

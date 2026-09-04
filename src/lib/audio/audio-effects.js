@@ -75,7 +75,7 @@ class AudioEffects {
         this.adjustedTrimStart = this.adjustedTrimStartSeconds / durationSeconds;
         this.adjustedTrimEnd = this.adjustedTrimEndSeconds / durationSeconds;
 
-        if (name === effectTypes.MODIFY && trimStart !== 0 && trimEnd !== 1) {
+        if (name === effectTypes.SAMPLE_RATE && trimStart !== 0 && trimEnd !== 1) {
             sampleRate = this.manualData.rate;
             sampleCount = Math.floor((sampleCount / buffer.sampleRate) * this.manualData.rate);
         }
