@@ -1,6 +1,6 @@
 const msg = {
     title: 'Change Sample Rate',
-    warning: 'Choosing a higher sample rate than the current rate will not make the existing audio higher quality.',
+    warning: 'Choosing a sample rate higher than the current rate will not make the audio higher quality.',
     sampleRate: 'Sample Rate:',
     apply: 'Apply',
     cancel: 'Cancel'
@@ -9,7 +9,7 @@ const msg = {
 const styles = {
     label: 'font-weight: 500;font-size: 14px;margin-bottom: 5px;',
     warning: 'font-size:13px;opacity:0.5;',
-    select: '' //'border-radius: 5px;text-align: center;margin-left: 10px;width: 50%;'
+    select: 'margin: 15px;padding: 0.5rem 1rem;'
 };
 
 const sampleRates = [
@@ -27,8 +27,10 @@ const genTitle = function (text) {
     return label;
 };
 
+/**
+ * @this components/sound-editor.jsx
+ */
 const sampleRatePrompt = async function () {
-    console.log(this);
     let selectedSampleRate = this.props.sampleRate;
 
     // Open modal prompt
@@ -44,7 +46,6 @@ const sampleRatePrompt = async function () {
     );
 
     const initModal = () => {
-        modal.style.marginBottom = '15px';
         const rateTitle = genTitle(msg.sampleRate);
 
         const rateSelector = document.createElement('select');
@@ -57,8 +58,12 @@ const sampleRatePrompt = async function () {
         }
 
         rateSelector.selectedIndex = sampleRates.indexOf(this.props.sampleRate);
+        if (rateSelector.selectedIndex === -1) {
+            rateSelector.selectedIndex = sampleRates[0];
+        }
+
         rateSelector.onchange = () => {
-            selectedSampleRate = rateSelector.value;
+            selectedSampleRate = Number(rateSelector.value) || selectedSampleRate;
         };
         rateTitle.appendChild(rateSelector);
 

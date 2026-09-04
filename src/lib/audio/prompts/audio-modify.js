@@ -14,8 +14,8 @@ const styles = {
     sliderDiv: 'margin: 0 10px 0 5px;width: 40px;display: flex;flex-direction: column;align-items: center;',
     label: 'text-align: center;width: 40px;font-size: 12px;font-weight: bold;',
     slider: 'transform: rotate(270deg);height: 40px;width: 120px;margin: 45px 10px;',
-    scalar: 'text-align: center;width: 40px;border: solid 1px gray;border-radius: 10px;font-size: x-small;',
-    preview: 'border-radius: 100%;padding: 5px;width: 45px;height: 45px;border: none;background: var(--ui-modal-header-background);',
+    scalar: 'text-align: center;width: 40px;border: solid 1px var(--ui-black-transparent);color: var(--text-primary);background-color: var(--input-background);padding: 5px 2px; border-radius: 6px;font-size: x-small;',
+    preview: 'border-radius: 100%;padding: 5px;width: 45px;height: 45px;border: none;display: flex;justify-content: center;align-items: center;background: var(--ui-modal-header-background-default);',
 };
 
 const generateSliderUI = function (title, params, scalar) {
@@ -81,7 +81,7 @@ const audioModifyPrompt = async function () {
     gainNode.connect(audio.destination);
 
     const pitchDiv = generateSliderUI(msg.pitch, {
-        min: -360, max: 360, step: 1, value: 0
+        min: -24, max: 24, step: 1, value: 0
     }, 0);
     const volumeDiv = generateSliderUI(msg.volume, {
         min: 0, max: 2, step: 0.01, value: 1 
@@ -109,7 +109,7 @@ const audioModifyPrompt = async function () {
     const initModal = () => {
         const previewButton = document.createElement('button');
         previewButton.style = styles.preview;
-        previewButton.innerHTML = `<img draggable="false" style="max-width: 100%;max-height: 100%" src="${playIcon}">`;
+        previewButton.innerHTML = `<img draggable="false" style="max-width: 65%;max-height: 65%;" src="${playIcon}">`;
 
         modal.setAttribute('style', styles.modal);
         modal.append(pitchDiv, volumeDiv, previewButton);
@@ -131,7 +131,7 @@ const audioModifyPrompt = async function () {
             bufferSource.connect(gainNode);
             bufferSource.buffer = sourceBuffer;
             bufferSource.start(0);
-            bufferSource.detune.value = pitchParts[1].value * 10; // Must be re-applied
+            bufferSource.detune.value = Number(pitchParts[1].value) * 100; // Must be re-applied
  
             previewButton.firstChild.src = stopIcon;
             audioPlaying = true;
@@ -151,12 +151,12 @@ const audioModifyPrompt = async function () {
         }
 
         // Modification value updates
-        setupUISlider(pitchParts[1],  pitchParts[2], 1, (value) => {
+        setupUISlider(pitchParts[1], pitchParts[2], 1, (value) => {
             if (bufferSource) {
-                bufferSource.detune.value = value * 10;
+                bufferSource.detune.value = Number(value) * 100;
             }
         });
-        setupUISlider(volumeParts[1],  volumeParts[2], 100, (value) => {
+        setupUISlider(volumeParts[1], volumeParts[2], 100, (value) => {
             gainNode.gain.value = value;
         });
     };

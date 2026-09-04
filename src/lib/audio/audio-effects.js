@@ -62,8 +62,9 @@ class AudioEffects {
             sampleCount = unaffectedSampleCount + adjustedAffectedSampleCount;
             break;
         case effectTypes.MODIFY:
-            this.playbackRate = this.manualData.pitch;
-            adjustedAffectedSampleCount = Math.floor(affectedSampleCount / this.playbackRate);
+            this.playbackRate = Math.pow(2, this.manualData.pitch / 12);
+            adjustedAffectedSampleCount =
+                Math.floor(affectedSampleCount / this.playbackRate);
             sampleCount = unaffectedSampleCount + adjustedAffectedSampleCount;
             break;
         }
@@ -124,17 +125,10 @@ class AudioEffects {
             // For the sample rate effect we need to manually copy and transform
             // The buffer to tie it to a specified sample rate.
             const buffer = this.buffer;
-            const ogBufferLeftData = buffer.getChannelData(0);
-            const ogBufferRightData = buffer.getChannelData(1);
-
             const newBuffer = this.audioContext.createBuffer(2, buffer.length, buffer.sampleRate);
-            const newBufferLeftData = newBuffer.getChannelData(0);
-            const newBufferRightData = newBuffer.getChannelData(1);
 
             // Our clone from earlier also needs to keep the original buffer's sample rate, so we need to make yet another buffer.
             const sampleRateBuffer = this.makeSampleRateBuffer(buffer, durationSeconds, this.manualData.rate);
-            const sampleRateBufferLeftData = sampleRateBuffer.getChannelData(0);
-            const sampleRateBufferRightData = sampleRateBuffer.getChannelData(1);
 
             const startSamples = Math.floor(this.trimStartSeconds * buffer.sampleRate);
             const endSamples = Math.floor(this.trimEndSeconds * buffer.sampleRate);
@@ -159,8 +153,18 @@ class AudioEffects {
                 }
             };
 
-            transformChannel(ogBufferLeftData, newBufferLeftData, sampleRateBufferLeftData);
-            transformChannel(ogBufferRightData, newBufferRightData, sampleRateBufferRightData);
+            for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+                const ogBufferChannelData = buffer.getChannelData(channel);
+                const newBufferChannelData = newBuffer.getChannelData(channel);
+                const sampleRateBufferChannelData = sampleRateBuffer.getChannelData(channel);
+
+                transformChannel(
+                    ogBufferChannelData,
+                    newBufferChannelData,
+                    sampleRateBufferChannelData
+                );
+            }
+
             this.buffer = newBuffer;
         } else {
             // All other effects use the original buffer because it is not modified.
@@ -172,12 +176,8 @@ class AudioEffects {
         this.name = name;
     }
     makeSampleRateBuffer(buffer, durationSeconds, newSampleRate) {
-        const ogBufferLeftData = buffer.getChannelData(0);
-        const ogBufferRightData = buffer.getChannelData(1);
         const newBufferLength = Math.floor(durationSeconds * newSampleRate);
         const newBuffer = this.audioContext.createBuffer(2, newBufferLength, newSampleRate);
-        const newBufferDataLeft = newBuffer.getChannelData(0);
-        const newBufferDataRight = newBuffer.getChannelData(1);
         const bufferLength = buffer.length;
 
         // This does work with just bufferLength, but causes cut-off when newSampleRate is
@@ -196,8 +196,12 @@ class AudioEffects {
             }
         };
 
-        sampleChannel(ogBufferLeftData, newBufferDataLeft);
-        sampleChannel(ogBufferRightData, newBufferDataRight);
+        for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+            const ogBufferChannelData = buffer.getChannelData(channel);
+            const newBufferChannelData = newBuffer.getChannelData(channel);
+
+            sampleChannel(ogBufferChannelData, newBufferChannelData);
+        }
 
         return newBuffer;
     }

@@ -27,7 +27,7 @@ import earRight from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
 import stereoIcon from '!../../lib/tw-recolor/build!./icon--stereo.svg';
 import monoIcon from '!../../lib/tw-recolor/build!./icon--mono.svg';
 
-import sampleRateIcon from './icon--sample-rate.svg';
+import sampleRateIcon from '!../../lib/tw-recolor/build!./icon--sample-rate.svg';
 
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';
