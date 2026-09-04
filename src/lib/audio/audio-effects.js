@@ -75,7 +75,7 @@ class AudioEffects {
         this.adjustedTrimStart = this.adjustedTrimStartSeconds / durationSeconds;
         this.adjustedTrimEnd = this.adjustedTrimEndSeconds / durationSeconds;
 
-        if (trimStart !== 0 && trimEnd !== 1) {
+        if (name === effectTypes.MODIFY && trimStart !== 0 && trimEnd !== 1) {
             sampleRate = this.manualData.rate;
             sampleCount = Math.floor((sampleCount / buffer.sampleRate) * this.manualData.rate);
         }
@@ -124,7 +124,6 @@ class AudioEffects {
         } else if (name === effectTypes.SAMPLE_RATE) {
             // For the sample rate effect we need to manually copy and transform
             // The buffer to tie it to a specified sample rate.
-            const buffer = this.buffer;
             const newBuffer = this.audioContext.createBuffer(2, buffer.length, buffer.sampleRate);
 
             // Our clone from earlier also needs to keep the original buffer's sample rate, so we need to make yet another buffer.
