@@ -199,7 +199,7 @@ const messages = defineMessages({
     sampleRate: {
         id: 'pm.gui.soundEditor.sampleRate',
         description: 'Title of the button to edit the sound sample rate',
-        defaultMessage: 'Sample Rate'
+        defaultMessage: 'Edit Sample Rate'
     }
 });
 
