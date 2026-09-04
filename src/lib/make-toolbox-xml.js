@@ -1297,6 +1297,18 @@ const _strings = function() {
                 </shadow>
             </value>
         </block>
+        <block type="operator_countAppearTimes">
+            <value name="TEXT1">
+                <shadow type="text">
+                <field name="TEXT">${letter}</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                <field name="TEXT">${banana}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="operator_contains" id="operator_contains">
             <value name="STRING1">
@@ -1369,9 +1381,7 @@ const _strings = function() {
                     <field name="TEXT">${apple}\n${banana}</field>
                 </shadow>
             </value>
-        </block> 
-        <block type="operator_newLine" />
-        <block type="operator_tabCharacter" />
+        </block>
         ${blockSeparator}
         <block type="operator_toUpperLowerCase">
             <value name="TEXT">
@@ -1380,6 +1390,20 @@ const _strings = function() {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="operator_character_to_code">
+            <value name="ONE">
+                <shadow type="text" />
+            </value>
+        </block>
+        <block type="operator_code_to_character">
+            <value name="ONE">
+                <shadow type="text" />
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_newLine" />
+        <block type="operator_tabCharacter" />
     `
 }
 

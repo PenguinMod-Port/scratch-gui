@@ -8,7 +8,6 @@ export default function (ScratchBlocks) {
 
         vm.emitWorkspaceUpdate();
 
-        workspace.toolboxRefreshEnabled_ = true;
         const flyout = workspace.getFlyout();
         if (flyout) {
             const flyoutWorkspace = flyout.getWorkspace();
@@ -17,6 +16,8 @@ export default function (ScratchBlocks) {
                 flyoutWorkspace
             );
         }
+        workspace.getToolbox().refreshSelection();
+        workspace.toolboxRefreshEnabled_ = true;
 
         if (eventsOriginallyEnabled) ScratchBlocks.Events.enable();
     }
