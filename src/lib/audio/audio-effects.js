@@ -211,6 +211,7 @@ class AudioEffects {
         const result = this.audioContext.createBuffer(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
         const startSample = Math.floor(startSeconds * buffer.sampleRate);
         const endSample = Math.min(buffer.length, Math.ceil(endSeconds * buffer.sampleRate));
+        const quietThreshold = 0.01;
         for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
             const source = buffer.getChannelData(channel);
             const destination = result.getChannelData(channel);
@@ -238,11 +239,14 @@ class AudioEffects {
 
                 const sample = source[i];
                 const magnitude = Math.abs(sample);
-                if (magnitude === 0) {
-                    destination[i] = 0;
+
+                if (magnitude < quietThreshold) {
+                    // Ignore samples that are extremely quiet.
+                    // Resolves a weird crunchy effect.
+                    destination[i] = sample;
                     continue;
                 }
-                
+
                 // Quiet -> increase
                 // Loud -> decrease
                 const targetRatio = medium / magnitude;
