@@ -92,7 +92,7 @@ class AudioEffects {
         }
 
         if (name === effectTypes.NORMALIZE) {
-            this.buffer = this.normalizeBuffer(this.buffer, this.trimStartSeconds, this.trimEndSeconds);
+            this.buffer = this.normalizeBuffer(buffer, this.trimStartSeconds, this.trimEndSeconds);
         } else if (name === effectTypes.REVERSE) {
             // For the reverse effect we need to manually reverse the data into a new audio buffer
             // to prevent overwriting the original, so that the undo stack works correctly.
