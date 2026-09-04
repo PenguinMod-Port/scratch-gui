@@ -522,14 +522,15 @@ const SoundEditor = props => (
                         id="tw.mono"
                     />
                 )}
+                {` ${String(props.dataFormat).toUpperCase()} `}
                 {` (${formatSoundSize(props.size)})`}
             </div>
         </div>
         {props.size >= SOUND_BYTE_LIMIT && (
             <div className={classNames(styles.alert, styles.tooLarge)}>
                 <FormattedMessage
-                    defaultMessage="This sound may be too large to upload to Scratch."
-                    description="Message that appears when a sound exceeds the Scratch sound size limit."
+                    defaultMessage="This sound may be too large to upload to Penguinmod."
+                    description="Message that appears when a sound exceeds the Penguinmod sound size limit."
                     id="tw.tooLarge"
                 />
             </div>
@@ -540,6 +541,7 @@ const SoundEditor = props => (
 SoundEditor.propTypes = {
     isStereo: PropTypes.bool.isRequired,
     duration: PropTypes.number.isRequired,
+    dataFormat: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     canPaste: PropTypes.bool.isRequired,
     canRedo: PropTypes.bool.isRequired,

@@ -13,6 +13,9 @@ const soundPayload = sound => {
         body: ''
     };
 
+    // TODO scratch-storage should be fixed so that encodeDataURI does not
+    // always prepend the wave format header; Once that is fixed, the following
+    // lines will have to change.
     switch (assetDataFormat) {
     case 'wav':
         payload.mime = 'audio/x-wav';
@@ -20,9 +23,14 @@ const soundPayload = sound => {
         break;
     case 'mp3':
         payload.mime = 'audio/mp3';
-        // TODO scratch-storage should be fixed so that encodeDataURI does not
-        // always prepend the wave format header; Once that is fixed, the following
-        // line will have to change.
+        payload.body = assetDataUrl.replace('data:audio/x-wav;base64,', '');
+        break;
+    case 'ogg':
+        payload.mime = 'audio/ogg';
+        payload.body = assetDataUrl.replace('data:audio/x-wav;base64,', '');
+        break;
+    case 'flac':
+        payload.mime = 'audio/flac';
         payload.body = assetDataUrl.replace('data:audio/x-wav;base64,', '');
         break;
     default:
