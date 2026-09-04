@@ -42,6 +42,7 @@ import fadeOutIcon from './icon--fade-out.svg';
 import fadeInIcon from './icon--fade-in.svg';
 import muteIcon from './icon--mute.svg';
 import modifyIcon from './icon--modify.svg';
+import normalizeIcon from './icon--normalize.svg';
 
 import deleteIcon from '!../../lib/tw-recolor/build!./icon--delete.svg';
 import copyIcon from '!../../lib/tw-recolor/build!./icon--copy.svg';
@@ -185,6 +186,11 @@ const messages = defineMessages({
         id: 'pm.gui.soundEditor.modify',
         description: 'Title of the button that opens the modify sound menu',
         defaultMessage: 'Modify'
+    },
+    normalize: {
+        id: 'pm.gui.soundEditor.normalize',
+        description: 'Title of the button to apply a normalization effect',
+        defaultMessage: 'Normalize'
     },
     convertStereo: {
         id: 'pm.gui.soundEditor.convertStereo',
@@ -431,6 +437,12 @@ const SoundEditor = props => (
                 />
                 <IconButton
                     className={styles.effectButton}
+                    img={normalizeIcon}
+                    title={<FormattedMessage {...messages.normalize} />}
+                    onClick={props.onNormalize}
+                />
+                <IconButton
+                    className={styles.effectButton}
                     img={fasterIcon}
                     title={<FormattedMessage {...messages.faster} />}
                     onClick={props.onFaster}
@@ -565,6 +577,7 @@ SoundEditor.propTypes = {
     onFadeOut: PropTypes.func.isRequired,
     onFaster: PropTypes.func.isRequired,
     onLouder: PropTypes.func.isRequired,
+    onNormalize: PropTypes.func.isRequired,
     onModifySound: PropTypes.func.isRequired,
     onMute: PropTypes.func.isRequired,
     onLowPass: PropTypes.func.isRequired,

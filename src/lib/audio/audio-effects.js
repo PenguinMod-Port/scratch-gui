@@ -19,6 +19,7 @@ const effectTypes = {
     MUTE: 'mute',
     LOWPASS: 'low pass',
     HIGHPASS: 'high pass',
+    NORMALIZE: 'normalize',
     MODIFY: 'modify',
     SAMPLE_RATE: 'sample rate'
 };
@@ -90,10 +91,12 @@ class AudioEffects {
             this.audioContext = new window.webkitOfflineAudioContext(channelCount, sampleScale * sampleCount, 44100);
         }
 
-        // For the reverse effect we need to manually reverse the data into a new audio buffer
-        // to prevent overwriting the original, so that the undo stack works correctly.
-        // Doing buffer.reverse() would mutate the original data.
-        if (name === effectTypes.REVERSE) {
+        if (name === effectTypes.NORMALIZE) {
+            this.buffer = this.normalizeBuffer(this.buffer, this.trimStartSeconds, this.trimEndSeconds);
+        } else if (name === effectTypes.REVERSE) {
+            // For the reverse effect we need to manually reverse the data into a new audio buffer
+            // to prevent overwriting the original, so that the undo stack works correctly.
+            // Doing buffer.reverse() would mutate the original data.
             const numberOfChannels = buffer.numberOfChannels;
             const newBuffer = this.audioContext.createBuffer(
                 numberOfChannels,
@@ -204,11 +207,60 @@ class AudioEffects {
 
         return newBuffer;
     }
+    normalizeBuffer(buffer, startSeconds, endSeconds) {
+        const result = this.audioContext.createBuffer(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
+        const startSample = Math.floor(startSeconds * buffer.sampleRate);
+        const endSample = Math.min(buffer.length, Math.ceil(endSeconds * buffer.sampleRate));
+        for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+            const source = buffer.getChannelData(channel);
+            const destination = result.getChannelData(channel);
+            
+            // Find the average absolute amplitude.
+            let sum = 0;
+            for (let i = startSample; i < endSample; i++) {
+                sum += Math.abs(source[i]);
+            }
+
+            const sampleCount = endSample - startSample;
+            const medium = sampleCount > 0 ? sum / sampleCount : 0;
+
+            if (medium === 0) {
+                // Silent channel... ignore.
+                destination.set(source);
+                continue;
+            }
+
+            for (let i = 0; i < buffer.length; i++) {
+                if (i < startSample || i >= endSample) {
+                    destination[i] = source[i];
+                    continue;
+                }
+
+                const sample = source[i];
+                const magnitude = Math.abs(sample);
+                if (magnitude === 0) {
+                    destination[i] = 0;
+                    continue;
+                }
+                
+                // Quiet -> increase
+                // Loud -> decrease
+                const ratio = medium / magnitude;
+                const adjustment = Math.sqrt(ratio);
+                destination[i] = Math.max(-1, Math.min(1, sample * adjustment));
+            }
+        }
+
+        return result;
+    }
     process (done) {
         // Some effects need to use more nodes and must expose an input and output
         let input;
         let output;
         switch (this.name) {
+        case effectTypes.NORMALIZE:
+            // Already normalized when the AudioBuffer was created.
+            break;
         case effectTypes.FASTER:
         case effectTypes.SLOWER:
             this.source.playbackRate.setValueAtTime(this.playbackRate, this.adjustedTrimStartSeconds);
