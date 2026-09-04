@@ -49,8 +49,8 @@ class RecordingStep extends React.Component {
     handleLevelUpdate (level) {
         this.setState({
             level: level,
-            mainLeftChunkLevels: ? (this.state.mainLeftChunkLevels || []).concat([level]) : this.state.mainLeftChunkLevels,
-            rightChunkLevels: ? (this.state.rightChunkLevels || []).concat([level]) : this.state.rightChunkLevels,
+            mainLeftChunkLevels: this.props.recording ? (this.state.mainLeftChunkLevels || []).concat([level]) : this.state.mainLeftChunkLevels,
+            rightChunkLevels: this.props.recording ? (this.state.rightChunkLevels || []).concat([level]) : this.state.rightChunkLevels,
         });
     }
     handleRecord () {
