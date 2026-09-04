@@ -17,8 +17,8 @@ import AudioEffects from '../lib/audio/audio-effects.js';
 import SoundEditorComponent from '../components/sound-editor/sound-editor.jsx';
 import AudioBufferPlayer from '../lib/audio/audio-buffer-player.js';
 
-import { audioModifyPrompt } from '..lib/audio/prompts/audio-modify.js';
-import { sampleRatePrompt } from '..lib/audio/prompts/sample-rate.js';
+import { audioModifyPrompt } from '../lib/audio/prompts/audio-modify.js';
+import { sampleRatePrompt } from '../lib/audio/prompts/sample-rate.js';
 
 import log from '../lib/log.js';
 
