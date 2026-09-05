@@ -34,7 +34,5 @@ export default (class extends BooleanSetting {
         } else {
             for (const category of categories) category.removeCounter();
         }
-
-        refreshWorkspace(ScratchBlocks);
     }
 });
