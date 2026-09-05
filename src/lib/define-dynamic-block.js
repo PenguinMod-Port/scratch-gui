@@ -26,7 +26,8 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
             colour: colors.colour,
             colourSecondary: colors.colourSecondary,
             colourTertiary: colors.colourTertiary,
-            colourQuaternary: colors.colourQuaternary
+            colourQuaternary: colors.colourQuaternary,
+            colorText: categoryInfo.blockText
         };
         // There is a scratch-blocks / Blockly extension called "scratch_extension" which adjusts the styling of
         // blocks to allow for an icon, a feature of Scratch extension blocks. However, Scratch "core" extension
