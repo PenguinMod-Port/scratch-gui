@@ -7,7 +7,7 @@ import refreshWorkspace from "../../util/refreshWorkspace.js";
 export default (class extends BooleanSetting {
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Block comments inherit block color"
+            defaultMessage="Inherited Comment Colors"
             id="pm.editorSettings.blockCommentParent.primary"
         />)
     }

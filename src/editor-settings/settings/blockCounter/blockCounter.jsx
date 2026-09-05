@@ -8,7 +8,7 @@ export default (class extends BooleanSetting {
 
     getPrimary() {
         return (<FormattedMessage
-            defaultMessage="Block counter"
+            defaultMessage="Category Counter"
             id="pm.editorSettings.blockCounter.primary"
         />)
     }
