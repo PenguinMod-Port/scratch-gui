@@ -7,6 +7,7 @@ export default Object.fromEntries([
     'mergeOperators',
     'blockCommentParent',
     'outputBubbleAutoTyping',
+    'blockCounter',
     'paintMultiTool',
     'paintScrollZoom',
     'soundDisplayDetail',
