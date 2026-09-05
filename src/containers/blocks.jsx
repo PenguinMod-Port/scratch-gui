@@ -383,7 +383,7 @@ class Blocks extends React.Component {
 
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);
-        this.workspace.addChangeListener(function (event) {
+        this.workspace.addChangeListener((event) => {
             this.ScratchBlocks.Toolbox.Category.blockCounterDispatcher(
                 event,
                 this.workspace
