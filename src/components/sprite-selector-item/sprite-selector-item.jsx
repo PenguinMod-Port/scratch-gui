@@ -77,7 +77,7 @@ const SpriteSelectorItem = props => (
                     </MenuItem>
                 ) : null }
                 {props.onSpecialExportButtonClick ? (
-                    <MenuItem onClick={props.onSpecialExportButtonClick}>
+                    <MenuItem onClick={() => props.onSpecialExportButtonClick(props.index)}>
                         <FormattedMessage
                             defaultMessage="export with extras"
                             description="Menu item to export the selected item with extra features"
@@ -113,6 +113,7 @@ SpriteSelectorItem.propTypes = {
     componentRef: PropTypes.func,
     costumeURL: PropTypes.string,
     details: PropTypes.string,
+    index: PropTypes.number,
     // eslint-disable-next-line react/forbid-prop-types
     name: PropTypes.any,
     number: PropTypes.number,
