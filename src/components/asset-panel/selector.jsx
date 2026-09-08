@@ -111,6 +111,7 @@ Selector.propTypes = {
     onDeleteClick: PropTypes.func,
     onDuplicateClick: PropTypes.func,
     onExportClick: PropTypes.func,
+    onSpecialExportClick: PropTypes.func,
     onItemClick: PropTypes.func.isRequired,
     onRemoveSortable: PropTypes.func,
     ordering: PropTypes.arrayOf(PropTypes.number),
