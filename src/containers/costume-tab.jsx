@@ -150,8 +150,8 @@ class CostumeTab extends React.Component {
         ], {type: item.asset.assetType.contentType});
         downloadBlob(`${item.name}.${item.asset.dataFormat}`, blob);
     }
-    handleExportCostumeExtras (costumeIndex) {
-        console.log(costumeIndex, this)
+    handleExportCostumeExtras () {
+        const costumeIndex = this.state.selectedCostumeIndex ?? 0;
         const item = this.props.vm.editingTarget.sprite.costumes[costumeIndex];
         const blob = new Blob([
             this.props.vm.getExportedCostume(item, true)
