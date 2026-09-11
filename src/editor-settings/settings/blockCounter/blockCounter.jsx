@@ -26,13 +26,16 @@ export default (class extends BooleanSetting {
 
         ScratchBlocks.Toolbox.Category.SHOW_BLOCK_COUNT = value;
 
-        // Manually update toolbox categories
-        const toolbox = ScratchBlocks.getMainWorkspace().getToolbox();
-        const categories = toolbox.categoryMenu_.categories_;
-        if (value) {
-            for (const category of categories) category.createCounter(true);
-        } else {
-            for (const category of categories) category.removeCounter();
+        // Manually update toolbox categories.
+        const workspace = ScratchBlocks.getMainWorkspace();
+        if (workspace) {
+            const toolbox = workspace.getToolbox();
+            const categories = toolbox.categoryMenu_.categories_;
+            if (value) {
+                for (const category of categories) category.createCounter(true);
+            } else {
+                for (const category of categories) category.removeCounter();
+            }
         }
     }
 });
