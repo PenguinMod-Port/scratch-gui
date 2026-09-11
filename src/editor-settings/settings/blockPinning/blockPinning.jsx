@@ -52,7 +52,8 @@ export default (class extends BooleanSetting {
         }
 
         ScratchBlocks.BlockSvg.PINS = storedPins;
-        console.log(this);
-        ScratchBlocks.BlockSvg.pinCallback();
+        if (ScratchBlocks.BlockSvg._pinCallbackOverridden) {
+            ScratchBlocks.BlockSvg.pinCallback();
+        }
     }
 });

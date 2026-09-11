@@ -165,6 +165,7 @@ class Blocks extends React.Component {
         this.ScratchBlocks.Procedures.beforeEditCallback = this.handleBeforeEditCustomProcedure;
         this.ScratchBlocks.Toolbox.categoryReorderCallback = this.handleCategoryReorder;
         this.ScratchBlocks.BlockSvg.pinCallback = this.handlePinCallback;
+        this.ScratchBlocks.BlockSvg._pinCallbackOverridden = true;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const Msg = this.ScratchBlocks.Msg;
