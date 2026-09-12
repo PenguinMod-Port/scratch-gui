@@ -852,7 +852,7 @@ export const penguinmodGallery = [
         iconURL: require('../extensions/penguinmod/jwTargets.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="Direct access to sprites and their clones."
+                defaultMessage="Direct access to sprites and their clones. (extra blocks if used with Vector extension)"
                 description="Description for the jwTargets extension"
                 id="pm.gui.extension.jwTargets.description"
             />
