@@ -862,6 +862,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Speech Bubbles"
+                description="Name for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.name"
+            />
+        ),
+        extensionId: 'SPspeechBubbles',
+        iconURL: require('../extensions/penguinmod/SPspeechBubbles.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Customize speech bubbles on sprites"
+                description="Description for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Pointers"
                 description="Name for the jwPointer extension"
                 id="pm.gui.extension.jwPointer.name"
