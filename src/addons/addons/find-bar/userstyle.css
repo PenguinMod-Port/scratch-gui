@@ -6,6 +6,7 @@
   width: 100%;
   height: 100%;
   margin-left: 1em;
+  order: 1; /* fix new tabs being added after the find bar*/
 }
 .sa-find-bar[hidden] {
   /* !important to override displayNoneWhileDisabled */
