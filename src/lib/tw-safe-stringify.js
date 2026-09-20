@@ -18,7 +18,7 @@ const circularReplacer = () => {
  */
 export const safeStringify = input => {
     if (input === null || input === undefined) {
-        return `null`
+        return `null`;
     }
 
     if (typeof input === 'object') {

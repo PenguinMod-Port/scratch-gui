@@ -13,14 +13,42 @@ import {
     getIsShowingProject,
     onFetchedProjectData,
     projectError,
-    setProjectId,
-} from "../reducers/project-state";
+    setProjectId
+} from '../reducers/project-state';
+
+import { ProjectUnsharedError, ProjectFetchError, ProjectUnavailableLegalReasons } from './tw-load-project-error';
 import { activateTab, BLOCKS_TAB_INDEX } from "../reducers/editor-tab";
 import { API_SITE, ASSET_CDN_SITE } from "./brand";
 
 import log from "./log";
 import storage from "./storage";
 
+// TW: Temporary hack for project tokens
+const fetchProjectToken = async projectId => {
+    if (projectId === '0') {
+        return null;
+    }
+    // Parse ?token=abcdef
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('token')) {
+        return searchParams.get('token');
+    }
+    // Parse #1?token=abcdef
+    const hashParams = new URLSearchParams(location.hash.split('?')[1]);
+    if (hashParams.has('token')) {
+        return hashParams.get('token');
+    }
+    try {
+        const metadata = await fetchProjectMeta(projectId);
+        return metadata.project_token;
+    } catch (e) {
+        log.error(e);
+        if (e instanceof ProjectUnavailableLegalReasons) {
+            throw e;
+        }
+        throw new ProjectUnsharedError('Cannot access project token. Project is probably unshared. See https://docs.turbowarp.org/unshared-projects');
+    }
+};
 import VM from "scratch-vm";
 
 /* Higher Order Component to provide behavior for loading projects by id. If

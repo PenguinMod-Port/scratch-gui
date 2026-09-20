@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
-    <title>lounder</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g>
-  <title>Layer 1</title>
-  <line stroke="#00c3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="undefined" id="svg_4" y2="18" x2="2" y1="2" x1="2" fill="none"/>
-  <line transform="rotate(90 10 18)" stroke="#00c3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="svg_5" y2="26" x2="10" y1="10" x1="10" fill="none"/>
-  <line stroke-linecap="round" stroke-linejoin="round" id="svg_6" y2="10" x2="18" y1="10" x1="2" stroke-width="1.5" stroke="#00c3ff" fill="none"/>
-  <rect fill="#00c3ff80" x="2" y="1.5" width="16.5" height="8"></rect>
-  <line stroke="#00c3ff" stroke-width="1.5" stroke-linecap="round" x1="8.5" y1="12" x2="12.5" y2="16" fill="none"/>
-  <line stroke="#00c3ff" stroke-width="1.5" stroke-linecap="round" x1="12.5" y1="12" x2="8.5" y2="16" fill="none"/>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20.477" height="20.365" viewBox="0 0 20.477 20.365"><g stroke="#00c3ff" stroke-miterlimit="10"><path d="M19.937 19.615H.75V.407" fill="none" stroke-width="1.5"/><path d="M.811 10.293s2.061-5.482 4-5.584c2.013-.105 2.011 9.832 3.684 9.78 1.842-.056 2.58-8.096 4.25-8.104 1.727-.008 2.298 7.035 3.794 6.847 1.416-.179 2.689-2.94 2.689-2.94" fill="none" stroke-width="1.25" stroke-linecap="round"/><path d="M14.5 19.71V.5h5v19.21z" fill-opacity=".2" fill="#00c3ff" stroke-dasharray="2.3"/></g></svg>

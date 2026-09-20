@@ -285,6 +285,11 @@ const CustomProcedures = props => {
                     />
                     <button
                         className={styles.presetColor}
+                        style={{ background: ScratchBlocks.Colours.operators_strings }}
+                        onClick={() => props.setProcColor("operators_strings")}
+                    />
+                    <button
+                        className={styles.presetColor}
                         style={{ background: ScratchBlocks.Colours.data }}
                         onClick={() => props.setProcColor("data")}
                     />

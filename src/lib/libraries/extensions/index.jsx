@@ -536,6 +536,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Sensing Expansion"
+                description="Name for the pmSensingExpansion extension"
+                id="pm.gui.extension.pmSensingExpansion.name"
+            />
+        ),
+        extensionId: 'pmSensingExpansion',
+        iconURL: require('../extensions/penguinmod/pmSensingExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More sensing blocks for specific use cases or interacting with the users device."
+                description="Description for the pmSensingExpansion extension"
+                id="pm.gui.extension.pmSensingExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion', 'hardware']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Operators Expansion"
                 description="Name for the pmOperatorsExpansion extension"
                 id="pm.gui.extension.pmOperatorsExpansion.name"
@@ -550,7 +569,7 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.pmOperatorsExpansion.description"
             />
         ),
-        tags: ['pm', 'expansion']
+        tags: ['pm', 'expansion', 'math']
     },
     {
         name: (
@@ -852,12 +871,31 @@ export const penguinmodGallery = [
         iconURL: require('../extensions/penguinmod/jwTargets.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="Direct access to sprites and their clones."
+                defaultMessage="Direct access to sprites and their clones. (extra blocks if used with Vector extension)"
                 description="Description for the jwTargets extension"
                 id="pm.gui.extension.jwTargets.description"
             />
         ),
         tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Speech Bubbles"
+                description="Name for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.name"
+            />
+        ),
+        extensionId: 'SPspeechBubbles',
+        iconURL: require('../extensions/penguinmod/SPspeechBubbles.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Customize speech bubbles on sprites"
+                description="Description for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'expansion']
     },
     {
         name: (

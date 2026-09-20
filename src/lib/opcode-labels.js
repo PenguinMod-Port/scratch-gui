@@ -115,6 +115,16 @@ const messages = defineMessages({
         description: 'Label for the effect monitor when shown on the stage',
         id: 'pm.gui.opcodeLabels.getEffectValue.vertiShear'
     },
+    looks_getEffectValue_repeatX: {
+        defaultMessage: 'repeat x',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.repeatX'
+    },
+    looks_getEffectValue_repeatY: {
+        defaultMessage: 'repeat y',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.repeatY'
+    },
     looks_getSpriteVisible: {
         defaultMessage: 'visible?',
         description: 'Label for the visibility monitor when shown on the stage',
@@ -124,6 +134,16 @@ const messages = defineMessages({
         defaultMessage: 'layer',
         description: 'Label for the layer monitor when shown on the stage',
         id: 'pm.gui.opcodeLabels.getLayer'
+    },
+    looks_sayHeight: {
+        defaultMessage: 'bubble height',
+        description: 'Label for the bubble height monitor when shown on the stage',
+        id: 'pm.gui.opcodes.sayHeight'
+    },
+    looks_sayWidth: {
+        defaultMessage: 'bubble width',
+        description: 'Label for the bubble width monitor when shown on the stage',
+        id: 'pm.gui.opcodes.sayWidth'
     },
     looks_stretchGetX: {
         defaultMessage: 'stretch x',
@@ -330,6 +350,8 @@ class OpcodeLabels {
             looks_getEffectValue: {category: 'looks'},
             looks_getSpriteVisible: {category: 'looks'},
             looks_layersGetLayer: {category: 'looks'},
+            looks_sayHeight: {category: 'looks'},
+            looks_sayWidth: {category: 'looks'},
             looks_stretchGetX: {category: 'looks'},
             looks_stretchGetY: {category: 'looks'},
             looks_tintColor: {category: 'looks'},
@@ -423,10 +445,14 @@ class OpcodeLabels {
                 case 'opaque': return this._translator(messages.looks_getEffectValue_opaque);
                 case 'horizontal_shear': return this._translator(messages.looks_getEffectValue_horizShear);
                 case 'vertical_shear': return this._translator(messages.looks_getEffectValue_vertiShear);
+                case 'repeat_x': return this._translator(messages.looks_getEffectValue_repeatX);
+                case 'repeat_y': return this._translator(messages.looks_getEffectValue_repeatY);
             }
         }
         this._opcodeMap.looks_getSpriteVisible.labelFn = () => this._translator(messages.looks_getSpriteVisible);
         this._opcodeMap.looks_layersGetLayer.labelFn = () => this._translator(messages.looks_layersGetLayer);
+        this._opcodeMap.looks_sayHeight.labelFn = () => this._translator(messages.looks_sayHeight);
+        this._opcodeMap.looks_sayWidth.labelFn = () => this._translator(messages.looks_sayWidth);
         this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
         this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
         this._opcodeMap.looks_tintColor.labelFn = () => this._translator(messages.looks_tintColor);

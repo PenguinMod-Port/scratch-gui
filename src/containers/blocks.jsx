@@ -27,10 +27,8 @@ import {connect} from 'react-redux';
 import {updateToolbox} from '../reducers/toolbox';
 import {activateColorPicker} from '../reducers/color-picker';
 import {
-    activateCommentColor,
-    activateCommentFont,
-    deactivateCommentColor,
-    deactivateCommentFont,
+    activateCommentEditor,
+    deactivateCommentEditor,
 } from '../reducers/comment-editor';
 import {
     closeExtensionLibrary,
@@ -49,8 +47,10 @@ import {
 } from '../reducers/editor-tab';
 import AddonHooks from '../addons/hooks.js';
 import LoadScratchBlocksHOC from '../lib/tw-load-scratch-blocks-hoc.jsx';
+import uid from "../lib/uid.js";
 import {findTopBlock} from '../lib/backpack/code-payload.js';
 import {gentlyRequestPersistentStorage} from '../lib/tw-persistent-storage.js';
+import {saveExtensionPinDependencies, loadExtensionPinDependencies} from '../lib/block-pin-dependency.js';
 
 // TW: Strings we add to scratch-blocks are localized here
 const messages = defineMessages({
@@ -115,9 +115,12 @@ class Blocks extends React.Component {
             'handlePromptStart',
             'handlePromptCallback',
             'handlePromptClose',
-            'handleCommentColorEditorClose',
-            'handleCommentFontEditorClose',
+            'handleCustomPrompt',
+            'handleCreateCustomPromptUtility',
+            'handleCommentEditorClose',
             'handleCustomProceduresClose',
+            'handleCategoryReorder',
+            'handlePinCallback',
             'handleBeforeEditCustomProcedure',
             'onScriptGlowOn',
             'onScriptGlowOff',
@@ -136,26 +139,33 @@ class Blocks extends React.Component {
             'handleEnableProcedureReturns'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
+        this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
         this.ScratchBlocks.recordSoundCallback = this.handleOpenSoundRecorder;
 
         this.state = {
-            prompt: null
+            prompt: null,
+            customPrompts: [],
         };
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
         this.toolboxUpdateQueue = [];
+        this.customModalRefs = new Map();
     }
     componentDidMount () {
         this.ScratchBlocks = VMScratchBlocks(this.props.vm, this.props.useCatBlocks);
+        this.props.vm.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.prompt = this.handlePromptStart;
+        this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.statusButtonCallback = this.handleConnectionModalStart;
         this.ScratchBlocks.recordSoundCallback = this.handleOpenSoundRecorder;
 
-        this.ScratchBlocks.ScratchBubble.editCommentColorCallback = this.props.onActivateCommentColor;
-        this.ScratchBlocks.ScratchBubble.editCommentFontCallback = this.props.onActivateCommentFont;
+        this.ScratchBlocks.ScratchBubble.editCommentCallback = this.props.onActivateCommentEditor;
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
         this.ScratchBlocks.Procedures.beforeEditCallback = this.handleBeforeEditCustomProcedure;
+        this.ScratchBlocks.Toolbox.categoryReorderCallback = this.handleCategoryReorder;
+        this.ScratchBlocks.BlockSvg.pinCallback = this.handlePinCallback;
+        this.ScratchBlocks.BlockSvg._pinCallbackOverridden = true;
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const Msg = this.ScratchBlocks.Msg;
@@ -252,17 +262,26 @@ class Blocks extends React.Component {
             this.handleExtensionAdded(category);
         }
 
+        // pm: override this function to connect it to blockly.
+        this.props.vm.runtime.updateFlyoutCheckbox = (blockId, checked) => {
+            if (!this.workspace) return;
+
+            const flyout = this.workspace.getFlyout();
+            if (flyout) flyout.setCheckboxState(blockId, checked);
+        }
+
         gentlyRequestPersistentStorage();
     }
     shouldComponentUpdate (nextProps, nextState) {
         return (
             this.state.prompt !== nextState.prompt ||
+            this.state.customPrompts !== nextState.customPrompts ||
+            (nextState.customPrompts && this.state.customPrompts.length !== nextState.customPrompts.length) ||
             this.props.isVisible !== nextProps.isVisible ||
             this._renderedToolboxXML !== nextProps.toolboxXML ||
             this.props.extensionLibraryVisible !== nextProps.extensionLibraryVisible ||
             this.props.customProceduresVisible !== nextProps.customProceduresVisible ||
-            this.props.commentColorEditorVisible !== nextProps.commentColorEditorVisible ||
-            this.props.commentFontEditorVisible !== nextProps.commentFontEditorVisible ||
+            this.props.commentEditorVisible !== nextProps.commentEditorVisible ||
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
@@ -313,7 +332,11 @@ class Blocks extends React.Component {
     componentWillUnmount () {
         this.detachVM();
         this.unmounted = true;
-        this.workspace.dispose();
+        try {
+            // Sometimes will error when changing themes.
+            this.workspace.dispose();
+        } catch {}
+
         clearTimeout(this.toolboxUpdateTimeout);
 
         // Clear the flyout blocks so that they can be recreated on mount.
@@ -343,6 +366,21 @@ class Blocks extends React.Component {
 
     updateToolbox () {
         this.toolboxUpdateTimeout = false;
+
+        this.ScratchBlocks.Toolbox.CATEGORY_ORDERING = this.props.vm._categoryOrdering;
+
+        if (this.ScratchBlocks.BlockSvg.PINS_ENABLED) {
+            try {
+                const NAMESPACE = "PM_BLOCK-PINS";
+                const stored = localStorage.getItem(NAMESPACE);
+
+                const parsed = JSON.parse(stored);
+                if (parsed && typeof parsed === "object" && Array.isArray(parsed)) {
+                    this.ScratchBlocks.BlockSvg.PINS = parsed;
+                    loadExtensionPinDependencies(parsed, this.props.vm);
+                }
+            } catch {}
+        }
 
         const categoryId = this.workspace.toolbox_.getSelectedCategoryId();
         const offset = this.workspace.toolbox_.getCategoryScrollOffset();
@@ -378,6 +416,12 @@ class Blocks extends React.Component {
 
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);
+        this.workspace.addChangeListener((event) => {
+            this.ScratchBlocks.Toolbox.Category.blockCounterDispatcher(
+                event,
+                this.workspace
+            );
+        });
         this.flyoutWorkspace = this.workspace
             .getFlyout()
             .getWorkspace();
@@ -411,6 +455,8 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('BLOCKSINFO_UPDATE', this.handleBlocksInfoUpdate);
         this.props.vm.removeListener('PERIPHERAL_CONNECTED', this.handleStatusButtonUpdate);
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
+
+        this.props.vm.runtime.removeListener("RUNTIME_DISPOSED", this.onProjectDispose);
     }
 
     updateToolboxBlockValue (id, value) {
@@ -467,6 +513,7 @@ class Blocks extends React.Component {
     onProjectDispose() {
         // Clear some data when the project is disposed.
         this.ScratchBlocks.Procedures.GLOBAL_BLOCKS.clear();
+        this.ScratchBlocks.Toolbox.CATEGORY_ORDERING = [];
 
         this.props.vm.setFramerate(30);
         this.props.vm.setRuntimeOptions({
@@ -489,10 +536,7 @@ class Blocks extends React.Component {
             const stageCostumes = stage.getCostumes();
             const targetCostumes = target.getCostumes();
             const targetSounds = target.getSounds();
-            const dynamicBlocksXML = injectExtensionCategoryTheme(
-                this.props.vm.runtime.getBlocksXML(target),
-                this.props.theme
-            );
+            const dynamicBlocksXML = this.props.vm.runtime.getBlocksXML(target);
             return makeToolboxXML(false, target.isStage, target.id, dynamicBlocksXML,
                 targetCostumes[targetCostumes.length - 1].name,
                 stageCostumes[stageCostumes.length - 1].name,
@@ -643,6 +687,72 @@ class Blocks extends React.Component {
         p.prompt.showCloudOption = (optVarType === this.ScratchBlocks.SCALAR_VARIABLE_TYPE) && this.props.canUseCloud;
         this.setState(p);
     }
+
+    /**
+     * @param {{title:string, scrollable:boolean?}} config The config for the modal
+     * @param {{content:CSSStyleDeclaration?, overlay:CSSStyleDeclaration?}?} styles Sets styles on parts of the modal. If specified, at least one of the parts should have styles.
+     * @param {Array<{
+     *      name:string,
+     *      role:"ok"|"close"|null,
+     *      class:"ok"|"cancel"|null,
+     *      style:CSSStyleDeclaration?,
+     *      dontClose:boolean?,
+     *      callback:function():void
+     * }>?} buttons Buttons to place onto the modal. `role` makes the button callback run for other types of interactions.
+     * @param {() -> ()} handleCallback A callback that runs when the modal is created, with more internal handles passed into it.
+     * @returns {Promise<HTMLElement>}
+     */
+    handleCustomPrompt (config, styles, buttons, handleCallback) {
+        const isObject = (value) => value && typeof value === 'object' && !Array.isArray(value);
+
+        return new Promise((resolve, reject) => {
+            /* validate arguments */
+            if (config && isObject(config)) {
+                if (!config.title) return reject("Custom Modal -- Missing 'title' (string) property in Param 1");
+            } else {
+                return reject("Custom Modal -- Param 1 must be an object with at least properties: 'title' (string)");
+            }
+            if (styles && !isObject(styles)) {
+                return reject("Custom Modal -- Param 2 must be an object");
+            }
+            if (styles && (!styles.content && !styles.overlay)) {
+                return reject("Custom Modal -- If Param 2 is specified, specify CSS styles within either: 'content' or 'overlay'");
+            }
+
+            // create the callback for when the node is created. an HTML element (or modal) with ref={functionHere} will run the function with the HTMLElement as 1st arg
+            const thisPromptId = uid();
+            const customPromptObject = {
+                id: thisPromptId,
+                config, styles, buttons
+            };
+            this.customModalRefs.set(thisPromptId, (node) => {
+                resolve(node);
+
+                // dont bother creating the util if handleCallback is undefined
+                if (typeof handleCallback !== "function") return;
+                const handle = this.handleCreateCustomPromptUtility(customPromptObject);
+                handleCallback(handle);
+            })
+
+            // Setting state with this info will cause blocks.jsx to re-render, rendering the modal before any code after setState can run.
+            // However, the callback & ref are not be usable until slightly later. this is why ref is set to a callback above.
+            // This is one of many reasons why React is pretty stupid.
+            this.setState({
+                customPrompts: this.state.customPrompts.concat(customPromptObject)
+            });
+        });
+    }
+    handleCreateCustomPromptUtility (customPromptObject) {
+        const handle = {};
+        handle.customPromptObject = customPromptObject;
+        handle.closePrompt = () => {
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPromptObject)
+            });
+        };
+
+        return handle;
+    }
     handleConnectionModalStart (extensionId) {
         this.props.onOpenConnectionModal(extensionId);
     }
@@ -665,14 +775,38 @@ class Blocks extends React.Component {
             variableOptions);
         this.handlePromptClose();
     }
-    handlePromptClose () {
+    handleCustomPromptButton(button, customPrompt) {
+        button.callback();
+        if (button.dontClose) return;
+        this.setState({
+            customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+        });
+    }
+    handleCustomPromptOk(customPrompt) {
+        const okButton = (customPrompt.buttons || []).find(button => button.role === "ok");
+        if (okButton) {
+            okButton.callback();
+            if (okButton.dontClose) return;
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+            });
+        }
+    }
+    handlePromptClose (customPrompt) {
+        if (customPrompt) {
+            const closeButton = (customPrompt.buttons || []).find(button => button.role === "close");
+            if (closeButton) {
+                closeButton.callback();
+            }
+            return this.setState({
+                customPrompts: this.state.customPrompts.filter(prompt => prompt !== customPrompt)
+            });
+        }
+
         this.setState({prompt: null});
     }
-    handleCommentColorEditorClose (data) {
-        this.props.onRequestCloseCommentColor(data);
-    }
-    handleCommentFontEditorClose (data) {
-        this.props.onRequestCloseCommentFont(data);
+    handleCommentEditorClose () {
+        this.props.onRequestCloseCommentEditor();
     }
     handleCustomProceduresClose (data) {
         this.props.onRequestCloseCustomProcedures(data);
@@ -680,10 +814,29 @@ class Blocks extends React.Component {
         ws.refreshToolboxSelection_();
         ws.toolbox_.scrollToCategoryById('myBlocks');
     }
+    handleCategoryReorder () {
+        this.props.vm._categoryOrdering = this.ScratchBlocks.Toolbox.CATEGORY_ORDERING;
+        this.updateToolbox();
+    }
+    handlePinCallback () {
+        const pins = saveExtensionPinDependencies(
+            this.ScratchBlocks.BlockSvg.PINS,
+            this.props.vm
+        );
+
+        try {
+            const NAMESPACE = "PM_BLOCK-PINS";
+            localStorage.setItem(NAMESPACE, JSON.stringify(pins));
+        } catch {}
+
+        const toolboxXML = this.getToolboxXML();
+        if (toolboxXML) {
+            this.props.updateToolboxState(toolboxXML);
+        }
+    }
     handleBeforeEditCustomProcedure (block) {
         if (block.type === 'procedures_call' && block.global_) {
-            // If this global block is not being edited from the source
-            // sprite, switch workspaces.
+            // If this global block is not being edited from the source sprite, switch workspaces.
             const proccode = block.procCode_;
             const editingTargetId = this.props.vm.editingTarget.id;
             const targetId = this.props.vm.runtime._globalProcedureSourceMap[proccode];
@@ -730,8 +883,7 @@ class Blocks extends React.Component {
             anyModalVisible,
             canUseCloud,
             customStageSize,
-            commentColorEditorVisible,
-            commentFontEditorVisible,
+            commentEditorVisible,
             customProceduresVisible,
             extensionLibraryVisible,
             options,
@@ -745,8 +897,7 @@ class Blocks extends React.Component {
             onOpenCustomExtensionModal,
             reduxOnOpenCustomExtensionModal,
             updateToolboxState,
-            onActivateCommentFont,
-            onActivateCommentColor,
+            onActivateCommentEditor,
             onActivateCustomProcedures,
             onRequestCloseExtensionLibrary,
             onRequestCloseCustomProcedures,
@@ -778,6 +929,21 @@ class Blocks extends React.Component {
                         onOk={this.handlePromptCallback}
                     />
                 ) : null}
+                {this.state.customPrompts.map(prompt => (
+                    <Prompt
+                        isCustom={true}
+                        vm={vm}
+                        customRef={this.customModalRefs.get(prompt.id)}
+                        onOk={() => this.handleCustomPromptOk(prompt)}
+                        onCancel={() => this.handlePromptClose(prompt)}
+                        config={prompt.config}
+                        title={prompt.config.title}
+                        styleContent={prompt.styles ? prompt.styles.content : null}
+                        styleOverlay={prompt.styles ? prompt.styles.overlay : null}
+                        customButtons={prompt.buttons}
+                        onCustomButton={(button) => this.handleCustomPromptButton(button, prompt)}
+                    />
+                ))}
                 {extensionLibraryVisible ? (
                     <ExtensionLibrary
                         vm={vm}
@@ -795,22 +961,12 @@ class Blocks extends React.Component {
                         onRequestClose={this.handleCustomProceduresClose}
                     />
                 ) : null}
-                {commentColorEditorVisible ? (
+                {commentEditorVisible ? (
                     <CommentEditor
-                        mode='color'
                         options={{
                             media: options.media
                         }}
-                        onRequestClose={this.handleCommentColorEditorClose}
-                    />
-                ) : null}
-                {commentFontEditorVisible ? (
-                    <CommentEditor
-                        mode='font'
-                        options={{
-                            media: options.media
-                        }}
-                        onRequestClose={this.handleCommentFontEditorClose}
+                        onRequestClose={this.handleCommentEditorClose}
                     />
                 ) : null}
             </React.Fragment>
@@ -826,8 +982,7 @@ Blocks.propTypes = {
         width: PropTypes.number,
         height: PropTypes.number
     }),
-    commentColorEditorVisible: PropTypes.bool,
-    commentFontEditorVisible: PropTypes.bool,
+    commentEditorVisible: PropTypes.bool,
     customProceduresVisible: PropTypes.bool,
     extensionLibraryVisible: PropTypes.bool,
     isRtl: PropTypes.bool,
@@ -835,8 +990,7 @@ Blocks.propTypes = {
     locale: PropTypes.string.isRequired,
     messages: PropTypes.objectOf(PropTypes.string),
     onActivateColorPicker: PropTypes.func,
-    onActivateCommentFont: PropTypes.func,
-    onActivateCommentColor: PropTypes.func,
+    onActivateCommentEditor: PropTypes.func,
     onActivateCustomProcedures: PropTypes.func,
     onOpenConnectionModal: PropTypes.func,
     onOpenSoundRecorder: PropTypes.func,
@@ -900,8 +1054,7 @@ const mapStateToProps = state => ({
     locale: state.locales.locale,
     messages: state.locales.messages,
     toolboxXML: state.scratchGui.toolbox.toolboxXML,
-    commentColorEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'color',
-    commentFontEditorVisible: state.scratchGui.commentEditor.active && state.scratchGui.commentEditor.active === 'font',
+    commentEditorVisible: state.scratchGui.commentEditor.active,
     customProceduresVisible: state.scratchGui.customProcedures.active,
     workspaceMetrics: state.scratchGui.workspaceMetrics,
     useCatBlocks: isTimeTravel2020(state)
@@ -909,8 +1062,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCommentColor: (data, callback) => dispatch(activateCommentColor(data, callback)),
-    onActivateCommentFont: (data, callback) => dispatch(activateCommentFont(data, callback)),
+    onActivateCommentEditor: comment => dispatch(activateCommentEditor(comment)),
     onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
     onOpenConnectionModal: id => {
         dispatch(setConnectionModalExtensionId(id));
@@ -927,11 +1079,8 @@ const mapDispatchToProps = dispatch => ({
     onRequestCloseCustomProcedures: data => {
         dispatch(deactivateCustomProcedures(data));
     },
-    onRequestCloseCommentColor: () => {
-        dispatch(deactivateCommentColor());
-    },
-    onRequestCloseCommentFont: () => {
-        dispatch(deactivateCommentFont());
+    onRequestCloseCommentEditor: () => {
+        dispatch(deactivateCommentEditor());
     },
     updateToolboxState: toolboxXML => {
         dispatch(updateToolbox(toolboxXML));

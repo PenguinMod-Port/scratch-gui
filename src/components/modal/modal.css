@@ -16,6 +16,10 @@
     color: $ui-modal-foreground;
 }
 
+.scrollable {
+    overflow: auto;
+}
+
 .modal-content * {
     box-sizing: border-box;
 }

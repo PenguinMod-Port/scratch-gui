@@ -10,7 +10,6 @@ import styles from './prompt.css';
 import {SCRATCH_MAX_CLOUD_VARIABLES} from '../../lib/tw-cloud-limits.js';
 import isScratchDesktop from '../../lib/isScratchDesktop.js';
 
-
 const messages = defineMessages({
     forAllSpritesMessage: {
         defaultMessage: 'For all sprites',
@@ -52,7 +51,61 @@ const Packager = () => (
     </a>
 );
 
-const PromptComponent = props => (
+const customButtonStyle = button => {
+    // If class is manually specified, dont try to guess the intended style.
+    if (button.class) {
+        switch (button.class) {
+            case "ok":
+                return styles.okButton;
+            case "cancel":
+                return styles.cancelButton;
+            default:
+                return styles.cancelButton;
+        }
+    }
+
+    // Assume intended style from role.
+    if (button.role) {
+        switch (button.role) {
+            case "ok":
+                return styles.okButton;
+            case "close":
+                return styles.cancelButton;
+        }
+    }
+    return styles.cancelButton;
+};
+
+const PromptComponent = props => props.isCustom ? (
+    <Modal
+        className={styles.modalContent}
+        contentLabel={props.title}
+        id="customModal"
+        onRequestClose={props.onCancel}
+        componentRef={props.ref}
+        boxRef={props.boxRef}
+        styleContent={props.styleContent}
+        styleOverlay={props.styleOverlay}
+        scrollable={props.config.scrollable}
+    >
+        <Box className={styles.body}>
+            <Box componentRef={props.customRef}>
+            </Box>
+            {(props.customButtons && props.customButtons.length > 0 ? <Box className={styles.buttonRow}>
+                {/* slice then reverse to avoid mutating the array. reversing cause scratch modals put OK on the right & usually you define OK button first */}
+                {props.customButtons.slice().reverse().map(button => (
+                    <button
+                        className={customButtonStyle(button)}
+                        style={button.style}
+                        onClick={() => props.onCustomButton(button)}
+                    >
+                        {button.name}
+                    </button>
+                ))}
+            </Box> : null)}
+        </Box>
+    </Modal>
+) : (
     <Modal
         className={styles.modalContent}
         contentLabel={props.title}
@@ -204,6 +257,7 @@ const PromptComponent = props => (
 );
 
 PromptComponent.propTypes = {
+    title: PropTypes.string.isRequired,
     isAddingCloudVariableScratchSafe: PropTypes.bool.isRequired,
     canAddCloudVariable: PropTypes.bool.isRequired,
     cloudSelected: PropTypes.bool.isRequired,
@@ -221,7 +275,16 @@ PromptComponent.propTypes = {
     onScopeOptionSelection: PropTypes.func.isRequired,
     showCloudOption: PropTypes.bool.isRequired,
     showVariableOptions: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired
+
+    /* custom modals */
+    isCustom: PropTypes.bool,
+    config: PropTypes.object,
+    onCustomButton: PropTypes.func,
+    customButtons: PropTypes.arrayOf(PropTypes.object),
+    customRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
 };
 
 export default PromptComponent;

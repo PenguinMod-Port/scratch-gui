@@ -23,7 +23,7 @@ const manifest = {
   "tags": [
     "recommended"
   ],
-  "enabledByDefault": true,
+  "enabledByDefault": false,
   "userscripts": [
     {
       "url": "userscript.js"

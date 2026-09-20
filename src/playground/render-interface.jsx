@@ -31,7 +31,6 @@ import SettingsStore from '../addons/settings-store-singleton';
 import '../lib/tw-fix-history-api';
 import GUI from './render-gui.jsx';
 import MenuBar from '../components/menu-bar/menu-bar.jsx';
-import ProjectInput from '../components/tw-project-input/project-input.jsx';
 import FeaturedProjects from '../components/tw-featured-projects/featured-projects.jsx';
 import Description from '../components/tw-description/description.jsx';
 import BrowserModal from '../components/browser-modal/browser-modal.jsx';
@@ -268,63 +267,7 @@ class Interface extends React.Component {
                             {isBrowserSupported() ? null : (
                                 <BrowserModal isRtl={isRtl} />
                             )}
-                            {
-                                // eslint-disable-next-line max-len
-                                (description.instructions === "unshared" ||
-                                    description.credits === "unshared") && (
-                                    <div
-                                        className={classNames(
-                                            styles.infobox,
-                                            styles.unsharedUpdate,
-                                        )}
-                                    >
-                                        <p>
-                                            <FormattedMessage
-                                                defaultMessage="Unshared projects are no longer visible."
-                                                description="Appears on unshared projects"
-                                                id="tw.unshared2.1"
-                                            />
-                                        </p>
-                                        <p>
-                                            <FormattedMessage
-                                                defaultMessage="For more information, visit: {link}"
-                                                description="Appears on unshared projects"
-                                                id="tw.unshared.2"
-                                                values={{
-                                                    link: (
-                                                        <a
-                                                            href="https://docs.turbowarp.org/unshared-projects"
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            {
-                                                                "https://docs.turbowarp.org/unshared-projects"
-                                                            }
-                                                        </a>
-                                                    ),
-                                                }}
-                                            />
-                                        </p>
-                                        <p>
-                                            <FormattedMessage
-                                                // eslint-disable-next-line max-len
-                                                defaultMessage="If the project was shared recently, this message may appear incorrectly for a few minutes."
-                                                description="Appears on unshared projects"
-                                                id="tw.unshared.cache"
-                                            />
-                                        </p>
-                                        <p>
-                                            <FormattedMessage
-                                                // eslint-disable-next-line max-len
-                                                defaultMessage="If this project is actually shared, please report a bug."
-                                                description="Appears on unshared projects"
-                                                id="tw.unshared.bug"
-                                            />
-                                        </p>
-                                    </div>
-                                )
-                            }
-                            {hasCloudVariables && projectId !== "0" && (
+                            {hasCloudVariables && projectId !== '0' && (
                                 <div className={styles.section}>
                                     <CloudVariableBadge />
                                 </div>

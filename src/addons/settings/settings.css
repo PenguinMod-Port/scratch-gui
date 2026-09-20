@@ -588,3 +588,16 @@ a:active, a:focus {
         transform: translateY(0);
     }
 }
+
+.warning {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 20px;
+}
+
+.warningBox {
+    background-color: #f004;
+    border: 1px solid #f00;
+    border-radius: 5px;
+    padding: 12px 10px;
+}

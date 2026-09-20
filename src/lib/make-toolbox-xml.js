@@ -6,11 +6,39 @@ const categorySeparator = '<sep gap="36"/>';
 
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
+const xmlEscape = function (unsafe) {
+    return unsafe.replace(/[<>&'"]/g, c => {
+        switch (c) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        case '\'': return '&apos;';
+        case '"': return '&quot;';
+        }
+    });
+};
+
 const translate = (id, english) => {
     if (LazyScratchBlocks.isLoaded()) {
         return LazyScratchBlocks.get().ScratchMsgs.translate(id, english);
     }
     return english;
+};
+
+const getPinsXml = () => {
+    if (LazyScratchBlocks.isLoaded()) {
+        const ScratchBlocks = LazyScratchBlocks.get();
+        if (ScratchBlocks.BlockSvg.PINS.length) {
+            return ScratchBlocks.BlockSvg.PINS.join('\n');
+        }
+    }
+
+    const noPinsMsg = translate(
+        'NO_PINS',
+        'No Pinned Blocks!'
+    );
+
+    return `<label text="${noPinsMsg}"></label>`;
 };
 
 /* eslint-disable no-unused-vars */
@@ -172,18 +200,6 @@ const motion = function (isInitialSetup, isStage, targetId, colour) {
         ${categorySeparator}
     </category>
     `;
-};
-
-const xmlEscape = function (unsafe) {
-    return unsafe.replace(/[<>&'"]/g, c => {
-        switch (c) {
-        case '<': return '&lt;';
-        case '>': return '&gt;';
-        case '&': return '&amp;';
-        case '\'': return '&apos;';
-        case '"': return '&quot;';
-        }
-    });
 };
 
 const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, colour) {
@@ -1208,7 +1224,7 @@ const strings = function (isInitialSetup, isStage, targetId, colour) {
     return `
     <category
         name="%{BKY_PM_CATEGORY_STRINGS}"
-        id="strings"
+        id="pmStrings"
         colour="${colour}"
         secondaryColour="#00000044">
         ${_strings()}
@@ -1297,6 +1313,18 @@ const _strings = function() {
                 </shadow>
             </value>
         </block>
+        <block type="operator_countAppearTimes">
+            <value name="TEXT1">
+                <shadow type="text">
+                <field name="TEXT">${letter}</field>
+                </shadow>
+            </value>
+            <value name="TEXT2">
+                <shadow type="text">
+                <field name="TEXT">${banana}</field>
+                </shadow>
+            </value>
+        </block>
         ${blockSeparator}
         <block type="operator_contains" id="operator_contains">
             <value name="STRING1">
@@ -1369,9 +1397,7 @@ const _strings = function() {
                     <field name="TEXT">${apple}\n${banana}</field>
                 </shadow>
             </value>
-        </block> 
-        <block type="operator_newLine" />
-        <block type="operator_tabCharacter" />
+        </block>
         ${blockSeparator}
         <block type="operator_toUpperLowerCase">
             <value name="TEXT">
@@ -1380,6 +1406,35 @@ const _strings = function() {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="operator_character_to_code">
+            <value name="ONE">
+                <shadow type="text" />
+            </value>
+        </block>
+        <block type="operator_code_to_character">
+            <value name="ONE">
+                <shadow type="text" />
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_encode">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_decode">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${btoa(apple)}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        <block type="operator_newLine" />
+        <block type="operator_tabCharacter" />
     `
 }
 
@@ -1421,6 +1476,22 @@ const myBlocks = function (isInitialSetup, isStage, targetId, colour) {
     </category>
     `;
 };
+
+const pins = function (isInitialSetup) {
+    const pinCategoryIcon = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MC42OTIiIGhlaWdodD0iNzAuNjkyIiB2aWV3Qm94PSIwIDAgNzAuNjkyIDcwLjY5MiI+PHBhdGggZD0iTTAgMzUuMzQ2QzAgMTUuODI1IDE1LjgyNSAwIDM1LjM0NiAwczM1LjM0NiAxNS44MjUgMzUuMzQ2IDM1LjM0Ni0xNS44MjUgMzUuMzQ2LTM1LjM0NiAzNS4zNDZTMCA1NC44NjcgMCAzNS4zNDYiIGZpbGw9IiNjNWJmOTYiLz48cGF0aCBkPSJNNC42NTYgMzUuMzQ2YzAtMTYuOTUgMTMuNzQtMzAuNjkgMzAuNjktMzAuNjlzMzAuNjkgMTMuNzQgMzAuNjkgMzAuNjktMTMuNzQgMzAuNjktMzAuNjkgMzAuNjktMzAuNjktMTMuNzQtMzAuNjktMzAuNjkiIGZpbGw9IiNmZmY3YzIiLz48cGF0aCBkPSJNNDguOTU2IDQ0LjAwMyA1MSA1MC4wMmwtNi4wMTctMi4wNDVMMzQuMTY4IDM3LjE2Yy0xLjg3MyAxLjY1NS02LjAwNyA1LjE1MS03LjMwMyA1LjAxOS0yLjM4Ny0uMjQ0LTEuODg5LTIuOTQ3LTIuMDQ4LTUuMzc2LS4xNTgtMi40MyAxLjQ3MS0zLjQ0IDEuNDcxLTMuNDRsLTUuODc5LTUuODhhMi40NSAyLjQ1IDAgMCAxIDAtMy40NjFsNC42MzMtNC42MzNhMi40NSAyLjQ1IDAgMCAxIDMuNDYxIDBsNi4wNyA2LjA3czIuMTQ5LTIuMDAzIDMuOTAyLTJjMS43NTMuMDAyIDUuNjY0LjA3NSA1LjMyMyAyLjAxMy0uMjM1IDEuMzMyLTQuMTExIDUuOTYtNS42MzkgNy43MzV6IiBmaWxsPSIjNDQ1MjczIi8+PC9zdmc+";
+
+    return `
+    <category
+        name="Pinned"
+        id="pins"
+        colour="#ffffff"
+        secondaryColour="#00000044"
+        textColour="#000000"
+        iconURI="${pinCategoryIcon}">
+        ${getPinsXml()}
+    </category>
+    `;
+}
 
 // eslint-disable-next-line max-len
 const extraTurboWarpBlocks = `
@@ -1474,10 +1545,11 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
     const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
-    const stringsXML = moveCategory('strings') || strings(isInitialSetup, isStage, targetId, colors.operators_strings);
+    const stringsXML = moveCategory('pmStrings') || strings(isInitialSetup, isStage, targetId, colors.operators_strings);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
     const listsXML = moveCategory('list') || lists(isInitialSetup, isStage, targetId, colors.data_lists);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
+    const pinsXML = moveCategory('pins') || pins(isInitialSetup);
 
     // Always display TurboWarp blocks as the first extension, if it exists,
     // and also add an "is compiled?" block to the top.
@@ -1487,8 +1559,10 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     }
 
     const mergeOperators = SettingsStore.store.mergeOperators;
+    const pinsEnabled = SettingsStore.store.blockPinning;
     const everything = [
         xmlOpen,
+        pinsEnabled ? pinsXML : '', pinsEnabled ? gap : '',
         motionXML, gap,
         looksXML, gap,
         soundXML, gap,

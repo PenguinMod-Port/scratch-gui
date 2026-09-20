@@ -27,16 +27,22 @@ import earRight from '!../../lib/tw-recolor/build!./icon--ear-right.svg';
 import stereoIcon from '!../../lib/tw-recolor/build!./icon--stereo.svg';
 import monoIcon from '!../../lib/tw-recolor/build!./icon--mono.svg';
 
+import sampleRateIcon from '!../../lib/tw-recolor/build!./icon--sample-rate.svg';
+
 import fasterIcon from './icon--faster.svg';
 import slowerIcon from './icon--slower.svg';
 import louderIcon from './icon--louder.svg';
 import softerIcon from './icon--softer.svg';
 import robotIcon from './icon--robot.svg';
 import echoIcon from './icon--echo.svg';
+import highpassIcon from './icon--highpass.svg';
+import lowpassIcon from './icon--lowpass.svg';
 import reverseIcon from './icon--reverse.svg';
 import fadeOutIcon from './icon--fade-out.svg';
 import fadeInIcon from './icon--fade-in.svg';
 import muteIcon from './icon--mute.svg';
+import modifyIcon from './icon--modify.svg';
+import normalizeIcon from './icon--normalize.svg';
 
 import deleteIcon from '!../../lib/tw-recolor/build!./icon--delete.svg';
 import copyIcon from '!../../lib/tw-recolor/build!./icon--copy.svg';
@@ -166,6 +172,26 @@ const messages = defineMessages({
         description: 'Title of the button to apply the mute effect',
         defaultMessage: 'Mute'
     },
+    lowPass: {
+        id: 'pm.gui.soundEditor.lowPass',
+        description: 'Title of the button to apply low pass on audio',
+        defaultMessage: 'Low Pass'
+    },
+    highPass: {
+        id: 'pm.gui.soundEditor.highPass',
+        description: 'Title of the button to apply high pass on audio',
+        defaultMessage: 'High Pass'
+    },
+    modify: {
+        id: 'pm.gui.soundEditor.modify',
+        description: 'Title of the button that opens the modify sound menu',
+        defaultMessage: 'Modify'
+    },
+    normalize: {
+        id: 'pm.gui.soundEditor.normalize',
+        description: 'Title of the button to apply a normalization effect',
+        defaultMessage: 'Normalize'
+    },
     convertStereo: {
         id: 'pm.gui.soundEditor.convertStereo',
         description: 'Title of the button to convert to stereo',
@@ -175,6 +201,11 @@ const messages = defineMessages({
         id: 'pm.gui.soundEditor.convertMono',
         description: 'Title of the button to convert to mono',
         defaultMessage: 'Convert to Mono'
+    },
+    sampleRate: {
+        id: 'pm.gui.soundEditor.sampleRate',
+        description: 'Title of the button to edit the sound sample rate',
+        defaultMessage: 'Edit Sample Rate'
     }
 });
 
@@ -339,6 +370,18 @@ const SoundEditor = props => (
                         />
                     </button>
                 </Label>
+                <Label text={props.intl.formatMessage(messages.sampleRate)}>
+                    <button
+                        className={styles.button}
+                        title={props.intl.formatMessage(messages.sampleRate)}
+                        onClick={props.onSetSampleRate}
+                    >
+                        <TWRenderRecoloredImage
+                            draggable={false}
+                            src={sampleRateIcon}
+                        />
+                    </button>
+                </Label>
             </div>
         </div>
         <div className={styles.row}>
@@ -386,6 +429,18 @@ const SoundEditor = props => (
                 )}
             </div>
             <div className={styles.effects}>
+                <IconButton
+                    className={styles.effectButton}
+                    img={modifyIcon}
+                    title={<FormattedMessage {...messages.modify} />}
+                    onClick={props.onModifySound}
+                />
+                <IconButton
+                    className={styles.effectButton}
+                    img={normalizeIcon}
+                    title={<FormattedMessage {...messages.normalize} />}
+                    onClick={props.onNormalize}
+                />
                 <IconButton
                     className={styles.effectButton}
                     img={fasterIcon}
@@ -447,6 +502,18 @@ const SoundEditor = props => (
                     title={<FormattedMessage {...messages.echo} />}
                     onClick={props.onEcho}
                 />
+                <IconButton
+                    className={styles.effectButton}
+                    img={lowpassIcon}
+                    title={<FormattedMessage {...messages.lowPass} />}
+                    onClick={props.onLowPass}
+                />
+                <IconButton
+                    className={styles.effectButton}
+                    img={highpassIcon}
+                    title={<FormattedMessage {...messages.highPass} />}
+                    onClick={props.onHighPass}
+                />
             </div>
         </div>
         <div className={styles.infoRow}>
@@ -467,14 +534,15 @@ const SoundEditor = props => (
                         id="tw.mono"
                     />
                 )}
+                {` ${String(props.dataFormat).toUpperCase()} `}
                 {` (${formatSoundSize(props.size)})`}
             </div>
         </div>
         {props.size >= SOUND_BYTE_LIMIT && (
             <div className={classNames(styles.alert, styles.tooLarge)}>
                 <FormattedMessage
-                    defaultMessage="This sound may be too large to upload to Scratch."
-                    description="Message that appears when a sound exceeds the Scratch sound size limit."
+                    defaultMessage="This sound may be too large to upload to Penguinmod."
+                    description="Message that appears when a sound exceeds the Penguinmod sound size limit."
                     id="tw.tooLarge"
                 />
             </div>
@@ -485,6 +553,7 @@ const SoundEditor = props => (
 SoundEditor.propTypes = {
     isStereo: PropTypes.bool.isRequired,
     duration: PropTypes.number.isRequired,
+    dataFormat: PropTypes.string.isRequired,
     size: PropTypes.number.isRequired,
     canPaste: PropTypes.bool.isRequired,
     canRedo: PropTypes.bool.isRequired,
@@ -499,6 +568,7 @@ SoundEditor.propTypes = {
     onContainerClick: PropTypes.func.isRequired,
     onChannelFocusChange: PropTypes.func.isRequired,
     onToggleFormat: PropTypes.func.isRequired,
+    onSetSampleRate: PropTypes.func.isRequired,
     onCopy: PropTypes.func.isRequired,
     onCopyToNew: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
@@ -507,7 +577,11 @@ SoundEditor.propTypes = {
     onFadeOut: PropTypes.func.isRequired,
     onFaster: PropTypes.func.isRequired,
     onLouder: PropTypes.func.isRequired,
+    onNormalize: PropTypes.func.isRequired,
+    onModifySound: PropTypes.func.isRequired,
     onMute: PropTypes.func.isRequired,
+    onLowPass: PropTypes.func.isRequired,
+    onHighPass: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onRedo: PropTypes.func.isRequired,

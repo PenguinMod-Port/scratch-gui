@@ -15,47 +15,6 @@ const getCategoryIconURI = extensionIcons => {
 // scratch-blocks colours has a pen property that scratch-gui uses for all extensions
 const getExtensionColors = theme => theme.getBlockColors().pen;
 
-const DEFAULT_EXTENSION_PRIMARY = '#0fbd8c';
-
-/**
- * Applies extension color theme to categories.
- * No changes are applied if called with the default theme, allowing extensions to provide their own colors.
- * These colors are not seen if the category provides a blockIconURI.
- * @param {Array.<object>} dynamicBlockXML - XML for each category of extension blocks, returned from getBlocksXML
- * in the vm runtime.
- * @param {Theme} theme - Theme name
- * @returns {Array.<object>} Dynamic block XML updated with colors.
- */
-const injectExtensionCategoryTheme = (dynamicBlockXML, theme) => {
-    // Minor optimization -- don't do anything at all for the default theme.
-    if (theme.blocks === BLOCKS_THREE) return dynamicBlockXML;
-
-    const extensionColors = getExtensionColors(theme);
-    const extensionIcons = theme.getExtensions();
-    const parser = new DOMParser();
-    const serializer = new XMLSerializer();
-
-    return dynamicBlockXML.map(extension => {
-        const dom = parser.parseFromString(extension.xml, 'text/xml');
-
-        const primaryColor = dom.documentElement.getAttribute('colour');
-        dom.documentElement.setAttribute('colour', extensionColors);
-        // Note: the category's secondaryColour matches up with the blocks' tertiary color,
-        // both used for border color.
-        dom.documentElement.setAttribute('secondaryColour', "#0004");
-
-        const categoryIconURI = getCategoryIconURI(extensionIcons[extension.id]);
-        if (categoryIconURI) {
-            dom.documentElement.setAttribute('iconURI', categoryIconURI);
-        }
-
-        return {
-            ...extension,
-            xml: serializer.serializeToString(dom)
-        };
-    });
-};
-
 const injectBlockIcons = (blockInfoJson, theme) => {
     // Block icons are the first element of `args0`
     if (!blockInfoJson.args0 || blockInfoJson.args0.length < 1 ||
@@ -100,6 +59,5 @@ const injectExtensionBlockTheme = (blockInfoJson, theme) => {
 };
 
 export {
-    injectExtensionBlockTheme,
-    injectExtensionCategoryTheme
+    injectExtensionBlockTheme
 };

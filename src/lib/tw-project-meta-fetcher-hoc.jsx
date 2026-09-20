@@ -14,8 +14,11 @@ export const fetchProjectMeta = async (projectId) => {
     if (res.ok) {
         return data;
     }
+    if (res.status === 451) {
+        throw new ProjectUnavailableLegalReasons('Project is unavailable for legal reasons', data.url);
+    }
     if (res.status === 404) {
-        throw new Error("Project is probably unshared");
+        throw new Error('Project is probably unshared');
     }
     throw new Error(`Unexpected status code: ${res.status}`);
 };
@@ -74,13 +77,7 @@ const TWProjectMetaFetcherHOC = function (WrappedComponent) {
                         })
                         .catch((err) => {
                             setIndexable(false);
-                            if (`${err}`.includes("unshared")) {
-                                this.props.onSetDescription(
-                                    "unshared",
-                                    "unshared",
-                                );
-                            }
-                            log.warn("cannot fetch project meta", err);
+                            log.warn('cannot fetch project meta', err);
                         });
                 }
             }

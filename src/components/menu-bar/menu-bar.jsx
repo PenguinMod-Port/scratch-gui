@@ -113,6 +113,8 @@ import SeeInsideButton from './tw-see-inside.jsx';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 import {APP_NAME} from '../../lib/brand.js';
 
+import SettingsStore from '../../editor-settings/settings-store-singleton';
+
 const ariaMessages = defineMessages({
     tutorials: {
         id: 'gui.menuBar.tutorialsLibrary',
@@ -232,14 +234,18 @@ class MenuBar extends React.Component {
             'handleKeyPress',
             'handleRestoreOption',
             'getSaveToComputerHandler',
-            'restoreOptionMessage'
+            'restoreOptionMessage',
+            'handleProjectChanged',
+            'getBlockCount'
         ]);
     }
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyPress);
+        this.props.vm.on('PROJECT_CHANGED', this.handleProjectChanged);
     }
     componentWillUnmount () {
         document.removeEventListener('keydown', this.handleKeyPress);
+        this.props.vm.removeListener('PROJECT_CHANGED', this.handleProjectChanged);
     }
     handleClickNew () {
         // if the project is dirty, and user owns the project, we will autosave.
@@ -353,6 +359,9 @@ class MenuBar extends React.Component {
             }
         }
     }
+    handleProjectChanged () {
+        this.forceUpdate();
+    }
     getSaveToComputerHandler (downloadProjectCallback) {
         return () => {
             this.props.onRequestCloseFile();
@@ -443,6 +452,11 @@ class MenuBar extends React.Component {
             callback();
             this.props.onRequestCloseAbout();
         };
+    }
+    getBlockCount () {
+        this.props.vm.runtime.updateProjectBlockCounter();
+        const count = this.props.vm.runtime._projectBlockCount;
+        return `${count} Block${count === 1 ? "" : "s"}`;
     }
     render () {
         const saveNowMessage = (
@@ -1086,6 +1100,11 @@ class MenuBar extends React.Component {
                 </div>
 
                 <div className={styles.accountInfoGroup}>
+                    {SettingsStore.store.projectBlockCounter && !this.props.isPlayerOnly ? (
+                        <div className={styles.menuBarItem}>
+                            <span>{this.getBlockCount()}</span>
+                        </div>
+                    ) : null}
                     <TWSaveStatus
                         showSaveFilePicker={this.props.showSaveFilePicker}
                     />

@@ -12,6 +12,7 @@ class Prompt extends React.Component {
             'handleOk',
             'handleScopeOptionSelection',
             'handleCancel',
+            'handleCustomButton',
             'handleChange',
             'handleKeyPress',
             'handleCloudVariableOptionChange'
@@ -34,13 +35,17 @@ class Prompt extends React.Component {
         event.target.select();
     }
     handleOk () {
-        this.props.onOk(this.state.inputValue, {
+        if (this.props.isCustom) this.props.onOk();
+        else this.props.onOk(this.state.inputValue, {
             scope: this.state.globalSelected ? 'global' : 'local',
             isCloud: this.state.cloudSelected
         });
     }
     handleCancel () {
         this.props.onCancel();
+    }
+    handleCustomButton(button) {
+        this.props.onCustomButton(button);
     }
     handleChange (e) {
         this.setState({inputValue: e.target.value});
@@ -58,7 +63,24 @@ class Prompt extends React.Component {
         }
     }
     render () {
-        return (
+        if (this.props.isCustom) return (
+            <PromptComponent
+                isCustom={this.props.isCustom}
+                componentRef={this.props.componentRef}
+                boxRef={this.props.boxRef}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                onKeyPress={this.handleKeyPress}
+                styleContent={this.props.styleContent}
+                styleOverlay={this.props.styleOverlay}
+                title={this.props.title}
+                config={this.props.config}
+                customButtons={this.props.customButtons}
+                onCustomButton={this.handleCustomButton}
+                customRef={this.props.customRef}
+            />
+        )
+        else return (
             <PromptComponent
                 isAddingCloudVariableScratchSafe={this.state.isAddingCloudVariableScratchSafe}
                 canAddCloudVariable={this.state.canAddCloudVariable}
@@ -93,7 +115,17 @@ Prompt.propTypes = {
     showCloudOption: PropTypes.bool.isRequired,
     showVariableOptions: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+
+    /* custom modals */
+    isCustom: PropTypes.bool,
+    config: PropTypes.object,
+    onCustomButton: PropTypes.func,
+    customButtons: PropTypes.arrayOf(PropTypes.object),
+    customRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
 };
 
 export default Prompt;

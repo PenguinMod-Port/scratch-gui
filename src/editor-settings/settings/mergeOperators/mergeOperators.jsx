@@ -22,6 +22,8 @@ export default (class extends BooleanSetting {
     async setValue(value) {
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
+
+        ScratchBlocks.Toolbox.OPERATOR_STRING_MERGE = value;
         refreshWorkspace(ScratchBlocks);
     }
 });

@@ -10,7 +10,7 @@ const migrateSettings = settings => {
         return settings;
     }
 
-    // doi doi doi
+    // oui doui
 
     return settings;
 };

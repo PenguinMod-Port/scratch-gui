@@ -4,6 +4,8 @@ import React from 'react';
 import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
 
 export default (class extends BooleanSetting {
+    defaultValue() { return true }
+
     getPrimary() {
         return (<FormattedMessage
             defaultMessage="Typed Output Displays"
