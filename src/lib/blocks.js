@@ -61,7 +61,7 @@ export default function (vm) {
                     name: 'OBJECT'
                 }
             ],
-            output: true,
+            output: null,
             colour: ScratchBlocks.Colours.sensing,
             outputShape: ScratchBlocks.OUTPUT_SHAPE_ROUND
         };
