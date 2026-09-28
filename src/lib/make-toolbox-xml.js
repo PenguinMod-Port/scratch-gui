@@ -871,6 +871,27 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
         </block>
         ${blockSeparator}
         <block type="sensing_mobile" />
+        ${blockSeparator}
+        <block type="sensing_fingerdown">
+            <value name="FINGER_OPTION">
+                <shadow type="sensing_fingeroptions" />
+            </value>
+        </block>
+        <block type="sensing_fingertapped">
+            <value name="FINGER_OPTION">
+                <shadow type="sensing_fingeroptions" />
+            </value>
+        </block>
+        <block type="sensing_fingerx">
+            <value name="FINGER_OPTION">
+                <shadow type="sensing_fingeroptions" />
+            </value>
+        </block>
+        <block type="sensing_fingery">
+            <value name="FINGER_OPTION">
+                <shadow type="sensing_fingeroptions" />
+            </value>
+        </block>
         ${isStage ? '' : `
             ${blockSeparator}
             <block type="sensing_setdragmode" id="sensing_setdragmode"></block>
