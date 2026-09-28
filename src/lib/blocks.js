@@ -295,6 +295,27 @@ export default function (vm) {
         this.jsonInit(json);
     };
 
+    ScratchBlocks.Blocks.sensing_fulltouchingobjectmenu.init = function () {
+        const mouse = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_POINTER', 'mouse-pointer');
+        const edge = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_EDGE', 'edge');
+        const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
+        const json = jsonForMenuBlock('FULLTOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
+            [mouse, '_mouse_'],
+            [edge, '_edge_'],
+            [thisSprite, '_myself_']
+        ]);
+        this.jsonInit(json);
+    };
+
+    ScratchBlocks.Blocks.sensing_touchingobjectmenusprites.init = function () {
+        const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
+        const json = jsonForMenuBlock('SPRITETOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
+            [thisSprite, '_myself_']
+        ]);
+        this.jsonInit(json);
+    };
+
+
     ScratchBlocks.Blocks.control_create_clone_of_menu.init = function () {
         const json = jsonForMenuBlock('CLONE_OPTION', cloneMenu, ScratchBlocks.Colours.control, []);
         this.jsonInit(json);
