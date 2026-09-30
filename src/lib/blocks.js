@@ -299,7 +299,7 @@ export default function (vm) {
         const mouse = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_POINTER', 'mouse-pointer');
         const edge = ScratchBlocks.ScratchMsgs.translate('SENSING_TOUCHINGOBJECT_EDGE', 'edge');
         const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
-        const json = jsonForMenuBlock('FULLTOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
+        const json = jsonForMenuBlock('FULLTOUCHINGOBJECTMENU', spriteMenu, ScratchBlocks.Colours.sensing, [
             [mouse, '_mouse_'],
             [edge, '_edge_'],
             [thisSprite, '_myself_']
@@ -309,7 +309,7 @@ export default function (vm) {
 
     ScratchBlocks.Blocks.sensing_touchingobjectmenusprites.init = function () {
         const thisSprite = ScratchBlocks.ScratchMsgs.translate('PM_LOOKS_THIS', 'this sprite');
-        const json = jsonForMenuBlock('SPRITETOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
+        const json = jsonForMenuBlock('SPRITETOUCHINGOBJECTMENU', spriteMenu, ScratchBlocks.Colours.sensing, [
             [thisSprite, '_myself_']
         ]);
         this.jsonInit(json);
