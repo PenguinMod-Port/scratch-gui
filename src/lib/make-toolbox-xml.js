@@ -894,7 +894,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
         </block>
         ${isStage ? '' : `
             ${blockSeparator}
-            <block type="sensing_setdragmode" id="sensing_setdragmode"></block>
+            <block type="sensing_setdragmode" />
+            <block type="sensing_getdragmode" />
         `}
         ${blockSeparator}
         <block id="loudness" type="sensing_loudness"/>
