@@ -47,6 +47,8 @@ import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
 import SettingsStore from '../editor-settings/settings-store-singleton';
 void SettingsStore; // make sure its init'd or something idk
 
+import HomeCommunication from './home-communication.jsx';
+
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
 const setProjectIdMetadata = projectId => {
@@ -112,14 +114,17 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        return (
+        return (<React.Fragment>
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
             >
                 {children}
             </GUIComponent>
-        );
+            <HomeCommunication
+                projectId={projectId}
+            />
+        </React.Fragment>);
     }
 }
 

@@ -900,6 +900,7 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
         ${blockSeparator}
         <block id="online" type="sensing_online"/>
         <block type="sensing_username"/>
+        <block type="sensing_loggedin"/>
         ${categorySeparator}
     </category>
     `;

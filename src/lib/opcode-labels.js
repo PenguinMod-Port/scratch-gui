@@ -290,6 +290,10 @@ const messages = defineMessages({
         defaultMessage: 'draggable?',
         id: 'pm.gui.opcodeLabels.getDragMode'
     },
+    sensing_loggedin: {
+        defaultMessage: 'logged in?',
+        id: 'pm.gui.opcodeLabels.loggedIn'
+    },
     sensing_mouse_any: {
         defaultMessage: 'any',
         id: 'pm.gui.opcodeLabels.mouseAny'
@@ -387,6 +391,7 @@ class OpcodeLabels {
             // pm sensing
             sensing_getclipboard: {category: 'sensing'},
             sensing_getdragmode: {category: 'sensing'},
+            sensing_loggedin: {category: 'sensing'},
             sensing_mouseclicked: {category: 'sensing'},
             sensing_mouse_button_clicked: {category: 'sensing'},
             sensing_mouse_button_down: {category: 'sensing'},
@@ -523,6 +528,7 @@ class OpcodeLabels {
 
         this._opcodeMap.sensing_getclipboard.labelFn = () => this._translator(messages.sensing_getclipboard);
         this._opcodeMap.sensing_getdragmode.labelFn = () => this._translator(messages.sensing_getdragmode);
+        this._opcodeMap.sensing_loggedin.labelFn = () => this._translator(messages.sensing_loggedin);
         this._opcodeMap.sensing_mouse_button_clicked.labelFn = params => this._translator(messages.sensing_mouse_button_clicked, {BUTTON: buttonMap(params.BUTTON_OPTION)});
         this._opcodeMap.sensing_mouse_button_down.labelFn = params => this._translator(messages.sensing_mouse_button_down, {BUTTON: buttonMap(params.BUTTON_OPTION)});
         this._opcodeMap.sensing_mouse_button_released.labelFn = params => this._translator(messages.sensing_mouse_button_released, {BUTTON: buttonMap(params.BUTTON_OPTION)});

@@ -85,11 +85,17 @@ const vmListenerHOC = function (WrappedComponent) {
                 document.addEventListener('keydown', this.handleKeyDown);
                 document.addEventListener('keyup', this.handleKeyUp);
             }
-            this.props.vm.postIOData('userData', {username: this.props.username});
+            this.props.vm.postIOData('userData', {
+                username: this.props.username,
+                usernameLoggedIn: this.props.usernameLoggedIn
+            });
         }
         componentDidUpdate (prevProps) {
-            if (prevProps.username !== this.props.username) {
-                this.props.vm.postIOData('userData', {username: this.props.username});
+            if (prevProps.username !== this.props.username || prevProps.usernameLoggedIn !== this.props.usernameLoggedIn) {
+                this.props.vm.postIOData('userData', {
+                    username: this.props.username,
+                    usernameLoggedIn: this.props.usernameLoggedIn
+                });
             }
 
             // Re-request a targets update when the shouldUpdateTargets state changes to true
@@ -295,6 +301,7 @@ const vmListenerHOC = function (WrappedComponent) {
         shouldUpdateTargets: PropTypes.bool,
         shouldUpdateProjectChanged: PropTypes.bool,
         username: PropTypes.string,
+        usernameLoggedIn: PropTypes.bool,
         vm: PropTypes.instanceOf(VM).isRequired
     };
     VMListener.defaultProps = {
@@ -321,7 +328,8 @@ const vmListenerHOC = function (WrappedComponent) {
         shouldUpdateProjectChanged: !state.scratchGui.mode.isFullScreen && !state.scratchGui.mode.isPlayerOnly,
         vm: state.scratchGui.vm,
         username: state.session && state.session.session && state.session.session.user ?
-            state.session.session.user.username : state.scratchGui.tw ? state.scratchGui.tw.username : ''
+            state.session.session.user.username : state.scratchGui.tw ? state.scratchGui.tw.username : '',
+        usernameLoggedIn: state.scratchGui.tw.usernameLoggedIn
     });
     const mapDispatchToProps = dispatch => ({
         onTargetsUpdate: data => {
