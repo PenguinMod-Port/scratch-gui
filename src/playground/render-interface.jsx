@@ -41,6 +41,8 @@ import AddonChannels from '../addons/channels';
 import {loadServiceWorker} from './load-service-worker';
 import runAddons from '../addons/entry';
 import InvalidEmbed from '../components/tw-invalid-embed/invalid-embed.jsx';
+import VoteFrame from './vote-frame.jsx';
+import {Theme, GUI_LIGHT} from '../lib/themes';
 import {APP_NAME} from '../lib/brand.js';
 
 import styles from "./interface.css";
@@ -281,6 +283,12 @@ class Interface extends React.Component {
                                     />
                                 </div>
                             ) : null}
+                            {projectId !== '0' && (
+                                <VoteFrame
+                                    id={projectId}
+                                    darkmode={this.props.theme.gui !== GUI_LIGHT}
+                                />
+                            )}
                             <div className={styles.section}>
                                 <p>
                                     <FormattedMessage
@@ -322,6 +330,7 @@ Interface.propTypes = {
     isPlayerOnly: PropTypes.bool,
     isRtl: PropTypes.bool,
     projectId: PropTypes.string,
+    theme: PropTypes.instanceOf(Theme),
 };
 
 const mapStateToProps = (state) => ({
@@ -333,6 +342,7 @@ const mapStateToProps = (state) => ({
     isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
     isRtl: state.locales.isRtl,
     projectId: state.scratchGui.projectState.projectId,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = () => ({});
