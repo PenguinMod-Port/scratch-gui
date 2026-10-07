@@ -795,6 +795,22 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
                     <shadow type="sensing_touchingobjectmenu"/>
                 </value>
             </block>
+            <block type="sensing_objecttouchingobject">
+                <value name="FULLTOUCHINGOBJECTMENU">
+                    <shadow type="sensing_fulltouchingobjectmenu"/>
+                </value>
+                <value name="SPRITETOUCHINGOBJECTMENU">
+                    <shadow type="sensing_touchingobjectmenusprites"/>
+                </value>
+            </block>
+            <block type="sensing_objecttouchingclonesprite">
+                <value name="FULLTOUCHINGOBJECTMENU">
+                    <shadow type="sensing_fulltouchingobjectmenu"/>
+                </value>
+                <value name="SPRITETOUCHINGOBJECTMENU">
+                    <shadow type="sensing_touchingobjectmenusprites"/>
+                </value>
+            </block>
             <block type="sensing_touchingcolor">
                 <value name="COLOR">
                     <shadow type="colour_picker"/>
