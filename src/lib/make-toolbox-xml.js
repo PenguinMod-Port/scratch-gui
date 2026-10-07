@@ -910,6 +910,14 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
                 <shadow id="sensing_of_object_menu" type="sensing_of_object_menu"/>
             </value>
         </block>
+        <block type="sensing_set_of">
+            <value name="OBJECT">
+                <shadow id="sensing_of_object_menu" type="sensing_of_object_menu"/>
+            </value>
+            <value name="VALUE">
+                <shadow type="text" />
+            </value>
+        </block>
         ${blockSeparator}
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>

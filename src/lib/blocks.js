@@ -67,6 +67,32 @@ export default function (vm) {
         };
     };
 
+    const jsonForSensingSetMenus = function (menuOptionsFn) {
+        return {
+            message0: ScratchBlocks.Msg.PM_SENSING_SET_OF,
+            args0: [
+                {
+                    type: 'field_dropdown',
+                    name: 'PROPERTY',
+                    options: function () {
+                        return menuOptionsFn();
+                    }
+
+                },
+                {
+                    type: 'input_value',
+                    name: 'OBJECT'
+                },
+                {
+                    type: 'input_value',
+                    name: 'VALUE'
+                }
+            ],
+            colour: ScratchBlocks.Colours.sensing,
+            extensions: ['shape_statement']
+        };
+    };
+
     const soundsMenu = function () {
         let menu = [['', '']];
         if (vm.editingTarget && vm.editingTarget.sprite.sounds.length > 0) {
@@ -274,6 +300,86 @@ export default function (vm) {
         };
 
         const json = jsonForSensingMenus(menuFn);
+        this.jsonInit(json);
+    };
+    
+    ScratchBlocks.Blocks.sensing_set_of.init = function () {
+        const blockId = this.id;
+        const blockType = this.type;
+
+        // Get the sensing_of block from vm.
+        let defaultSensingOfBlock;
+        const blocks = vm.runtime.flyoutBlocks._blocks;
+        Object.keys(blocks).forEach(id => {
+            const block = blocks[id];
+            if (id === blockType || (block && block.opcode === blockType)) {
+                defaultSensingOfBlock = block;
+            }
+        });
+
+        // Function that fills in menu for the first input in the sensing block.
+        // Called every time it opens since it depends on the values in the other block input.
+        const menuFn = function () {
+            const stageOptions = [
+                [ScratchBlocks.Msg.PM_SENSING_SET_OF_BACKDROP, 'backdrop'],
+                [ScratchBlocks.Msg.SENSING_OF_VOLUME, 'volume']
+            ];
+            const spriteOptions = [
+                [ScratchBlocks.Msg.SENSING_OF_XPOSITION, 'x position'],
+                [ScratchBlocks.Msg.SENSING_OF_YPOSITION, 'y position'],
+                [ScratchBlocks.Msg.SENSING_OF_DIRECTION, 'direction'],
+                [ScratchBlocks.Msg.PM_SENSING_SET_OF_COSTUME, 'costume'],
+                [ScratchBlocks.Msg.SENSING_OF_SIZE, 'size'],
+                [ScratchBlocks.Msg.SENSING_OF_VOLUME, 'volume']
+            ];
+            if (vm.editingTarget) {
+                let lookupBlocks = vm.editingTarget.blocks;
+                let sensingOfBlock = lookupBlocks.getBlock(blockId);
+
+                // The block doesn't exist, but should be in the flyout. Look there.
+                if (!sensingOfBlock) {
+                    sensingOfBlock = vm.runtime.flyoutBlocks.getBlock(blockId) || defaultSensingOfBlock;
+                    // If we still don't have a block, just return an empty list . This happens during
+                    // scratch blocks construction.
+                    if (!sensingOfBlock) {
+                        return [['', '']];
+                    }
+                    // The block was in the flyout so look up future block info there.
+                    lookupBlocks = vm.runtime.flyoutBlocks;
+                }
+                const sort = function (options) {
+                    options.sort(ScratchBlocks.scratchBlocksUtils.compareStrings);
+                };
+                // Get all the stage variables (no lists) so we can add them to menu when the stage is selected.
+                const stageVariableOptions = vm.runtime.getTargetForStage().getAllVariableNamesInScopeByType('');
+                sort(stageVariableOptions);
+                const stageVariableMenuItems = stageVariableOptions.map(variable => [variable, variable]);
+                if (sensingOfBlock.inputs.OBJECT.shadow !== sensingOfBlock.inputs.OBJECT.block) {
+                    // There's a block dropped on top of the menu. It'd be nice to evaluate it and
+                    // return the correct list, but that is tricky. Scratch2 just returns stage options
+                    // so just do that here too.
+                    return stageOptions.concat(stageVariableMenuItems);
+                }
+                const menuBlock = lookupBlocks.getBlock(sensingOfBlock.inputs.OBJECT.shadow);
+                const selectedItem = menuBlock.fields.OBJECT.value;
+                if (selectedItem === '_stage_') {
+                    return stageOptions.concat(stageVariableMenuItems);
+                }
+                // Get all the local variables (no lists) and add them to the menu.
+                const target = vm.runtime.getSpriteTargetByName(selectedItem);
+                let spriteVariableOptions = [];
+                // The target should exist, but there are ways for it not to (e.g. #4203).
+                if (target) {
+                    spriteVariableOptions = target.getAllVariableNamesInScopeByType('', true);
+                    sort(spriteVariableOptions);
+                }
+                const spriteVariableMenuItems = spriteVariableOptions.map(variable => [variable, variable]);
+                return spriteOptions.concat(spriteVariableMenuItems);
+            }
+            return [['', '']];
+        };
+
+        const json = jsonForSensingSetMenus(menuFn);
         this.jsonInit(json);
     };
 
