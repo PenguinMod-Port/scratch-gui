@@ -928,8 +928,8 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>
         ${blockSeparator}
-        <block id="online" type="sensing_online"/>
         <block type="sensing_username"/>
+        <block id="online" type="sensing_online"/>
         <block type="sensing_loggedin"/>
         ${categorySeparator}
     </category>
