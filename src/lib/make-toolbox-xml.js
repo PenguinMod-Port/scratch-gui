@@ -811,6 +811,12 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
                     <shadow type="sensing_touchingobjectmenusprites"/>
                 </value>
             </block>
+            <block type="sensing_getxyoftouchingsprite">
+                <value name="SPRITE">
+                    <shadow type="sensing_distancetomenu"/>
+                </value>
+            </block>
+            ${blockSeparator}
             <block type="sensing_touchingcolor">
                 <value name="COLOR">
                     <shadow type="colour_picker"/>
