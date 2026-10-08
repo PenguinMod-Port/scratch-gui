@@ -19,16 +19,57 @@ const SplashModalComponent = props => (
     >
         <Box className={styles.body}>
             <Box className={styles.column}>
-                <a onClick={props.onClose}>New Project</a>
-                <a onClick={props.onOpenPaint}>Open Paint</a>
-                <a>Load Project</a>
-                <a>Load Extension</a>
-                <a>Restore Points</a>
+                <a onClick={props.onClose}>
+                    <FormattedMessage
+                        defaultMessage="New Project"
+                        description="Button on splash screen to make a new project."
+                        id="pm.gui.splashModal.newProject"
+                    />
+                </a>
+                <a onClick={() => {props.onClose(); props.onStartSelectingFileUpload();}}>
+                    <FormattedMessage
+                        defaultMessage="Load Project"
+                        description="Button on splash screen to load a project."
+                        id="pm.gui.splashModal.loadProject"
+                    />
+                </a>
+                <a onClick={props.onOpenExtensionModal}>
+                    <FormattedMessage
+                        defaultMessage="Load Extension"
+                        description="Button on splash screen to load an extension."
+                        id="pm.gui.splashModal.loadExtension"
+                    />
+                </a>
+                <a onClick={props.onOpenRestoreModal}>
+                    <FormattedMessage
+                        defaultMessage="Restore Points"
+                        description="Button on splash screen to open the restore points modal."
+                        id="pm.gui.splashModal.restorePoints"
+                    />
+                </a>
             </Box>
             <Box className={styles.column}>
-                <a href={HOME_SITE} target="_blank">Home Page</a>
-                <a href={DOC_SITE} target="_blank">Documentation</a>
-                <a href={WIKI_SITE} target="_blank">Wiki</a>
+                <a href={HOME_SITE} target="_blank">
+                    <FormattedMessage
+                        defaultMessage="Home Page"
+                        description="Button on splash screen to open the home page."
+                        id="pm.gui.splashModal.homePage"
+                    />
+                </a>
+                <a href={DOC_SITE} target="_blank">
+                    <FormattedMessage
+                        defaultMessage="Documentation"
+                        description="Button on splash screen to open the documentation."
+                        id="pm.gui.splashModal.docs"
+                    />
+                </a>
+                <a href={WIKI_SITE} target="_blank">
+                    <FormattedMessage
+                        defaultMessage="Wiki"
+                        description="Button on splash screen to open the wiki."
+                        id="pm.gui.splashModal.wiki"
+                    />
+                </a>
             </Box>
             <span className={styles.version}>v{props.vm.runtime.pmVersion.toString()}</span>
         </Box>
@@ -37,6 +78,9 @@ const SplashModalComponent = props => (
 
 SplashModalComponent.propTypes = {
     onClose: PropTypes.func.isRequired,
+    onOpenExtensionModal: PropTypes.func.isRequired,
+    onOpenRestoreModal: PropTypes.func.isRequired,
+    onStartSelectingFileUpload: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

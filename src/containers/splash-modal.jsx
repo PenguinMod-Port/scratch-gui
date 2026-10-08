@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import SplashModalComponent from '../components/splash-modal/splash-modal.jsx';
-import {closeSplashModal} from '../reducers/modals';
+import {closeSplashModal, openCustomExtensionModal, openRestorePointModal} from '../reducers/modals';
 import {activateTab, COSTUMES_TAB_INDEX} from '../reducers/editor-tab';
 import {STAGE_DISPLAY_SCALE_METADATA, STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../lib/layout-constants';
 import {setStageSize} from '../reducers/stage-size';
@@ -13,7 +13,10 @@ const SplashModal = props => (
 );
 
 SplashModal.propTypes = {
-    onClose: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
+    onOpenExtensionModal: PropTypes.func.isRequired,
+    onOpenRestoreModal: PropTypes.func.isRequired,
+    onStartSelectingFileUpload: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -23,10 +26,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onClose: () => dispatch(closeSplashModal()),
-    onOpenPaint: () => {
+    onOpenExtensionModal: () => {
         dispatch(closeSplashModal());
-        dispatch(activateTab(COSTUMES_TAB_INDEX));
-        // dispatch(setStageSize(STAGE_SIZE_MODES.small))
+        dispatch(openCustomExtensionModal());
+    },
+    onOpenRestoreModal: () => {
+        dispatch(closeSplashModal());
+        dispatch(openRestorePointModal());
     }
 });
 

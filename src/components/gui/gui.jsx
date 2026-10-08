@@ -213,7 +213,7 @@ const GUIComponent = props => {
                 {fontsModalVisible && <TWFontsModal />}
                 {unknownPlatformModalVisible && <TWUnknownPlatformModal />}
                 {invalidProjectModalVisible && <TWInvalidProjectModal />}
-                {splashModalVisible && !loading && <SplashModal />}
+                {splashModalVisible && !loading && <SplashModal onStartSelectingFileUpload={onStartSelectingFileUpload} />}
             </React.Fragment>
         );
 
