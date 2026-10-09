@@ -54,7 +54,7 @@ export default {
 	"cloudlink": {tags: ["internet"]},
 	"truefantomnetwork": {tags: ["internet"]},
 	"truefantommath": {tags: ["math"]},
-	"truefantomregexp": {},
+	"truefantomregexp": {hide: true},
 	"truefantomcouplers": {hide: true},
 	"dogeiscutformatnumbers": {tags: ["math"]},
 	"lmsAllMenus": {hide: true},
@@ -101,5 +101,8 @@ export default {
 	"lmsmcutils": {},
 	"SPtuneShark3": {tags: ["sound"]},
 	"cubesterWebhooks": {tags: ["internet"]},
-	"nishiowoDectalk": {tags: ["sound"]}
+	"nishiowoDectalk": {tags: ["sound"]},
+	"videoSprites": {tags: ["graphics"]},
+	"SPmessagePlus": {tags: ["expansion"]},
+	"samuelloufgeolocation": {tags: ["hardware"]}
 }

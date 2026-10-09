@@ -550,7 +550,7 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.pmSensingExpansion.description"
             />
         ),
-        tags: ['pm', 'expansion', 'hardware']
+        tags: ['pm', 'expansion', 'hardware', 'internet']
     },
     {
         name: (
@@ -819,7 +819,8 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.jwFetch.description"
             />
         ),
-        tags: ['pm', 'internet']
+        tags: ['pm', 'internet'],
+        internetConnectionRequired: true
     },
     {
         name: (
@@ -1066,6 +1067,7 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.jgRuntime.description"
             />
         ),
-        tags: ['pm', 'data', 'internet']
+        tags: ['pm', 'data', 'internet'],
+        internetConnectionRequired: true
     }
 ]
