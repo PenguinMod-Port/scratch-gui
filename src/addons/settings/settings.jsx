@@ -1120,18 +1120,18 @@ class AddonSettingsComponent extends React.Component {
                         />
                     )}
                 </div>
-                <div className={styles.warning}>
-                    <div className={styles.section}>
-                        <div className={styles.warningBox}>
-                            PenguinMod is no longer supporting addons in favour of Editor Settings.
-                            While we continue work on Editor Settings, addons will still be available, but are not guaranteed to work as they should.
-                            Use at your own discretion.
-                        </div>
-                    </div>
-                </div>
                 <div className={styles.addons}>
                     {!this.state.loading && (
                         <div className={styles.section}>
+                            <div className={styles.warning}>
+                                <div className={styles.section}>
+                                    <div className={styles.warningBox}>
+                                        PenguinMod is no longer supporting addons in favour of Editor Settings.
+                                        While we continue work on Editor Settings, addons will still be available, but are not guaranteed to work as they should.
+                                        Use at your own discretion.
+                                    </div>
+                                </div>
+                            </div>
                             <AddonList
                                 addons={addonState}
                                 search={this.state.search}

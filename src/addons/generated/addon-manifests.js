@@ -49,7 +49,6 @@ import _transparent_orphans from "../addons/transparent-orphans/_manifest_entry.
 import _paint_by_default from "../addons/paint-by-default/_manifest_entry.js";
 import _block_cherry_picking from "../addons/block-cherry-picking/_manifest_entry.js";
 import _hide_new_variables from "../addons/hide-new-variables/_manifest_entry.js";
-import _editor_extra_keys from "../addons/editor-extra-keys/_manifest_entry.js";
 import _hide_delete_button from "../addons/hide-delete-button/_manifest_entry.js";
 import _no_script_bumping from "../addons/no-script-bumping/_manifest_entry.js";
 import _disable_stage_drag_select from "../addons/disable-stage-drag-select/_manifest_entry.js";
@@ -122,7 +121,6 @@ export default {
   "paint-by-default": _paint_by_default,
   "block-cherry-picking": _block_cherry_picking,
   "hide-new-variables": _hide_new_variables,
-  "editor-extra-keys": _editor_extra_keys,
   "hide-delete-button": _hide_delete_button,
   "no-script-bumping": _no_script_bumping,
   "disable-stage-drag-select": _disable_stage_drag_select,
