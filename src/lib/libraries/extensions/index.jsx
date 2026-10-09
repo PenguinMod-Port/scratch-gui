@@ -957,6 +957,25 @@ export const penguinmodGallery = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Regular Expressions"
+                description="Name for the dogeiscutRegularExpressions extension"
+                id="pm.gui.extension.dogeiscutRegularExpressions.name"
+            />
+        ),
+        extensionId: 'dogeiscutRegularExpressions',
+        iconURL: require('../extensions/penguinmod/dogeiscutRegularExpressions.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Match data from pieces of text with regular expressions."
+                description="Description for the dogeiscutRegularExpressions extension"
+                id="pm.gui.extension.dogeiscutRegularExpressions.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Sound Systems"
                 description="Name for the jgExtendedAudio extension"
                 id="pm.gui.extension.jgExtendedAudio.name"
