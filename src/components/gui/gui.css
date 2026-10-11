@@ -36,6 +36,10 @@
     overflow: hidden;
 }
 
+.flex-wrapper.stage-left {
+    flex-direction: row-reverse;
+}
+
 .editor-wrapper {
     /*
         This is carefully balanced--  the minimum width at which the GUI will be displayed is 1024px.

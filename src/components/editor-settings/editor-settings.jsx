@@ -69,6 +69,8 @@ class EditorSettingsModal extends React.Component {
                     content: <React.Fragment>
                         <settings.splashModal />
                         <Separator />
+                        <settings.stageLeft />
+                        <Separator />
                         <settings.showExtensionIds />
                     </React.Fragment>
                 },

@@ -53,6 +53,8 @@ import codeIcon from '!../../lib/tw-recolor/build!./icon--code.svg';
 import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
 
+import SettingsStore from '../../editor-settings/settings-store-singleton';
+
 const messages = defineMessages({
     addExtension: {
         id: 'gui.gui.addExtension',
@@ -348,7 +350,7 @@ const GUIComponent = props => {
                     onToggleLoginOpen={onToggleLoginOpen}
                 />
                 <Box className={styles.bodyWrapper}>
-                    <Box className={styles.flexWrapper}>
+                    <Box className={classNames(styles.flexWrapper, {[styles.stageLeft]: SettingsStore.store.stageLeft})}>
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
