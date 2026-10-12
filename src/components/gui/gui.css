@@ -237,6 +237,7 @@
     /* pad entire wrapper to the left and right; allow children to fill width */
     padding-left: $space;
     padding-right: $space;
+    gap: $space;
 
     /* this will only ever be as wide as the stage */
     flex-basis: 0;
@@ -247,7 +248,6 @@
     flex-grow: 1;
     flex-basis: 0;
 
-    padding-top: $space;
     min-height: 0; /* this makes it work in Firefox */
 
     /*

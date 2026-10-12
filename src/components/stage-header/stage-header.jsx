@@ -17,6 +17,7 @@ import unFullScreenIcon from './icon--unfullscreen.svg';
 import largeStageIcon from '!../../lib/tw-recolor/build!./icon--large-stage.svg';
 import smallStageIcon from '!../../lib/tw-recolor/build!./icon--small-stage.svg';
 import fullStageIcon from '!../../lib/tw-recolor/build!./icon--full-stage.svg';
+import hiddenStageIcon from '!../../lib/tw-recolor/build!./icon--hidden-stage.svg'
 import settingsIcon from './icon--settings.svg';
 
 import styles from './stage-header.css';
@@ -38,6 +39,11 @@ const messages = defineMessages({
         defaultMessage: 'Switch to full stage',
         description: 'Button to change stage size to its full size',
         id: 'tw.stageHeader.full'
+    },
+    hiddenStageSizeMessage: {
+        defaultMessage: 'Switch to hidden stage',
+        description: 'Button to change stage size to hide the stage',
+        id: 'pm.gui.stageHeader.full'
     },
     fullScreenMessage: {
         defaultMessage: 'Enter full screen mode',
@@ -75,6 +81,7 @@ const StageHeaderComponent = function (props) {
         onSetStageLarge,
         onSetStageSmall,
         onSetStageFull,
+        onSetStageHidden,
         onOpenSettings,
         isEmbedded,
         stageSize,
@@ -165,6 +172,13 @@ const StageHeaderComponent = function (props) {
                     <ToggleButtons
                         buttons={[
                             {
+                                handleClick: onSetStageHidden,
+                                icon: hiddenStageIcon,
+                                iconClassName: styles.stageButtonIcon,
+                                isSelected: stageSizeMode === STAGE_SIZE_MODES.hidden,
+                                title: props.intl.formatMessage(messages.hiddenStageSizeMessage)
+                            },
+                            {
                                 handleClick: onSetStageSmall,
                                 icon: smallStageIcon,
                                 iconClassName: styles.stageButtonIcon,
@@ -250,6 +264,7 @@ StageHeaderComponent.propTypes = {
     onSetStageLarge: PropTypes.func.isRequired,
     onSetStageSmall: PropTypes.func.isRequired,
     onSetStageFull: PropTypes.func.isRequired,
+    onSetStageHidden: PropTypes.func.isRequired,
     onOpenSettings: PropTypes.func.isRequired,
     isEmbedded: PropTypes.bool.isRequired,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)),
