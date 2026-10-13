@@ -1,6 +1,7 @@
 export default Object.fromEntries([
     "blockColors",
     "blockCommentParent",
+    "blockCornerRadius",
     "blockCounter",
     "blockPinning",
     "cascadeProcedureColors",

@@ -84,6 +84,7 @@ class EditorSettingsModal extends React.Component {
                         <settings.commentColors />
                         <settings.blockCommentParent />
                         <Separator />
+                        <settings.blockCornerRadius />
                         <settings.hexagonalRoundness />
                         <Separator />
                         <settings.outputBubbleAutoTyping />
