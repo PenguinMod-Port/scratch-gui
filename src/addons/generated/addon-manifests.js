@@ -16,7 +16,6 @@ import _clones from "../addons/clones/_manifest_entry.js";
 import _mouse_pos from "../addons/mouse-pos/_manifest_entry.js";
 import _color_picker from "../addons/color-picker/_manifest_entry.js";
 import _remove_sprite_confirm from "../addons/remove-sprite-confirm/_manifest_entry.js";
-import _block_count from "../addons/block-count/_manifest_entry.js";
 import _onion_skinning from "../addons/onion-skinning/_manifest_entry.js";
 import _paint_snap from "../addons/paint-snap/_manifest_entry.js";
 import _default_costume_editor_color from "../addons/default-costume-editor-color/_manifest_entry.js";
@@ -25,11 +24,9 @@ import _2d_color_picker from "../addons/2d-color-picker/_manifest_entry.js";
 import _paint_skew from "../addons/paint-skew/_manifest_entry.js";
 import _better_img_uploads from "../addons/better-img-uploads/_manifest_entry.js";
 import _pick_colors_from_stage from "../addons/pick-colors-from-stage/_manifest_entry.js";
-import _editor_square_inputs from "../addons/editor-square-inputs/_manifest_entry.js";
 import _zebra_striping from "../addons/zebra-striping/_manifest_entry.js";
 import _editor_compact from "../addons/editor-compact/_manifest_entry.js";
 import _custom_menu_bar from "../addons/custom-menu-bar/_manifest_entry.js";
-import _custom_block_text from "../addons/custom-block-text/_manifest_entry.js";
 import _editor_colored_context_menus from "../addons/editor-colored-context-menus/_manifest_entry.js";
 import _editor_buttons_reverse_order from "../addons/editor-buttons-reverse-order/_manifest_entry.js";
 import _variable_manager from "../addons/variable-manager/_manifest_entry.js";
@@ -85,7 +82,6 @@ export default {
   "mouse-pos": _mouse_pos,
   "color-picker": _color_picker,
   "remove-sprite-confirm": _remove_sprite_confirm,
-  "block-count": _block_count,
   "onion-skinning": _onion_skinning,
   "paint-snap": _paint_snap,
   "default-costume-editor-color": _default_costume_editor_color,
@@ -94,11 +90,9 @@ export default {
   "paint-skew": _paint_skew,
   "better-img-uploads": _better_img_uploads,
   "pick-colors-from-stage": _pick_colors_from_stage,
-  "editor-square-inputs": _editor_square_inputs,
   "zebra-striping": _zebra_striping,
   "editor-compact": _editor_compact,
   "custom-menu-bar": _custom_menu_bar,
-  "custom-block-text": _custom_block_text,
   "editor-colored-context-menus": _editor_colored_context_menus,
   "editor-buttons-reverse-order": _editor_buttons_reverse_order,
   "variable-manager": _variable_manager,
