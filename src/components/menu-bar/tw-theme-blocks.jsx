@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {BLOCKS_DARK, BLOCKS_HIGH_CONTRAST, BLOCKS_THREE, Theme} from '../../lib/themes/index.js';
+import {BLOCKS_DARK, BLOCKS_FLAT, BLOCKS_HIGH_CONTRAST, BLOCKS_THREE, Theme} from '../../lib/themes/index.js';
 import {openBlocksThemeMenu, blocksThemeMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -24,6 +24,11 @@ const options = defineMessages({
         description: 'Name of normal Scratch block colors.',
         id: 'tw.blockColors.three'
     },
+    [BLOCKS_FLAT]: {
+        defaultMessage: 'Flat',
+        description: 'Name of the flat block colors',
+        id: 'tw.blockColors.flat'
+    },
     [BLOCKS_HIGH_CONTRAST]: {
         defaultMessage: 'High Contrast',
         description: 'Name of the high contrast block colors.',
@@ -39,7 +44,8 @@ const options = defineMessages({
 const icons = {
     [BLOCKS_THREE]: threeIcon,
     [BLOCKS_HIGH_CONTRAST]: highContrastIcon,
-    [BLOCKS_DARK]: darkIcon
+    [BLOCKS_DARK]: darkIcon,
+    [BLOCKS_FLAT]: threeIcon
 };
 
 const ThemeIcon = ({id}) => (
@@ -107,6 +113,7 @@ const BlocksThemeMenu = ({
         <Submenu place={isRtl ? 'left' : 'right'}>
             {[
                 BLOCKS_THREE,
+                BLOCKS_FLAT,
                 BLOCKS_HIGH_CONTRAST,
                 BLOCKS_DARK
             ].map(i => (

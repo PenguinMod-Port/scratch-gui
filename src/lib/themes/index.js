@@ -15,6 +15,7 @@ import * as guiAmoled from './gui/amoled';
 import * as blocksThree from './blocks/three';
 import * as blocksHighContrast from './blocks/high-contrast';
 import * as blocksDark from './blocks/dark';
+import * as blocksFlat from './blocks/flat';
 
 const ACCENT_PURPLE = 'purple';
 const ACCENT_BLUE = 'blue';
@@ -47,6 +48,7 @@ const GUI_DEFAULT = GUI_LIGHT;
 const BLOCKS_THREE = 'three';
 const BLOCKS_DARK = 'dark';
 const BLOCKS_HIGH_CONTRAST = 'high-contrast';
+const BLOCKS_FLAT = 'flat';
 const BLOCKS_DEFAULT = BLOCKS_THREE;
 const defaultBlockColors = blocksThree.blockColors;
 const BLOCKS_MAP = {
@@ -73,6 +75,14 @@ const BLOCKS_MAP = {
         colourModifier: blocksDark.colourModifier,
         textColourModifier: blocksDark.textColourModifier,
         useForStage: false
+    },
+    [BLOCKS_FLAT]: {
+        blocksMediaFolder: 'blocks-media/default',
+        colors: defaultsDeep({}, blocksFlat.blockColors, defaultBlockColors),
+        extensions: blocksFlat.extensions,
+        colourModifier: blocksFlat.colourModifier,
+        textColourModifier: blocksFlat.textColourModifier,
+        useForStage: true
     }
 };
 
@@ -172,5 +182,6 @@ export {
     BLOCKS_THREE,
     BLOCKS_DARK,
     BLOCKS_HIGH_CONTRAST,
+    BLOCKS_FLAT,
     BLOCKS_MAP
 };
