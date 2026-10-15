@@ -48,6 +48,12 @@ jobs:
     - name: Deploy to GitHub Pages
       if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
       uses: actions/deploy-pages@v4.0.5
+
+    - name: Make zip for release
+      if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && inputs.semver
+      run: |
+        cd ./build/
+        zip -r ../penguinmod-v${{ inputs.semver }}.zip .
     - name: Create release
       if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && inputs.semver
       uses: ncipollo/release-action@v1.21.0
@@ -55,3 +61,4 @@ jobs:
         tag: "v${{ inputs.semver }}"
         name: "v${{ inputs.semver }}"
         commit: develop
+        artifacts: "penguinmod-v${{ inputs.semver }}.zip"
