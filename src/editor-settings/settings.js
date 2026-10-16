@@ -10,6 +10,8 @@ export default Object.fromEntries([
     "disableExpandables",
     "hexagonalRoundness",
     "mergeOperators",
+    "notchHeight",
+    "notchSpacing",
     "outputBubbleAutoTyping",
     "paintMultiTool",
     "paintPenPressure",
