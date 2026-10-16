@@ -6,6 +6,8 @@ on:
         type: string
         required: false
   push:
+    branches:
+      - develop
   pull_request:
 
 permissions:
