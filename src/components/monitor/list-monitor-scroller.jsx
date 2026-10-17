@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import {FormattedMessage} from 'react-intl';
+import DOMElementRenderer from '../../containers/dom-element-renderer.jsx';
 
 import styles from './monitor.css';
 import {List} from 'react-virtualized';
@@ -73,7 +74,7 @@ class ListMonitorScroller extends React.Component {
 
                     ) : (
                         <div className={styles.valueInner}>
-                            {safeStringify(this.props.values[index])}
+                            {this.props.values[index] instanceof HTMLElement ? (<DOMElementRenderer domElement={this.props.values[index]} />) : this.props.values[index]}
                         </div>
                     )}
                 </div>
@@ -81,7 +82,8 @@ class ListMonitorScroller extends React.Component {
         );
     }
     render () {
-        const {height, values, width, activeIndex, activeValue} = this.props;
+        let {height, values, width, activeIndex, activeValue} = this.props;
+        values ??= [];
         // Keep the active index in view if defined, else must be undefined for List component
         const scrollToIndex = activeIndex === null ? undefined : activeIndex; /* eslint-disable-line no-undefined */
         return (
@@ -118,7 +120,8 @@ ListMonitorScroller.propTypes = {
     onRemove: PropTypes.func,
     values: PropTypes.arrayOf(PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.number
+        PropTypes.number,
+        PropTypes.instanceOf(HTMLElement)
     ])),
     width: PropTypes.number
 };

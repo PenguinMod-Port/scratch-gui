@@ -4,22 +4,32 @@ import React from 'react';
 import VM from 'scratch-vm';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import log from '../lib/log';
+import twLibraryMixin from '../lib/libraries/tw-library-mixin';
 
 import extensionLibraryContent, {
     galleryError,
     galleryLoading,
-    galleryMore
+    galleryMore,
+    sharkpoolGallery,
+    penguinmodGallery
 } from '../lib/libraries/extensions/index.jsx';
-import extensionTags from '../lib/libraries/tw-extension-tags';
+import { isTrustedExtension } from "./tw-security-manager.jsx";
+import extensionTags from '../lib/libraries/extension-tags';
 
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
+import extensions from '../lib/libraries/extensions/index.jsx';
 
 const messages = defineMessages({
     extensionTitle: {
         defaultMessage: 'Choose an Extension',
         description: 'Heading for the extension library',
         id: 'gui.extensionLibrary.chooseAnExtension'
+    },
+    header: {
+        defaultMessage: 'Extensions',
+        description: 'Header for extension library',
+        id: 'pm.gui.extensionLibrary.header'
     }
 });
 
@@ -27,6 +37,7 @@ const toLibraryItem = extension => {
     if (typeof extension === 'object') {
         return ({
             rawURL: extension.iconURL || extensionIcon,
+            featured: true,
             ...extension
         });
     }
@@ -40,6 +51,7 @@ const translateGalleryItem = (extension, locale) => ({
 });
 
 let cachedGallery = null;
+let externalGalleryListenerAttached = false;
 
 const fetchLibrary = async () => {
     const res = await fetch('https://extensions.turbowarp.org/generated-metadata/extensions-v0.json');
@@ -55,7 +67,7 @@ const fetchLibrary = async () => {
         extensionId: extension.id,
         extensionURL: `https://extensions.turbowarp.org/${extension.slug}.js`,
         iconURL: `https://extensions.turbowarp.org/${extension.image || 'images/unknown.svg'}`,
-        tags: ['tw'],
+        tags: [],
         credits: [
             ...(extension.original || []),
             ...(extension.by || [])
@@ -81,22 +93,33 @@ const fetchLibrary = async () => {
         })) : null,
         incompatibleWithScratch: !extension.scratchCompatible,
         featured: true
-    }));
+    }))
+        .map(extension => twLibraryMixin[extension.extensionId] ?
+            {...extension, ...twLibraryMixin[extension.extensionId]} :
+            (console.debug(`no mixin for ${extension.extensionId}`) || extension)
+        )
+        .map(extension => ({...extension, tags: [...extension.tags, "tw"]}))
+        .filter(extension => !extension.hide);
 };
 
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleItemSelect'
+            'handleItemSelect',
+            'wrapperEventHandler',
         ]);
+        this.pendingExtensions = new Set();
         this.state = {
             gallery: cachedGallery,
             galleryError: null,
-            galleryTimedOut: false
+            galleryTimedOut: false,
         };
     }
     componentDidMount () {
+        if (!externalGalleryListenerAttached) {
+            window.addEventListener('message', this.wrapperEventHandler);
+        }
         if (!this.state.gallery) {
             const timeout = setTimeout(() => {
                 this.setState({
@@ -127,15 +150,8 @@ class ExtensionLibrary extends React.PureComponent {
         }
 
         const extensionId = item.extensionId;
-
         if (extensionId === 'custom_extension') {
             this.props.onOpenCustomExtensionModal();
-            return;
-        }
-
-        if (extensionId === 'procedures_enable_return') {
-            this.props.onEnableProcedureReturns();
-            this.props.onCategorySelected('myBlocks');
             return;
         }
 
@@ -156,17 +172,92 @@ class ExtensionLibrary extends React.PureComponent {
             }
         }
     }
+    async wrapperEventHandler(e) {
+        /**
+         * External gallery support.
+         * 
+         * Supports galleries outside the editor to automatically load extensions without
+         * having to manually input the extension code.
+         */
+        // Don't recursively try to run this event.
+        if (e.origin === window.origin) return;
+
+        // 'isTrustedExtension' checks the extension url.
+        if (!isTrustedExtension(e.origin)) {
+            e.source.postMessage({
+                p4: {
+                    type: 'error',
+                    error: 'not_trusted'
+                }
+            }, e.origin);
+            return;
+        }
+
+        const extensionSource = e.data.loadExt;
+        if (!extensionSource || typeof extensionSource !== 'string') {
+            e.source.postMessage({
+                p4: {
+                    type: 'error',
+                    error: 'no_extension_source_string'
+                }
+            }, e.origin);
+            return;
+        }
+
+        // Load the extension like any other custom extension url (this means sandboxing for some urls)
+        if (
+            this.props.vm.extensionManager.isExtensionLoaded(extensionSource) ||
+            this.props.vm.extensionManager.workerURLs.includes(extensionSource)
+        ) {
+            this.props.onCategorySelected(extensionSource);
+            e.source.postMessage({
+                p4: {
+                    type: 'success'
+                }
+            }, e.origin);
+        } else {
+            if (this.pendingExtensions.has(extensionSource)) {
+                // Prevent dual loading.
+                return;
+            }
+
+            this.pendingExtensions.add(extensionSource);
+            this.props.vm.extensionManager.loadExtensionURL(extensionSource)
+                .then(() => {
+                    this.pendingExtensions.delete(extensionSource);
+                    this.props.onCategorySelected(extensionSource);
+                    e.source.postMessage({
+                        p4: {
+                            type: 'success'
+                        }
+                    }, e.origin);
+                })
+                .catch(err => {
+                    log.error(err);
+                    // The source website is expected to display the error
+                    e.source.postMessage({
+                        p4: {
+                            type: 'error',
+                            error: 'couldnt_load',
+                            pmerror: String(err.stack ? err.stack : err)
+                        }
+                    }, e.origin);
+                });
+        }
+    }
     render () {
         let library = null;
         if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
             library = extensionLibraryContent.map(toLibraryItem);
             library.push('---');
+            library = library.concat(penguinmodGallery.map(toLibraryItem));
+            library.push('---');
             if (this.state.gallery) {
                 library.push(toLibraryItem(galleryMore));
+                library.push(toLibraryItem(sharkpoolGallery));
                 const locale = this.props.intl.locale;
                 library.push(
                     ...this.state.gallery
-                        .filter(i => i.extensionId !== 'faceSensing')
                         .map(i => translateGalleryItem(i, locale))
                         .map(toLibraryItem)
                 );
@@ -185,6 +276,7 @@ class ExtensionLibrary extends React.PureComponent {
                 id="extensionLibrary"
                 tags={extensionTags}
                 title={this.props.intl.formatMessage(messages.extensionTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}

@@ -174,7 +174,7 @@ class TWRestorePointManager extends React.Component {
 
         RestorePointAPI.exportRestorePoint(id)
             .then(result => {
-                downloadBlob(`${result.title}.sb3`, result.blob);
+                downloadBlob(`${result.title}.pmp`, result.blob);
                 removeFromExportingList();
             })
             .catch(error => {

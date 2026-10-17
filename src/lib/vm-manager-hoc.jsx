@@ -13,7 +13,10 @@ import {
     onLoadedProject,
     projectError
 } from '../reducers/project-state';
+import { openSplashModal } from '../reducers/modals';
 import log from './log';
+
+import SettingsStore from '../editor-settings/settings-store-singleton';
 
 /**
  * List of fonts that could be used by security prompts.
@@ -51,6 +54,12 @@ const vmManagerHOC = function (WrappedComponent) {
                 }
                 this.props.vm.initialized = true;
                 this.props.vm.setLocale(this.props.locale, this.props.messages);
+
+                // perfect place to load settings!
+                SettingsStore.readLocalStorage();
+                if (!this.props.isPlayerOnly && SettingsStore.store.splashModal) {
+                    this.props.onOpenSplashModal();
+                }
             }
             if (!this.props.isPlayerOnly && !this.props.isStarted) {
                 this.props.vm.start();
@@ -136,7 +145,8 @@ const vmManagerHOC = function (WrappedComponent) {
         projectData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
         projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         username: PropTypes.string,
-        vm: PropTypes.instanceOf(VM).isRequired
+        vm: PropTypes.instanceOf(VM).isRequired,
+        onOpenSplashModal: PropTypes.func
     };
 
     const mapStateToProps = state => {
@@ -158,7 +168,8 @@ const vmManagerHOC = function (WrappedComponent) {
         onError: error => dispatch(projectError(error)),
         onLoadedProject: (loadingState, canSave) =>
             dispatch(onLoadedProject(loadingState, canSave, true)),
-        onSetProjectUnchanged: () => dispatch(setProjectUnchanged())
+        onSetProjectUnchanged: () => dispatch(setProjectUnchanged()),
+        onOpenSplashModal: () => dispatch(openSplashModal())
     });
 
     // Allow incoming props to override redux-provided props. Used to mock in tests.

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import DOMElementRenderer from '../../containers/dom-element-renderer.jsx';
 
 import styles from './monitor.css';
 
@@ -17,7 +18,7 @@ const SliderMonitor = ({categoryColor, isDiscrete, label, min, max, value, onSli
                     color: categoryColor.text
                 }}
             >
-                {value}
+                {value instanceof HTMLElement ? (<DOMElementRenderer domElement={value} />) : value}
             </div>
         </div>
         <div className={styles.row}>

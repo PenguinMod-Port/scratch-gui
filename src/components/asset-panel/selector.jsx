@@ -26,6 +26,7 @@ const Selector = props => {
         onDeleteClick,
         onDuplicateClick,
         onExportClick,
+        onSpecialExportClick,
         onItemClick
     } = props;
 
@@ -81,6 +82,7 @@ const Selector = props => {
                             onDeleteButtonClick={onDeleteClick}
                             onDuplicateButtonClick={onDuplicateClick}
                             onExportButtonClick={onExportClick}
+                            onSpecialExportButtonClick={onSpecialExportClick}
                         />
                     </SortableAsset>
                 ))}
@@ -109,6 +111,7 @@ Selector.propTypes = {
     onDeleteClick: PropTypes.func,
     onDuplicateClick: PropTypes.func,
     onExportClick: PropTypes.func,
+    onSpecialExportClick: PropTypes.func,
     onItemClick: PropTypes.func.isRequired,
     onRemoveSortable: PropTypes.func,
     ordering: PropTypes.arrayOf(PropTypes.number),

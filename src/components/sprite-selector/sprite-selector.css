@@ -53,6 +53,7 @@
     */
     height: calc(100% - $sprite-info-height);
     overflow-y: auto;
+    min-width: 5rem;
 }
 
 .scroll-wrapper-dragging {

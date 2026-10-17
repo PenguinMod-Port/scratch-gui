@@ -326,6 +326,7 @@ class Stage extends React.Component {
             deltaY: e.deltaY
         };
         this.props.vm.postIOData('mouseWheel', data);
+        e.preventDefault();
     }
     onContextMenu (e) {
         if (this.props.vm.runtime.ioDevices.mouse.usesRightClickDown) {

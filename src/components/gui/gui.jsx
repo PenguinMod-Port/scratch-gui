@@ -31,16 +31,19 @@ import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
 import TWUsernameModal from '../../containers/tw-username-modal.jsx';
 import TWSettingsModal from '../../containers/tw-settings-modal.jsx';
+import EditorSettingsModal from '../editor-settings/editor-settings.jsx';
 import TWSecurityManager from '../../containers/tw-security-manager.jsx';
 import TWCustomExtensionModal from '../../containers/tw-custom-extension-modal.jsx';
 import TWRestorePointManager from '../../containers/tw-restore-point-manager.jsx';
 import TWFontsModal from '../../containers/tw-fonts-modal.jsx';
 import TWUnknownPlatformModal from '../../containers/tw-unknown-platform-modal.jsx';
 import TWInvalidProjectModal from '../../containers/tw-invalid-project-modal.jsx';
+import SplashModal from '../../containers/splash-modal.jsx';
 
 import {STAGE_SIZE_MODES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 import {Theme} from '../../lib/themes';
+import tintFilter from '../../lib/tint-filter';
 
 import {isRendererSupported, isBrowserSupported} from '../../lib/tw-environment-support-prober';
 
@@ -49,6 +52,8 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from '!../../lib/tw-recolor/build!./icon--code.svg';
 import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
 import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
+
+import SettingsStore from '../../editor-settings/settings-store-singleton';
 
 const messages = defineMessages({
     addExtension: {
@@ -154,10 +159,12 @@ const GUIComponent = props => {
         tipsLibraryVisible,
         usernameModalVisible,
         settingsModalVisible,
+        editorSettingsModalVisible,
         customExtensionModalVisible,
         fontsModalVisible,
         unknownPlatformModalVisible,
         invalidProjectModalVisible,
+        splashModalVisible,
         vm,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -171,8 +178,23 @@ const GUIComponent = props => {
         tabList: classNames(tabStyles.reactTabsTabList, styles.tabList),
         tabPanel: classNames(tabStyles.reactTabsTabPanel, styles.tabPanel),
         tabPanelSelected: classNames(tabStyles.reactTabsTabPanelSelected, styles.isSelected),
-        tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
+        tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected),
+        tabDisabled: classNames(tabStyles.reactTabsTab, styles.tab, styles.isDisabled)
     };
+
+    const runtime = props.vm.runtime;
+    const [editorTabs, setEditorTabs] = React.useState(
+        () => Object.values(runtime.tabManager.tabs)
+    );
+    React.useEffect(() => {
+        const updateTabs = () => {
+            setEditorTabs(Object.values(runtime.tabManager.tabs));
+        };
+        runtime.on('EDITOR_TABS_UPDATE', updateTabs);
+        return () => {
+            runtime.off('EDITOR_TABS_UPDATE', updateTabs);
+        };
+    }, [runtime]);
 
     const unconstrainedWidth = (
         UNCONSTRAINED_NON_STAGE_WIDTH +
@@ -188,10 +210,12 @@ const GUIComponent = props => {
                 <TWRestorePointManager />
                 {usernameModalVisible && <TWUsernameModal />}
                 {settingsModalVisible && <TWSettingsModal />}
+                {editorSettingsModalVisible && <EditorSettingsModal />}
                 {customExtensionModalVisible && <TWCustomExtensionModal />}
                 {fontsModalVisible && <TWFontsModal />}
                 {unknownPlatformModalVisible && <TWUnknownPlatformModal />}
                 {invalidProjectModalVisible && <TWInvalidProjectModal />}
+                {splashModalVisible && !loading && <SplashModal onStartSelectingFileUpload={onStartSelectingFileUpload} />}
             </React.Fragment>
         );
 
@@ -326,7 +350,7 @@ const GUIComponent = props => {
                     onToggleLoginOpen={onToggleLoginOpen}
                 />
                 <Box className={styles.bodyWrapper}>
-                    <Box className={styles.flexWrapper}>
+                    <Box className={classNames(styles.flexWrapper, {[styles.stageLeft]: SettingsStore.store.stageLeft})}>
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
@@ -336,9 +360,10 @@ const GUIComponent = props => {
                                 selectedTabPanelClassName={tabClassNames.tabPanelSelected}
                                 onSelect={onActivateTab}
                             >
-                                <TabList className={tabClassNames.tabList}>
-                                    <Tab className={tabClassNames.tab}>
+                                <TabList className={tabClassNames.tabList} style={{'--selected-tab-layer': editorTabs.length + 4}}>
+                                    <Tab className={tabClassNames.tab} style={{'--tab-layer': editorTabs.length + 3}}>
                                         <img
+                                            className={styles.tabIcon}
                                             draggable={false}
                                             src={codeIcon()}
                                         />
@@ -351,8 +376,10 @@ const GUIComponent = props => {
                                     <Tab
                                         className={tabClassNames.tab}
                                         onClick={onActivateCostumesTab}
+                                        style={{'--tab-layer': editorTabs.length + 2}}
                                     >
                                         <img
+                                            className={styles.tabIcon}
                                             draggable={false}
                                             src={costumesIcon()}
                                         />
@@ -373,8 +400,10 @@ const GUIComponent = props => {
                                     <Tab
                                         className={tabClassNames.tab}
                                         onClick={onActivateSoundsTab}
+                                        style={{'--tab-layer': editorTabs.length + 1}}
                                     >
                                         <img
+                                            className={styles.tabIcon}
                                             draggable={false}
                                             src={soundsIcon()}
                                         />
@@ -384,6 +413,23 @@ const GUIComponent = props => {
                                             id="gui.gui.soundsTab"
                                         />
                                     </Tab>
+                                    {editorTabs.filter(tab => tab.visible !== false).map((tab, index) => (
+                                        <Tab
+                                            key={tab.id}
+                                            className={!tab.enabled ? tabClassNames.tabDisabled : tabClassNames.tab}
+                                            disabled={!tab.enabled}
+                                            style={{'--tab-layer': editorTabs.length - index}}
+                                        >
+                                            <span className={styles.tabIcon}>
+                                                <img
+                                                    draggable={false}
+                                                    src={tab.uri}
+                                                    style={{filter: tintFilter(theme.getGuiColors()['looks-secondary'])}}
+                                                />
+                                            </span>
+                                            <span>{tab.name}</span>
+                                        </Tab>
+                                    ))}
                                 </TabList>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     <Box className={styles.blocksWrapper}>
@@ -426,6 +472,26 @@ const GUIComponent = props => {
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
                                 </TabPanel>
+                                {editorTabs.filter(tab => tab.visible !== false).map(tab => (
+                                    <TabPanel key={tab.id} className={tabClassNames.tabPanel}>
+                                        <Box className={styles.tabContainer}>
+                                            <div style={{width: "100%"}} ref={container => {
+                                                if (!container) return;
+
+                                                let element = null;
+
+                                                if(tab.element !== null) {
+                                                    element = tab.element;
+                                                } else {
+                                                    element = document.createElement('p');
+                                                    element.textContent = 'No tab content!';
+                                                    element.className = styles.tabContentGone;
+                                                }
+                                                container.replaceChildren(element);
+                                            }} />
+                                        </Box>
+                                    </TabPanel>
+                                ))}
                             </Tabs>
                             {backpackVisible ? (
                                 <Backpack host={backpackHost} />
@@ -536,10 +602,12 @@ GUIComponent.propTypes = {
     tipsLibraryVisible: PropTypes.bool,
     usernameModalVisible: PropTypes.bool,
     settingsModalVisible: PropTypes.bool,
+    editorSettingsModalVisible: PropTypes.bool,
     customExtensionModalVisible: PropTypes.bool,
     fontsModalVisible: PropTypes.bool,
     unknownPlatformModalVisible: PropTypes.bool,
     invalidProjectModalVisible: PropTypes.bool,
+    splashModalVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 GUIComponent.defaultProps = {

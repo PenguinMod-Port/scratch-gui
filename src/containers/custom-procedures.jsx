@@ -11,16 +11,25 @@ class CustomProcedures extends React.Component {
         super(props);
         bindAll(this, [
             'handleAddLabel',
-            'handleAddBoolean',
-            'handleAddTextNumber',
+            'handleAddCommand',
+            'handleAddArgument',
             'handleToggleWarp',
+            'handleToggleTerminal',
+            'handleToggleGlobal',
+            'handleForceOutput',
+            'handleSetProcColor',
+            'handleCustomColorChange',
             'handleCancel',
             'handleOk',
             'setBlocks'
         ]);
         this.state = {
             rtlOffset: 0,
-            warp: false
+            warp: false,
+            terminal: false,
+            global: false,
+            forceOutput: 0,
+            color: '#000000'
         };
     }
     componentWillUnmount () {
@@ -43,6 +52,8 @@ class CustomProcedures extends React.Component {
         ScratchBlocks.Blocks.defaultToolbox = null;
         this.workspace = ScratchBlocks.inject(this.blocks, workspaceConfig);
         ScratchBlocks.Blocks.defaultToolbox = oldDefaultToolbox;
+
+        this.blockly = ScratchBlocks;
 
         // Create the procedure declaration block for editing the mutation.
         this.mutationRoot = this.workspace.newBlock('procedures_declaration');
@@ -104,10 +115,26 @@ class CustomProcedures extends React.Component {
         this.mutationRoot.domToMutation(this.props.mutator);
         this.mutationRoot.initSvg();
         this.mutationRoot.render();
-        this.setState({warp: this.mutationRoot.getWarp()});
+        this.setState({
+            warp: this.mutationRoot.getWarp(),
+            global: this.mutationRoot.getGlobal(),
+            forceOutput: this.mutationRoot.getForceOutput(),
+            terminal: this.mutationRoot.isTerminal_,
+            color: this.mutationRoot.procColour_.startsWith("#") ? this.mutationRoot.procColour_ : "#000000"
+        });
+
         // Allow the initial events to run to position this block, then focus.
         setTimeout(() => {
             this.mutationRoot.focusLastEditor_();
+
+            if (this.state.forceOutput === 0) {
+                this.mutationRoot.setNextStatement(!this.state.terminal);
+            } else {
+                this.mutationRoot.setOutputShape(this.state.forceOutput);
+                this.mutationRoot.setOutput(true);
+                this.mutationRoot.setNextStatement(false);
+                this.mutationRoot.setPreviousStatement(false);
+            }
         });
     }
     handleCancel () {
@@ -122,14 +149,14 @@ class CustomProcedures extends React.Component {
             this.mutationRoot.addLabelExternal();
         }
     }
-    handleAddBoolean () {
+    handleAddCommand () {
         if (this.mutationRoot) {
-            this.mutationRoot.addBooleanExternal();
+            this.mutationRoot.addCommandExternal();
         }
     }
-    handleAddTextNumber () {
+    handleAddArgument (type) {
         if (this.mutationRoot) {
-            this.mutationRoot.addStringNumberExternal();
+            this.mutationRoot.addArgumentExternal(type);
         }
     }
     handleToggleWarp () {
@@ -139,17 +166,76 @@ class CustomProcedures extends React.Component {
             this.setState({warp: newWarp});
         }
     }
+    handleToggleGlobal () {
+        if (this.mutationRoot) {
+            const newGlobal = !this.mutationRoot.getGlobal();
+            this.mutationRoot.setGlobal(newGlobal);
+            this.setState({global: newGlobal});
+        }
+    }
+    handleToggleTerminal () {
+        if (this.mutationRoot) {
+            const isReporter = this.mutationRoot.getForceOutput() == 0;
+            const newTerminal = !this.mutationRoot.isTerminal_;
+
+            this.mutationRoot.isTerminal_ = newTerminal;
+            if (isReporter) {
+                this.mutationRoot.setNextStatement(!newTerminal)
+            }
+            this.mutationRoot.updateDisplay_();
+            this.setState({terminal: newTerminal});
+        }
+    } 
+    handleForceOutput (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.setForceOutput(value);
+
+            this.mutationRoot.setOutputShape(value == 0 ? 3 : Number(value));
+            this.mutationRoot.setOutput(value != 0);
+            this.mutationRoot.setPreviousStatement(value == 0);
+            this.mutationRoot.setNextStatement(value == 0
+                ? !this.state.terminal
+                : false
+            );
+
+            // If we are currently editing a argument/label name,
+            // calling this will fix any incorrect positioning on the screen.
+            this.blockly.WidgetDiv.repositionForWindowResize();
+
+            this.setState({forceOutput: value});
+        }
+    }
+    handleSetProcColor (value) {
+        if (this.mutationRoot) {
+            this.mutationRoot.procColour_ = value;
+            this.mutationRoot.updateDisplay_();
+            this.mutationRoot.updateDisplay_(); // Call a second time to fix shadow outlines
+            this.setState({color: value.startsWith("#") ? value : "#000000"});
+        }
+    }
+    handleCustomColorChange (e) {
+        this.handleSetProcColor(e.target.value);
+    }
     render () {
         return (
             <CustomProceduresComponent
                 componentRef={this.setBlocks}
                 warp={this.state.warp}
-                onAddBoolean={this.handleAddBoolean}
+                terminal={this.state.terminal}
+                global={this.state.global}
+                forceOutput={this.state.forceOutput}
+                onAddCommand={this.handleAddCommand}
                 onAddLabel={this.handleAddLabel}
-                onAddTextNumber={this.handleAddTextNumber}
+                onAddTextNumber={this.handleAddArgument}
                 onCancel={this.handleCancel}
                 onOk={this.handleOk}
                 onToggleWarp={this.handleToggleWarp}
+                onToggleTerminal={this.handleToggleTerminal}
+                onToggleGlobal={this.handleToggleGlobal}
+                onForceOutput={this.handleForceOutput}
+                setProcColor={this.handleSetProcColor}
+                onCustomColorChange={this.handleCustomColorChange}
+                currentColor={this.state.color}
             />
         );
     }

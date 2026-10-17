@@ -79,6 +79,7 @@ class CostumeTab extends React.Component {
             'handleDeleteCostume',
             'handleDuplicateCostume',
             'handleExportCostume',
+            'handleExportCostumeExtras',
             'handleNewCostume',
             'handleNewBlankCostume',
             'handleSurpriseCostume',
@@ -146,6 +147,14 @@ class CostumeTab extends React.Component {
         const item = this.props.vm.editingTarget.sprite.costumes[costumeIndex];
         const blob = new Blob([
             this.props.vm.getExportedCostume(item)
+        ], {type: item.asset.assetType.contentType});
+        downloadBlob(`${item.name}.${item.asset.dataFormat}`, blob);
+    }
+    handleExportCostumeExtras () {
+        const costumeIndex = this.state.selectedCostumeIndex ?? 0;
+        const item = this.props.vm.editingTarget.sprite.costumes[costumeIndex];
+        const blob = new Blob([
+            this.props.vm.getExportedCostume(item, true)
         ], {type: item.asset.assetType.contentType});
         downloadBlob(`${item.name}.${item.asset.dataFormat}`, blob);
     }
@@ -315,6 +324,7 @@ class CostumeTab extends React.Component {
                 onDrop={this.handleDrop}
                 onDuplicateClick={this.handleDuplicateCostume}
                 onExportClick={this.handleExportCostume}
+                onSpecialExportClick={this.handleExportCostumeExtras}
                 onItemClick={this.handleSelectCostume}
             >
                 {target.costumes ?

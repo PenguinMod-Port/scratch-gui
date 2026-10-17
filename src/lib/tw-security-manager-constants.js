@@ -9,7 +9,9 @@ const SecurityModals = {
     Notify: 'Notify',
     Geolocate: 'Geolocate',
     Embed: 'Embed',
-    Download: 'Download'
+    Download: 'Download',
+    Unsandbox: 'Unsandbox',
+    ScreenshotCamera: 'ScreenshotCamera'
 };
 
 export default SecurityModals;

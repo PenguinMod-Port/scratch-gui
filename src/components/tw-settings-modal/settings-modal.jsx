@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import Box from '../box/box.jsx';
 import Modal from '../../containers/modal.jsx';
+import ModalTabs from '../modal/modal-tabs.jsx';
 import FancyCheckbox from '../tw-fancy-checkbox/checkbox.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
@@ -19,14 +20,29 @@ const BufferedInput = BufferedInputHOC(Input);
 
 const messages = defineMessages({
     title: {
-        defaultMessage: 'Advanced Settings',
+        defaultMessage: 'Project Settings',
         description: 'Title of settings modal',
-        id: 'tw.settingsModal.title'
+        id: 'pm.gui.settingsModal.title'
     },
     help: {
         defaultMessage: 'Click for help',
         description: 'Hover text of help icon in settings',
         id: 'tw.settingsModal.help'
+    },
+    render: {
+        defaultMessage: 'Render',
+        description: 'Label for render tab',
+        id: 'pm.gui.settingsModal.render'
+    },
+    limits: {
+        defaultMessage: 'Limits',
+        description: 'Label for limits tab',
+        id: 'pm.gui.settingsModal.limits'
+    },
+    optimization: {
+        defaultMessage: 'Optimization',
+        description: 'Label for optimization tab',
+        id: 'pm.gui.settingsModal.optimization'
     }
 });
 
@@ -41,6 +57,8 @@ const LearnMore = props => (
         </DocumentationLink>
     </React.Fragment>
 );
+
+const Separator = props => <div className={styles.separator}></div>
 
 class UnwrappedSetting extends React.Component {
     constructor (props) {
@@ -128,6 +146,36 @@ BooleanSetting.propTypes = {
     label: PropTypes.node.isRequired
 };
 
+const IntegerSetting = ({value, onChange, label, min, max, defaultValue, ...props}) => (
+    <Setting
+        {...props}
+        active={value !== defaultValue}
+        primary={
+            <label className={styles.label}>
+                {label}
+                <span className={styles.space}></span>
+                <BufferedInput
+                    className={styles.input}
+                    value={value}
+                    onSubmit={onChange}
+                    type="number"
+                    step="1"
+                    min={min}
+                    max={max}
+                />
+            </label>
+        }
+    />
+);
+IntegerSetting.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.number.isRequired,
+    label: PropTypes.node.isRequired,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    defaultValue: PropTypes.number
+};
+
 const HighQualityPen = props => (
     <BooleanSetting
         {...props}
@@ -151,45 +199,33 @@ const HighQualityPen = props => (
 );
 
 const CustomFPS = props => (
-    <BooleanSetting
-        value={props.framerate !== 30}
+    <IntegerSetting
+        value={props.framerate}
         onChange={props.onChange}
         label={
             <FormattedMessage
-                defaultMessage="60 FPS (Custom FPS)"
-                description="FPS setting"
-                id="tw.settingsModal.fps"
+                defaultMessage="Custom FPS: "
+                description="Custom FPS setting"
+                id="pm.gui.settingsModal.fps"
             />
         }
         help={
             <FormattedMessage
                 // eslint-disable-next-line max-len
-                defaultMessage="Runs scripts 60 times per second instead of 30. Most projects will not work properly with this enabled. You should try Interpolation with 60 FPS mode disabled if that is the case. {customFramerate}."
-                description="FPS setting help"
-                id="tw.settingsModal.fpsHelp"
-                values={{
-                    customFramerate: (
-                        <a
-                            onClick={props.onCustomizeFramerate}
-                            tabIndex="0"
-                        >
-                            <FormattedMessage
-                                defaultMessage="Click to use a framerate other than 30 or 60"
-                                description="FPS settings help"
-                                id="tw.settingsModal.fpsHelp.customFramerate"
-                            />
-                        </a>
-                    )
-                }}
+                defaultMessage="Runs scripts at a custom framerate. 30 FPS is the default."
+                description="Custom FPS setting help"
+                id="pm.gui.settingsModal.fpsHelp"
             />
         }
+        min={0}
+        max={250}
+        defaultValue={30}
         slug="custom-fps"
     />
 );
 CustomFPS.propTypes = {
     framerate: PropTypes.number,
-    onChange: PropTypes.func,
-    onCustomizeFramerate: PropTypes.func
+    onChange: PropTypes.func
 };
 
 const Interpolation = props => (
@@ -278,6 +314,27 @@ const RemoveMiscLimits = props => (
     />
 );
 
+const DirectionClamping = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Disable Direction Clamping"
+                description="Disable Direction setting"
+                id="pm.settingsModal.directionClamping"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Removes the restriction that limits sprite directions to -179 to 180 degrees."
+                description="Disable Direction help"
+                id="pm.settingsModal.directionClampingHelp"
+            />
+        }
+    />
+);
+
 const WarpTimer = props => (
     <BooleanSetting
         {...props}
@@ -322,6 +379,48 @@ const DisableCompiler = props => (
             />
         }
         slug="disable-compiler"
+    />
+);
+
+const OffscreenRendering = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Disable Offscreen Rendering"
+                description="Disable Offscreen Rendering setting"
+                id="pm.gui.settingsModal.offscreenRendering"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Optimizes performance by disabling the rendering of sprites that are outside the stage viewport."
+                description="Disable Offscreen Rendering help"
+                id="pm.gui.settingsModal.offscreenRenderingHelp"
+            />
+        }
+    />
+);
+
+const StrictEquality = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Strict Equality"
+                description="Strict Equality setting"
+                id="pm.gui.settingsModal.strictEquality"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Makes blocks that use equality more strict, such as case sensitivity and better type checking."
+                description="Strict Equality help"
+                id="pm.gui.settingsModal.strictEqualityHelp"
+            />
+        }
     />
 );
 
@@ -433,79 +532,81 @@ Header.propTypes = {
 };
 
 const SettingsModalComponent = props => (
-    <Modal
+    <ModalTabs
         className={styles.modalContent}
         onRequestClose={props.onClose}
+        onTabChange={props.onTabChange}
         contentLabel={props.intl.formatMessage(messages.title)}
+        currentTab={props.currentTab}
+        tabs={[
+            {
+                title: props.intl.formatMessage(messages.render),
+                content: <React.Fragment>
+                    {!props.isEmbedded && (
+                        <CustomStageSize
+                            {...props}
+                        />
+                    )}
+                    <CustomFPS
+                        framerate={props.framerate}
+                        onChange={props.onFramerateChange}
+                    />
+                    <Separator />
+                    <Interpolation
+                        value={props.interpolation}
+                        onChange={props.onInterpolationChange}
+                    />
+                    <HighQualityPen
+                        value={props.highQualityPen}
+                        onChange={props.onHighQualityPenChange}
+                    />
+                    <OffscreenRendering
+                        value={props.offscreenRendering}
+                        onChange={props.onOffscreenRenderingChange}
+                    />
+                </React.Fragment>
+            },
+            {
+                title: props.intl.formatMessage(messages.limits),
+                content: <React.Fragment>
+                    <InfiniteClones
+                        value={props.infiniteClones}
+                        onChange={props.onInfiniteClonesChange}
+                    />
+                    <RemoveFencing
+                        value={props.removeFencing}
+                        onChange={props.onRemoveFencingChange}
+                    />
+                    <DirectionClamping
+                        value={props.directionClamping}
+                        onChange={props.onDirectionClampingChange}
+                    />
+                    <RemoveMiscLimits
+                        value={props.removeLimits}
+                        onChange={props.onRemoveLimitsChange}
+                    />
+                </React.Fragment>
+            },
+            {
+                title: props.intl.formatMessage(messages.optimization),
+                content: <React.Fragment>
+                    <WarpTimer
+                        value={props.warpTimer}
+                        onChange={props.onWarpTimerChange}
+                    />
+                    <OffscreenRendering
+                        value={props.offscreenRendering}
+                        onChange={props.onOffscreenRenderingChange}
+                    />
+                    <StrictEquality
+                        value={props.strictEquality}
+                        onChange={props.onStrictEqualityChange}
+                    />
+                </React.Fragment>
+            }
+        ]}
         id="settingsModal"
-    >
-        <Box className={styles.body}>
-            <Header>
-                <FormattedMessage
-                    defaultMessage="Featured"
-                    description="Settings modal section"
-                    id="tw.settingsModal.featured"
-                />
-            </Header>
-            <CustomFPS
-                framerate={props.framerate}
-                onChange={props.onFramerateChange}
-                onCustomizeFramerate={props.onCustomizeFramerate}
-            />
-            <Interpolation
-                value={props.interpolation}
-                onChange={props.onInterpolationChange}
-            />
-            <HighQualityPen
-                value={props.highQualityPen}
-                onChange={props.onHighQualityPenChange}
-            />
-            <WarpTimer
-                value={props.warpTimer}
-                onChange={props.onWarpTimerChange}
-            />
-            <Header>
-                <FormattedMessage
-                    defaultMessage="Remove Limits"
-                    description="Settings modal section"
-                    id="tw.settingsModal.removeLimits"
-                />
-            </Header>
-            <InfiniteClones
-                value={props.infiniteClones}
-                onChange={props.onInfiniteClonesChange}
-            />
-            <RemoveFencing
-                value={props.removeFencing}
-                onChange={props.onRemoveFencingChange}
-            />
-            <RemoveMiscLimits
-                value={props.removeLimits}
-                onChange={props.onRemoveLimitsChange}
-            />
-            <Header>
-                <FormattedMessage
-                    defaultMessage="Danger Zone"
-                    description="Settings modal section"
-                    id="tw.settingsModal.dangerZone"
-                />
-            </Header>
-            {!props.isEmbedded && (
-                <CustomStageSize
-                    {...props}
-                />
-            )}
-            <DisableCompiler
-                value={props.disableCompiler}
-                onChange={props.onDisableCompilerChange}
-            />
-            {!props.isEmbedded && (
-                <StoreProjectOptions
-                    {...props}
-                />
-            )}
-        </Box>
-    </Modal>
+    />
 );
 
 SettingsModalComponent.propTypes = {
@@ -514,7 +615,6 @@ SettingsModalComponent.propTypes = {
     isEmbedded: PropTypes.bool,
     framerate: PropTypes.number,
     onFramerateChange: PropTypes.func,
-    onCustomizeFramerate: PropTypes.func,
     highQualityPen: PropTypes.bool,
     onHighQualityPenChange: PropTypes.func,
     interpolation: PropTypes.bool,
@@ -527,8 +627,16 @@ SettingsModalComponent.propTypes = {
     onRemoveLimitsChange: PropTypes.func,
     warpTimer: PropTypes.bool,
     onWarpTimerChange: PropTypes.func,
+    directionClamping: PropTypes.bool,
+    onDirectionClampingChange: PropTypes.func,
+    offscreenRendering: PropTypes.bool,
+    onOffscreenRenderingChange: PropTypes.func,
     disableCompiler: PropTypes.bool,
-    onDisableCompilerChange: PropTypes.func
+    onDisableCompilerChange: PropTypes.func,
+    strictEquality: PropTypes.bool,
+    onStrictEqualityChange: PropTypes.func,
+    currentTab: PropTypes.number,
+    onTabChange: PropTypes.func
 };
 
 export default injectIntl(SettingsModalComponent);
