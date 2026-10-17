@@ -7,7 +7,7 @@ import refreshWorkspace from "../../util/refreshWorkspace.js";
 export default (class extends IntegerSetting {
     defaultValue() { return 100 }
     min = 0
-    max = 200
+    max = 300
 
     getPrimary() {
         return (<FormattedMessage
