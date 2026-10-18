@@ -461,29 +461,6 @@ export const galleryError = {
     featured: true
 };
 
-export const sharkpoolGallery = {
-    name: (
-        <FormattedMessage
-            defaultMessage="SharkPool's Extension Gallery"
-            description="Name of sharkpools-extensions.vercel.app/ in extension library"
-            id="pm.sharkpoolGallery.name"
-        />
-    ),
-    href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
-    extensionId: 'sharkpool-gallery',
-    iconURL: sharkpoolGalleryIcon,
-    description: (
-        <FormattedMessage
-            // eslint-disable-next-line max-len
-            defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
-            description="Name for the sharkpoolGallery gallery"
-            id="pm.sharkpoolGallery.more"
-        />
-    ),
-    tags: ['sharkpool', 'library'],
-    featured: true
-};
-
 export const penguinmodGallery = [
     {
         name: (
@@ -1078,5 +1055,26 @@ export const penguinmodGallery = [
         ),
         tags: ['pm', 'data', 'internet'],
         internetConnectionRequired: true
+    }, {
+        name: (
+            <FormattedMessage
+                defaultMessage="SharkPool's Extension Gallery"
+                description="Name of sharkpools-extensions.vercel.app/ in extension library"
+                id="pm.gui.extension.sharkpoolGallery.name"
+            />
+        ),
+        href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
+        extensionId: 'sharkpool-gallery',
+        iconURL: sharkpoolGalleryIcon,
+        description: (
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
+                description="Description for the sharkpoolGallery gallery"
+                id="pm.gui.extension.sharkpoolGallery.description"
+            />
+        ),
+        tags: ['library'],
+        featured: true
     }
 ]
