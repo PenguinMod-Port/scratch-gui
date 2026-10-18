@@ -24,6 +24,7 @@ export const initialState = {
     interpolation: false,
     cloud: true,
     username: '',
+    usernameLoggedIn: false,
     highQualityPen: false,
     compilerOptions: {
         enabled: true,

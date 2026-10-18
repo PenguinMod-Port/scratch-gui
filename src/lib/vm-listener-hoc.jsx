@@ -87,14 +87,14 @@ const vmListenerHOC = function (WrappedComponent) {
             }
             this.props.vm.postIOData('userData', {
                 username: this.props.username,
-                usernameLoggedIn: this.props.usernameLoggedIn
+                loggedIn: this.props.usernameLoggedIn
             });
         }
         componentDidUpdate (prevProps) {
             if (prevProps.username !== this.props.username || prevProps.usernameLoggedIn !== this.props.usernameLoggedIn) {
                 this.props.vm.postIOData('userData', {
                     username: this.props.username,
-                    usernameLoggedIn: this.props.usernameLoggedIn
+                    loggedIn: this.props.usernameLoggedIn
                 });
             }
 
