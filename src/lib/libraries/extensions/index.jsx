@@ -386,9 +386,12 @@ export default [
 export const galleryLoading = {
     name: (
         <FormattedMessage
-            defaultMessage="TurboWarp Extension Gallery"
+            defaultMessage="{APP_NAME} Extension Gallery"
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
+            values={{
+                APP_NAME: 'TurboWarp'
+            }}
         />
     ),
     href: 'https://extensions.turbowarp.org/',
@@ -409,9 +412,12 @@ export const galleryLoading = {
 export const galleryMore = {
     name: (
         <FormattedMessage
-            defaultMessage="TurboWarp Extension Gallery"
+            defaultMessage="{APP_NAME} Extension Gallery"
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
+            values={{
+                APP_NAME: 'TurboWarp'
+            }}
         />
     ),
     href: 'https://extensions.turbowarp.org/',
@@ -432,9 +438,12 @@ export const galleryMore = {
 export const galleryError = {
     name: (
         <FormattedMessage
-            defaultMessage="TurboWarp Extension Gallery"
+            defaultMessage="{APP_NAME} Extension Gallery"
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
+            values={{
+                APP_NAME: 'TurboWarp'
+            }}
         />
     ),
     href: 'https://extensions.turbowarp.org/',
