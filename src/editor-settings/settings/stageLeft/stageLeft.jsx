@@ -1,6 +1,7 @@
 import BooleanSetting from "../../components/boolean-setting/boolean-setting.jsx";
 import {FormattedMessage} from 'react-intl';
 import React from 'react';
+import LazyScratchBlocks from "../../../lib/tw-lazy-scratch-blocks.js";
 
 export default (class extends BooleanSetting {
     getPrimary() {
@@ -15,5 +16,15 @@ export default (class extends BooleanSetting {
             defaultMessage="Positions the stage on the left instead of the right."
             id="pm.editorSettings.stageLeft.help"
         />)
+    }
+
+    async setValue(value) {
+        await LazyScratchBlocks.load();
+        let ScratchBlocks = LazyScratchBlocks.get();
+
+        // temp until i find a different solution
+        document.querySelector('.gui_flex-wrapper_2AgdD').classList[value ? 'add' : 'remove']('gui_stage-left_1LDW1')
+
+        queueMicrotask(() => ScratchBlocks.svgResize(ScratchBlocks.mainWorkspace));
     }
 });
