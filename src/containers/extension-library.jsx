@@ -72,7 +72,7 @@ const fetchLibrary = async () => {
         credits: [
             ...(extension.original || []),
             ...(extension.by || [])
-        ],
+        ].map(credit => credit.name),
         docsURI: extension.docs ? `https://extensions.turbowarp.org/${extension.slug}` : null,
         samples: extension.samples ? extension.samples.map(sample => ({
             href: `${process.env.ROOT}editor?project_url=https://extensions.turbowarp.org/samples/${encodeURIComponent(sample)}.sb3`,

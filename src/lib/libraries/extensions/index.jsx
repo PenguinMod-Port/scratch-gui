@@ -55,6 +55,7 @@ import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
 
 import sharkpoolGalleryIcon from './sharkpool-gallery/gallery.svg';
+import { EXTENSIONS_SITE } from '../../brand';
 
 export default [
     {
@@ -1061,17 +1062,40 @@ export const penguinmodGalleryExtra = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="{APP_NAME} Extension Gallery"
+                description="Name of extensions.turbowarp.org in extension library"
+                id="tw.extensionGallery.name"
+                values={{
+                    APP_NAME: 'PenguinMod'
+                }}
+            />
+        ),
+        href: EXTENSIONS_SITE,
+        extensionId: '',
+        iconURL: require('../extensions/gallery/pm-gallery.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="See some user-submitted extensions at extensions.penguinmod.com"
+                description="Description for the PenguinMod extra extension gallery"
+                id="pm.gui.extension.extraGallery.description"
+            />
+        ),
+        tags: ['library'],
+        featured: true
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="SharkPool's Extension Gallery"
                 description="Name of sharkpools-extensions.vercel.app/ in extension library"
                 id="pm.gui.extension.sharkpoolGallery.name"
             />
         ),
         href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
-        extensionId: 'sharkpool-gallery',
+        extensionId: '',
         iconURL: sharkpoolGalleryIcon,
         description: (
             <FormattedMessage
-                // eslint-disable-next-line max-len
                 defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
                 description="Description for the sharkpoolGallery gallery"
                 id="pm.gui.extension.sharkpoolGallery.description"
