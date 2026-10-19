@@ -603,7 +603,6 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.dogeiscutObject.name"
             />
         ),
-        credits: ['DogeisCut'],
         extensionId: 'dogeiscutObject',
         iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
         description: (
@@ -1055,7 +1054,11 @@ export const penguinmodGallery = [
         ),
         tags: ['pm', 'data', 'internet'],
         internetConnectionRequired: true
-    }, {
+    }
+]
+
+export const penguinmodGalleryExtra = [
+    {
         name: (
             <FormattedMessage
                 defaultMessage="SharkPool's Extension Gallery"
