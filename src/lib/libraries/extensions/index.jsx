@@ -396,7 +396,7 @@ export const galleryLoading = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -422,7 +422,7 @@ export const galleryMore = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -448,7 +448,7 @@ export const galleryError = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
