@@ -16,6 +16,7 @@ export default Object.fromEntries([
     "paintMultiTool",
     "paintPenPressure",
     "paintScrollZoom",
+    "pmGallery",
     "projectBlockCounter",
     "showExtensionIds",
     "soundDisplayDetail",
@@ -23,5 +24,6 @@ export default Object.fromEntries([
     "stageLeft",
     "swatches",
     "test",
+    "twGallery",
     "vmDebug"
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))

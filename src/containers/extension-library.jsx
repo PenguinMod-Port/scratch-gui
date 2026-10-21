@@ -20,6 +20,8 @@ import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
 import extensions from '../lib/libraries/extensions/index.jsx';
 
+import SettingsStore from '../editor-settings/settings-store-singleton';
+
 const messages = defineMessages({
     extensionTitle: {
         defaultMessage: 'Choose an Extension',
@@ -265,24 +267,34 @@ class ExtensionLibrary extends React.PureComponent {
         library = extensionLibraryContent.map(toLibraryItem);
         library.push('---');
         library.push(...penguinmodGallery.map(toLibraryItem));
-        library.push('---');
-        library.push(...penguinmodGalleryExtra.map(toLibraryItem));
-        if (this.state.pmGallery) {
-            library.push(...this.state.pmGallery.map(toLibraryItem));
+        if (!SettingsStore.store.pmGallery) {
+            library.push(...penguinmodGalleryExtra.map(toLibraryItem));
         }
-        library.push('---');
-        if (this.state.gallery) {
+        if (!SettingsStore.store.twGallery) {
             library.push(toLibraryItem(galleryMore));
-            const locale = this.props.intl.locale;
-            library.push(
-                ...this.state.gallery
-                    .map(i => translateGalleryItem(i, locale))
-                    .map(toLibraryItem)
-            );
-        } else if (this.state.galleryError) {
-            library.push(toLibraryItem(galleryError));
-        } else {
-            library.push(toLibraryItem(galleryLoading));
+        }
+        if (SettingsStore.store.pmGallery) {
+            library.push('---');
+            library.push(...penguinmodGalleryExtra.map(toLibraryItem));
+            if (this.state.pmGallery) {
+                library.push(...this.state.pmGallery.map(toLibraryItem));
+            }
+        }
+        if (SettingsStore.store.twGallery) {
+            library.push('---');
+            if (this.state.gallery) {
+                library.push(toLibraryItem(galleryMore));
+                const locale = this.props.intl.locale;
+                library.push(
+                    ...this.state.gallery
+                        .map(i => translateGalleryItem(i, locale))
+                        .map(toLibraryItem)
+                );
+            } else if (this.state.galleryError) {
+                library.push(toLibraryItem(galleryError));
+            } else {
+                library.push(toLibraryItem(galleryLoading));
+            }
         }
 
         return (
