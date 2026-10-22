@@ -71,6 +71,8 @@ class EditorSettingsModal extends React.Component {
                         <Separator />
                         <settings.stageLeft />
                         <Separator />
+                        <settings.pmGallery />
+                        <settings.twGallery />
                         <settings.showExtensionIds />
                     </React.Fragment>
                 },

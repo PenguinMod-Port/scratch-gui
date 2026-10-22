@@ -55,6 +55,7 @@ import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
 
 import sharkpoolGalleryIcon from './sharkpool-gallery/gallery.svg';
+import { EXTENSIONS_SITE } from '../../brand';
 
 export default [
     {
@@ -395,7 +396,7 @@ export const galleryLoading = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -421,7 +422,7 @@ export const galleryMore = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -447,7 +448,7 @@ export const galleryError = {
         />
     ),
     href: 'https://extensions.turbowarp.org/',
-    extensionId: 'gallery',
+    extensionId: '',
     iconURL: galleryIcon,
     description: (
         <FormattedMessage
@@ -622,7 +623,6 @@ export const penguinmodGallery = [
                 id="pm.gui.extension.dogeiscutObject.name"
             />
         ),
-        credits: ['DogeisCut'],
         extensionId: 'dogeiscutObject',
         iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
         description: (
@@ -1074,7 +1074,35 @@ export const penguinmodGallery = [
         ),
         tags: ['pm', 'data', 'internet'],
         internetConnectionRequired: true
-    }, {
+    }
+]
+
+export const penguinmodGalleryExtra = [
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="{APP_NAME} Extension Gallery"
+                description="Name of extensions.turbowarp.org in extension library"
+                id="tw.extensionGallery.name"
+                values={{
+                    APP_NAME: 'PenguinMod'
+                }}
+            />
+        ),
+        href: EXTENSIONS_SITE,
+        extensionId: '',
+        iconURL: require('../extensions/gallery/pm-gallery.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="See some user-submitted extensions at extensions.penguinmod.com"
+                description="Description for the PenguinMod extra extension gallery"
+                id="pm.gui.extension.extraGallery.description"
+            />
+        ),
+        tags: ['library'],
+        featured: true
+    },
+    {
         name: (
             <FormattedMessage
                 defaultMessage="SharkPool's Extension Gallery"
@@ -1083,11 +1111,10 @@ export const penguinmodGallery = [
             />
         ),
         href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
-        extensionId: 'sharkpool-gallery',
+        extensionId: '',
         iconURL: sharkpoolGalleryIcon,
         description: (
             <FormattedMessage
-                // eslint-disable-next-line max-len
                 defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
                 description="Description for the sharkpoolGallery gallery"
                 id="pm.gui.extension.sharkpoolGallery.description"

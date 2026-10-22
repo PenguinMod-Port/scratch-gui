@@ -10,7 +10,8 @@ import extensionLibraryContent, {
     galleryError,
     galleryLoading,
     galleryMore,
-    penguinmodGallery
+    penguinmodGallery,
+    penguinmodGalleryExtra
 } from '../lib/libraries/extensions/index.jsx';
 import { isTrustedExtension } from "./tw-security-manager.jsx";
 import extensionTags from '../lib/libraries/extension-tags';
@@ -18,6 +19,8 @@ import extensionTags from '../lib/libraries/extension-tags';
 import LibraryComponent from '../components/library/library.jsx';
 import extensionIcon from '../components/action-menu/icon--sprite.svg';
 import extensions from '../lib/libraries/extensions/index.jsx';
+
+import SettingsStore from '../editor-settings/settings-store-singleton';
 
 const messages = defineMessages({
     extensionTitle: {
@@ -50,6 +53,7 @@ const translateGalleryItem = (extension, locale) => ({
 });
 
 let cachedGallery = null;
+let cachedPmGallery = null;
 let externalGalleryListenerAttached = false;
 
 const fetchLibrary = async () => {
@@ -70,21 +74,7 @@ const fetchLibrary = async () => {
         credits: [
             ...(extension.original || []),
             ...(extension.by || [])
-        ].map(credit => {
-            if (credit.link) {
-                return (
-                    <a
-                        href={credit.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        key={credit.name}
-                    >
-                        {credit.name}
-                    </a>
-                );
-            }
-            return credit.name;
-        }),
+        ].map(credit => credit.name),
         docsURI: extension.docs ? `https://extensions.turbowarp.org/${extension.slug}` : null,
         samples: extension.samples ? extension.samples.map(sample => ({
             href: `${process.env.ROOT}editor?project_url=https://extensions.turbowarp.org/samples/${encodeURIComponent(sample)}.sb3`,
@@ -101,6 +91,23 @@ const fetchLibrary = async () => {
         .filter(extension => !extension.hide);
 };
 
+const fetchPenguinmodLibrary = async () => {
+    const res = await fetch('https://extensions.penguinmod.com/extensions.json');
+    if (!res.ok) {
+        throw new Error(`HTTP status ${res.status}`);
+    }
+    const data = await res.json();
+    return data.map(extension => ({
+        name: extension.name,
+        description: extension.description,
+        extensionId: '', // not provided
+        extensionURL: `https://extensions.penguinmod.com/extensions/${extension.code}`,
+        iconURL: `https://extensions.penguinmod.com/images/${extension.banner}`,
+        credits: [extension.creatorAlias ?? extension.creator],
+        tags: ['pm', ...(extension.tags ?? [])]
+    }))
+};
+
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
@@ -113,6 +120,8 @@ class ExtensionLibrary extends React.PureComponent {
             gallery: cachedGallery,
             galleryError: null,
             galleryTimedOut: false,
+
+            pmGallery: cachedPmGallery
         };
     }
     componentDidMount () {
@@ -140,6 +149,15 @@ class ExtensionLibrary extends React.PureComponent {
                         galleryError: error
                     });
                     clearTimeout(timeout);
+                });
+        }
+        if (!this.state.pmGallery) {
+            fetchPenguinmodLibrary()
+                .then(gallery => {
+                    cachedPmGallery = gallery;
+                    this.setState({
+                        pmGallery: gallery
+                    });
                 });
         }
     }
@@ -246,10 +264,23 @@ class ExtensionLibrary extends React.PureComponent {
     }
     render () {
         let library = null;
-        if (this.state.gallery || this.state.galleryError || this.state.galleryTimedOut) {
-            library = extensionLibraryContent.map(toLibraryItem);
+        library = extensionLibraryContent.map(toLibraryItem);
+        library.push('---');
+        library.push(...penguinmodGallery.map(toLibraryItem));
+        if (!SettingsStore.store.pmGallery) {
+            library.push(...penguinmodGalleryExtra.map(toLibraryItem));
+        }
+        if (!SettingsStore.store.twGallery) {
+            library.push(toLibraryItem(galleryMore));
+        }
+        if (SettingsStore.store.pmGallery) {
             library.push('---');
-            library = library.concat(penguinmodGallery.map(toLibraryItem));
+            library.push(...penguinmodGalleryExtra.map(toLibraryItem));
+            if (this.state.pmGallery) {
+                library.push(...this.state.pmGallery.map(toLibraryItem));
+            }
+        }
+        if (SettingsStore.store.twGallery) {
             library.push('---');
             if (this.state.gallery) {
                 library.push(toLibraryItem(galleryMore));

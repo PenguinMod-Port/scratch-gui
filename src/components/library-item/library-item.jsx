@@ -94,7 +94,7 @@ class LibraryItemComponent extends React.PureComponent {
                     }
                 >
                     <span className={styles.libraryItemName}>{this.props.name}{(() => {
-                        if (!showIDS || typeof this.props.extensionId !== 'string') return "";
+                        if (!showIDS || typeof this.props.extensionId !== 'string' || this.props.extensionId === "") return "";
                         return <span className={styles.extensionId}> ({this.props.extensionId})</span>;
                     })()}</span>
                     <br />
