@@ -550,12 +550,31 @@ export const penguinmodGallery = [
         iconURL: require('../extensions/penguinmod/pmOperatorsExpansion.svg'),
         description: (
             <FormattedMessage
-                defaultMessage="More operators like nand, nor, character code to character, reading multiple lined text line by line, etc."
+                defaultMessage="More operators like nand, coalescion, typeof, etc."
                 description="Description for the pmOperatorsExpansion extension"
                 id="pm.gui.extension.pmOperatorsExpansion.description"
             />
         ),
         tags: ['pm', 'expansion', 'math']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Strings Expansion"
+                description="Name for the pmStringsExpansion extension"
+                id="pm.gui.extension.pmStringsExpansion.name"
+            />
+        ),
+        extensionId: 'pmStringsExpansion',
+        iconURL: require('../extensions/penguinmod/pmStringsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More blocks related to string operations such as reversing or replacing."
+                description="Description for the pmStringsExpansion extension"
+                id="pm.gui.extension.pmStringsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
     },
     {
         name: (
