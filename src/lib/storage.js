@@ -1,85 +1,96 @@
-import ScratchStorage from '@turbowarp/scratch-storage';
+import ScratchStorage from "scratch-storage";
 
-import defaultProject from './default-project';
+import defaultProject from "./default-project";
 
 /**
  * Wrapper for ScratchStorage which adds default web sources.
  * @todo make this more configurable
  */
 class Storage extends ScratchStorage {
-    constructor () {
+    constructor() {
         super();
         this.cacheDefaultProject();
     }
-    addOfficialScratchWebStores () {
+    addOfficialScratchWebStores() {
+        const die = () => {
+            throw new Error("We do not support saving in the editor");
+        };
+
         this.addWebStore(
             [this.AssetType.Project],
             this.getProjectGetConfig.bind(this),
-            this.getProjectCreateConfig.bind(this),
-            this.getProjectUpdateConfig.bind(this)
+            die,
+            die,
         );
         this.addWebStore(
-            [this.AssetType.ImageVector, this.AssetType.ImageBitmap, this.AssetType.Sound, this.AssetType.Font],
+            [
+                this.AssetType.ImageVector,
+                this.AssetType.ImageBitmap,
+                this.AssetType.Sound,
+                this.AssetType.Font,
+            ],
             this.getAssetGetConfig.bind(this),
-            // We set both the create and update configs to the same method because
-            // storage assumes it should update if there is an assetId, but the
-            // asset store uses the assetId as part of the create URI.
-            this.getAssetCreateConfig.bind(this),
-            this.getAssetCreateConfig.bind(this)
+            die,
+            die,
+        );
+        this.addWebStore(
+            [
+                this.AssetType.ImageVector,
+                this.AssetType.ImageBitmap,
+                this.AssetType.Sound,
+                this.AssetType.Font,
+            ],
+            this.getScratchAssetGetConfig.bind(this),
+            die,
+            die,
         );
     }
-    setProjectHost (projectHost) {
+    setProjectHost(projectHost) {
         this.projectHost = projectHost;
     }
-    setProjectToken (projectToken) {
-        this.projectToken = projectToken;
+    setProjectID(projectID) {
+        this.projectID = projectID;
     }
-    getProjectGetConfig (projectAsset) {
-        const path = `${this.projectHost}/${projectAsset.assetId}`;
-        const qs = this.projectToken ? `?token=${this.projectToken}` : '';
-        return path + qs;
+    getProjectGetConfig(projectAsset) {
+        // projectHost ends in projectID query param
+        return `${this.projectHost}=${projectAsset.assetId}`;
     }
-    getProjectCreateConfig () {
+    getProjectCreateConfig() {
         return {
             url: `${this.projectHost}/`,
-            withCredentials: true
+            withCredentials: true,
         };
     }
-    getProjectUpdateConfig (projectAsset) {
-        return {
-            url: `${this.projectHost}/${projectAsset.assetId}`,
-            withCredentials: true
-        };
-    }
-    setAssetHost (assetHost) {
+    setAssetHost(assetHost) {
         this.assetHost = assetHost;
     }
-    getAssetGetConfig (asset) {
-        return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+    getAssetGetConfig(asset) {
+        if (!this.projectID || this.projectID == "0") {
+            // we might be fetching one of the dumb assets scratch stores
+            // because for some reason the editor will fetch random assets
+            // from the scratch cdn
+            return this.getScratchAssetGetConfig(asset);
+        }
+
+        return `${this.assetHost}/${this.projectID}_${asset.assetId}.${asset.dataFormat}`;
     }
-    getAssetCreateConfig (asset) {
-        return {
-            // There is no such thing as updating assets, but storage assumes it
-            // should update if there is an assetId, and the asset store uses the
-            // assetId as part of the create URI. So, force the method to POST.
-            // Then when storage finds this config to use for the "update", still POSTs
-            method: 'post',
-            url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
-            withCredentials: true
-        };
+    getScratchAssetGetConfig(asset) {
+        return `https://assets.scratch.mit.edu/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
     }
-    setTranslatorFunction (translator) {
+    setTranslatorFunction(translator) {
         this.translator = translator;
         this.cacheDefaultProject();
     }
-    cacheDefaultProject () {
+    cacheDefaultProject() {
         const defaultProjectAssets = defaultProject(this.translator);
-        defaultProjectAssets.forEach(asset => this.builtinHelper._store(
-            this.AssetType[asset.assetType],
-            this.DataFormat[asset.dataFormat],
-            asset.data,
-            asset.id
-        ));
+        defaultProjectAssets.forEach((asset) =>
+            this.builtinHelper._store(
+                this.AssetType[asset.assetType],
+                this.DataFormat[asset.dataFormat],
+                asset.data,
+                asset.id,
+            ),
+        );
     }
 }
 

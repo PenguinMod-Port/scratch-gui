@@ -53,7 +53,8 @@ import twIcon from './tw/tw.svg';
 import customExtensionIcon from './custom/custom.svg';
 import returnIcon from './custom/return.svg';
 import galleryIcon from './gallery/gallery.svg';
-import {APP_NAME} from '../../brand';
+
+import sharkpoolGalleryIcon from './sharkpool-gallery/gallery.svg';
 
 export default [
     {
@@ -74,7 +75,7 @@ export default [
                 id="gui.extension.music.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'sound'],
         featured: true
     },
     {
@@ -95,7 +96,7 @@ export default [
                 id="gui.extension.pen.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'graphics'],
         featured: true
     },
     {
@@ -116,7 +117,7 @@ export default [
                 id="gui.extension.videosensing.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'graphics'],
         featured: true
     },
     {
@@ -138,7 +139,7 @@ export default [
                 id="tw.extension.faceSensing.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'graphics'],
         featured: true
     },
     {
@@ -160,7 +161,7 @@ export default [
                 id="gui.extension.text2speech.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'sound'],
         featured: true,
         internetConnectionRequired: true
     },
@@ -200,7 +201,7 @@ export default [
                 id="gui.extension.makeymakey.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true
     },
     {
@@ -216,7 +217,7 @@ export default [
                 id="gui.extension.microbit.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -247,7 +248,7 @@ export default [
                 id="gui.extension.ev3.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -278,7 +279,7 @@ export default [
                 id="gui.extension.boost.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -310,7 +311,7 @@ export default [
                 id="gui.extension.wedo2.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -342,7 +343,7 @@ export default [
                 id="gui.extension.gdxfor.description"
             />
         ),
-        tags: ['scratch'],
+        tags: ['scratch', 'hardware'],
         featured: true,
         disabled: false,
         bluetoothRequired: true,
@@ -361,52 +362,6 @@ export default [
         helpLink: 'https://scratch.mit.edu/vernier'
     },
     {
-        // not really an extension, but it's easiest to present it as one
-        name: (
-            <FormattedMessage
-                defaultMessage="Custom Reporters"
-                description="Name of custom reporters extension"
-                id="tw.customReporters.name"
-            />
-        ),
-        extensionId: 'procedures_enable_return',
-        iconURL: returnIcon,
-        description: (
-            <FormattedMessage
-                defaultMessage="Allow custom blocks to output values and be used as inputs."
-                description="Description of custom reporters extension"
-                id="tw.customReporters.description"
-            />
-        ),
-        tags: ['tw'],
-        incompatibleWithScratch: true,
-        featured: true
-    },
-    {
-        name: (
-            <FormattedMessage
-                defaultMessage="{APP_NAME} Blocks"
-                description="Name of the strange 'TurboWarp Blocks' extension"
-                id="tw.twExtension.name"
-                values={{
-                    APP_NAME
-                }}
-            />
-        ),
-        extensionId: 'tw',
-        iconURL: twIcon,
-        description: (
-            <FormattedMessage
-                defaultMessage="Weird new blocks."
-                description="Description of the strange 'TurboWarp Blocks' extension"
-                id="tw.twExtension.description"
-            />
-        ),
-        incompatibleWithScratch: true,
-        tags: ['tw'],
-        featured: true
-    },
-    {
         name: (
             <FormattedMessage
                 defaultMessage="Custom Extension"
@@ -423,9 +378,8 @@ export default [
                 id="tw.customExtension.description"
             />
         ),
-        tags: ['tw'],
+        tags: [],
         featured: true
-        // Not marked as incompatible with Scratch so that clicking on it doesn't show a prompt
     }
 ];
 
@@ -436,7 +390,7 @@ export const galleryLoading = {
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
             values={{
-                APP_NAME
+                APP_NAME: 'TurboWarp'
             }}
         />
     ),
@@ -451,7 +405,7 @@ export const galleryLoading = {
             id="tw.extensionGallery.loading"
         />
     ),
-    tags: ['tw'],
+    tags: ['tw', 'library'],
     featured: true
 };
 
@@ -462,7 +416,7 @@ export const galleryMore = {
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
             values={{
-                APP_NAME
+                APP_NAME: 'TurboWarp'
             }}
         />
     ),
@@ -477,7 +431,7 @@ export const galleryMore = {
             id="tw.extensionGallery.more"
         />
     ),
-    tags: ['tw'],
+    tags: ['tw', 'library'],
     featured: true
 };
 
@@ -488,7 +442,7 @@ export const galleryError = {
             description="Name of extensions.turbowarp.org in extension library"
             id="tw.extensionGallery.name"
             values={{
-                APP_NAME
+                APP_NAME: 'TurboWarp'
             }}
         />
     ),
@@ -503,6 +457,624 @@ export const galleryError = {
             id="tw.extensionGallery.error"
         />
     ),
-    tags: ['tw'],
+    tags: ['tw', 'library'],
     featured: true
 };
+
+export const penguinmodGallery = [
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Motion Expansion"
+                description="Name for the pmMotionExpansion extension"
+                id="pm.gui.extension.pmMotionExpansion.name"
+            />
+        ),
+        extensionId: 'pmMotionExpansion',
+        iconURL: require('../extensions/penguinmod/pmMotionExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More small motion blocks for movement or collision."
+                description="Description for the pmMotionExpansion extension"
+                id="pm.gui.extension.pmMotionExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Events Expansion"
+                description="Name for the pmEventsExpansion extension"
+                id="pm.gui.extension.pmEventsExpansion.name"
+            />
+        ),
+        extensionId: 'pmEventsExpansion',
+        iconURL: require('../extensions/penguinmod/pmEventsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More events for sending & receiving information, notifing specific sprites or better control when things should happen."
+                description="Description for the pmEventsExpansion extension"
+                id="pm.gui.extension.pmEventsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Controls Expansion"
+                description="Name for the pmControlsExpansion extension"
+                id="pm.gui.extension.pmControlsExpansion.name"
+            />
+        ),
+        extensionId: 'pmControlsExpansion',
+        iconURL: require('../extensions/penguinmod/pmControlsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More control blocks for animations, complex systems or cleaner one-time use blocks."
+                description="Description for the pmControlsExpansion extension"
+                id="pm.gui.extension.pmControlsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Sensing Expansion"
+                description="Name for the pmSensingExpansion extension"
+                id="pm.gui.extension.pmSensingExpansion.name"
+            />
+        ),
+        extensionId: 'pmSensingExpansion',
+        iconURL: require('../extensions/penguinmod/pmSensingExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More sensing blocks for specific use cases or interacting with the users device."
+                description="Description for the pmSensingExpansion extension"
+                id="pm.gui.extension.pmSensingExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion', 'hardware', 'internet']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Operators Expansion"
+                description="Name for the pmOperatorsExpansion extension"
+                id="pm.gui.extension.pmOperatorsExpansion.name"
+            />
+        ),
+        extensionId: 'pmOperatorsExpansion',
+        iconURL: require('../extensions/penguinmod/pmOperatorsExpansion.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="More operators like nand, nor, character code to character, reading multiple lined text line by line, etc."
+                description="Description for the pmOperatorsExpansion extension"
+                id="pm.gui.extension.pmOperatorsExpansion.description"
+            />
+        ),
+        tags: ['pm', 'expansion', 'math']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Arrays"
+                description="Name for the jwArray extension"
+                id="pm.gui.extension.jwArray.name"
+            />
+        ),
+        extensionId: 'jwArray',
+        iconURL: require('../extensions/penguinmod/jwArray.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data efficiently in multi-purpose arrays."
+                description="Description for the jwArray extension"
+                id="pm.gui.extension.jwArray.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Integers"
+                description="Name for the jwInt extension"
+                id="pm.gui.extension.jwInt.name"
+            />
+        ),
+        extensionId: 'jwInt',
+        iconURL: require('../extensions/penguinmod/jwInt.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Large integers with zero precision loss."
+                description="Description for the jwInt extension"
+                id="pm.gui.extension.jwInt.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Objects"
+                description="Name for the dogeiscutObject extension"
+                id="pm.gui.extension.dogeiscutObject.name"
+            />
+        ),
+        credits: ['DogeisCut'],
+        extensionId: 'dogeiscutObject',
+        iconURL: require('../extensions/penguinmod/dogeiscutObject.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data efficiently in multi-purpose objects."
+                description="Description for the dogeiscutObject extension"
+                id="pm.gui.extension.dogeiscutObject.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="JavaScript"
+                description="Name for the SPjavascriptV2 extension"
+                id="pm.gui.extension.SPjavascriptV2.name"
+            />
+        ),
+        extensionId: 'SPjavascriptV2',
+        iconURL: require('../extensions/penguinmod/SPjavascriptV2.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Run your own custom code written in JavaScript!"
+                description="Description for the SPjavascriptV2 extension"
+                id="pm.gui.extension.SPjavascriptV2.description"
+            />
+        ),
+        tags: ['pm', 'language']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="XML"
+                description="Name for the jwXML extension"
+                id="pm.gui.extension.jwXML.name"
+            />
+        ),
+        extensionId: 'jwXML',
+        iconURL: require('../extensions/penguinmod/jwXML.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Creating, parsing and modifying XML data."
+                description="Description for the jwXML extension"
+                id="pm.gui.extension.jwXML.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Classes"
+                description="Name for the jwClass extension"
+                id="pm.gui.extension.jwClass.name"
+            />
+        ),
+        extensionId: 'jwClass',
+        iconURL: require('../extensions/penguinmod/jwClass.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Advanced extension for creating classes and instances, knowledge of OOP required."
+                description="Description for the jwClass extension"
+                id="pm.gui.extension.jwClass.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Infinity"
+                description="Name for the jwNum extension"
+                id="pm.gui.extension.jwNum.name"
+            />
+        ),
+        extensionId: 'jwNum',
+        iconURL: require('../extensions/penguinmod/jwNum.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Advanced number type capable of massive numbers."
+                description="Description for the jwNum extension"
+                id="pm.gui.extension.jwNum.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Tweening"
+                description="Name for the jgTween extension"
+                id="pm.gui.extension.jgTween.name"
+            />
+        ),
+        //credits: ['easings.net', 'Arrow', 'GarboMuffin'], probably make new key somewhen for like 'helped by' or whatever
+        extensionId: 'jgTween',
+        iconURL: require('../extensions/penguinmod/jgTween.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Smoothly animating values using different easing functions and directions."
+                description="Description for the jgTween extension"
+                id="pm.gui.extension.jgTween.description"
+            />
+        ),
+        tags: ['pm', 'math']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Promises"
+                description="Name for the jwPromise extension"
+                id="pm.gui.extension.jwPromise.name"
+            />
+        ),
+        extensionId: 'jwPromise',
+        iconURL: require('../extensions/penguinmod/jwPromise.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Run operations in parallel and await their results."
+                description="Description for the jwPromise extension"
+                id="pm.gui.extension.jwPromise.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Debugger"
+                description="Name for the jwDebugger extension"
+                id="pm.gui.extension.jwDebugger.name"
+            />
+        ),
+        extensionId: 'jwDebugger',
+        iconURL: require('../extensions/penguinmod/jwDebugger.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Log important information to debug your code."
+                description="Description for the jwDebugger extension"
+                id="pm.gui.extension.jwDebugger.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Storage"
+                description="Name for the jgStorage extension"
+                id="pm.gui.extension.jgStorage.name"
+            />
+        ),
+        extensionId: 'jgStorage',
+        iconURL: require('../extensions/penguinmod/jgStorage.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Store data after PenguinMod has already been closed out. Basic Server Storage is also included."
+                description="Description for the jgStorage extension"
+                id="pm.gui.extension.jgStorage.description"
+            />
+        ),
+        tags: ['pm', 'data'],
+        internetConnectionRequired: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Vector"
+                description="Name for the jwVector extension"
+                id="pm.gui.extension.jwVector.name"
+            />
+        ),
+        extensionId: 'jwVector',
+        iconURL: require('../extensions/penguinmod/jwVector.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Math with direction and magnitude."
+                description="Description for the jwVector extension"
+                id="pm.gui.extension.jwVector.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Requests"
+                description="Name for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.name"
+            />
+        ),
+        extensionId: 'jwFetch',
+        iconURL: require('../extensions/penguinmod/jwFetch.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Make HTTP requests."
+                description="Description for the jwFetch extension"
+                id="pm.gui.extension.jwFetch.description"
+            />
+        ),
+        tags: ['pm', 'internet'],
+        internetConnectionRequired: true
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Scope"
+                description="Name for the jwScope extension"
+                id="pm.gui.extension.jwScope.name"
+            />
+        ),
+        extensionId: 'jwScope',
+        iconURL: require('../extensions/penguinmod/jwScope.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Temporary variables based on block stack. (extra blocks if used with Array extension)"
+                description="Description for the jwScope extension"
+                id="pm.gui.extension.jwScope.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Camera"
+                description="Name for the jwCamera extension"
+                id="pm.gui.extension.jwCamera.name"
+            />
+        ),
+        extensionId: 'jwCamera',
+        iconURL: require('../extensions/penguinmod/jwCamera.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Move, scale and rotate your view of the project."
+                description="Description for the jwCamera extension"
+                id="pm.gui.extension.jwCamera.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Temporary Variables"
+                description="Name for the tempVars extension"
+                id="pm.gui.extension.tempVars.name"
+            />
+        ),
+        extensionId: 'tempVars',
+        iconURL: require('../extensions/penguinmod/tempVars.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create temporary variables for use in one block stack."
+                description="Description for the tempVars extension"
+                id="pm.gui.extension.tempVars.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Targets"
+                description="Name for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.name"
+            />
+        ),
+        extensionId: 'jwTargets',
+        iconURL: require('../extensions/penguinmod/jwTargets.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Direct access to sprites and their clones. (extra blocks if used with Vector extension)"
+                description="Description for the jwTargets extension"
+                id="pm.gui.extension.jwTargets.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Speech Bubbles"
+                description="Name for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.name"
+            />
+        ),
+        extensionId: 'SPspeechBubbles',
+        iconURL: require('../extensions/penguinmod/SPspeechBubbles.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Customize speech bubbles on sprites"
+                description="Description for the SPspeechBubbles extension"
+                id="pm.gui.extension.SPspeechBubbles.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'expansion']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Pointers"
+                description="Name for the jwPointer extension"
+                id="pm.gui.extension.jwPointer.name"
+            />
+        ),
+        extensionId: 'jwPointer',
+        iconURL: require('../extensions/penguinmod/jwPointer.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Define references to values. (extra blocks if used with Array extension)"
+                description="Description for the jwPointer extension"
+                id="pm.gui.extension.jwPointer.description"
+            />
+        ),
+        tags: ['pm', 'data', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Polygons"
+                description="Name for the jwPolygon extension"
+                id="pm.gui.extension.jwPolygon.name"
+            />
+        ),
+        extensionId: 'jwPolygon',
+        iconURL: require('../extensions/penguinmod/jwPolygon.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create and perform transforms on polygons."
+                description="Description for the jwPolygon extension"
+                id="pm.gui.extension.jwPolygon.description"
+            />
+        ),
+        tags: ['pm', 'math', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Regular Expressions"
+                description="Name for the dogeiscutRegularExpressions extension"
+                id="pm.gui.extension.dogeiscutRegularExpressions.name"
+            />
+        ),
+        extensionId: 'dogeiscutRegularExpressions',
+        iconURL: require('../extensions/penguinmod/dogeiscutRegularExpressions.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Match data from pieces of text with regular expressions."
+                description="Description for the dogeiscutRegularExpressions extension"
+                id="pm.gui.extension.dogeiscutRegularExpressions.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Sound Systems"
+                description="Name for the jgExtendedAudio extension"
+                id="pm.gui.extension.jgExtendedAudio.name"
+            />
+        ),
+        extensionId: 'jgExtendedAudio',
+        iconURL: require('../extensions/penguinmod/jgExtendedAudio.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="An audio grouping system for more intensive audio work."
+                description="Description for the jgExtendedAudio extension"
+                id="pm.gui.extension.jgExtendedAudio.description"
+            />
+        ),
+        tags: ['pm', 'sound']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Color"
+                description="Name for the jwColor extension"
+                id="pm.gui.extension.jwColor.name"
+            />
+        ),
+        extensionId: 'jwColor',
+        iconURL: require('../extensions/penguinmod/jwColor.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Utilities for anything involving colors."
+                description="Description for the jwColor extension"
+                id="pm.gui.extension.jwColor.description"
+            />
+        ),
+        tags: ['pm', 'graphics', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Lambda"
+                description="Name for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.name"
+            />
+        ),
+        extensionId: 'jwLambda',
+        iconURL: require('../extensions/penguinmod/jwLambda.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Create and execute anonymous functions."
+                description="Description for the jwLambda extension"
+                id="pm.gui.extension.jwLambda.description"
+            />
+        ),
+        tags: ['pm', 'type']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Labels"
+                description="Name for the jwProto extension"
+                id="pm.gui.extension.jwProto.name"
+            />
+        ),
+        extensionId: 'jwProto',
+        iconURL: require('../extensions/penguinmod/jwProto.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Annotate your code with extra blocks."
+                description="Description for the jwProto extension"
+                id="pm.gui.extension.jwProto.description"
+            />
+        ),
+        tags: ['pm']
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Runtime"
+                description="Name for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.name"
+            />
+        ),
+        extensionId: 'jgRuntime',
+        iconURL: require('../extensions/penguinmod/jgRuntime.svg'),
+        description: (
+            <FormattedMessage
+                defaultMessage="Blocks for modifying project data and settings."
+                description="Description for the jgRuntime extension"
+                id="pm.gui.extension.jgRuntime.description"
+            />
+        ),
+        tags: ['pm', 'data', 'internet'],
+        internetConnectionRequired: true
+    }, {
+        name: (
+            <FormattedMessage
+                defaultMessage="SharkPool's Extension Gallery"
+                description="Name of sharkpools-extensions.vercel.app/ in extension library"
+                id="pm.gui.extension.sharkpoolGallery.name"
+            />
+        ),
+        href: 'https://sharkpools-extensions.vercel.app/?originPM=true',
+        extensionId: 'sharkpool-gallery',
+        iconURL: sharkpoolGalleryIcon,
+        description: (
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Extensions created by SharkPool & other contributors. Click on an extension to add it to your project."
+                description="Description for the sharkpoolGallery gallery"
+                id="pm.gui.extension.sharkpoolGallery.description"
+            />
+        ),
+        tags: ['library'],
+        featured: true
+    }
+]

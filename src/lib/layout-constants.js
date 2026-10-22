@@ -18,7 +18,12 @@ const STAGE_SIZE_MODES = keyMirror({
     /**
      * Display the stage at its full size.
      */
-    full: null
+    full: null,
+
+    /**
+     * dont display stage
+     */
+    hidden: null
 });
 
 /**
@@ -32,7 +37,9 @@ const STAGE_DISPLAY_SIZES = keyMirror({
 
     constrained: null,
 
-    full: null
+    full: null,
+
+    hidden: null
 });
 
 // zoom level to start with
@@ -57,6 +64,9 @@ const STAGE_DISPLAY_SCALE_METADATA = {
     },
     [STAGE_DISPLAY_SIZES.full]: {
         scale: 1
+    },
+    [STAGE_DISPLAY_SIZES.hidden]: {
+        width: 0
     }
 };
 

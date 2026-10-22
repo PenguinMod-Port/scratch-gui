@@ -36,6 +36,10 @@
     overflow: hidden;
 }
 
+.flex-wrapper.stage-left {
+    flex-direction: row-reverse;
+}
+
 .editor-wrapper {
     /*
         This is carefully balanced--  the minimum width at which the GUI will be displayed is 1024px.
@@ -94,6 +98,8 @@
 
     user-select: none;
     white-space: nowrap;
+
+    z-index: var(--tab-layer, 0);
 }
 
 [dir="ltr"] .tab {
@@ -112,17 +118,6 @@
     margin-right: 0;
 }
 
-/* Use z-indices to force left-on-top for tabs */
-.tab:nth-of-type(1) {
-    z-index: 3;
-}
-.tab:nth-of-type(2) {
-    z-index: 2;
-}
-.tab:nth-of-type(3) {
-    z-index: 1;
-}
-
 .tab:hover {
   background-color: $ui-primary;
 }
@@ -131,12 +126,24 @@
     height: 90%;
     color: $looks-secondary;
     background-color: $ui-white;
-    z-index: 4; /* Make sure selected is always above */
+    z-index: var(--selected-tab-layer); /* Make sure selected is always above */
+}
+
+.tab.is-disabled,
+.tab.is-disabled:hover {
+    background-color: $ui-tertiary;
+    color: $text-primary-transparent;
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.tab .tab-icon {
+    filter: grayscale(100%);
 }
 
 .tab img {
     width: 1.375rem;
-    filter: grayscale(100%);
+    height: 1.375rem;
 }
 
 [dir="ltr"] .tab img {
@@ -156,7 +163,7 @@
     transform: scaleX(-1);
 }
 
-.tab.is-selected img {
+.tab.is-selected .tab-icon {
     filter: none;
 }
 
@@ -193,6 +200,24 @@
     display: flex;
 }
 
+.tab-container {
+    display: flex;
+    width: 100%;
+
+    border: 1px solid $ui-black-transparent;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.tab-content-gone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 .blocks-wrapper {
     flex-grow: 1;
     position: relative;
@@ -212,6 +237,7 @@
     /* pad entire wrapper to the left and right; allow children to fill width */
     padding-left: $space;
     padding-right: $space;
+    gap: $space;
 
     /* this will only ever be as wide as the stage */
     flex-basis: 0;
@@ -222,7 +248,6 @@
     flex-grow: 1;
     flex-basis: 0;
 
-    padding-top: $space;
     min-height: 0; /* this makes it work in Firefox */
 
     /*

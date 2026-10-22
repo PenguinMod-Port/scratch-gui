@@ -21,7 +21,7 @@ const manifest = {
     }
   ],
   "dynamicDisable": true,
-  "enabledByDefault": true,
+  "enabledByDefault": false,
   "tags": [
     "recommended"
   ]

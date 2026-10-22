@@ -1,0 +1,158 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+
+.modal-content {
+    width: 500px;
+}
+
+.body {
+    background: $ui-modal-background;
+    padding: 1.5rem 2.25rem;
+}
+
+.body input[type="checkbox"],
+.body input[type="radio"] {
+    margin-right: 8px;
+}
+
+/* Preview */
+.preview-outer {
+    border: solid $ui-black-transparent 5px;
+    border-radius: 20px;
+    width: fit-content;
+    justify-self: center;
+    margin-bottom: 15px;
+}
+
+.preview-inner {
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    border: solid $ui-black-transparent 3px;
+    padding: 10px;
+    border-radius: 16px;
+}
+.preview-inner span {
+    width: 100%;
+    display: block;
+}
+
+/* UI */
+.preset-color[type="color"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  width: 50px;
+  height: 25px;
+  cursor: pointer;
+  background: none;
+  border: 3px solid $ui-black-transparent;
+  border-radius: 8px;
+  padding: 0;
+}
+/* (Chrome, Safari, Edge) */
+.preset-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+/* (Chrome, Safari, Edge) */
+.preset-color[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+/* (Firefox) */
+.preset-color[type="color"]::-moz-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+.text-field {
+    padding: 0.35rem 0.75rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    background-color: var(--input-background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--ui-black-transparent);
+    border-radius: 0.5rem;
+    outline: none;
+    cursor: pointer;
+    transition: 0.25s ease-out;
+    box-shadow: none;
+    text-overflow: ellipsis;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.label-content {
+    gap: 15px;
+    display: flex;
+}
+.label-content span {
+    font-size: 0.7rem !important;
+}
+.label-content button {
+    padding: 0.5rem 1rem !important;
+}
+
+.label-container {
+    display: block;
+    margin-top: 10px;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.breaker {
+    width: 100%;
+    border-top: dotted 3px $ui-black-transparent;
+    margin: 15px 0;
+}
+
+.center-row {
+    text-align: center !important;
+}
+
+.markdown-help {
+    padding: 0.5rem 1rem !important;
+    background: var(--looks-secondary) !important;
+    border: var(--looks-secondary) !important;
+    color: white !important;
+}
+
+/* Confirmation buttons at the bottom of the modal */
+.button-row {
+    margin-top: 1rem;
+    font-weight: bolder;
+    text-align: right;
+}
+
+.body button {
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    color: black;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.button-row button.ok-button {
+    background: $looks-secondary;
+    border: $looks-secondary;
+    color: white;
+}
+
+[dir="ltr"] .button-row button + button {
+    margin-left: 0.5rem;
+}
+
+[dir="rtl"] .button-row button + button {
+    margin-right: 0.5rem;
+}

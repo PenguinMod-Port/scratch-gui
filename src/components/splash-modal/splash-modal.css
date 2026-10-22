@@ -1,0 +1,31 @@
+@import "../../css/colors.css";
+
+.modal-content {
+    width: 400px;
+    position: relative;
+}
+
+.body {
+    background: $ui-modal-background;
+    padding: 1.5rem 2.25rem;
+    display: flex;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: flex-start;
+}
+
+.column a {
+    margin: 0.25rem;
+    color: $text-primary !important;
+}
+
+.version {
+    position: absolute;
+    bottom: 0.25rem;
+    right: 0.25rem;
+    color: $text-primary-transparent;
+}

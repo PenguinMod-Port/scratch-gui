@@ -15,6 +15,11 @@ const messages = defineMessages({
         defaultMessage: 'Choose a Sprite',
         description: 'Heading for the sprite library',
         id: 'gui.spriteLibrary.chooseASprite'
+    },
+    header: {
+        defaultMessage: 'Sprites',
+        description: 'Header for sprite library',
+        id: 'pm.gui.spriteLibrary.header'
     }
 });
 
@@ -49,6 +54,7 @@ class SpriteLibrary extends React.PureComponent {
                 id="spriteLibrary"
                 tags={spriteTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 removedTrademarks
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
