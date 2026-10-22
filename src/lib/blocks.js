@@ -149,6 +149,20 @@ export default function (vm) {
         return sprites;
     };
 
+    const allSpritesMenu = function () {
+        const sprites = [];
+        for (const targetId in vm.runtime.targets) {
+            if (!Object.prototype.hasOwnProperty.call(vm.runtime.targets, targetId)) continue;
+            if (vm.runtime.targets[targetId].isOriginal) {
+                if (!vm.runtime.targets[targetId].isStage) {
+                    sprites.push([vm.runtime.targets[targetId].sprite.name, vm.runtime.targets[targetId].sprite.name]);
+                }
+            }
+        }
+        if (sprites.length === 0) return [['', '']];
+        return sprites;
+    };
+
     const cloneMenu = function () {
         if (vm.editingTarget && vm.editingTarget.isStage) {
             const menu = spriteMenu();
@@ -388,6 +402,11 @@ export default function (vm) {
         const json = jsonForMenuBlock('DISTANCETOMENU', spriteMenu, ScratchBlocks.Colours.sensing, [
             [mouse, '_mouse_']
         ]);
+        this.jsonInit(json);
+    };
+
+    ScratchBlocks.Blocks.sensing_sprites.init = function () {
+        const json = jsonForMenuBlock('SPRITE', allSpritesMenu, ScratchBlocks.Colours.sensing, []);
         this.jsonInit(json);
     };
 

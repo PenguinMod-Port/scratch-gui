@@ -279,6 +279,8 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
+            ${blockSeparator}
+            <block type="looks_backdrops" />
         ` : `
             <block id="${targetId}_switchcostumeto" type="looks_switchcostumeto">
                 <value name="COSTUME">
@@ -309,6 +311,9 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
                     </shadow>
                 </value>
             </block>
+            ${blockSeparator}
+            <block type="looks_costume" />
+            <block type="looks_backdrops" />
             ${blockSeparator}
             <block type="looks_changesizeby">
                 <value name="CHANGE">
@@ -526,6 +531,8 @@ const sound = function (isInitialSetup, isStage, targetId, soundName, colour) {
                 </shadow>
             </value>
         </block>
+        ${blockSeparator}
+        <block type="sound_sounds_menu" />
         ${categorySeparator}
     </category>
     `;
@@ -575,6 +582,7 @@ const events = function (isInitialSetup, isStage, targetId, colour) {
               <shadow type="event_broadcast_menu"></shadow>
             </value>
         </block>
+        <block type="event_broadcast_menu" />
         ${categorySeparator}
     </category>
     `;
@@ -924,13 +932,14 @@ const sensing = function (isInitialSetup, isStage, targetId, colour) {
                 <shadow type="text" />
             </value>
         </block>
+        <block type="sensing_sprites" />
         ${blockSeparator}
         <block id="current" type="sensing_current"/>
         <block type="sensing_dayssince2000"/>
         ${blockSeparator}
         <block type="sensing_username"/>
-        <block id="online" type="sensing_online"/>
         <block type="sensing_loggedin"/>
+        <block id="online" type="sensing_online"/>
         ${categorySeparator}
     </category>
     `;
@@ -1229,6 +1238,7 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
                 </shadow>
             </value>
         </block>
+        <block type="operator_constant" />
         ${blockSeparator}
         <block type="operator_distanceTo">
             <value name="x1">
