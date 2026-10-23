@@ -48,7 +48,7 @@ jobs:
       with:
         path: ./build/
     - name: Deploy to GitHub Pages
-      if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
+      if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && inputs.semver
       uses: actions/deploy-pages@v4.0.5
 
     - name: Make zip for release
