@@ -6,7 +6,9 @@ const guiColors = {
     'looks-secondary': '#0fbd83',
     'looks-transparent': 'hsla(160, 85%, 40%, 0.35)',
     'looks-light-transparent': 'hsla(160, 85%, 40%, 0.15)',
-    'looks-secondary-dark': 'hsla(160, 70%, 35%, 1)'
+    'looks-secondary-dark': 'hsla(160, 70%, 35%, 1)',
+
+    'drop-highlight': '#8fffda'
 };
 
 const blockColors = {};

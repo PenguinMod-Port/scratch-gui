@@ -12,6 +12,8 @@ const guiColors = {
     'extensions-tertiary': 'hsla(205, 100%, 40%, 1)',
     'extensions-transparent': 'hsla(205, 100%, 65%, 0.35)',
     'extensions-light': 'hsla(205, 60%, 85%, 1)',
+    
+    'drop-highlight': '#8fd0ff'
 };
 
 const blockColors = {

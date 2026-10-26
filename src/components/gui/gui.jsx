@@ -49,9 +49,9 @@ import {isRendererSupported, isBrowserSupported} from '../../lib/tw-environment-
 
 import styles from './gui.css';
 import addExtensionIcon from './icon--extensions.svg';
-import codeIcon from '!../../lib/tw-recolor/build!./icon--code.svg';
-import costumesIcon from '!../../lib/tw-recolor/build!./icon--costumes.svg';
-import soundsIcon from '!../../lib/tw-recolor/build!./icon--sounds.svg';
+import codeIcon from './icon--code.svg';
+import costumesIcon from './icon--costumes.svg';
+import soundsIcon from './icon--sounds.svg';
 
 import SettingsStore from '../../editor-settings/settings-store-singleton';
 
@@ -362,11 +362,13 @@ const GUIComponent = props => {
                             >
                                 <TabList className={tabClassNames.tabList} style={{'--selected-tab-layer': editorTabs.length + 4}}>
                                     <Tab className={tabClassNames.tab} style={{'--tab-layer': editorTabs.length + 3}}>
-                                        <img
-                                            className={styles.tabIcon}
-                                            draggable={false}
-                                            src={codeIcon()}
-                                        />
+                                        <span className={styles.tabIcon}>
+                                            <img
+                                                draggable={false}
+                                                src={codeIcon}
+                                                style={{filter: tintFilter(theme.getGuiColors()['looks-secondary'])}}
+                                            />
+                                        </span>
                                         <FormattedMessage
                                             defaultMessage="Code"
                                             description="Button to get to the code panel"
@@ -378,11 +380,13 @@ const GUIComponent = props => {
                                         onClick={onActivateCostumesTab}
                                         style={{'--tab-layer': editorTabs.length + 2}}
                                     >
-                                        <img
-                                            className={styles.tabIcon}
-                                            draggable={false}
-                                            src={costumesIcon()}
-                                        />
+                                        <span className={styles.tabIcon}>
+                                            <img
+                                                draggable={false}
+                                                src={costumesIcon}
+                                                style={{filter: tintFilter(theme.getGuiColors()['looks-secondary'])}}
+                                            />
+                                        </span>
                                         {targetIsStage ? (
                                             <FormattedMessage
                                                 defaultMessage="Backdrops"
@@ -402,11 +406,13 @@ const GUIComponent = props => {
                                         onClick={onActivateSoundsTab}
                                         style={{'--tab-layer': editorTabs.length + 1}}
                                     >
-                                        <img
-                                            className={styles.tabIcon}
-                                            draggable={false}
-                                            src={soundsIcon()}
-                                        />
+                                        <span className={styles.tabIcon}>
+                                            <img
+                                                draggable={false}
+                                                src={soundsIcon}
+                                                style={{filter: tintFilter(theme.getGuiColors()['looks-secondary'])}}
+                                            />
+                                        </span>
                                         <FormattedMessage
                                             defaultMessage="Sounds"
                                             description="Button to get to the sounds panel"
