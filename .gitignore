@@ -5,9 +5,6 @@
 /node_modules
 npm-*
 
-# PNPM
-pnpm-workspace.yaml
-
 # Testing
 /.nyc_output
 /coverage

@@ -31,7 +31,7 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       with:
-        version: 10
+        version: 12
     - name: Install Node.js
       uses: actions/setup-node@v6.0.0
       with:
@@ -39,7 +39,7 @@ jobs:
         cache: 'pnpm'
 
     - name: Install dependencies
-      run: pnpm up && pnpm i --frozen-lockfile --shamefully-hoist --force
+      run: pnpm up && pnpm i --frozen-lockfile
     - name: Build site
       run: NODE_ENV="production" pnpm exec webpack --bail
       

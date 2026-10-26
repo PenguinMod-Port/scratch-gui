@@ -1,0 +1,5 @@
+allowBuilds:
+  chromedriver: true
+  core-js: true
+  protobufjs: true
+nodeLinker: hoisted
