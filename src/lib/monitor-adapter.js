@@ -36,7 +36,7 @@ export default function ({id, mode, spriteName, opcode, params, value, vm}) {
     }
 
     const customTypeHandler = (value, list = false) => {
-        let func = (list && value.toListItem) || value.toMonitorContent || value.toReporterContent;
+        let func = (list && value.toListItem) || value.toMonitorContent || value.toReporterContent || value.toString;
         if (!func) {
             return safeStringify(value);
         }
