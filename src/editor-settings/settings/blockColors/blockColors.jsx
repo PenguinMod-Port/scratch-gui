@@ -54,6 +54,10 @@ export default (class extends PaletteSetting {
             more: (<FormattedMessage
                 defaultMessage="My Blocks"
                 id="pm.editorSettings.blockColors.more"
+            />),
+            pen: (<FormattedMessage
+                defaultMessage="Extensions (default)"
+                id="pm.editorSettings.blockColors.pen"
             />)
         }
     }

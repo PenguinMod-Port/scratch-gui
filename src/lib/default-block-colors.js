@@ -10,4 +10,5 @@ export default {
     data: "#FF8C1A",
     data_lists: "#FF661A",
     more: "#FF6680",
+    pen: "#0FBD8C",
 }
