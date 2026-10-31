@@ -25,5 +25,6 @@ export default Object.fromEntries([
     "swatches",
     "test",
     "twGallery",
+    "twoColumnCategories",
     "vmDebug"
 ].map(v => [v, require(`./settings/${v}/${v}.jsx`).default]))

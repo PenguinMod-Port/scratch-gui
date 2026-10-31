@@ -71,6 +71,8 @@ class EditorSettingsModal extends React.Component {
                         <Separator />
                         <settings.stageLeft />
                         <Separator />
+                        <settings.projectBlockCounter />
+                        <Separator />
                         <settings.pmGallery />
                         <settings.twGallery />
                         <settings.showExtensionIds />
@@ -95,7 +97,7 @@ class EditorSettingsModal extends React.Component {
                         <settings.swatches />
                         <settings.disableExpandables />
                         <Separator />
-                        <settings.projectBlockCounter />
+                        <settings.twoColumnCategories />
                         <settings.blockCounter />
                         <Separator />
                         <settings.blockPinning />
