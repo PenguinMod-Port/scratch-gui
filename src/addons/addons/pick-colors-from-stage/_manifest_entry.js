@@ -2,7 +2,7 @@
 const manifest = {
   "editorOnly": true,
   "noTranslations": true,
-  "enabledByDefault": true,
+  "enabledByDefault": false,
   "name": "Pick colors on stage with eyedropper",
   "description": "Allows the eyedropper in the costume editor to also pick colors from the stage.",
   "credits": [

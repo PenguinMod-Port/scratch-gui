@@ -3,6 +3,7 @@
 
 .tag-button {
     padding: .625rem 1rem;
+    margin-bottom: 6px;
     background: $looks-secondary;
     border-radius: 1.375rem;
     color: white;

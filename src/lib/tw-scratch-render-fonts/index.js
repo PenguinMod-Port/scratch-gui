@@ -7,6 +7,16 @@ const Marker = require('./Knewave.woff2');
 const Curly = require('./Griffy-Regular.woff2');
 const Pixel = require('./Grand9K-Pixel.woff2');
 const Scratch = require('./ScratchSavers_b2.woff2');
+
+/* PenguinMod Fonts */
+const Technological = require('./MonospaceBold.ttf');
+const Bubbly = require('./QTKooper.otf');
+const Playful = require('./BadComic-Regular.ttf');
+const BitsAndBytes = require('./freecam-v2.ttf');
+const Arcade = require('./PressStart2P.ttf');
+const Archivo = require('./Archivo-Regular.ttf');
+const ArchivoBlack = require('./Archivo-Black.ttf');
+
 const log = require('../log').default;
 
 const fontSource = {
@@ -16,7 +26,16 @@ const fontSource = {
     'Marker': Marker,
     'Curly': Curly,
     'Pixel': Pixel,
-    'Scratch': Scratch
+    'Scratch': Scratch,
+
+    /* PenguinMod Fonts */
+    'Technological': Technological,
+    'Bubbly': Bubbly,
+    'Bits and Bytes': BitsAndBytes,
+    'Playful': Playful,
+    'Arcade': Arcade,
+    'Archivo': Archivo,
+    'Archivo Black': ArchivoBlack
 };
 
 const fontData = {};

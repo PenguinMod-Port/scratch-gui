@@ -15,7 +15,7 @@ import menuBarStyles from './menu-bar.css';
 import styles from './settings-menu.css';
 
 import dropdownCaret from './dropdown-caret.svg';
-import settingsIcon from './icon--settings.svg';
+import settingsIcon from './icon--style.svg';
 
 const SettingsMenu = ({
     canChangeLanguage,
@@ -40,9 +40,9 @@ const SettingsMenu = ({
         />
         <span className={styles.dropdownLabel}>
             <FormattedMessage
-                defaultMessage="Settings"
-                description="Settings menu"
-                id="gui.menuBar.settings"
+                defaultMessage="Style"
+                description="Style menu"
+                id="pm.gui.menuBar.style"
             />
         </span>
         <img
@@ -67,7 +67,6 @@ const SettingsMenu = ({
                         <TWAccentThemeMenu />
                     </React.Fragment>
                 )}
-                {onClickDesktopSettings && <TWDesktopSettings onClick={onClickDesktopSettings} />}
             </MenuSection>
         </MenuBarMenu>
     </MenuLabel>

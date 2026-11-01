@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_RED, ACCENT_RAINBOW, Theme} from '../../lib/themes/index.js';
+import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_CYAN, ACCENT_GREEN, ACCENT_ORANGE, Theme} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -20,15 +20,30 @@ const options = defineMessages({
         description: 'Name of the red color scheme, used by TurboWarp by default.',
         id: 'tw.accent.red'
     },
-    [ACCENT_PURPLE]: {
-        defaultMessage: 'Purple',
-        description: 'Name of the purple color scheme. Matches modern Scratch.',
-        id: 'tw.accent.purple'
+    [ACCENT_ORANGE]: {
+        defaultMessage: 'Orange',
+        description: 'Name of the orange color scheme.',
+        id: 'pm.gui.accent.orange'
+    },
+    [ACCENT_GREEN]: {
+        defaultMessage: 'Green',
+        description: 'Name of the green color scheme, used by Scratch Labs.',
+        id: 'pm.gui.accent.green'
+    },
+    [ACCENT_CYAN]: {
+        defaultMessage: 'Cyan',
+        description: 'Name of the cyan color scheme, used by PenguinMod by default.',
+        id: 'pm.gui.accent.cyan'
     },
     [ACCENT_BLUE]: {
         defaultMessage: 'Blue',
         description: 'Name of the blue color scheme. Matches Scratch before the high contrast update.',
         id: 'tw.accent.blue'
+    },
+    [ACCENT_PURPLE]: {
+        defaultMessage: 'Purple',
+        description: 'Name of the purple color scheme. Matches modern Scratch.',
+        id: 'tw.accent.purple'
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: 'Rainbow',

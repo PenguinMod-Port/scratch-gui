@@ -42,9 +42,10 @@ const RecordingStep = props => (
                 />
             </Box>
             <Box className={styles.waveformContainer}>
-                {props.levels ? (
+                {props.mainLeftChunkLevels && props.rightChunkLevels ? (
                     <Waveform
-                        data={props.levels}
+                        mainLeftData={props.mainLeftChunkLevels}
+                        rightData={props.rightChunkLevels}
                         height={150}
                         level={0}
                         width={440}
@@ -109,7 +110,8 @@ RecordingStep.propTypes = {
     intl: intlShape.isRequired,
     isRtl: PropTypes.bool,
     level: PropTypes.number,
-    levels: PropTypes.arrayOf(PropTypes.number),
+    mainLeftChunkLevels: PropTypes.arrayOf(PropTypes.number),
+    rightChunkLevels: PropTypes.arrayOf(PropTypes.number),
     listening: PropTypes.bool,
     onRecord: PropTypes.func.isRequired,
     onStopRecording: PropTypes.func.isRequired,

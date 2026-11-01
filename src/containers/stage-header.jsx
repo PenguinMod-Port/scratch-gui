@@ -98,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
     onSetStageFull: () => dispatch(setStageSize(STAGE_SIZE_MODES.full)),
+    onSetStageHidden: () => dispatch(setStageSize(STAGE_SIZE_MODES.hidden)),
     onSetStageFullScreen: () => dispatch(setFullScreen(true)),
     onSetStageUnFullScreen: () => dispatch(setFullScreen(false)),
     onOpenSettings: () => dispatch(openSettingsModal())

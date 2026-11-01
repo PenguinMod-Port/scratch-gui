@@ -28,9 +28,11 @@ class RecordModal extends React.Component {
         ]);
 
         this.state = {
-            samples: null,
+            mainLeftChunkLevels: null,
+            rightChunkLevels: null,
             encoding: false,
-            levels: null,
+            mainLeftSampleLevels: null,
+            rightSampleLevels: null,
             playhead: null,
             playing: false,
             recording: false,
@@ -42,9 +44,17 @@ class RecordModal extends React.Component {
     handleRecord () {
         this.setState({recording: true});
     }
-    handleStopRecording (samples, sampleRate, levels, trimStart, trimEnd) {
-        if (samples.length > 0) {
-            this.setState({samples, sampleRate, levels, trimStart, trimEnd, recording: false});
+    handleStopRecording (mainLeftSampleLevels, rightSampleLevels, sampleRate, mainLeftChunkLevels, rightChunkLevels, trimStart, trimEnd) {
+        if (mainLeftSampleLevels.length > 0) {
+            this.setState({
+                mainLeftSampleLevels,
+                rightSampleLevels,
+                sampleRate,
+                mainLeftChunkLevels,
+                rightChunkLevels,
+                trimStart, trimEnd,
+                recording: false
+            });
         }
     }
     handlePlay () {
@@ -54,7 +64,7 @@ class RecordModal extends React.Component {
         this.setState({playing: false, playhead: null});
     }
     handleBack () {
-        this.setState({playing: false, samples: null});
+        this.setState({playing: false, mainLeftSampleLevels: null, rightSampleLevels: null});
     }
     handleSetTrimEnd (trimEnd) {
         this.setState({trimEnd});
@@ -67,12 +77,17 @@ class RecordModal extends React.Component {
     }
     handleSubmit () {
         this.setState({encoding: true}, () => {
-            const sampleCount = this.state.samples.length;
+            const sampleCount = this.state.mainLeftSampleLevels.length;
             const startIndex = Math.floor(this.state.trimStart * sampleCount);
             const endIndex = Math.floor(this.state.trimEnd * sampleCount);
-            const clippedSamples = this.state.samples.slice(startIndex, endIndex);
+            const clippedSamples = this.state.mainLeftSampleLevels.slice(startIndex, endIndex);
+            const buffer = {
+                mainLeftSamples: this.state.mainLeftSampleLevels.slice(startIndex, endIndex),
+                rightSamples: this.state.rightSampleLevels.slice(startIndex, endIndex),
+                sampleRate: this.state.sampleRate
+            };
 
-            encodeAndAddSoundToVM(this.props.vm, clippedSamples, this.state.sampleRate, 'recording1',
+            encodeAndAddSoundToVM(this.props.vm, buffer, 'recording1',
                 () => {
                     this.props.onClose();
                     this.props.onNewSound();
@@ -86,12 +101,14 @@ class RecordModal extends React.Component {
         return (
             <RecordModalComponent
                 encoding={this.state.encoding}
-                levels={this.state.levels}
+                mainLeftChunkLevels={this.state.mainLeftChunkLevels}
+                rightChunkLevels={this.state.rightChunkLevels}
                 playhead={this.state.playhead}
                 playing={this.state.playing}
                 recording={this.state.recording}
                 sampleRate={this.state.sampleRate}
-                samples={this.state.samples}
+                mainLeftSampleLevels={this.state.mainLeftSampleLevels}
+                rightSampleLevels={this.state.rightSampleLevels}
                 trimEnd={this.state.trimEnd}
                 trimStart={this.state.trimStart}
                 onBack={this.handleBack}

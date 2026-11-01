@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 20 20" xmlns:bx="https://boxy-svg.com">
+  <bx:title>left-right-active</bx:title>
+  <desc>Created with Sketch.</desc>
+  <g transform="matrix(0.932053, 0, 0, 0.932053, -213.451813, -157.769516)" style="">
+    <g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill-rule="nonzero" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal">
+      <path d="M 231.333 180 C 231.333 177.036 233.736 174.634 236.699 174.634 C 239.663 174.634 242.065 177.037 242.065 180 C 242.065 182.964 239.662 185.366 236.699 185.366 C 233.735 185.366 231.333 182.963 231.333 180 Z M 239.869 178.059 L 239.899 179.93 C 239.899 180.206 240.123 180.43 240.399 180.43 C 240.675 180.43 240.899 180.206 240.899 179.93 L 240.869 178.059 C 240.869 177.783 240.645 177.559 240.369 177.559 C 240.093 177.559 239.869 177.783 239.869 178.059 Z M 238.094 178.286 L 238.094 180.169 C 238.094 180.445 238.318 180.669 238.594 180.669 C 238.87 180.669 239.094 180.445 239.094 180.169 L 239.094 178.286 C 239.094 178.01 238.87 177.786 238.594 177.786 C 238.318 177.786 238.094 178.01 238.094 178.286 Z" stroke="none" stroke-width="0" stroke-linecap="butt" style="fill: #855CD6;"></path>
+      <path d="M244.20173,179.91848h3.90687" fill="none" stroke-width="1" stroke-linecap="round" style="stroke: #855CD6"></path>
+      <path d="M246.03048,177.79879l2.11969,2.11969" fill="none" stroke-width="1" stroke-linecap="round" style="stroke: #855CD6"></path>
+      <path d="M246.03048,182.07973l2.11969,-2.11969" data-paper-data="{&quot;index&quot;:null}" fill="none" stroke-width="1" stroke-linecap="round" style="stroke: #855CD6"></path>
+      <path d="M240.36886,178.05929v1.8831" fill="none" stroke-width="1" stroke-linecap="round" style=""></path>
+      <path d="M 238.594 178.286 L 238.594 180.169" fill="none" stroke-width="1" stroke-linecap="round" style="stroke-width: 1;"></path>
+    </g>
+  </g>
+</svg>

@@ -64,15 +64,52 @@
 
     position: relative;
 
-    background: hsla(300, 53%, 60%, 0.15);
     border: 1px solid $ui-black-transparent;
     border-radius: 5px;
 
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.waveform-container[data-channel="-1"] {
+    background: linear-gradient(
+        hsla(300, 53%, 60%, 0.15) 0%,
+        hsla(300, 53%, 60%, 0.15) 50%,
+        hsla(300, 53%, 60%, 0.30) 50%,
+        hsla(300, 53%, 60%, 0.30) 100%
+    );
+}
+.waveform-container[data-channel="0"] {
+    background: linear-gradient(
+        hsla(300, 53%, 60%, 0.15) 0%,
+        hsla(300, 53%, 60%, 0.15) 50%,
+        hsla(300, 53%, 60%, 0) 50%,
+        hsla(300, 53%, 60%, 0) 100%
+    );
+}
+.waveform-container[data-channel="1"] {
+    background: linear-gradient(
+        hsla(300, 53%, 60%, 0) 0%,
+        hsla(300, 53%, 60%, 0) 50%,
+        hsla(300, 53%, 60%, 0.30) 50%,
+        hsla(300, 53%, 60%, 0.30) 100%
+    );
+}
 
 $border-radius: 0.25rem;
+
+.advanced-controls {
+    margin-top: calc(1 * 0.5rem) !important;
+}
+.advanced-container {
+    gap: 10px;
+    border-right: none !important;
+}
+.no-margin {
+    margin: 0 !important;
+}
+.advanced-container .button[aria-pressed='true'] {
+    background-color: var(--looks-light-transparent);
+}
 
 .button {
     height: 2rem;
@@ -145,7 +182,6 @@ $border-radius: 0.25rem;
     color: $text-primary;
     font-size: 0.625rem;
     user-select: none;
-
 }
 
 [dir="ltr"] .trim-button {

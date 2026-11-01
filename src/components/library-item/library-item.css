@@ -99,7 +99,6 @@
     */
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     min-width: 0;
 }
 
@@ -239,4 +238,10 @@
 .favorite-container.active,
 .library-item:hover .favorite-container {
     display: block;
+}
+
+.extensionId {
+    font-style: italic;
+    font-size: 0.75em;
+    opacity: 0.75;
 }

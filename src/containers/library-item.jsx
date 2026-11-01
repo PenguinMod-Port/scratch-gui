@@ -62,7 +62,7 @@ class LibraryItem extends React.PureComponent {
             if (this.props.href) {
                 window.open(this.props.href);
             } else {
-                this.props.onSelect(this.props.id);
+                this.props.onSelect(this.props.id, e);
             }
         }
         e.preventDefault();

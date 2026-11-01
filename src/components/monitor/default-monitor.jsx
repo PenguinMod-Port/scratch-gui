@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './monitor.css';
+import DOMElementRenderer from '../../containers/dom-element-renderer.jsx';
 
 const DefaultMonitor = ({categoryColor, label, value}) => (
     <div className={styles.defaultMonitor}>
@@ -15,7 +16,7 @@ const DefaultMonitor = ({categoryColor, label, value}) => (
                     color: categoryColor.text
                 }}
             >
-                {value}
+                {value instanceof HTMLElement ? (<DOMElementRenderer domElement={value} />) : value}
             </div>
         </div>
     </div>
@@ -29,7 +30,8 @@ DefaultMonitor.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.number
+        PropTypes.number,
+        PropTypes.instanceOf(HTMLElement)
     ])
 };
 

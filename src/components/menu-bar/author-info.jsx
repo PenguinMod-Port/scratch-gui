@@ -3,6 +3,7 @@ import React from 'react';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import UserAvatar from './user-avatar.jsx';
+import { HOME_SITE } from '../../lib/brand';
 
 import styles from './author-info.css';
 
@@ -52,20 +53,21 @@ ActualAuthorInfo.propTypes = {
     username: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
 
-const AuthorInfo = ({projectId, ...props}) => (
+const AuthorInfo = ({projectId, username, ...props}) => (
     projectId ? (
         <a
             className={styles.link}
-            href={`https://scratch.mit.edu/projects/${projectId}`}
+            href={`${HOME_SITE}/profile?user=${username}`}
             target="_blank"
             rel="noreferrer"
         >
-            <ActualAuthorInfo {...props} />
+            <ActualAuthorInfo username={username} {...props} />
         </a>
-    ) : <ActualAuthorInfo {...props} />
+    ) : <ActualAuthorInfo username={username} {...props} />
 );
 AuthorInfo.propTypes = {
-    projectId: PropTypes.string
+    projectId: PropTypes.string,
+    username: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
 
 export default AuthorInfo;

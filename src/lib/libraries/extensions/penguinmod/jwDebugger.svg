@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; fill: rgb(41, 190, 184); stroke: rgb(51, 140, 137);" rx="48" ry="48" id="object-0"></rect>
+  <g style="" transform="matrix(10.961845, 0, 0, 10.961845, 190.381531, 40.381538)">
+    <path d="M 15.5 11.5 C 15.5 14.538 13.038 17 10 17 C 6.962 17 4.5 14.538 4.5 11.5 C 4.5 9.908 5.176 8.475 6.257 7.47 C 6.335 7.489 6.416 7.5 6.5 7.5 L 13.5 7.5 C 13.584 7.5 13.665 7.49 13.743 7.47 C 14.824 8.474 15.5 9.908 15.5 11.5 Z" style="stroke-width: 1; fill: rgb(255, 255, 255);"></path>
+    <path d="M 10 3 C 11.933 3 13.5 4.567 13.5 6.5 L 6.5 6.5 C 6.5 4.567 8.067 3 10 3 Z" style="stroke-linejoin: round; stroke-width: 2px; fill: rgb(255, 255, 255);"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); transform-box: fill-box; transform-origin: 50% 50%;" d="M 3.5 11.5 L 4.5 11.5"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); transform-box: fill-box; transform-origin: 50% 50%;" d="M 15.5 11.5 L 16.5 11.5" transform="matrix(1, 0, 0, 1, 0, 0.000003)"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); transform-origin: 10px 11.5px;" d="M 3.5 11.5 L 4.5 11.5" transform="matrix(0.866025, -0.5, 0.5, 0.866025, 0, 0)"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 1; fill: none; stroke: rgb(255, 255, 255); transform-origin: 10px 11.5px;" d="M 15.5 11.5 L 16.5 11.5" transform="matrix(0.866025, -0.5, 0.5, 0.866025, 0, 0)"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 1; fill: none; stroke: rgb(255, 255, 255); transform-origin: 10px 11.5px;" d="M 3.5 11.5 L 4.5 11.5" transform="matrix(0.866025, 0.5, -0.5, 0.866025, 0, 0)"></path>
+    <path style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 1; fill: none; stroke: rgb(255, 255, 255); transform-origin: 10px 11.5px;" d="M 15.5 11.5 L 16.5 11.5" transform="matrix(0.866025, 0.5, -0.5, 0.866025, 0, 0)"></path>
+  </g>
+</svg>
