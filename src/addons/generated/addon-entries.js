@@ -55,7 +55,6 @@ export default {
   "block-duplicate": () => import(/* webpackChunkName: "addon-default-entry" */ "../addons/block-duplicate/_runtime_entry.js"),
   "swap-local-global": () => import(/* webpackChunkName: "addon-entry-swap-local-global" */ "../addons/swap-local-global/_runtime_entry.js"),
   "editor-comment-previews": () => import(/* webpackChunkName: "addon-default-entry" */ "../addons/editor-comment-previews/_runtime_entry.js"),
-  "columns": () => import(/* webpackChunkName: "addon-entry-columns" */ "../addons/columns/_runtime_entry.js"),
   "number-pad": () => import(/* webpackChunkName: "addon-entry-number-pad" */ "../addons/number-pad/_runtime_entry.js"),
   "editor-number-arrow-keys": () => import(/* webpackChunkName: "addon-entry-editor-number-arrow-keys" */ "../addons/editor-number-arrow-keys/_runtime_entry.js"),
   "expanded-backpack": () => import(/* webpackChunkName: "addon-entry-expanded-backpack" */ "../addons/expanded-backpack/_runtime_entry.js"),

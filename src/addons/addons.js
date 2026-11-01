@@ -55,7 +55,6 @@ const addons = [
     'block-duplicate',
     'swap-local-global',
     'editor-comment-previews',
-    'columns',
     'number-pad',
     'editor-number-arrow-keys',
     'expanded-backpack',
@@ -69,7 +68,7 @@ const addons = [
 ];
 
 const newAddons = [
-    'expanded-backpack'
+    'debugger'
 ];
 
 // eslint-disable-next-line import/no-commonjs

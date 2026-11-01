@@ -453,7 +453,7 @@ const GUIComponent = props => {
                                             vm={vm}
                                         />
                                     </Box>
-                                    <Box className={styles.extensionButtonContainer}>
+                                    <Box className={classNames(styles.extensionButtonContainer, {[styles.hover]: SettingsStore.store.twoColumnCategories})}>
                                         <button
                                             className={styles.extensionButton}
                                             title={intl.formatMessage(messages.addExtension)}

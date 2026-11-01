@@ -1331,6 +1331,18 @@ const _strings = function() {
                 </shadow>
             </value>
         </block>
+        <block type="operator_repeat">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">${apple}</field>
+                </shadow>
+            </value>
+            <value name="TIMES">
+                <shadow type="math_whole_number">
+                    <field name="NUM">3</field>
+                </shadow>
+            </value>
+        </block>
         <block type="operator_letter_of">
             <value name="LETTER">
                 <shadow type="math_whole_number">
@@ -1474,6 +1486,13 @@ const _strings = function() {
             <value name="TEXT">
                 <shadow type="text">
                     <field name="TEXT">${apple}\n${banana}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="operator_trim">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">   ${apple}   </field>
                 </shadow>
             </value>
         </block>

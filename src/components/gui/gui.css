@@ -271,10 +271,24 @@
     border: 1px solid $looks-secondary;
     box-sizing: content-box; /* To match scratch-block vertical toolbox borders */
 }
+.extension-button-container.hover {
+    bottom: 0.75rem;
+    left: 15.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 100%;
+    box-shadow: 0 0 0 4px $looks-transparent;
+    transition: transform, box-shadow 0.5s;
+}
+.extension-button-container.hover:hover {
+    background: $extensions-primary;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px $looks-transparent;
+}
 
 $fade-out-distance: 15px;
 
-.extension-button-container:before {
+.extension-button-container:not(.hover):before {
     content: "";
     position: absolute;
     top: calc(calc(-1 * $fade-out-distance) - 1px);
