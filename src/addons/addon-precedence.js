@@ -3,10 +3,7 @@
 // If an addon isn't listed here, it's interpreted to have lowest precedence and
 // that its order with other unlisted addons does not matter.
 const addonPrecedence = [
-    'columns',
-    'editor-stage-left',
-    'editor-theme3',
-    'hide-stage'
+    
 ];
 
 /**
