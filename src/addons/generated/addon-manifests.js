@@ -53,7 +53,6 @@ import _disable_paste_offset from "../addons/disable-paste-offset/_manifest_entr
 import _block_duplicate from "../addons/block-duplicate/_manifest_entry.js";
 import _swap_local_global from "../addons/swap-local-global/_manifest_entry.js";
 import _editor_comment_previews from "../addons/editor-comment-previews/_manifest_entry.js";
-import _columns from "../addons/columns/_manifest_entry.js";
 import _number_pad from "../addons/number-pad/_manifest_entry.js";
 import _editor_number_arrow_keys from "../addons/editor-number-arrow-keys/_manifest_entry.js";
 import _expanded_backpack from "../addons/expanded-backpack/_manifest_entry.js";
@@ -119,7 +118,6 @@ export default {
   "block-duplicate": _block_duplicate,
   "swap-local-global": _swap_local_global,
   "editor-comment-previews": _editor_comment_previews,
-  "columns": _columns,
   "number-pad": _number_pad,
   "editor-number-arrow-keys": _editor_number_arrow_keys,
   "expanded-backpack": _expanded_backpack,

@@ -55,7 +55,6 @@ const addons = [
     'block-duplicate',
     'swap-local-global',
     'editor-comment-previews',
-    'columns',
     'number-pad',
     'editor-number-arrow-keys',
     'expanded-backpack',
