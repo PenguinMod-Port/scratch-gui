@@ -31,7 +31,7 @@ export default (class extends IntegerSetting {
 
         // copied from block_render_svg.js
         ScratchBlocks.BlockSvg.TOP_LEFT_CORNER_START =
-            'm 0,' + ScratchBlocks.BlockSvg.CORNER_RADIUS;
+            'M 0,' + ScratchBlocks.BlockSvg.CORNER_RADIUS;
         ScratchBlocks.BlockSvg.TOP_LEFT_CORNER =
             'A ' + ScratchBlocks.BlockSvg.CORNER_RADIUS + ',' +
             ScratchBlocks.BlockSvg.CORNER_RADIUS + ' 0 0,1 ' +
