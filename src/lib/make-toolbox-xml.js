@@ -1679,7 +1679,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     }
 
     for (const extensionCategory of categoriesXML) {
-        everything.push(gap, extensionCategory.xml);
+        everything.push(gap, extensionCategory.xml.replace('colour="undefined"', `colour="${colors.pen}"`));
     }
 
     everything.push(xmlClose);
