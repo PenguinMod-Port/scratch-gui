@@ -154,7 +154,6 @@ class Blocks extends React.Component {
     }
     componentDidMount () {
         this.ScratchBlocks = VMScratchBlocks(this.props.vm, this.props.useCatBlocks);
-        this.props.vm.runtime.publishGlobalProcMutations = this.handlePublishGlobalProcMutations;
         this.props.vm.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
@@ -443,6 +442,7 @@ class Blocks extends React.Component {
         this.props.vm.addListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
 
         this.props.vm.runtime.addListener("RUNTIME_DISPOSED", this.onProjectDispose);
+        this.props.vm.runtime.addListener("PUBLISH_GLOBAL_PROCS", this.handlePublishGlobalProcMutations);
     }
     detachVM () {
         this.props.vm.removeListener('SCRIPT_GLOW_ON', this.onScriptGlowOn);
@@ -459,6 +459,7 @@ class Blocks extends React.Component {
         this.props.vm.removeListener('PERIPHERAL_DISCONNECTED', this.handleStatusButtonUpdate);
 
         this.props.vm.runtime.removeListener("RUNTIME_DISPOSED", this.onProjectDispose);
+        this.props.vm.runtime.removeListener("PUBLISH_GLOBAL_PROCS", this.handlePublishGlobalProcMutations);
     }
 
     updateToolboxBlockValue (id, value) {
