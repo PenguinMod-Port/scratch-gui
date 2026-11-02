@@ -121,6 +121,7 @@ class Blocks extends React.Component {
             'handleCustomProceduresClose',
             'handleCategoryReorder',
             'handlePinCallback',
+            'handlePublishGlobalProcMutations',
             'handleBeforeEditCustomProcedure',
             'onScriptGlowOn',
             'onScriptGlowOff',
@@ -153,6 +154,7 @@ class Blocks extends React.Component {
     }
     componentDidMount () {
         this.ScratchBlocks = VMScratchBlocks(this.props.vm, this.props.useCatBlocks);
+        this.props.vm.runtime.publishGlobalProcMutations = this.handlePublishGlobalProcMutations;
         this.props.vm.customPrompt = this.handleCustomPrompt;
         this.ScratchBlocks.prompt = this.handlePromptStart;
         this.ScratchBlocks.customPrompt = this.handleCustomPrompt;
@@ -832,6 +834,13 @@ class Blocks extends React.Component {
         const toolboxXML = this.getToolboxXML();
         if (toolboxXML) {
             this.props.updateToolboxState(toolboxXML);
+        }
+    }
+    handlePublishGlobalProcMutations (mutations) {
+        const globalProcMap = this.ScratchBlocks.Procedures.GLOBAL_BLOCKS;
+        for (const mutation of mutations) {
+            const parsedMutation = this.ScratchBlocks.Xml.textToDom(mutation.textContent);
+            globalProcMap.set(mutation.proccode, parsedMutation);
         }
     }
     handleBeforeEditCustomProcedure (block) {
