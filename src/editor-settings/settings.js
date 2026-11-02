@@ -18,6 +18,7 @@ export default Object.fromEntries([
     "paintScrollZoom",
     "pmGallery",
     "projectBlockCounter",
+    "reporterHeightThreshold",
     "showExtensionIds",
     "soundDisplayDetail",
     "splashModal",

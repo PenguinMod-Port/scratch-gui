@@ -92,6 +92,7 @@ class EditorSettingsModal extends React.Component {
                         <settings.notchHeight />
                         <settings.notchSpacing />
                         <settings.hexagonalRoundness />
+                        <settings.reporterHeightThreshold />
                         <Separator />
                         <settings.outputBubbleAutoTyping />
                         <settings.swatches />
