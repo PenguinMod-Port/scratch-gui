@@ -93,7 +93,7 @@ class GUI extends React.Component {
             let popupArgs = `scrollbars=yes,resizable=yes,status=no,location=yes,toolbar=no,menubar=no,left=200,top=200`;
             popupArgs += `,width=${this.props.customStageSize.width}`;
             popupArgs += `,height=${this.props.customStageSize.height +44}`;
-            const child = open('/popout-scafold.html', '_blank', popupArgs);
+            const child = open('/popout-scaffold.html', '_blank', popupArgs);
             child.addEventListener('DOMContentLoaded', () => {
                 this.setState({
                     popoutWrapper: child.document.getElementById('popout-wrapper'),
