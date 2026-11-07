@@ -16,8 +16,7 @@ class StageHeader extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleKeyPress',
-            'handlePopIn'
+            'handleKeyPress'
         ]);
         this.checkInvalidStageSizeMode();
     }
@@ -35,7 +34,6 @@ class StageHeader extends React.Component {
             this.props.onSetStageUnFullScreen();
         }
     }
-    handlePopIn () { window.close() }
     checkInvalidStageSizeMode () {
         // Switch from "large" to "full" when the large option isn't even displayed in the interface
         if (this.props.stageSizeMode === STAGE_SIZE_MODES.large && !this.showFixedLargeSize()) {
@@ -59,7 +57,6 @@ class StageHeader extends React.Component {
             <StageHeaderComponent
                 {...props}
                 onKeyPress={this.handleKeyPress}
-                onPopinStage={this.handlePopIn}
                 showFixedLargeSize={this.showFixedLargeSize()}
             />
         );
@@ -103,6 +100,7 @@ const mapDispatchToProps = dispatch => ({
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
     onSetStageFull: () => dispatch(setStageSize(STAGE_SIZE_MODES.full)),
     onPopoutStage: () => dispatch(setPopout(true)),
+    onPopinStage: () => dispatch(setPopout(false)),
     onSetStageHidden: () => dispatch(setStageSize(STAGE_SIZE_MODES.hidden)),
     onSetStageFullScreen: () => dispatch(setFullScreen(true)),
     onSetStageUnFullScreen: () => dispatch(setFullScreen(false)),

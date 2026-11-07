@@ -113,16 +113,20 @@ class GUI extends React.Component {
                     stageSizeOverride: this.computeStageSize(child)
                 });
             });
-            child.addEventListener('beforeunload', () => {
+            child.onpageshow = () =>
+            child.addEventListener('pagehide', () => {
                 this.props.onPopinStage();
                 this.setState({
+                    popout: null,
+                    popoutWrapper: null,
                     popoutOpen: false,
                     stageSizeOverride: null
                 });
             });
         }
-        if (this.state.popout)
-            applyGuiColors(this.props.reduxTheme, this.state.popout.document.documentElement);
+        if (this.state.popout) applyGuiColors(this.props.reduxTheme, this.state.popout.document.documentElement);
+        if (!this.props.isPoppedOut && this.state.popoutOpen)
+            this.state.popout.close();
     }
     computeStageSize(win) {
         const fitX = win.innerWidth / this.props.customStageSize.width;
