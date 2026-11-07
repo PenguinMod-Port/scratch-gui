@@ -169,6 +169,7 @@ module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
         entry: {
+            "popout-scafold": "./src/playground/popout-scafold.js",
             editor: "./src/playground/editor.jsx",
             player: "./src/playground/player.jsx",
             fullscreen: "./src/playground/fullscreen.jsx",
@@ -214,6 +215,13 @@ module.exports = [
                 "process.env.ENABLE_WINDCHIMES": JSON.stringify(
                     process.env.ENABLE_WINDCHIMES || "",
                 ),
+            }),
+            new HtmlWebpackPlugin({
+                chunks: ["popout-scafold"],
+                template: "src/playground/popout-scafold.ejs",
+                filename: "popout-scafold.html",
+                title: `${APP_NAME} - Popout Stage`,
+                ...htmlWebpackPluginCommon,
             }),
             new HtmlWebpackPlugin({
                 chunks: ["editor"],

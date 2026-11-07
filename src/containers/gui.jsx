@@ -27,6 +27,7 @@ import {
     closeTelemetryModal,
     openExtensionLibrary
 } from '../reducers/modals';
+import {setPopout} from '../reducers/mode.js';
 
 import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
 import LocalizationHOC from '../lib/localization-hoc.jsx';
@@ -62,6 +63,13 @@ const setProjectIdMetadata = projectId => {
 };
 
 class GUI extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            popoutWrapper: null,
+            popoutOpen: false
+        }
+    }
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
@@ -79,6 +87,25 @@ class GUI extends React.Component {
             // this only notifies container when a project changes from not yet loaded to loaded
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
+        }
+
+        if (this.props.isPoppedOut && !this.state.popoutOpen) {
+            let popupArgs = `scrollbars=yes,resizable=yes,status=no,location=yes,toolbar=no,menubar=no,left=200,top=200`;
+            popupArgs += `,width=${this.props.customStageSize.width}`;
+            popupArgs += `,height=${this.props.customStageSize.height +44}`;
+            const child = open('/popout-scafold.html', '_blank', popupArgs);
+            child.addEventListener('DOMContentLoaded', () => {
+                this.setState({
+                    popoutWrapper: child.document.getElementById('popout-wrapper'),
+                    popoutOpen: true
+                });
+            });
+            child.addEventListener('beforeunload', () => {
+                this.props.onPopinStage();
+                this.setState({
+                    popoutOpen: false
+                });
+            });
         }
     }
     render () {
@@ -118,6 +145,8 @@ class GUI extends React.Component {
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
+                popoutWrapperElement={this.state.popoutWrapper}
+                isPopoutOpen={this.state.popoutOpen}
             >
                 {children}
             </GUIComponent>
@@ -198,6 +227,9 @@ const mapStateToProps = state => {
         unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
         splashModalVisible: state.scratchGui.modals.splashModal,
+        isPoppedOut: state.scratchGui.mode.isPoppedOut,
+        isPopoutOpen: state.scratchGui.mode.popoutOpen,
+        customStageSize: state.scratchGui.customStageSize,
         vm: state.scratchGui.vm
     };
 };
@@ -209,7 +241,9 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    onPopoutStage: () => dispatch(setPopout(true)),
+    onPopinStage: () => dispatch(setPopout(false))
 });
 
 const ConnectedGUI = injectIntl(connect(

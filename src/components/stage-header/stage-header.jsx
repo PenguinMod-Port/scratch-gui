@@ -14,10 +14,12 @@ import {STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../../lib/layout-constants'
 
 import fullScreenIcon from './icon--fullscreen.svg';
 import unFullScreenIcon from './icon--unfullscreen.svg';
+import popoutStageIcon from './icon--popout-stage.svg';
+import popinStageIcon from './icon--popin-stage.svg';
 import largeStageIcon from '!../../lib/tw-recolor/build!./icon--large-stage.svg';
 import smallStageIcon from '!../../lib/tw-recolor/build!./icon--small-stage.svg';
 import fullStageIcon from '!../../lib/tw-recolor/build!./icon--full-stage.svg';
-import hiddenStageIcon from '!../../lib/tw-recolor/build!./icon--hidden-stage.svg'
+import hiddenStageIcon from '!../../lib/tw-recolor/build!./icon--hidden-stage.svg';
 import settingsIcon from './icon--settings.svg';
 
 import styles from './stage-header.css';
@@ -25,6 +27,11 @@ import styles from './stage-header.css';
 import FullscreenAPI from '../../lib/tw-fullscreen-api';
 
 const messages = defineMessages({
+    popoutStageMessage: {
+        defaultMessage: 'Popout stage to new window',
+        description: 'Button to move the stage into a seperate, dedicated, window',
+        id: 'pm.gui.stageHeader.popout'
+    },
     largeStageSizeMessage: {
         defaultMessage: 'Switch to large stage',
         description: 'Button to change stage size to large',
@@ -74,6 +81,7 @@ const StageHeaderComponent = function (props) {
         customStageSize,
         showFixedLargeSize,
         isFullScreen,
+        isPoppedOut,
         isPlayerOnly,
         onKeyPress,
         onSetStageFullScreen,
@@ -81,6 +89,8 @@ const StageHeaderComponent = function (props) {
         onSetStageLarge,
         onSetStageSmall,
         onSetStageFull,
+        onPopoutStage,
+        onPopinStage,
         onSetStageHidden,
         onOpenSettings,
         isEmbedded,
@@ -220,21 +230,52 @@ const StageHeaderComponent = function (props) {
                         className={styles.stageSizeRow}
                         key="editor" // addons require the HTML element to be not be re-used by in-editor buttons
                     >
-                        {stageControls}
-                        <div>
-                            <Button
-                                className={styles.stageButton}
-                                onClick={onSetStageFullScreen}
-                            >
-                                <img
-                                    alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
-                                    className={styles.stageButtonIcon}
-                                    draggable={false}
-                                    src={fullScreenIcon}
-                                    title={props.intl.formatMessage(messages.fullscreenControl)}
-                                />
-                            </Button>
-                        </div>
+                        {isPoppedOut 
+                            ? (<div className={styles.settingsButton}>
+                                    <Button
+                                        className={styles.stageButton}
+                                        onClick={isPoppedOut ? onPopinStage : onPopoutStage}
+                                    >
+                                        <img
+                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            className={styles.stageButtonIcon}
+                                            draggable={false}
+                                            src={isPoppedOut ? popinStageIcon : popoutStageIcon}
+                                            title={props.intl.formatMessage(messages.popoutStageMessage)}
+                                        />
+                                    </Button>
+                                </div>) 
+                            : (<>
+                                {stageControls}
+                                <div className={styles.settingsButton}>
+                                    <Button
+                                        className={styles.stageButton}
+                                        onClick={isPoppedOut ? onPopinStage : onPopoutStage}
+                                    >
+                                        <img
+                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            className={styles.stageButtonIcon}
+                                            draggable={false}
+                                            src={isPoppedOut ? popinStageIcon : popoutStageIcon}
+                                            title={props.intl.formatMessage(messages.popoutStageMessage)}
+                                        />
+                                    </Button>
+                                </div>
+                                <div>
+                                    <Button
+                                        className={styles.stageButton}
+                                        onClick={onSetStageFullScreen}
+                                    >
+                                        <img
+                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            className={styles.stageButtonIcon}
+                                            draggable={false}
+                                            src={fullScreenIcon}
+                                            title={props.intl.formatMessage(messages.fullscreenControl)}
+                                        />
+                                    </Button>
+                                </div>
+                            </>)}
                     </div>
                 </Box>
             </Box>

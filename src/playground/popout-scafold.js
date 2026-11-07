@@ -1,0 +1,1 @@
+import '../containers/stage-wrapper.jsx';

@@ -6,6 +6,7 @@ import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-int
 import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {createPortal} from 'react-dom';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
 
@@ -165,6 +166,9 @@ const GUIComponent = props => {
         unknownPlatformModalVisible,
         invalidProjectModalVisible,
         splashModalVisible,
+        isPoppedOut,
+        isPopoutOpen,
+        popoutWrapperElement,
         vm,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -218,6 +222,13 @@ const GUIComponent = props => {
                 {splashModalVisible && !loading && <SplashModal onStartSelectingFileUpload={onStartSelectingFileUpload} />}
             </React.Fragment>
         );
+        const stageBox = (<StageWrapper
+            isFullScreen={isFullScreen}
+            isRendererSupported={isRendererSupported()}
+            isRtl={isRtl}
+            stageSize={stageSize}
+            vm={vm}
+        />);
 
         return isPlayerOnly ? (
             <React.Fragment>
@@ -505,13 +516,7 @@ const GUIComponent = props => {
                         </Box>
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                            <StageWrapper
-                                isFullScreen={isFullScreen}
-                                isRendererSupported={isRendererSupported()}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                vm={vm}
-                            />
+                            {isPopoutOpen ? createPortal(stageBox, popoutWrapperElement) : stageBox}
                             <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}
