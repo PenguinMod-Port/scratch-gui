@@ -40,8 +40,9 @@ import TWFontsModal from '../../containers/tw-fonts-modal.jsx';
 import TWUnknownPlatformModal from '../../containers/tw-unknown-platform-modal.jsx';
 import TWInvalidProjectModal from '../../containers/tw-invalid-project-modal.jsx';
 import SplashModal from '../../containers/splash-modal.jsx';
+import StageHeader from '../../containers/stage-header.jsx';
 
-import {STAGE_SIZE_MODES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
+import {STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 import {Theme} from '../../lib/themes';
 import tintFilter from '../../lib/tint-filter';
@@ -461,6 +462,7 @@ const GUIComponent = props => {
                                                 media: `${basePath}static/${theme.getBlocksMediaFolder()}/`
                                             }}
                                             stageSize={stageSize}
+                                            isPoppedOut={isPopoutOpen}
                                             onOpenCustomExtensionModal={onOpenCustomExtensionModal}
                                             theme={theme}
                                             vm={vm}
@@ -518,7 +520,17 @@ const GUIComponent = props => {
                         </Box>
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                            {isPopoutOpen ? createPortal(stageBox, popoutWrapperElement) : stageBox}
+                            {isPopoutOpen 
+                                ? (<>
+                                        <Box className={styles.stageHeaderBox}>
+                                            <StageHeader
+                                                stageSize={STAGE_DISPLAY_SIZES.hidden}
+                                                vm={vm}
+                                            />
+                                        </Box>
+                                        {createPortal(stageBox, popoutWrapperElement)}
+                                    </>) 
+                                : stageBox}
                             <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}

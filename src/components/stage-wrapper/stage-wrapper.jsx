@@ -46,7 +46,7 @@ const StageWrapperComponent = function (props) {
             <Box className={classNames(
                 styles.stageCanvasWrapper,
                 {
-                    [styles.hidden]: stageSize === STAGE_DISPLAY_SIZES.hidden
+                    [styles.hidden]: stageSize === STAGE_DISPLAY_SIZES.hidden && !stageSizeOverride
                 }
             )}>
                 {

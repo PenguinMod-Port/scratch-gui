@@ -2,6 +2,10 @@
 @import "../../css/colors.css";
 @import "../../css/z-index.css";
 
+.stage-header-box {
+    position: relative;
+    height: 2.25rem;
+}
 .page-wrapper {
     height: 100%;
     display: flex;

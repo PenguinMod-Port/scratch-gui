@@ -231,14 +231,14 @@ const StageHeaderComponent = function (props) {
                         className={styles.stageSizeRow}
                         key="editor" // addons require the HTML element to be not be re-used by in-editor buttons
                     >
-                        {isPoppedOut 
+                        {isPoppedOut && stageSizeOverride
                             ? (<div className={styles.settingsButton}>
                                     <Button
                                         className={styles.popoutButton}
                                         onClick={onPopinStage}
                                     >
                                         <img
-                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            alt={props.intl.formatMessage(messages.popoutStageMessage)}
                                             className={styles.stageButtonIcon}
                                             draggable={false}
                                             src={popinStageIcon}
@@ -251,18 +251,18 @@ const StageHeaderComponent = function (props) {
                                 <div className={styles.settingsButton}>
                                     <Button
                                         className={styles.popoutButton}
-                                        onClick={onPopoutStage}
+                                        onClick={isPoppedOut ? onPopinStage : onPopoutStage}
                                     >
                                         <img
-                                            alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
+                                            alt={props.intl.formatMessage(messages.popoutStageMessage)}
                                             className={styles.stageButtonIcon}
                                             draggable={false}
-                                            src={popoutStageIcon}
+                                            src={isPoppedOut ? popinStageIcon : popoutStageIcon}
                                             title={props.intl.formatMessage(messages.popoutStageMessage)}
                                         />
                                     </Button>
                                 </div>
-                                <div>
+                                {!isPoppedOut ? <div>
                                     <Button
                                         className={styles.stageButton}
                                         onClick={onSetStageFullScreen}
@@ -275,7 +275,7 @@ const StageHeaderComponent = function (props) {
                                             title={props.intl.formatMessage(messages.fullscreenControl)}
                                         />
                                     </Button>
-                                </div>
+                                </div> : null}
                             </>)}
                     </div>
                 </Box>
