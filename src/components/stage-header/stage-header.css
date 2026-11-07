@@ -72,7 +72,19 @@
     user-select: none;
     cursor: pointer;
 }
+.popout-button {
+    display: block;
+    border: 1px solid $ui-black-transparent;
+    border-radius: $form-radius;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
+    background: $ui-white;
+    padding: 0.25rem;
+    user-select: none;
+    cursor: pointer;
+}
 
+.popout-button:active,
 .stage-button:active {
     background-color: $looks-transparent;
 }

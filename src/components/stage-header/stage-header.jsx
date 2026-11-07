@@ -234,7 +234,7 @@ const StageHeaderComponent = function (props) {
                         {isPoppedOut 
                             ? (<div className={styles.settingsButton}>
                                     <Button
-                                        className={styles.stageButton}
+                                        className={styles.popoutButton}
                                         onClick={onPopinStage}
                                     >
                                         <img
@@ -250,7 +250,7 @@ const StageHeaderComponent = function (props) {
                                 {stageControls}
                                 <div className={styles.settingsButton}>
                                     <Button
-                                        className={styles.stageButton}
+                                        className={styles.popoutButton}
                                         onClick={onPopoutStage}
                                     >
                                         <img
