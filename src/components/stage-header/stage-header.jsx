@@ -96,12 +96,13 @@ const StageHeaderComponent = function (props) {
         isEmbedded,
         stageSize,
         stageSizeMode,
+        stageSizeOverride,
         vm
     } = props;
 
     let header = null;
 
-    const stageDimensions = getStageDimensions(stageSize, customStageSize, isFullScreen || isEmbedded);
+    const stageDimensions = getStageDimensions(stageSize, customStageSize, isFullScreen || isEmbedded, stageSizeOverride);
 
     if (isFullScreen || isEmbedded) {
         const settingsButton = isEmbedded && enableSettingsButton ? (
@@ -234,13 +235,13 @@ const StageHeaderComponent = function (props) {
                             ? (<div className={styles.settingsButton}>
                                     <Button
                                         className={styles.stageButton}
-                                        onClick={isPoppedOut ? onPopinStage : onPopoutStage}
+                                        onClick={onPopinStage}
                                     >
                                         <img
                                             alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
                                             className={styles.stageButtonIcon}
                                             draggable={false}
-                                            src={isPoppedOut ? popinStageIcon : popoutStageIcon}
+                                            src={popinStageIcon}
                                             title={props.intl.formatMessage(messages.popoutStageMessage)}
                                         />
                                     </Button>
@@ -250,13 +251,13 @@ const StageHeaderComponent = function (props) {
                                 <div className={styles.settingsButton}>
                                     <Button
                                         className={styles.stageButton}
-                                        onClick={isPoppedOut ? onPopinStage : onPopoutStage}
+                                        onClick={onPopoutStage}
                                     >
                                         <img
                                             alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
                                             className={styles.stageButtonIcon}
                                             draggable={false}
-                                            src={isPoppedOut ? popinStageIcon : popoutStageIcon}
+                                            src={popoutStageIcon}
                                             title={props.intl.formatMessage(messages.popoutStageMessage)}
                                         />
                                     </Button>

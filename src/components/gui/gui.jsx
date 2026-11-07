@@ -154,6 +154,7 @@ const GUIComponent = props => {
         showSaveFilePicker,
         soundsTabVisible,
         stageSizeMode,
+        stageSizeOverride,
         targetIsStage,
         telemetryModalVisible,
         theme,
@@ -227,6 +228,7 @@ const GUIComponent = props => {
             isRendererSupported={isRendererSupported()}
             isRtl={isRtl}
             stageSize={stageSize}
+            stageSizeOverride={stageSizeOverride}
             vm={vm}
         />);
 
