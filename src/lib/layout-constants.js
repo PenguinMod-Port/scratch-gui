@@ -66,7 +66,7 @@ const STAGE_DISPLAY_SCALE_METADATA = {
         scale: 1
     },
     [STAGE_DISPLAY_SIZES.hidden]: {
-        width: 0
+        width: 1
     }
 };
 
