@@ -369,12 +369,6 @@ const TWStateManager = function (WrappedComponent) {
                 });
             }
 
-            if (urlParams.has("stricteq")) {
-                this.props.vm.setCompilerOptions({
-                    strictEquality: true,
-                });
-            }
-
             for (const extension of urlParams.getAll("extension")) {
                 this.props.vm.extensionManager.loadExtensionURL(extension);
             }

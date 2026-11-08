@@ -424,6 +424,27 @@ const StrictEquality = props => (
     />
 );
 
+const ConstantFolding = props => (
+    <BooleanSetting
+        {...props}
+        label={
+            <FormattedMessage
+                defaultMessage="Constant Folding"
+                description="Constant Folding setting"
+                id="pm.gui.settingsModal.constantFolding"
+            />
+        }
+        help={
+            <FormattedMessage
+                // eslint-disable-next-line max-len
+                defaultMessage="Evaluates expressions that stay constant at compile time."
+                description="Constant Folding help"
+                id="pm.gui.settingsModal.constantFoldingHelp"
+            />
+        }
+    />
+);
+
 const CustomStageSize = ({
     customStageSizeEnabled,
     stageWidth,
@@ -594,13 +615,18 @@ const SettingsModalComponent = props => (
                         value={props.warpTimer}
                         onChange={props.onWarpTimerChange}
                     />
-                    <OffscreenRendering
-                        value={props.offscreenRendering}
-                        onChange={props.onOffscreenRenderingChange}
+                    <ConstantFolding
+                        value={props.constantFolding}
+                        onChange={props.onConstantFoldingChange}
                     />
                     <StrictEquality
                         value={props.strictEquality}
                         onChange={props.onStrictEqualityChange}
+                    />
+                    <Separator />
+                    <OffscreenRendering
+                        value={props.offscreenRendering}
+                        onChange={props.onOffscreenRenderingChange}
                     />
                 </React.Fragment>
             }
@@ -635,6 +661,8 @@ SettingsModalComponent.propTypes = {
     onDisableCompilerChange: PropTypes.func,
     strictEquality: PropTypes.bool,
     onStrictEqualityChange: PropTypes.func,
+    constantFolding: PropTypes.bool,
+    onConstantFoldingChange: PropTypes.func,
     currentTab: PropTypes.number,
     onTabChange: PropTypes.func
 };

@@ -33,6 +33,7 @@ class SettingsModal extends React.Component {
             'handleDisableCompilerChange',
             'handleStoreProjectOptions',
             'handleStrictEqualityChange',
+            'handleConstantFoldingChange',
             'handleTabChange'
         ]);
         this.state = {
@@ -102,6 +103,11 @@ class SettingsModal extends React.Component {
             strictEquality: e.target.checked
         });
     }
+    handleConstantFoldingChange (e) {
+        this.props.vm.setCompilerOptions({
+            folding: e.target.checked
+        });
+    }
     render () {
         const {
             /* eslint-disable no-unused-vars */
@@ -126,6 +132,7 @@ class SettingsModal extends React.Component {
                 onStageHeightChange={this.handleStageHeightChange}
                 onDisableCompilerChange={this.handleDisableCompilerChange}
                 onStrictEqualityChange={this.handleStrictEqualityChange}
+                onConstantFoldingChange={this.handleConstantFoldingChange}
                 onTabChange={this.handleTabChange}
                 currentTab={this.state.currentTab}
                 stageWidth={this.props.customStageSize.width}
@@ -170,7 +177,8 @@ SettingsModal.propTypes = {
         height: PropTypes.number
     }),
     disableCompiler: PropTypes.bool,
-    strictEquality: PropTypes.bool
+    strictEquality: PropTypes.bool,
+    constantFolding: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
@@ -187,7 +195,8 @@ const mapStateToProps = state => ({
     directionClamping: state.scratchGui.tw.runtimeOptions.disableDirectionClamping,
     customStageSize: state.scratchGui.customStageSize,
     disableCompiler: !state.scratchGui.tw.compilerOptions.enabled,
-    strictEquality: state.scratchGui.tw.compilerOptions.strictEquality
+    strictEquality: state.scratchGui.tw.compilerOptions.strictEquality,
+    constantFolding: state.scratchGui.tw.compilerOptions.folding
 });
 
 const mapDispatchToProps = dispatch => ({
