@@ -4,3 +4,4 @@ allowBuilds:
   protobufjs: true
 nodeLinker: hoisted
 blockExoticSubdeps: false
+shamefullyHoist: true
