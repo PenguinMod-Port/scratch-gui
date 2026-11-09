@@ -7,7 +7,19 @@ import {connect} from 'react-redux';
 import check from './check.svg';
 import dropdownCaret from './dropdown-caret.svg';
 import {MenuItem, Submenu} from '../menu/menu.jsx';
-import {ACCENT_BLUE, ACCENT_MAP, ACCENT_PURPLE, ACCENT_RED, ACCENT_RAINBOW, ACCENT_CYAN, ACCENT_GREEN, ACCENT_ORANGE, Theme} from '../../lib/themes/index.js';
+import {
+    ACCENT_MAP,
+    ACCENT_BLUE,
+    ACCENT_PURPLE,
+    ACCENT_RED,
+    ACCENT_RAINBOW,
+    ACCENT_CYAN,
+    ACCENT_GREEN,
+    ACCENT_ORANGE,
+    ACCENT_PINK,
+    ACCENT_MAROON,
+    Theme
+} from '../../lib/themes/index.js';
 import {openAccentMenu, accentMenuOpen, closeSettingsMenu} from '../../reducers/menus.js';
 import {setTheme} from '../../reducers/theme.js';
 import {persistTheme} from '../../lib/themes/themePersistance.js';
@@ -15,6 +27,11 @@ import rainbowIcon from './tw-accent-rainbow.svg';
 import styles from './settings-menu.css';
 
 const options = defineMessages({
+    [ACCENT_MAROON]: {
+        defaultMessage: 'Maroon',
+        description: 'Name of the maroon color scheme.',
+        id: 'pm.gui.accent.maroon'
+    },
     [ACCENT_RED]: {
         defaultMessage: 'Red',
         description: 'Name of the red color scheme, used by TurboWarp by default.',
@@ -44,6 +61,11 @@ const options = defineMessages({
         defaultMessage: 'Purple',
         description: 'Name of the purple color scheme. Matches modern Scratch.',
         id: 'tw.accent.purple'
+    },
+    [ACCENT_PINK]: {
+        defaultMessage: 'Pink',
+        description: 'Name of the pink color scheme.',
+        id: 'pm.gui.accent.pink'
     },
     [ACCENT_RAINBOW]: {
         defaultMessage: 'Rainbow',
