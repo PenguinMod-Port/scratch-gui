@@ -954,74 +954,49 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
         id="operators"
         colour="${colour}"
         secondaryColour="#00000044">
-        <block type="operator_expandableMath">
+        <block type="operator_add_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
+            <value name="EXPANDABLE.1.NUM">
+                <shadow type="math_number" />
             </value>
-            <field name="OP2">+</field>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
+            <value name="EXPANDABLE.2.NUM">
+                <shadow type="math_number" />
             </value>
         </block>
-        <block type="operator_expandableMath">
+        <block type="operator_subtract_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
+            <value name="EXPANDABLE.1.NUM">
+                <shadow type="math_number" />
             </value>
-            <field name="OP2">-</field>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
+            <value name="EXPANDABLE.2.NUM">
+                <shadow type="math_number" />
             </value>
         </block>
-        <block type="operator_expandableMath">
+        <block type="operator_multiply_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
+            <value name="EXPANDABLE.1.NUM">
+                <shadow type="math_number" />
             </value>
-            <field name="OP2">*</field>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
+            <value name="EXPANDABLE.2.NUM">
+                <shadow type="math_number" />
             </value>
         </block>
-        <block type="operator_expandableMath">
+        <block type="operator_divide_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
+            <value name="EXPANDABLE.1.NUM">
+                <shadow type="math_number" />
             </value>
-            <field name="OP2">/</field>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
+            <value name="EXPANDABLE.2.NUM">
+                <shadow type="math_number" />
             </value>
         </block>
-        <block type="operator_expandableMath">
+        <block type="operator_power_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="NUM1">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
+            <value name="EXPANDABLE.1.NUM">
+                <shadow type="math_number" />
             </value>
-            <field name="OP2">^</field>
-            <value name="NUM2">
-                <shadow type="math_number">
-                    <field name="NUM">2</field>
-                </shadow>
+            <value name="EXPANDABLE.2.NUM">
+                <shadow type="math_number" />
             </value>
         </block>
         ${blockSeparator}
@@ -1163,33 +1138,30 @@ const operators = function (isInitialSetup, isStage, targetId, colour) {
             <field name="CHECKBOX">FALSE</field>
         </block>
         ${blockSeparator}
-        <block type="operator_expandableBool">
+        <block type="operator_and_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="BOOL1">
+            <value name="EXPANDABLE.1.OPERAND">
                 <shadow type="checkbox" />
             </value>
-            <field name="OP2">a</field>
-            <value name="BOOL2">
+            <value name="EXPANDABLE.2.OPERAND">
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block type="operator_expandableBool">
+        <block type="operator_or_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="BOOL1">
+            <value name="EXPANDABLE.1.OPERAND">
                 <shadow type="checkbox" />
             </value>
-            <field name="OP2">o</field>
-            <value name="BOOL2">
+            <value name="EXPANDABLE.2.OPERAND">
                 <shadow type="checkbox" />
             </value>
         </block>
-        <block type="operator_expandableBool">
+        <block type="operator_xor_expandable">
             <field name="EXPANDABLE">2</field>
-            <value name="BOOL1">
+            <value name="EXPANDABLE.1.OPERAND">
                 <shadow type="checkbox" />
             </value>
-            <field name="OP2">x</field>
-            <value name="BOOL2">
+            <value name="EXPANDABLE.2.OPERAND">
                 <shadow type="checkbox" />
             </value>
         </block>
