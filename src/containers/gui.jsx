@@ -93,6 +93,10 @@ class GUI extends React.Component {
             this.props.onProjectLoaded();
         }
 
+        if (this.props.isPoppedOut && this.props.isPlayerOnly) {
+            this.props.onPopinStage();
+            return;
+        }
         if (!this.props.isPoppedOut && this.state.stageSizeOverride) this.setState({ stageSizeOverride: null });
         if (this.props.isPoppedOut && !this.state.popoutOpen) {
             let popupArgs = `scrollbars=yes,resizable=yes,status=no,location=yes,toolbar=no,menubar=no,left=200,top=200`;

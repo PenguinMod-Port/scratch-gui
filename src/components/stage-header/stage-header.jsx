@@ -248,7 +248,7 @@ const StageHeaderComponent = function (props) {
                                 </div>) 
                             : (<>
                                 {stageControls}
-                                <div className={styles.settingsButton}>
+                                {!isPlayerOnly ? <div className={styles.settingsButton}>
                                     <Button
                                         className={styles.popoutButton}
                                         onClick={isPoppedOut ? onPopinStage : onPopoutStage}
@@ -261,7 +261,7 @@ const StageHeaderComponent = function (props) {
                                             title={props.intl.formatMessage(messages.popoutStageMessage)}
                                         />
                                     </Button>
-                                </div>
+                                </div> : null}
                                 {!isPoppedOut ? <div>
                                     <Button
                                         className={styles.stageButton}
