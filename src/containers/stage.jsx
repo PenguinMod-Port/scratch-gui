@@ -87,7 +87,7 @@ class Stage extends React.Component {
         this.props.vm.attachV2BitmapAdapter(new V2BitmapAdapter());
     }
     componentDidMount () {
-        this.attachRectEvents();
+        this.attachRectEvents(this.canvas);
         this.attachMouseEvents(this.canvas);
         this.updateRect();
         this.renderer.resize(this.rect.width, this.rect.height);
@@ -117,7 +117,7 @@ class Stage extends React.Component {
     }
     componentWillUnmount () {
         this.detachMouseEvents(this.canvas);
-        this.detachRectEvents();
+        this.detachRectEvents(this.canvas);
         this.stopColorPickingLoop();
         this.props.vm.runtime.removeListener('QUESTION', this.questionListener);
     }
@@ -142,32 +142,38 @@ class Stage extends React.Component {
         cancelAnimationFrame(this.animationFrameId);
     }
     attachMouseEvents (canvas) {
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
-        document.addEventListener('touchmove', this.onMouseMove);
-        document.addEventListener('touchend', this.onMouseUp);
+        const doc = canvas.ownerDocument;
+        doc.addEventListener('mousemove', this.onMouseMove);
+        doc.addEventListener('mouseup', this.onMouseUp);
+        doc.addEventListener('touchmove', this.onMouseMove);
+        doc.addEventListener('touchend', this.onMouseUp);
         canvas.addEventListener('mousedown', this.onMouseDown);
         canvas.addEventListener('touchstart', this.onMouseDown);
         canvas.addEventListener('wheel', this.onWheel);
         canvas.addEventListener('contextmenu', this.onContextMenu);
     }
     detachMouseEvents (canvas) {
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.removeEventListener('mouseup', this.onMouseUp);
-        document.removeEventListener('touchmove', this.onMouseMove);
-        document.removeEventListener('touchend', this.onMouseUp);
+        const doc = canvas.ownerDocument;
+        doc.removeEventListener('mousemove', this.onMouseMove);
+        doc.removeEventListener('mouseup', this.onMouseUp);
+        doc.removeEventListener('touchmove', this.onMouseMove);
+        doc.removeEventListener('touchend', this.onMouseUp);
         canvas.removeEventListener('mousedown', this.onMouseDown);
         canvas.removeEventListener('touchstart', this.onMouseDown);
         canvas.removeEventListener('wheel', this.onWheel);
         canvas.removeEventListener('contextmenu', this.onContextMenu);
     }
-    attachRectEvents () {
-        window.addEventListener('resize', this.updateRect);
-        window.addEventListener('scroll', this.updateRect);
+    attachRectEvents (canvas) {
+        const doc = canvas.ownerDocument;
+        const win = doc.defaultView;
+        win.addEventListener('resize', this.updateRect);
+        win.addEventListener('scroll', this.updateRect);
     }
-    detachRectEvents () {
-        window.removeEventListener('resize', this.updateRect);
-        window.removeEventListener('scroll', this.updateRect);
+    detachRectEvents (canvas) {
+        const doc = canvas.ownerDocument;
+        const win = doc.defaultView;
+        win.removeEventListener('resize', this.updateRect);
+        win.removeEventListener('scroll', this.updateRect);
     }
     updateRect () {
         this.rect = this.canvas.getBoundingClientRect();
