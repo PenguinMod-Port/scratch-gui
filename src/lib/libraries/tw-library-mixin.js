@@ -48,7 +48,7 @@ export default {
 	"AR": {tags: ["hardware"]},
 	"Encoding": {tags: ["data"]},
 	"lmsSoundExpanded": {tags: ["expansion"]},
-	"lmsTempVars2": {hide: true},
+	"lmsTempVars2": {},
 	"lmsTimers": {},
 	"clouddataping": {tags: ["internet"]},
 	"cloudlink": {tags: ["internet"]},
@@ -104,5 +104,8 @@ export default {
 	"nishiowoDectalk": {tags: ["sound"]},
 	"videoSprites": {tags: ["graphics"]},
 	"SPmessagePlus": {tags: ["expansion"]},
-	"samuelloufgeolocation": {tags: ["hardware"]}
+	"samuelloufgeolocation": {tags: ["hardware"]},
+	"cst1229extendable": {hidden: true},
+	"samuelloufwikipedia": {tags: ["internet"]},
+	"morerandomness": {tags: ["math"]}
 }
