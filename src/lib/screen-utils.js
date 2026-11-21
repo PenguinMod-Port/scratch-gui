@@ -100,9 +100,12 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen, setScale) 
 
 /**
  * @param {STAGE_DISPLAY_SIZES} stageSize - the current fully-resolved stage size.
+ * @param {number} override - override the stage scale
  * @returns {number} Minimum width to display the stage area of the screen at. May be wider than the stage's actual size
  */
-const getMinWidth = stageSize => {
+const getMinWidth = (stageSize, override) => {
+    if (override) return FIXED_WIDTH * override;
+    
     const metadata = STAGE_DISPLAY_SCALE_METADATA[stageSize];
     if (typeof metadata.width !== 'undefined') {
         return metadata.width;
