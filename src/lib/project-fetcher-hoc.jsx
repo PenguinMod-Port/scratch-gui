@@ -16,12 +16,11 @@ import {
     setProjectId
 } from '../reducers/project-state';
 
-import { ProjectUnsharedError, ProjectFetchError, ProjectUnavailableLegalReasons } from './tw-load-project-error';
+import log from './log';
+import storage from './storage';
+import { ProjectFetchError } from './tw-load-project-error';
 import { activateTab, BLOCKS_TAB_INDEX } from "../reducers/editor-tab";
 import { API_SITE, ASSET_CDN_SITE } from "./brand";
-
-import log from "./log";
-import storage from "./storage";
 
 // TW: Temporary hack for project tokens
 const fetchProjectToken = async projectId => {
@@ -38,16 +37,8 @@ const fetchProjectToken = async projectId => {
     if (hashParams.has('token')) {
         return hashParams.get('token');
     }
-    try {
-        const metadata = await fetchProjectMeta(projectId);
-        return metadata.project_token;
-    } catch (e) {
-        log.error(e);
-        if (e instanceof ProjectUnavailableLegalReasons) {
-            throw e;
-        }
-        throw new ProjectUnsharedError('Cannot access project token. Project is probably unshared. See https://docs.turbowarp.org/unshared-projects');
-    }
+    const metadata = await fetchProjectMeta(projectId);
+    return metadata.project_token;
 };
 import VM from "scratch-vm";
 
