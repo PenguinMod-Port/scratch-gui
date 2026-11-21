@@ -6,6 +6,7 @@ import {defineMessages, FormattedMessage, injectIntl, intlShape} from 'react-int
 import {connect} from 'react-redux';
 import MediaQuery from 'react-responsive';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {createPortal} from 'react-dom';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
 
@@ -39,8 +40,9 @@ import TWFontsModal from '../../containers/tw-fonts-modal.jsx';
 import TWUnknownPlatformModal from '../../containers/tw-unknown-platform-modal.jsx';
 import TWInvalidProjectModal from '../../containers/tw-invalid-project-modal.jsx';
 import SplashModal from '../../containers/splash-modal.jsx';
+import StageHeader from '../../containers/stage-header.jsx';
 
-import {STAGE_SIZE_MODES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
+import {STAGE_SIZE_MODES, STAGE_DISPLAY_SIZES, FIXED_WIDTH, UNCONSTRAINED_NON_STAGE_WIDTH} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
 import {Theme} from '../../lib/themes';
 import tintFilter from '../../lib/tint-filter';
@@ -153,6 +155,7 @@ const GUIComponent = props => {
         showSaveFilePicker,
         soundsTabVisible,
         stageSizeMode,
+        stageSizeOverride,
         targetIsStage,
         telemetryModalVisible,
         theme,
@@ -165,6 +168,9 @@ const GUIComponent = props => {
         unknownPlatformModalVisible,
         invalidProjectModalVisible,
         splashModalVisible,
+        isPoppedOut,
+        isPopoutOpen,
+        popoutWrapperElement,
         vm,
         ...componentProps
     } = omit(props, 'dispatch');
@@ -218,6 +224,14 @@ const GUIComponent = props => {
                 {splashModalVisible && !loading && <SplashModal onStartSelectingFileUpload={onStartSelectingFileUpload} />}
             </React.Fragment>
         );
+        const stageBox = (<StageWrapper
+            isFullScreen={isFullScreen}
+            isRendererSupported={isRendererSupported()}
+            isRtl={isRtl}
+            stageSize={stageSize}
+            stageSizeOverride={stageSizeOverride}
+            vm={vm}
+        />);
 
         return isPlayerOnly ? (
             <React.Fragment>
@@ -448,6 +462,7 @@ const GUIComponent = props => {
                                                 media: `${basePath}static/${theme.getBlocksMediaFolder()}/`
                                             }}
                                             stageSize={stageSize}
+                                            isPoppedOut={isPopoutOpen}
                                             onOpenCustomExtensionModal={onOpenCustomExtensionModal}
                                             theme={theme}
                                             vm={vm}
@@ -505,13 +520,17 @@ const GUIComponent = props => {
                         </Box>
 
                         <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                            <StageWrapper
-                                isFullScreen={isFullScreen}
-                                isRendererSupported={isRendererSupported()}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                vm={vm}
-                            />
+                            {isPopoutOpen 
+                                ? (<>
+                                        <Box className={styles.stageHeaderBox}>
+                                            <StageHeader
+                                                stageSize={STAGE_DISPLAY_SIZES.hidden}
+                                                vm={vm}
+                                            />
+                                        </Box>
+                                        {createPortal(stageBox, popoutWrapperElement)}
+                                    </>) 
+                                : stageBox}
                             <Box className={styles.targetWrapper}>
                                 <TargetPane
                                     stageSize={stageSize}

@@ -19,6 +19,7 @@ const StageWrapperComponent = function (props) {
         isRendererSupported,
         loading,
         stageSize,
+        stageSizeOverride,
         vm
     } = props;
 
@@ -38,19 +39,21 @@ const StageWrapperComponent = function (props) {
             <Box className={styles.stageMenuWrapper}>
                 <StageHeader
                     stageSize={stageSize}
+                    stageSizeOverride={stageSizeOverride}
                     vm={vm}
                 />
             </Box>
             <Box className={classNames(
                 styles.stageCanvasWrapper,
                 {
-                    [styles.hidden]: stageSize === STAGE_DISPLAY_SIZES.hidden
+                    [styles.hidden]: stageSize === STAGE_DISPLAY_SIZES.hidden && !stageSizeOverride
                 }
             )}>
                 {
                     isRendererSupported ?
                         <Stage
                             stageSize={stageSize}
+                            stageSizeOverride={stageSizeOverride}
                             vm={vm}
                         /> :
                         null

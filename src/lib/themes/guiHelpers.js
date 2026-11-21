@@ -33,8 +33,7 @@ const evaluateCSS = css => {
 /**
  * @param {Theme} theme the theme
  */
-const applyGuiColors = theme => {
-    const doc = document.documentElement;
+const applyGuiColors = (theme, doc = document.documentElement) => {
 
     const defaultGuiColors = Theme.light.getGuiColors();
     for (const [name, value] of Object.entries(defaultGuiColors)) {

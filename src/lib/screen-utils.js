@@ -44,9 +44,10 @@ const resolveStageSize = (stageSizeMode, isUnconstrained) => {
  * @param {STAGE_DISPLAY_SIZES} stageSize - the current fully-resolved stage size.
  * @param {{width: number, height: number}} customStageSize Custom stage size
  * @param {boolean} isFullScreen - true if full-screen mode is enabled.
+ * @param {number} [setScale] - overrules the stageSize input, setting the scaler for the stage size
  * @return {StageDimensions} - an object describing the dimensions of the stage.
  */
-const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
+const getStageDimensions = (stageSize, customStageSize, isFullScreen, setScale) => {
     const stageDimensions = {
         heightDefault: customStageSize.height,
         widthDefault: customStageSize.width,
@@ -71,7 +72,7 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
         }
 
         stageDimensions.scale = stageDimensions.width / stageDimensions.widthDefault;
-    } else {
+    } else if (!setScale) {
         const metadata = STAGE_DISPLAY_SCALE_METADATA[stageSize];
         if (typeof metadata.width !== 'undefined') {
             // Uses a fixed width.
@@ -84,6 +85,10 @@ const getStageDimensions = (stageSize, customStageSize, isFullScreen) => {
             stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
             stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
         }
+    } else {
+        stageDimensions.scale = setScale;
+        stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
+        stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
     }
 
     // Round off dimensions to prevent resampling/blurriness

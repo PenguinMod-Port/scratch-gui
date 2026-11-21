@@ -1,6 +1,7 @@
 allowBuilds:
   chromedriver: true
   core-js: true
+  fsevents: true
   protobufjs: true
 nodeLinker: hoisted
 blockExoticSubdeps: false

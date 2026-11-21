@@ -39,6 +39,7 @@
 
 .stage-size-row {
     display: flex;
+    gap: .2rem;
 }
 
 .stage-size-toggle-group {
@@ -51,7 +52,7 @@
     border-radius: $form-radius;
 }
 
-[dir="ltr"] .stage-size-toggle-group,
+/* [dir="ltr"] .stage-size-toggle-group,
 [dir="ltr"] .settings-button {
     margin-right: .2rem;
 }
@@ -59,7 +60,7 @@
 [dir="rtl"] .stage-size-toggle-group,
 [dir="rtl"] .settings-button {
     margin-left: .2rem;
-}
+} */
 
 .stage-button {
     display: block;
@@ -72,7 +73,19 @@
     user-select: none;
     cursor: pointer;
 }
+.popout-button {
+    display: block;
+    border: 1px solid $ui-black-transparent;
+    border-radius: $form-radius;
+    width: calc(2rem + 2px);
+    height: calc(2rem + 2px);
+    background: $ui-white;
+    padding: 0.25rem;
+    user-select: none;
+    cursor: pointer;
+}
 
+.popout-button:active,
 .stage-button:active {
     background-color: $looks-transparent;
 }
@@ -90,4 +103,5 @@
 .fullscreen-buttons-row {
     /* relied on by addons */
     display: flex;
+    gap: .2rem;
 }

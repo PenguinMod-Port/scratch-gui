@@ -4,7 +4,7 @@ import bindAll from 'lodash.bindall';
 import VM from 'scratch-vm';
 import {STAGE_DISPLAY_SCALE_METADATA, STAGE_DISPLAY_SIZES, STAGE_SIZE_MODES} from '../lib/layout-constants';
 import {setStageSize} from '../reducers/stage-size';
-import {setFullScreen} from '../reducers/mode';
+import {setFullScreen, setPopout} from '../reducers/mode';
 import {openSettingsModal} from '../reducers/modals';
 
 import {connect} from 'react-redux';
@@ -91,13 +91,16 @@ const mapStateToProps = state => ({
     // tw: update when dimensions or isWindowFullScreen changes
     isWindowFullScreen: state.scratchGui.tw.isWindowFullScreen,
     dimensions: state.scratchGui.tw.dimensions,
-    isPlayerOnly: state.scratchGui.mode.isPlayerOnly
+    isPlayerOnly: state.scratchGui.mode.isPlayerOnly,
+    isPoppedOut: state.scratchGui.mode.isPoppedOut
 });
 
 const mapDispatchToProps = dispatch => ({
     onSetStageLarge: () => dispatch(setStageSize(STAGE_SIZE_MODES.large)),
     onSetStageSmall: () => dispatch(setStageSize(STAGE_SIZE_MODES.small)),
     onSetStageFull: () => dispatch(setStageSize(STAGE_SIZE_MODES.full)),
+    onPopoutStage: () => dispatch(setPopout(true)),
+    onPopinStage: () => dispatch(setPopout(false)),
     onSetStageHidden: () => dispatch(setStageSize(STAGE_SIZE_MODES.hidden)),
     onSetStageFullScreen: () => dispatch(setFullScreen(true)),
     onSetStageUnFullScreen: () => dispatch(setFullScreen(false)),

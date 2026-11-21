@@ -23,7 +23,12 @@ const STAGE_SIZE_MODES = keyMirror({
     /**
      * dont display stage
      */
-    hidden: null
+    hidden: null,
+
+    /**
+     * Push the stage into a dedicated window
+     */
+    popout: null
 });
 
 /**

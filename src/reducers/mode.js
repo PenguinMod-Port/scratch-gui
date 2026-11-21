@@ -1,9 +1,12 @@
 const SET_FULL_SCREEN = 'scratch-gui/mode/SET_FULL_SCREEN';
 const SET_PLAYER = 'scratch-gui/mode/SET_PLAYER';
+const SET_POPOUT = 'scratch-gui/mode/SET_POPOUT';
+const SET_POPOUT_OPEN = 'scratch-gui/mode/SET_POPOUT_OPEN';
 
 const initialState = {
     isEmbedded: false,
     isFullScreen: false,
+    isPoppedOut: false,
     isPlayerOnly: false,
     hasEverEnteredEditor: true
 };
@@ -20,11 +23,21 @@ const reducer = function (state, action) {
             isPlayerOnly: action.isPlayerOnly,
             hasEverEnteredEditor: state.hasEverEnteredEditor || !action.isPlayerOnly
         });
+    case SET_POPOUT:
+        return Object.assign({}, state, {
+            isPoppedOut: action.isPoppedOut
+        });
     default:
         return state;
     }
 };
 
+const setPopout = function (isPoppedOut) {
+    return {
+        type: SET_POPOUT,
+        isPoppedOut: isPoppedOut
+    };
+};
 const setFullScreen = function (isFullScreen) {
     return {
         type: SET_FULL_SCREEN,
@@ -42,5 +55,6 @@ export {
     reducer as default,
     initialState as modeInitialState,
     setFullScreen,
-    setPlayer
+    setPlayer,
+    setPopout
 };

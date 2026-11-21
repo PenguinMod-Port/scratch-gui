@@ -27,6 +27,8 @@ import {
     closeTelemetryModal,
     openExtensionLibrary
 } from '../reducers/modals';
+import {setPopout} from '../reducers/mode.js';
+import {applyGuiColors} from '../lib/themes/guiHelpers';
 
 import FontLoaderHOC from '../lib/font-loader-hoc.jsx';
 import LocalizationHOC from '../lib/localization-hoc.jsx';
@@ -50,6 +52,7 @@ void SettingsStore; // make sure its init'd or something idk
 import HomeCommunication from './home-communication.jsx';
 
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
+const STAGE_HEADER_HEIGHT = 44;
 
 const setProjectIdMetadata = projectId => {
     // If project ID is '0' or zero, it's not a real project ID. In that case, remove the project ID metadata.
@@ -62,6 +65,15 @@ const setProjectIdMetadata = projectId => {
 };
 
 class GUI extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            popout: null,
+            popoutWrapper: null,
+            stageSizeOverride: null,
+            popoutOpen: false
+        }
+    }
     componentDidMount () {
         setIsScratchDesktop(this.props.isScratchDesktop);
         this.props.onStorageInit(storage);
@@ -80,6 +92,51 @@ class GUI extends React.Component {
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
         }
+
+        if (this.props.isPoppedOut && this.props.isPlayerOnly) {
+            this.props.onPopinStage();
+            return;
+        }
+        if (!this.props.isPoppedOut && this.state.stageSizeOverride) this.setState({ stageSizeOverride: null });
+        if (this.props.isPoppedOut && !this.state.popoutOpen) {
+            let popupArgs = `scrollbars=yes,resizable=yes,status=no,location=yes,toolbar=no,menubar=no,left=200,top=200`;
+            popupArgs += `,width=${this.props.customStageSize.width}`;
+            popupArgs += `,height=${this.props.customStageSize.height + STAGE_HEADER_HEIGHT}`;
+            const child = open('/popout-scaffold.html', '_blank', popupArgs);
+            if (!child) return this.props.onPopinStage();
+
+            child.addEventListener('DOMContentLoaded', () => {
+                const wrapper = child.document.getElementById('popout-wrapper');
+                if (!wrapper) return child.close();
+                child.addEventListener('resize', () => this.setState({ stageSizeOverride: this.computeStageSize(child) }));
+
+                this.setState({
+                    popout: child,
+                    popoutWrapper: wrapper,
+                    popoutOpen: true,
+                    stageSizeOverride: this.computeStageSize(child)
+                });
+            });
+            child.onpageshow = () =>
+            child.addEventListener('pagehide', () => {
+                this.props.onPopinStage();
+                this.setState({
+                    popout: null,
+                    popoutWrapper: null,
+                    popoutOpen: false,
+                    stageSizeOverride: null
+                });
+            });
+        }
+        if (this.state.popout) applyGuiColors(this.props.reduxTheme, this.state.popout.document.documentElement);
+        if (!this.props.isPoppedOut && this.state.popoutOpen)
+            this.state.popout.close();
+    }
+    computeStageSize(win) {
+        const fitX = win.innerWidth / this.props.customStageSize.width;
+        const fitY = win.innerHeight / (this.props.customStageSize.height + STAGE_HEADER_HEIGHT);
+        const scale = Math.min(fitX, fitY);
+        return scale;
     }
     render () {
         if (this.props.isError) {
@@ -118,6 +175,9 @@ class GUI extends React.Component {
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
+                stageSizeOverride={this.state.stageSizeOverride}
+                popoutWrapperElement={this.state.popoutWrapper}
+                isPopoutOpen={this.state.popoutOpen}
             >
                 {children}
             </GUIComponent>
@@ -163,7 +223,7 @@ GUI.defaultProps = {
     onVmInit: (/* vm */) => {}
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     const loadingState = state.scratchGui.projectState.loadingState;
     return {
         activeTabIndex: state.scratchGui.editorTab.activeTabIndex,
@@ -198,6 +258,10 @@ const mapStateToProps = state => {
         unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
         splashModalVisible: state.scratchGui.modals.splashModal,
+        isPoppedOut: state.scratchGui.mode.isPoppedOut,
+        isPopoutOpen: state.scratchGui.mode.popoutOpen,
+        customStageSize: state.scratchGui.customStageSize,
+        reduxTheme: ownProps.theme || state.scratchGui.theme.theme,
         vm: state.scratchGui.vm
     };
 };
@@ -209,7 +273,9 @@ const mapDispatchToProps = dispatch => ({
     onActivateSoundsTab: () => dispatch(activateTab(SOUNDS_TAB_INDEX)),
     onRequestCloseBackdropLibrary: () => dispatch(closeBackdropLibrary()),
     onRequestCloseCostumeLibrary: () => dispatch(closeCostumeLibrary()),
-    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal())
+    onRequestCloseTelemetryModal: () => dispatch(closeTelemetryModal()),
+    onPopoutStage: () => dispatch(setPopout(true)),
+    onPopinStage: () => dispatch(setPopout(false))
 });
 
 const ConnectedGUI = injectIntl(connect(

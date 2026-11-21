@@ -1,0 +1,14 @@
+@import '../css/colors.css';
+
+body,
+html { height: 100%; }
+body { margin: 0; }
+.stage-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    height: 100%;
+    background-color: $ui-primary;
+}

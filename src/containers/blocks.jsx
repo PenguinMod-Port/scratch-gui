@@ -286,7 +286,8 @@ class Blocks extends React.Component {
             this.props.locale !== nextProps.locale ||
             this.props.anyModalVisible !== nextProps.anyModalVisible ||
             this.props.stageSize !== nextProps.stageSize ||
-            this.props.customStageSize !== nextProps.customStageSize
+            this.props.customStageSize !== nextProps.customStageSize ||
+            this.props.isPoppedOut !== nextProps.isPoppedOut
         );
     }
     componentDidUpdate (prevProps) {
@@ -305,7 +306,8 @@ class Blocks extends React.Component {
         if (this.props.isVisible === prevProps.isVisible) {
             if (
                 this.props.stageSize !== prevProps.stageSize ||
-                this.props.customStageSize !== prevProps.customStageSize
+                this.props.customStageSize !== prevProps.customStageSize ||
+                this.props.isPoppedOut !== prevProps.isPoppedOut
             ) {
                 // force workspace to redraw for the new stage size
                 window.dispatchEvent(new Event('resize'));
