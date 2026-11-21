@@ -2,7 +2,7 @@
 const manifest = {
   "editorOnly": true,
   "noTranslations": true,
-  "enabledByDefault": true,
+  "enabledByDefault": false,
   "name": "Skewing in costume editor",
   "description": "Hold Ctrl while scaling an object on its sides to skew it. Hold Alt while skewing an object to skew it from its center.",
   "info": [

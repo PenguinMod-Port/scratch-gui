@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" xmlns:bx="https://boxy-svg.com">
+  <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; fill: rgb(141, 217, 65); stroke: rgb(112, 173, 52);" rx="48" ry="48" id="object-0"></rect>
+  <g transform="matrix(14.763508, 0, 0, 14.763508, 152.361481, 2.371441)" style="">
+    <path d="M 8.107 6.214 L 4.32 13.786 M 11.893 6.214 L 15.68 10 L 11.893 13.786" stroke="#fff" fill="none" style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path>
+  </g>
+</svg>

@@ -19,6 +19,11 @@
     padding-top: 44px;
 }
 
+.offset-controls .stage-canvas-wrapper.hidden {
+    padding-top: 34px;
+    visibility: hidden;
+}
+
 .stage-wrapper.full-screen {
     position: fixed;
     top: $stage-menu-height;

@@ -53,7 +53,8 @@ const PlaybackStep = props => (
             </Box>
             <Box className={styles.waveformContainer}>
                 <Waveform
-                    data={props.levels}
+                    mainLeftData={props.mainLeftChunkLevels}
+                    rightData={props.rightChunkLevels}
                     height={150}
                     level={0}
                     width={480}
@@ -114,7 +115,8 @@ const PlaybackStep = props => (
 PlaybackStep.propTypes = {
     encoding: PropTypes.bool.isRequired,
     intl: intlShape.isRequired,
-    levels: PropTypes.arrayOf(PropTypes.number).isRequired,
+    mainLeftChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
+    rightChunkLevels: PropTypes.arrayOf(PropTypes.number).isRequired,
     onBack: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
     onSetTrimEnd: PropTypes.func.isRequired,

@@ -45,7 +45,8 @@ class Dial extends React.Component {
         const cy = bbox.top + (bbox.height / 2);
         const cx = bbox.left + (bbox.width / 2);
         const angle = Math.atan2(my - cy, mx - cx);
-        const degrees = angle * (180 / Math.PI);
+        let degrees = angle * (180 / Math.PI);
+        if (e.shiftKey) degrees = Math.round(degrees / 45) * 45;
         return degrees + 90; // To correspond with scratch coordinate system
     }
 
@@ -56,6 +57,7 @@ class Dial extends React.Component {
      * @returns {string} Path data string for the gauge.
      */
     gaugePath (radius, direction) {
+        direction = ((direction + 180) % 360 + 360) % 360 - 180;
         const rads = (direction) * (Math.PI / 180);
         const path = [];
         path.push(`M ${radius} 0`);

@@ -22,14 +22,16 @@ const RecordModal = props => (
         onRequestClose={props.onCancel}
     >
         <Box className={styles.body}>
-            {props.samples ? (
+            {props.mainLeftSampleLevels && props.rightSampleLevels ? (
                 <PlaybackStep
                     encoding={props.encoding}
-                    levels={props.levels}
+                    mainLeftChunkLevels={props.mainLeftChunkLevels}
+                    rightChunkLevels={props.rightChunkLevels}
                     playhead={props.playhead}
                     playing={props.playing}
                     sampleRate={props.sampleRate}
-                    samples={props.samples}
+                    mainLeftSampleLevels={props.mainLeftSampleLevels}
+                    rightSampleLevels={props.rightSampleLevels}
                     trimEnd={props.trimEnd}
                     trimStart={props.trimStart}
                     onBack={props.onBack}
@@ -54,7 +56,8 @@ const RecordModal = props => (
 RecordModal.propTypes = {
     encoding: PropTypes.bool.isRequired,
     intl: intlShape.isRequired,
-    levels: PropTypes.arrayOf(PropTypes.number),
+    mainLeftChunkLevels: PropTypes.arrayOf(PropTypes.number),
+    rightChunkLevels: PropTypes.arrayOf(PropTypes.number),
     onBack: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onPlay: PropTypes.func.isRequired,
@@ -69,7 +72,8 @@ RecordModal.propTypes = {
     playing: PropTypes.bool,
     recording: PropTypes.bool,
     sampleRate: PropTypes.number,
-    samples: PropTypes.instanceOf(Float32Array),
+    mainLeftSampleLevels: PropTypes.instanceOf(Float32Array),
+    rightSampleLevels: PropTypes.instanceOf(Float32Array),
     trimEnd: PropTypes.number.isRequired,
     trimStart: PropTypes.number.isRequired
 };

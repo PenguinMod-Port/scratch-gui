@@ -3,6 +3,7 @@ const SET_INTERPOLATION = 'tw/SET_INTERPOLATION';
 const SET_COMPILER_OPTIONS = 'tw/SET_COMPILER_OPTIONS';
 const SET_RUNTIME_OPTIONS = 'tw/SET_RUNTIME_OPTIONS';
 const SET_USERNAME = 'tw/SET_USERNAME';
+const SET_USERNAME_LOGGED_IN = 'tw/SET_USERNAME_LOGGED_IN';
 const SET_CLOUD = 'tw/SET_CLOUD';
 const SET_HIGH_QUALITY_PEN = 'tw/SET_HIGH_QUALITY_PEN';
 const SET_WINDOW_FULLSCREEN = 'tw/SET_WINDOW_FULLSCREEN';
@@ -23,15 +24,19 @@ export const initialState = {
     interpolation: false,
     cloud: true,
     username: '',
+    usernameLoggedIn: false,
     highQualityPen: false,
     compilerOptions: {
         enabled: true,
-        warpTimer: false
+        warpTimer: false,
+        strictEquality: false
     },
     runtimeOptions: {
         maxClones: 300,
         miscLimits: true,
-        fencing: true
+        fencing: true,
+        disableOffscreenRendering: false,
+        disableDirectionClamping: false,
     },
     isWindowFullScreen: false,
     dimensions: [0, 0],
@@ -77,6 +82,10 @@ const reducer = function (state, action) {
     case SET_USERNAME:
         return Object.assign({}, state, {
             username: action.username
+        });
+    case SET_USERNAME_LOGGED_IN:
+        return Object.assign({}, state, {
+            usernameLoggedIn: action.usernameLoggedIn
         });
     case SET_CLOUD:
         return Object.assign({}, state, {
@@ -177,6 +186,13 @@ const setUsername = function (username) {
     return {
         type: SET_USERNAME,
         username: username
+    };
+};
+
+const setUsernameLoggedIn = function (usernameLoggedIn) {
+    return {
+        type: SET_USERNAME_LOGGED_IN,
+        usernameLoggedIn: usernameLoggedIn
     };
 };
 
@@ -286,6 +302,7 @@ export {
     setCompilerOptionsState,
     setRuntimeOptionsState,
     setUsername,
+    setUsernameLoggedIn,
     setCloud,
     setHighQualityPenState,
     setIsWindowFullScreen,

@@ -1,78 +1,19 @@
+import {hex2hsl, hsl2hex} from '../../tw-color-utils';
+
 const blockColors = {
-    motion: {
-        primary: '#4C97FF',
-        secondary: '#4280D7',
-        tertiary: '#3373CC',
-        quaternary: '#3373CC'
-    },
-    looks: {
-        primary: '#9966FF',
-        secondary: '#855CD6',
-        tertiary: '#774DCB',
-        quaternary: '#774DCB'
-    },
-    sounds: {
-        primary: '#CF63CF',
-        secondary: '#C94FC9',
-        tertiary: '#BD42BD',
-        quaternary: '#BD42BD'
-    },
-    control: {
-        primary: '#FFAB19',
-        secondary: '#EC9C13',
-        tertiary: '#CF8B17',
-        quaternary: '#CF8B17'
-    },
-    event: {
-        primary: '#FFBF00',
-        secondary: '#E6AC00',
-        tertiary: '#CC9900',
-        quaternary: '#CC9900'
-    },
-    sensing: {
-        primary: '#5CB1D6',
-        secondary: '#47A8D1',
-        tertiary: '#2E8EB8',
-        quaternary: '#2E8EB8'
-    },
-    pen: {
-        primary: '#0fBD8C',
-        secondary: '#0DA57A',
-        tertiary: '#0B8E69',
-        quaternary: '#0B8E69'
-    },
-    operators: {
-        primary: '#59C059',
-        secondary: '#46B946',
-        tertiary: '#389438',
-        quaternary: '#389438'
-    },
-    data: {
-        primary: '#FF8C1A',
-        secondary: '#FF8000',
-        tertiary: '#DB6E00',
-        quaternary: '#DB6E00'
-    },
-    // This is not a new category, but rather for differentiation
-    // between lists and scalar variables.
-    data_lists: {
-        primary: '#FF661A',
-        secondary: '#FF5500',
-        tertiary: '#E64D00',
-        quaternary: '#E64D00'
-    },
-    more: {
-        primary: '#FF6680',
-        secondary: '#FF4D6A',
-        tertiary: '#FF3355',
-        quaternary: '#FF3355'
-    },
-    addons: {
-        primary: '#29beb8',
-        secondary: '#3aa8a4',
-        tertiary: '#3aa8a4',
-        quaternary: '#3aa8a4'
-    },
+    /*motion: "#4C97FF",
+    looks: "#9966FF",
+    sounds: "#CF63CF",
+    control: "#FFAB19",
+    event: "#FFBF00",
+    sensing: "#5CB1D6",
+    pen: "#0FBD8C",
+    operators: "#59C059",
+    data: "#FF8C1A",
+    data_lists: "#FF661A",
+    more: "#FF6680",*/
+    addons: "#29BEB8",
+
     text: '#FFFFFF',
     workspace: '#F9F9F9',
     toolboxHover: '#4C97FF',
@@ -105,6 +46,9 @@ const blockColors = {
     valueReportBackground: '#FFFFFF',
     valueReportBorder: '#AAAAAA',
     valueReportForeground: '#000000',
+    errorReportBackground: '#ffeeee',
+    errorReportBorder: '#ff4444',
+    errorReportForeground: '#441111',
     menuHover: 'rgba(0, 0, 0, 0.2)',
     contextMenuBackground: '#ffffff',
     contextMenuBorder: '#cccccc',
@@ -121,12 +65,38 @@ const blockColors = {
     buttonActiveBackground: '#ffffff',
     buttonForeground: '#575E75',
     zoomIconFilter: 'none',
-    gridColor: '#dddddd'
+    gridColor: '#dddddd',
+    checkboxFieldBackground: '#33D833'
 };
 
 const extensions = {};
 
+const colourModifier = function(colour) {
+  const contrast = (c, amt) => {
+    const hsl = hex2hsl(c);
+    hsl[2] /= amt;
+
+    // stupid thing that makes pink colors not bad
+    hsl[1] /= (1 - Math.max(30 - Math.abs(330 - hsl[0]), 0) / 30) * (amt - 1) * 2 + 1;
+
+    return hsl2hex(hsl);
+  };
+
+  return [
+    colour,
+    contrast(colour, 1.1),
+    contrast(colour, 1.2),
+    contrast(colour, 1.2)
+  ];
+}
+
+const textColourModifier = function(colour) {
+  return colour;
+}
+
 export {
     blockColors,
-    extensions
+    extensions,
+    colourModifier,
+    textColourModifier
 };

@@ -44,6 +44,11 @@ import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
 import TWFullScreenResizerHOC from '../lib/tw-fullscreen-resizer-hoc.jsx';
 import TWThemeManagerHOC from './tw-theme-manager-hoc.jsx';
 
+import SettingsStore from '../editor-settings/settings-store-singleton';
+void SettingsStore; // make sure its init'd or something idk
+
+import HomeCommunication from './home-communication.jsx';
+
 const {RequestMetadata, setMetadata, unsetMetadata} = storage.scratchFetch;
 
 const setProjectIdMetadata = projectId => {
@@ -109,14 +114,17 @@ class GUI extends React.Component {
             loadingStateVisible,
             ...componentProps
         } = this.props;
-        return (
+        return (<React.Fragment>
             <GUIComponent
                 loading={fetchingProject || isLoading || loadingStateVisible}
                 {...componentProps}
             >
                 {children}
             </GUIComponent>
-        );
+            <HomeCommunication
+                projectId={projectId}
+            />
+        </React.Fragment>);
     }
 }
 
@@ -184,10 +192,12 @@ const mapStateToProps = state => {
         tipsLibraryVisible: state.scratchGui.modals.tipsLibrary,
         usernameModalVisible: state.scratchGui.modals.usernameModal,
         settingsModalVisible: state.scratchGui.modals.settingsModal,
+        editorSettingsModalVisible: state.scratchGui.modals.editorSettingsModal,
         customExtensionModalVisible: state.scratchGui.modals.customExtensionModal,
         fontsModalVisible: state.scratchGui.modals.fontsModal,
         unknownPlatformModalVisible: state.scratchGui.modals.unknownPlatformModal,
         invalidProjectModalVisible: state.scratchGui.modals.invalidProjectModal,
+        splashModalVisible: state.scratchGui.modals.splashModal,
         vm: state.scratchGui.vm
     };
 };

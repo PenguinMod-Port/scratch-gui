@@ -25,10 +25,16 @@ const manuallyTrustExtension = url => {
  */
 const isTrustedExtension = url => (
     // Always trust our official extension repostiory.
-    url.startsWith('https://extensions.turbowarp.org/') ||
+    url.startsWith('https://extensions.turbowarp.org') ||
+    url.startsWith('https://extensions.penguinmod.com') ||
+
+    /* Trust other people's galleries. These can be removed in the future, they will just show a pop-up on load if they are */
+    url.startsWith('https://sharkpools-extensions.vercel.app') || // SharkPool
+    url.startsWith('https://sharkpool-sp.github.io/SharkPools-Extensions') || // SharkPool (github link)
+    url.startsWith('https://pen-group.github.io') || // Pen-Group / ObviousAlexC
 
     // For development.
-    url.startsWith('http://localhost:8000/') ||
+    url.startsWith('http://localhost:8000') ||
 
     extensionsTrustedByUser.has(url)
 );
@@ -67,6 +73,10 @@ const isAlwaysTrustedForFetching = parsed => (
     parsed.origin === 'https://turbowarp.org' ||
     parsed.origin.endsWith('.turbowarp.org') ||
     parsed.origin.endsWith('.turbowarp.xyz') ||
+
+    // Any PenguinMod service such as projects
+    parsed.origin === 'https://penguinmod.com' ||
+    parsed.origin.endsWith('.penguinmod.com') ||
 
     // GitHub API
     // GitHub Pages allows redirects, so not included here.
@@ -128,6 +138,17 @@ let allowedVideo = false;
 let allowedReadClipboard = false;
 let allowedNotify = false;
 let allowedGeolocation = false;
+let loadingExtensionsRemember = false;
+let rememberedExtensionInfo = {
+    unsandboxed: false,
+    loaded: false
+};
+
+/**
+ * A list of developer defined names that are not allowed to ask for unsandboxing.
+ * @type {Set<string>}
+ */
+const notAllowedToAskUnsandbox = new Set();
 
 const resetPermissions = () => {
     fetchHostsTrustedByUser.clear();
@@ -151,7 +172,9 @@ const SECURITY_MANAGER_METHODS = [
     'canNotify',
     'canGeolocate',
     'canEmbed',
-    'canDownload'
+    'canDownload',
+    'canUnsandbox',
+    'canScreenshotCamera'
 ];
 
 class TWSecurityManagerComponent extends React.Component {
@@ -160,7 +183,8 @@ class TWSecurityManagerComponent extends React.Component {
         bindAll(this, [
             'handleAllowed',
             'handleDenied',
-            'handleRuntimeDisposed'
+            'handleRuntimeDisposed',
+            'projectWillChange'
         ]);
         bindAll(this, SECURITY_MANAGER_METHODS);
         this.nextModalCallbacks = [];
@@ -177,6 +201,14 @@ class TWSecurityManagerComponent extends React.Component {
         };
     }
 
+    projectWillChange() {
+        loadingExtensionsRemember = false;
+        rememberedExtensionInfo = {
+            unsandboxed: false,
+            loaded: false
+        };
+    }
+
     componentDidMount () {
         const vmSecurityManager = this.props.vm.extensionManager.securityManager;
         const propsSecurityManager = this.props.securityManager;
@@ -184,10 +216,12 @@ class TWSecurityManagerComponent extends React.Component {
             vmSecurityManager[method] = propsSecurityManager[method] || this[method];
         }
         this.props.vm.runtime.on('RUNTIME_DISPOSED', this.handleRuntimeDisposed);
+        this.props.vm.runtime.on('RUNTIME_DISPOSED', this.projectWillChange);
     }
 
     componentWillUnmount () {
         this.props.vm.runtime.off('RUNTIME_DISPOSED', this.handleRuntimeDisposed);
+        this.props.vm.runtime.off('RUNTIME_DISPOSED', this.projectWillChange);
     }
 
     handleRuntimeDisposed () {
@@ -196,6 +230,7 @@ class TWSecurityManagerComponent extends React.Component {
         if (this.state.type) {
             this.state.callback(false);
         }
+
     }
 
     // eslint-disable-next-line valid-jsdoc
@@ -286,6 +321,16 @@ class TWSecurityManagerComponent extends React.Component {
         }));
     }
 
+    handleChangeRemember(e) {
+        const checked = e.target.checked;
+        this.setState(oldState => ({
+            data: {
+                ...oldState.data,
+                remember: checked
+            }
+        }));
+    }
+
     /**
      * @param {string} url The extension's URL
      * @returns {Promise<boolean>} Whether the extension can be loaded
@@ -295,18 +340,40 @@ class TWSecurityManagerComponent extends React.Component {
             log.info(`Loading extension ${url} automatically`);
             return true;
         }
+        if (loadingExtensionsRemember) {
+            // TODO: find some way to identify these, custom extensions have too long of URLs
+            if (!rememberedExtensionInfo.loaded) {
+                console.warn('An extension was not loaded');
+                return false;
+            }
+            if (rememberedExtensionInfo.unsandboxed) {
+                console.log('An extension was loaded unsandboxed');
+                manuallyTrustExtension(url);
+            }
+            return true;
+        }
+
         const {showModal} = await this.acquireModalLock();
         if (url.startsWith('data:')) {
             const allowed = await showModal(SecurityModals.LoadExtension, {
                 url,
                 unsandboxed: getPersistedUnsandboxed(),
-                onChangeUnsandboxed: this.handleChangeUnsandboxed.bind(this)
+                remember: false,
+                onChangeUnsandboxed: this.handleChangeUnsandboxed.bind(this),
+                onChangeRemember: this.handleChangeRemember.bind(this),
             });
             if (allowed) {
                 setPersistedUnsandboxed(this.state.data.unsandboxed);
             }
             if (allowed && this.state.data.unsandboxed) {
                 manuallyTrustExtension(url);
+            }
+            if (this.state.data.remember) {
+                loadingExtensionsRemember = true;
+                rememberedExtensionInfo = {
+                    unsandboxed: this.state.data.unsandboxed,
+                    loaded: allowed
+                };
             }
             return allowed;
         }
@@ -472,6 +539,30 @@ class TWSecurityManagerComponent extends React.Component {
             url,
             name
         });
+    }
+    
+    /**
+     * @returns {Promise<boolean>} True if unsandboxing the provided extension name is allowed.
+     */
+    async canUnsandbox(name) {
+        if (notAllowedToAskUnsandbox.has(name)) return false;
+        const { showModal } = await this.acquireModalLock();
+        const allowedUnsandbox = await showModal(SecurityModals.Unsandbox, { name: name || "" });
+        if (!allowedUnsandbox) {
+            notAllowedToAskUnsandbox.add(name);
+        }
+        return allowedUnsandbox;
+    }
+
+    /**
+     * @returns {Promise<boolean>} True if screenshotting the camera is allowed.
+     */
+    async canScreenshotCamera() {
+        if (!allowedScreenshotCamera) {
+            const { showModal } = await this.acquireModalLock();
+            allowedScreenshotCamera = await showModal(SecurityModals.ScreenshotCamera);
+        }
+        return allowedScreenshotCamera;
     }
 
     render () {

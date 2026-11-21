@@ -13,6 +13,11 @@ const messages = defineMessages({
         defaultMessage: 'Choose a Backdrop',
         description: 'Heading for the backdrop library',
         id: 'gui.costumeLibrary.chooseABackdrop'
+    },
+    header: {
+        defaultMessage: 'Backdrops',
+        description: 'Header for backdrop library',
+        id: 'pm.gui.backdropLibrary.header'
     }
 });
 
@@ -52,6 +57,7 @@ class BackdropLibrary extends React.Component {
                 id="backdropLibrary"
                 tags={backdropTags}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
+                header={this.props.intl.formatMessage(messages.header)}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
             />

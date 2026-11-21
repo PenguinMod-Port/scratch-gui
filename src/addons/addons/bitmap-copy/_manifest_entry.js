@@ -18,7 +18,7 @@ const manifest = {
   ],
   "dynamicDisable": true,
   "tags": [],
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 import {clipboardSupported} from "../../environment";
 if (!clipboardSupported) manifest.unsupported = true;

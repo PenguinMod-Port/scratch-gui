@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; stroke: rgb(4, 107, 204); fill: rgb(5, 134, 255);" rx="48" ry="48" id="object-0"></rect>
+  <g style="" transform="matrix(18.04882, 0, 0, 18.04882, -5782.867187, -3146.743164)">
+    <path d="M 332.802 179.14 C 332.026 179.14 331.395 179.77 331.395 180.547 L 331.395 184.767 C 331.395 185.544 332.026 186.174 332.802 186.174 L 338.43 186.174 C 339.207 186.174 339.837 185.544 339.837 184.767 L 342.651 186.174 L 342.651 179.14 L 339.837 180.547 C 339.837 179.77 339.207 179.14 338.43 179.14 L 332.802 179.14 Z" stroke-width="0.5" fill="#fff" style="stroke-width: 0.5; stroke: rgb(255, 255, 255); stroke-linejoin: round; stroke-linecap: round;"></path>
+  </g>
+</svg>

@@ -6,12 +6,18 @@ import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import {openUsernameModal} from '../reducers/modals';
 import {closeEditMenu} from '../reducers/menus';
 import isScratchDesktop from '../lib/isScratchDesktop';
+import {APP_NAME} from '../lib/brand';
 
 const messages = defineMessages({
     cannotChangeWhileRunning: {
         defaultMessage: 'Username cannot be changed while the project is running.',
         description: 'Alert that appears when trying to change username while project is running',
         id: 'tw.changeUsername.cannotChangeWhileRunning'
+    },
+    cannotChangeWhileLoggedIn: {
+        defaultMessage: 'Username cannot be changed if you are logged into {APP_NAME}.',
+        description: 'Alert that appears when trying to change username while logged in.',
+        id: 'pm.gui.changeUsername.cannotChangeWhileLoggedIn'
     }
 });
 
@@ -23,7 +29,11 @@ class ChangeUsername extends React.Component {
         ]);
     }
     changeUsername () {
-        if (this.props.running && !isScratchDesktop()) {
+        if (this.props.usernameLoggedIn) {
+            // eslint-disable-next-line no-alert
+            alert(this.props.intl.formatMessage(messages.cannotChangeWhileLoggedIn, {APP_NAME}));
+            return;
+        } else if (this.props.running && !isScratchDesktop()) {
             // eslint-disable-next-line no-alert
             alert(this.props.intl.formatMessage(messages.cannotChangeWhileRunning));
             return;
@@ -39,11 +49,13 @@ ChangeUsername.propTypes = {
     children: PropTypes.func,
     onOpenUsernameModal: PropTypes.func,
     running: PropTypes.bool,
-    intl: intlShape
+    intl: intlShape,
+    usernameLoggedIn: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-    running: state.scratchGui.vmStatus.running
+    running: state.scratchGui.vmStatus.running,
+    usernameLoggedIn: state.scratchGui.tw.usernameLoggedIn
 });
 
 const mapDispatchToProps = dispatch => ({

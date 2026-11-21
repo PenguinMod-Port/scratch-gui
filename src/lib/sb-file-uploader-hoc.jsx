@@ -81,6 +81,12 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                             multiple: false,
                             types: [
                                 {
+                                    description: 'PenguinMod Project',
+                                    accept: {
+                                        '*/*': ['.pmp']
+                                    }
+                                },
+                                {
                                     description: 'Scratch Project',
                                     accept: {
                                         // Chrome on Android tracks the MIME type of files that get downloaded and
@@ -113,7 +119,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             } else {
                 // create <input> element and add it to DOM
                 this.inputElement = document.createElement('input');
-                this.inputElement.accept = '.sb,.sb2,.sb3';
+                this.inputElement.accept = '.sb,.sb2,.sb3,.pmp';
                 this.inputElement.style = 'display: none;';
                 this.inputElement.type = 'file';
                 this.inputElement.onchange = this.handleChange; // connects to step 3
@@ -133,7 +139,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 userOwnsProject
             } = this.props;
             const thisFileInput = e.target;
-            if (thisFileInput.files) { // Don't attempt to load if no file was selected
+            if (thisFileInput.files && thisFileInput.files.length) { // Don't attempt to load if no file was selected
                 this.fileToUpload = thisFileInput.files[0];
 
                 // If user owns the project, or user has changed the project,
@@ -164,6 +170,9 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                     this.removeFileObjects();
                 }
                 this.props.closeFileMenu();
+            } else {
+                this.expectingFileUploadFinish = false;
+                this.removeFileObjects();
             }
         }
         // step 4 is below, in mapDispatchToProps
@@ -186,8 +195,8 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         getProjectTitleFromFilename (fileInputFilename) {
             if (!fileInputFilename) return '';
             // only parse title with valid scratch project extensions
-            // (.sb, .sb2, and .sb3)
-            const matches = fileInputFilename.match(/^(.*)\.sb[23]?$/);
+            // (.sb, .sb2, .sb3, .pmp)
+            const matches = fileInputFilename.match(/^(.*)\.(sb[23]|pmp)?$/);
             if (!matches) return '';
             return matches[1].substring(0, 100); // truncate project title to max 100 chars
         }

@@ -44,6 +44,122 @@ const messages = defineMessages({
         id: 'gui.opcodeLabels.backdropnumber'
     },
 
+    // pm looks
+    looks_getEffectValue_color: {
+        defaultMessage: 'color',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.color'
+    },
+    looks_getEffectValue_fisheye: {
+        defaultMessage: 'fisheye',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.fisheye'
+    },
+    looks_getEffectValue_whirl: {
+        defaultMessage: 'whirl',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.whirl'
+    },
+    looks_getEffectValue_pixelate: {
+        defaultMessage: 'pixelate',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.pixelate'
+    },
+    looks_getEffectValue_mosaic: {
+        defaultMessage: 'mosaic',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.mosaic'
+    },
+    looks_getEffectValue_brightness: {
+        defaultMessage: 'brightness',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.brightness'
+    },
+    looks_getEffectValue_ghost: {
+        defaultMessage: 'ghost',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.ghost'
+    },
+    looks_getEffectValue_saturation: {
+        defaultMessage: 'saturation',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.saturation'
+    },
+    looks_getEffectValue_red: {
+        defaultMessage: 'red',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.red'
+    },
+    looks_getEffectValue_green: {
+        defaultMessage: 'green',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.green'
+    },
+    looks_getEffectValue_blue: {
+        defaultMessage: 'blue',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.blue'
+    },
+    looks_getEffectValue_opaque: {
+        defaultMessage: 'opaque',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.opaque'
+    },
+    looks_getEffectValue_horizShear: {
+        defaultMessage: 'horizontal shear',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.horizShear'
+    },
+    looks_getEffectValue_vertiShear: {
+        defaultMessage: 'vertical shear',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.vertiShear'
+    },
+    looks_getEffectValue_repeatX: {
+        defaultMessage: 'repeat x',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.repeatX'
+    },
+    looks_getEffectValue_repeatY: {
+        defaultMessage: 'repeat y',
+        description: 'Label for the effect monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getEffectValue.repeatY'
+    },
+    looks_getSpriteVisible: {
+        defaultMessage: 'visible?',
+        description: 'Label for the visibility monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.spriteVisible'
+    },
+    looks_layersGetLayer: {
+        defaultMessage: 'layer',
+        description: 'Label for the layer monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.getLayer'
+    },
+    looks_sayHeight: {
+        defaultMessage: 'bubble height',
+        description: 'Label for the bubble height monitor when shown on the stage',
+        id: 'pm.gui.opcodes.sayHeight'
+    },
+    looks_sayWidth: {
+        defaultMessage: 'bubble width',
+        description: 'Label for the bubble width monitor when shown on the stage',
+        id: 'pm.gui.opcodes.sayWidth'
+    },
+    looks_stretchGetX: {
+        defaultMessage: 'stretch x',
+        description: 'Label for the stretch x monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.stretchX'
+    },
+    looks_stretchGetY: {
+        defaultMessage: 'stretch y',
+        description: 'Label for the stretch y monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.stretchY'
+    },
+    looks_tintColor: {
+        defaultMessage: 'tint color',
+        description: 'Label for the tint color monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.tintColor'
+    },
 
     // Sound
     sound_volume: {
@@ -51,10 +167,31 @@ const messages = defineMessages({
         description: 'Label for the volume monitor when shown on the stage',
         id: 'gui.opcodeLabels.volume'
     },
+    sound_getEffectValue: {
+        defaultMessage: 'effect',
+        description: 'Label for the sound effect monitor with no effect chosen when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue'
+    },
+    sound_getEffectValue_pitch: {
+        defaultMessage: 'pitch',
+        description: 'Label for the pitch effect monitor when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue.pitch'
+    },
+    sound_getEffectValue_pan: {
+        defaultMessage: 'pan left/right',
+        description: 'Label for the pan left/right effect monitor when shown on the stage',
+        id: 'pm.opcodeLabels.soundgetEffectValue.pan'
+    },
     sound_tempo: {
         defaultMessage: 'tempo',
         description: 'Label for the tempo monitor when shown on the stage',
         id: 'gui.opcodeLabels.tempo'
+    },
+
+    // pm control
+    control_get_counter: {
+        defaultMessage: 'counter',
+        id: 'pm.gui.opcodeLabels.getCounter'
     },
 
     // Sensing
@@ -123,6 +260,11 @@ const messages = defineMessages({
         description: 'Label for the current second monitor when shown on the stage',
         id: 'gui.opcodeLabels.second'
     },
+    sensing_current_timestamp: {
+        defaultMessage: 'timestamp',
+        description: 'Label for the current timestamp monitor when shown on the stage',
+        id: 'pm.gui.opcodeLabels.timestamp'
+    },
     sensing_timer: {
         defaultMessage: 'timer',
         description: 'Label for the timer monitor when shown on the stage',
@@ -137,6 +279,52 @@ const messages = defineMessages({
         defaultMessage: 'online?',
         description: 'Name of "online?" block',
         id: 'tw.opcode.online'
+    },
+
+    //pm sensing
+    sensing_getclipboard: {
+        defaultMessage: 'clipboard',
+        id: 'pm.gui.opcodeLabels.getClipboard'
+    },
+    sensing_getdragmode: {
+        defaultMessage: 'draggable?',
+        id: 'pm.gui.opcodeLabels.getDragMode'
+    },
+    sensing_loggedin: {
+        defaultMessage: 'logged in?',
+        id: 'pm.gui.opcodeLabels.loggedIn'
+    },
+    sensing_mouse_any: {
+        defaultMessage: 'any',
+        id: 'pm.gui.opcodeLabels.mouseAny'
+    },
+    sensing_mouseclicked: {
+        defaultMessage: 'mouse clicked?',
+        id: 'pm.gui.opcodeLabels.mouseClicked'
+    },
+    sensing_mouse_button_clicked: {
+        defaultMessage: '{BUTTON} mouse clicked?',
+        id: 'pm.gui.opcodeLabels.mouseButtonClicked'
+    },
+    sensing_mouse_button_down: {
+        defaultMessage: '{BUTTON} mouse down?',
+        id: 'pm.gui.opcodeLabels.mouseButtonDown'
+    },
+    sensing_mouse_button_released: {
+        defaultMessage: '{BUTTON} mouse released?',
+        id: 'pm.gui.opcodeLabels.mouseButtonReleased'
+    },
+    sensing_mouse_left: {
+        defaultMessage: 'left',
+        id: 'pm.gui.opcodeLabels.mouseLeft'
+    },
+    sensing_mouse_middle: {
+        defaultMessage: 'middle',
+        id: 'pm.gui.opcodeLabels.mouseMiddle'
+    },
+    sensing_mouse_right: {
+        defaultMessage: 'right',
+        id: 'pm.gui.opcodeLabels.mouseRight'
     }
 });
 
@@ -166,13 +354,27 @@ class OpcodeLabels {
             looks_backdropnumbername: {category: 'looks'},
             looks_backdropname: {category: 'looks'},
 
+            // pm looks
+            looks_getEffectValue: {category: 'looks'},
+            looks_getSpriteVisible: {category: 'looks'},
+            looks_layersGetLayer: {category: 'looks'},
+            looks_sayHeight: {category: 'looks'},
+            looks_sayWidth: {category: 'looks'},
+            looks_stretchGetX: {category: 'looks'},
+            looks_stretchGetY: {category: 'looks'},
+            looks_tintColor: {category: 'looks'},
+
             // Data
             data_variable: {category: 'data'},
             data_listcontents: {category: 'list'},
 
             // Sound
             sound_volume: {category: 'sound'},
+            sound_getEffectValue: {category: 'sound'},
             sound_tempo: {category: 'sound'},
+
+            // pm control
+            control_get_counter: {category: 'control'},
 
             // Sensing
             sensing_answer: {category: 'sensing'},
@@ -184,7 +386,16 @@ class OpcodeLabels {
             sensing_current: {category: 'sensing'},
             sensing_timer: {category: 'sensing'},
             sensing_dayssince2000: {category: 'sensing'},
-            sensing_online: {category: 'sensing'}
+            sensing_online: {category: 'sensing'},
+
+            // pm sensing
+            sensing_getclipboard: {category: 'sensing'},
+            sensing_getdragmode: {category: 'sensing'},
+            sensing_loggedin: {category: 'sensing'},
+            sensing_mouseclicked: {category: 'sensing'},
+            sensing_mouse_button_clicked: {category: 'sensing'},
+            sensing_mouse_button_down: {category: 'sensing'},
+            sensing_mouse_button_released: {category: 'sensing'},
         };
 
         // Initialize opcodeMap with default strings
@@ -227,13 +438,52 @@ class OpcodeLabels {
         };
         this._opcodeMap.looks_backdropname.labelFn = () => this._translator(messages.looks_backdropname);
 
+        // pm looks
+        this._opcodeMap.looks_getEffectValue.labelFn = params => {
+            switch (params.EFFECT.toLowerCase()) {
+                case 'color': return this._translator(messages.looks_getEffectValue_color);
+                case 'fisheye': return this._translator(messages.looks_getEffectValue_fisheye);
+                case 'whirl': return this._translator(messages.looks_getEffectValue_whirl);
+                case 'pixelate': return this._translator(messages.looks_getEffectValue_pixelate);
+                case 'mosaic': return this._translator(messages.looks_getEffectValue_mosaic);
+                case 'brightness': return this._translator(messages.looks_getEffectValue_brightness);
+                case 'ghost': return this._translator(messages.looks_getEffectValue_ghost);
+                case 'saturation': return this._translator(messages.looks_getEffectValue_saturation);
+                case 'red': return this._translator(messages.looks_getEffectValue_red);
+                case 'green': return this._translator(messages.looks_getEffectValue_green);
+                case 'blue': return this._translator(messages.looks_getEffectValue_blue);
+                case 'opaque': return this._translator(messages.looks_getEffectValue_opaque);
+                case 'horizontal_shear': return this._translator(messages.looks_getEffectValue_horizShear);
+                case 'vertical_shear': return this._translator(messages.looks_getEffectValue_vertiShear);
+                case 'repeat_x': return this._translator(messages.looks_getEffectValue_repeatX);
+                case 'repeat_y': return this._translator(messages.looks_getEffectValue_repeatY);
+            }
+        }
+        this._opcodeMap.looks_getSpriteVisible.labelFn = () => this._translator(messages.looks_getSpriteVisible);
+        this._opcodeMap.looks_layersGetLayer.labelFn = () => this._translator(messages.looks_layersGetLayer);
+        this._opcodeMap.looks_sayHeight.labelFn = () => this._translator(messages.looks_sayHeight);
+        this._opcodeMap.looks_sayWidth.labelFn = () => this._translator(messages.looks_sayWidth);
+        this._opcodeMap.looks_stretchGetX.labelFn = () => this._translator(messages.looks_stretchGetX);
+        this._opcodeMap.looks_stretchGetY.labelFn = () => this._translator(messages.looks_stretchGetY);
+        this._opcodeMap.looks_tintColor.labelFn = () => this._translator(messages.looks_tintColor);
+
         // Data
         this._opcodeMap.data_variable.labelFn = params => params.VARIABLE;
         this._opcodeMap.data_listcontents.labelFn = params => params.LIST;
 
         // Sound
         this._opcodeMap.sound_volume.labelFn = () => this._translator(messages.sound_volume);
+        this._opcodeMap.sound_getEffectValue.labelFn = params => {
+            const effect = params.EFFECT.toLowerCase();
+            if (messages[`sound_getEffectValue_${effect}`]) {
+                return this._translator(messages[`sound_getEffectValue_${effect}`]);
+            }
+            return this._translator(messages.sound_getEffectValue);
+        };
         this._opcodeMap.sound_tempo.labelFn = () => this._translator(messages.sound_tempo);
+
+        // pm control
+        this._opcodeMap.control_get_counter.labelFn = () => this._translator(messages.control_get_counter);
 
         // Sensing
         this._opcodeMap.sensing_answer.labelFn = () => this._translator(messages.sensing_answer);
@@ -258,11 +508,31 @@ class OpcodeLabels {
                 return this._translator(messages.sensing_current_minute);
             case 'second':
                 return this._translator(messages.sensing_current_second);
+            case 'timestamp':
+                return this._translator(messages.sensing_current_timestamp);
             }
         };
         this._opcodeMap.sensing_timer.labelFn = () => this._translator(messages.sensing_timer);
         this._opcodeMap.sensing_dayssince2000.labelFn = () => this._translator(messages.sensing_dayssince2000);
         this._opcodeMap.sensing_online.labelFn = () => this._translator(messages.sensing_online);
+
+        //pm sensing
+        const buttonMap = button => {
+            switch (button) {
+                case 'left': return this._translator(messages.sensing_mouse_left);
+                case 'middle': return this._translator(messages.sensing_mouse_middle);
+                case 'right': return this._translator(messages.sensing_mouse_right);
+            }
+            return this._translator(messages.sensing_mouse_any);
+        }
+
+        this._opcodeMap.sensing_getclipboard.labelFn = () => this._translator(messages.sensing_getclipboard);
+        this._opcodeMap.sensing_getdragmode.labelFn = () => this._translator(messages.sensing_getdragmode);
+        this._opcodeMap.sensing_loggedin.labelFn = () => this._translator(messages.sensing_loggedin);
+        this._opcodeMap.sensing_mouse_button_clicked.labelFn = params => this._translator(messages.sensing_mouse_button_clicked, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouse_button_down.labelFn = params => this._translator(messages.sensing_mouse_button_down, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouse_button_released.labelFn = params => this._translator(messages.sensing_mouse_button_released, {BUTTON: buttonMap(params.BUTTON_OPTION)});
+        this._opcodeMap.sensing_mouseclicked.labelFn = () => this._translator(messages.sensing_mouseclicked);
     }
 
     /**

@@ -44,7 +44,6 @@
     border-right: 1px solid $ui-black-transparent;
     border-bottom: 1px solid $ui-black-transparent;
     box-sizing: content-box;
-    height: calc(100% - 3.25rem) !important;
 
     /*
         For now, the layout cannot support scrollbars in the category menu.
@@ -53,6 +52,10 @@
         same for Firefox, so a different solution may be needed for them.
     */
     -ms-overflow-style: none;
+}
+
+.blocks :global(.blocklyToolboxDiv:not(.blocklyToolboxDivColumns)) {
+    height: calc(100% - 3.25rem) !important;
 }
 
 [dir="rtl"] .blocks :global(.blocklyToolboxDiv) {

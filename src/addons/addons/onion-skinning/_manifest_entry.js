@@ -106,6 +106,6 @@ const manifest = {
     "recommended"
   ],
   "dynamicDisable": true,
-  "enabledByDefault": true
+  "enabledByDefault": false
 };
 export default manifest;

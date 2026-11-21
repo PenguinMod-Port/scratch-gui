@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <rect width="600" height="300" style="stroke-width: 48; stroke-linejoin: round; stroke: rgb(120, 120, 120); fill: rgb(150, 150, 150);" rx="48" ry="48" id="object-0"></rect>
+  <g transform="matrix(17.381411, 0, 0, 17.381411, 126.185898, -23.814102)" style="">
+    <line style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; fill: none; stroke: rgb(255, 255, 255);" x1="9.884" y1="6.232" x2="6.116" y2="13.768"></line>
+    <line style="stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; fill: none; stroke: rgb(255, 255, 255);" x1="13.884" y1="6.232" x2="10.116" y2="13.768"></line>
+  </g>
+</svg>

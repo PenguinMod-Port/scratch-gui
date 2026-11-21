@@ -1,0 +1,10 @@
+.space {
+    margin-right: 0.5em;
+}
+
+.label {
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

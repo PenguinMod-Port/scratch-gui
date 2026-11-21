@@ -127,11 +127,23 @@ const hsv2rgb = hsv => {
     }
 };
 
-const hex2hsv = hex => rgb2hsv(hex2rgb(hex));
+// Source - https://stackoverflow.com/a/54116681
+// Posted by Kamil Kiełczewski, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-07-26, License - CC BY-SA 4.0
+let hsl2hsv = ([h,s,l],v=s*Math.min(l,100-l)+l) => [h, v?200-200*l/v:0, v];
+let hsv2hsl = ([h,s,v],l=v-v*s/2/100, m=Math.min(l,100-l)) => [h,m?(v-l)/m:0,l];
 
+const hex2hsv = hex => rgb2hsv(hex2rgb(hex));
 const hsv2hex = hsv => rgb2hex(hsv2rgb(hsv));
 
+const hex2hsl = hex => hsv2hsl(hex2hsv(hex));
+const hsl2hex = hsl => hsv2hex(hsl2hsv(hsl));
+
 export {
+    hex2rgb,
+    rgb2hex,
     hex2hsv,
-    hsv2hex
+    hsv2hex,
+    hex2hsl,
+    hsl2hex
 };
