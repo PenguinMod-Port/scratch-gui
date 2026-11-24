@@ -6,7 +6,6 @@ import PaintEditor from '../lib/tw-scratch-paint';
 import {inlineSvgFonts, sanitizeSvg} from '@turbowarp/scratch-svg-renderer';
 import ErrorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import {openFontsModal} from '../reducers/modals';
-import SettingsStore from '../editor-settings/settings-store-singleton';
 
 import {connect} from 'react-redux';
 import {Theme} from '../lib/themes/index.js';
@@ -33,7 +32,8 @@ class PaintEditorWrapper extends React.Component {
             this.props.name !== nextProps.name ||
             this.props.theme !== nextProps.theme ||
             this.props.customStageSize !== nextProps.customStageSize ||
-            this.state.fonts !== nextState.fonts;
+            this.state.fonts !== nextState.fonts ||
+            this.props.settingsStore !== nextProps.settingsStore;
     }
     componentWillUnmount () {
         this.props.vm.runtime.fontManager.off('change', this.handleUpdateFonts);
@@ -84,7 +84,7 @@ class PaintEditorWrapper extends React.Component {
                 customFonts={this.state.fonts}
                 width={this.props.customStageSize.width}
                 height={this.props.customStageSize.height}
-                settingsStore={SettingsStore}
+                settingsStore={this.props.settingsStore}
             />
         );
     }
@@ -125,7 +125,8 @@ const mapStateToProps = (state, {selectedCostumeIndex}) => {
         selectedCostumeIndex: index,
         theme: state.scratchGui.theme.theme,
         vm: state.scratchGui.vm,
-        zoomLevelId: targetId
+        zoomLevelId: targetId,
+        settingsStore: state.scratchGui.settingsStore
     };
 };
 

@@ -55,8 +55,6 @@ import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
 
-import SettingsStore from '../../editor-settings/settings-store-singleton';
-
 const messages = defineMessages({
     addExtension: {
         id: 'gui.gui.addExtension',
@@ -364,7 +362,7 @@ const GUIComponent = props => {
                     onToggleLoginOpen={onToggleLoginOpen}
                 />
                 <Box className={styles.bodyWrapper}>
-                    <Box className={classNames(styles.flexWrapper, {[styles.stageLeft]: SettingsStore.store.stageLeft})}>
+                    <Box className={classNames(styles.flexWrapper, {[styles.stageLeft]: props.settingsStore.stageLeft})}>
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
@@ -468,7 +466,7 @@ const GUIComponent = props => {
                                             vm={vm}
                                         />
                                     </Box>
-                                    <Box className={classNames(styles.extensionButtonContainer, {[styles.hover]: SettingsStore.store.twoColumnCategories})}>
+                                    <Box className={classNames(styles.extensionButtonContainer, {[styles.hover]: props.settingsStore.twoColumnCategories})}>
                                         <button
                                             className={styles.extensionButton}
                                             title={intl.formatMessage(messages.addExtension)}
@@ -633,7 +631,8 @@ GUIComponent.propTypes = {
     unknownPlatformModalVisible: PropTypes.bool,
     invalidProjectModalVisible: PropTypes.bool,
     splashModalVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    settingsStore: PropTypes.object
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
@@ -665,7 +664,8 @@ const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
     blocksId: state.scratchGui.timeTravel.year.toString(),
     stageSizeMode: state.scratchGui.stageSize.stageSize,
-    theme: state.scratchGui.theme.theme
+    theme: state.scratchGui.theme.theme,
+    settingsStore: state.scratchGui.settingsStore
 });
 
 export default injectIntl(connect(

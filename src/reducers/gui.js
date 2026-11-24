@@ -8,6 +8,7 @@ import commentEditorReducer, {commentEditorInitialState} from './comment-editor'
 import customProceduresReducer, {customProceduresInitialState} from './custom-procedures';
 import blockDragReducer, {blockDragInitialState} from './block-drag';
 import editorTabReducer, {editorTabInitialState} from './editor-tab';
+import editorSettingsStoreReducer, {editorSettingsInitialState} from './editor-settings-store';
 import hoveredTargetReducer, {hoveredTargetInitialState} from './hovered-target';
 import menuReducer, {menuInitialState} from './menus';
 import micIndicatorReducer, {micIndicatorInitialState} from './mic-indicator';
@@ -69,7 +70,8 @@ const guiInitialState = {
     tw: twInitialState,
     vm: vmInitialState,
     vmStatus: vmStatusInitialState,
-    workspaceMetrics: workspaceMetricsInitialState
+    workspaceMetrics: workspaceMetricsInitialState,
+    settingsStore: editorSettingsInitialState
 };
 
 const initPlayer = function (currentState) {
@@ -176,7 +178,8 @@ const guiReducer = combineReducers({
     tw: twReducer,
     vm: vmReducer,
     vmStatus: vmStatusReducer,
-    workspaceMetrics: workspaceMetricsReducer
+    workspaceMetrics: workspaceMetricsReducer,
+    settingsStore: editorSettingsStoreReducer
 });
 
 export {

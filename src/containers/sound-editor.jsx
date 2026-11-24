@@ -27,32 +27,6 @@ const UNDO_STACK_SIZE = 99;
 const MAX_RMS = 1.2;
 
 class SoundEditor extends React.Component {
-    static EDITOR_SETTINGS_LISTENER_ATTACHED = false;
-    static EDITOR_SETTING_CALLBACK = null;
-
-    static listenToEditorSettings () {
-        if (SoundEditor.EDITOR_SETTINGS_LISTENER_ATTACHED) return;
-
-        // Force bind this editor setting to the GUI by attaching a 'set' listener.
-        const originalDescriptor = Object.getOwnPropertyDescriptor(SettingsStore.store, 'soundDisplayDetail');
-        let soundDisplayDetail = SettingsStore.store.soundDisplayDetail;
-        Object.defineProperty(SettingsStore.store, 'soundDisplayDetail', {
-            configurable: true,
-            enumerable: originalDescriptor?.enumerable ?? true,
-            get() {
-                return soundDisplayDetail;
-            },
-            set(value) {
-                soundDisplayDetail = value;
-                if (SoundEditor.EDITOR_SETTING_CALLBACK) {
-                    SoundEditor.EDITOR_SETTING_CALLBACK();
-                }
-            }
-        });
-
-        SoundEditor.EDITOR_SETTINGS_LISTENER_ATTACHED = true;
-    }
-
     constructor (props) {
         super(props);
         bindAll(this, [
@@ -69,7 +43,6 @@ class SoundEditor extends React.Component {
             'handleEffect',
             'handleUndo',
             'handleRedo',
-            'handleSettingsChange',
             'submitNewSamples',
             'handleCopy',
             'handlePaste',
@@ -101,9 +74,6 @@ class SoundEditor extends React.Component {
         this.undoStack = [];
 
         this.ref = null;
-
-        SoundEditor.listenToEditorSettings();
-        SoundEditor.EDITOR_SETTING_CALLBACK = this.handleSettingsChange;
     }
     componentDidMount () {
         this.audioBufferPlayer = new AudioBufferPlayer(
@@ -115,7 +85,7 @@ class SoundEditor extends React.Component {
 
         document.addEventListener('keydown', this.handleKeyPress);
 
-        this.handleSettingsChange();
+        this.handleWaveformDetail(this.props.settingsStore.soundDisplayDetail);
     }
     componentWillReceiveProps (newProps) {
         if (newProps.soundId !== this.props.soundId) { // A different sound has been selected
@@ -130,6 +100,10 @@ class SoundEditor extends React.Component {
                 trimStart: null,
                 trimEnd: null
             });
+        }
+
+        if (this.props.settingsStore.soundDisplayDetail !== newProps.settingsStore.soundDisplayDetail) {
+            this.handleWaveformDetail(newProps.settingsStore.soundDisplayDetail);
         }
     }
     componentWillUnmount () {
@@ -528,12 +502,6 @@ class SoundEditor extends React.Component {
             });
         }
     }
-    handleSettingsChange () {
-        const newDetail = SettingsStore.store.soundDisplayDetail;
-        if (newDetail !== this.getNormalizedWaveformDetail()) {
-            this.handleWaveformDetail(newDetail);
-        }
-    }
     handleCopy () {
         this.copy();
     }
@@ -865,7 +833,8 @@ SoundEditor.propTypes = {
     rightSamples: PropTypes.instanceOf(Float32Array),
     soundId: PropTypes.string,
     soundIndex: PropTypes.number,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    settingsStore: PropTypes.object
 };
 
 const mapStateToProps = (state, {soundIndex}) => {
@@ -887,7 +856,8 @@ const mapStateToProps = (state, {soundIndex}) => {
         rightSamples: audioBuffer.getChannelData(audioBuffer.numberOfChannels === 1 ? 0 : 1),
         isFullScreen: state.scratchGui.mode.isFullScreen,
         name: sound.name,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        settingsStore: state.scratchGui.settingsStore
     };
 };
 

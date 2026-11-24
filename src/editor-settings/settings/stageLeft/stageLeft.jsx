@@ -19,15 +19,8 @@ export default (class extends BooleanSetting {
     }
 
     async setValue(value) {
-        // temp until i find a different solution
-
-        const flexWrapper = document.querySelector('.gui_flex-wrapper_2AgdD');
-        if (!flexWrapper) return;
-
         await LazyScratchBlocks.load();
         let ScratchBlocks = LazyScratchBlocks.get();
-        flexWrapper.classList[value ? 'add' : 'remove']('gui_stage-left_1LDW1');
-
         queueMicrotask(() => ScratchBlocks.svgResize(ScratchBlocks.mainWorkspace));
     }
 });

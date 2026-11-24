@@ -136,11 +136,11 @@ class GenericSetting extends React.Component {
     }
 
     _setStorage(value) {
-
+        // done in settings-store.js
     }
 
     _readStorage(value) {
-
+        // done in settings-store.js
     }
 
     resetToDefault() {

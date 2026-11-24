@@ -40,12 +40,13 @@ class SettingsStore extends EventTargetShim {
     createEmptyStore () {
         const result = {};
         for (const id of Object.keys(settings)) {
-            let temp = new settings[id];
+            let temp = new settings[id]({store: {}}, {});
             result[id] = temp.state.value;
             let the = this;
             settings[id].prototype._setStorage = function(v) {
                 the.store[id] = v;
                 the.saveToLocalStorage();
+                if (this.props.onUpdateStore) this.props.onUpdateStore();
             };
             settings[id].prototype._readStorage = function(v) {
                 return the.store[id];

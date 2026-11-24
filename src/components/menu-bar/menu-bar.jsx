@@ -113,8 +113,6 @@ import SeeInsideButton from './tw-see-inside.jsx';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
 import {APP_NAME} from '../../lib/brand.js';
 
-import SettingsStore from '../../editor-settings/settings-store-singleton';
-
 const ariaMessages = defineMessages({
     tutorials: {
         id: 'gui.menuBar.tutorialsLibrary',
@@ -1100,7 +1098,7 @@ class MenuBar extends React.Component {
                 </div>
 
                 <div className={styles.accountInfoGroup}>
-                    {SettingsStore.store.projectBlockCounter && !this.props.isPlayerOnly ? (
+                    {this.props.settingsStore.projectBlockCounter && !this.props.isPlayerOnly ? (
                         <div className={styles.menuBarItem}>
                             <span>{this.getBlockCount()}</span>
                         </div>
@@ -1227,7 +1225,8 @@ MenuBar.propTypes = {
     configMenuOpen: PropTypes.bool,
     onOpenConfig: PropTypes.func,
     onRequestCloseConfig: PropTypes.func,
-    onClickEditorSettingsModal: PropTypes.func
+    onClickEditorSettingsModal: PropTypes.func,
+    settingsStore: PropTypes.object
 };
 
 MenuBar.defaultProps = {
@@ -1268,7 +1267,8 @@ const mapStateToProps = (state, ownProps) => {
         mode2020: isTimeTravel2020(state),
         modeNow: isTimeTravelNow(state),
 
-        configMenuOpen: configMenuOpen(state)
+        configMenuOpen: configMenuOpen(state),
+        settingsStore: state.scratchGui.settingsStore
     };
 };
 
