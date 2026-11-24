@@ -1620,6 +1620,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
 
     const mergeOperators = SettingsStore.store.mergeOperators;
     const pinsEnabled = SettingsStore.store.blockPinning;
+    const hideLists = SettingsStore.store.hideLists;
     const everything = [
         xmlOpen,
         pinsEnabled ? pinsXML : '', pinsEnabled ? gap : '',
@@ -1632,7 +1633,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         operatorsXML, gap,
         mergeOperators ? '' : stringsXML, mergeOperators ? '' : gap,
         variablesXML, gap,
-        listsXML, gap,
+        hideLists ? '' : listsXML, hideLists ? '' : gap,
         myBlocksXML
     ];
 

@@ -84,6 +84,7 @@ class EditorSettingsModal extends React.Component {
                         <settings.blockColors />
                         <settings.cascadeProcedureColors />
                         <settings.mergeOperators />
+                        <settings.hideLists />
                         <Separator />
                         <settings.commentColors />
                         <settings.blockCommentParent />

@@ -9,6 +9,7 @@ export default Object.fromEntries([
     "commentColors",
     "disableExpandables",
     "hexagonalRoundness",
+    "hideLists",
     "mergeOperators",
     "notchHeight",
     "notchSpacing",
