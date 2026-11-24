@@ -44,12 +44,12 @@ jobs:
       run: NODE_ENV="production" pnpm exec webpack --bail
       
     - name: Upload artifact 
-      uses: actions/upload-pages-artifact@v4.0.0
+      uses: actions/upload-pages-artifact@v5.0.0
       with:
         path: ./build/
     - name: Deploy to GitHub Pages
       if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && inputs.semver
-      uses: actions/deploy-pages@v4.0.5
+      uses: actions/deploy-pages@v5.0.1
 
     - name: Make zip for release
       if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && inputs.semver
