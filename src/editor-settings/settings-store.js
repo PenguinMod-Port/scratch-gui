@@ -15,18 +15,6 @@ const migrateSettings = settings => {
     return settings;
 };
 
-/**
- * @template T
- * @param {T|T[]} v A value
- * @returns {T[]} The value if it is a list, otherwise a 1 item list
- */
-const asArray = v => {
-    if (Array.isArray(v)) {
-        return v;
-    }
-    return [v];
-};
-
 class SettingsStore extends EventTargetShim {
     constructor () {
         super();
@@ -46,7 +34,7 @@ class SettingsStore extends EventTargetShim {
             settings[id].prototype._setStorage = function(v) {
                 the.store[id] = v;
                 the.saveToLocalStorage();
-                if (this.props.onUpdateStore) this.props.onUpdateStore();
+                if (this.props && this.props.onUpdateStore) this.props.onUpdateStore();
             };
             settings[id].prototype._readStorage = function(v) {
                 return the.store[id];
